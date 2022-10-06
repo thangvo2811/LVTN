@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
 
 import Helmet from "../../components/Helmet";
 import Section, { SectionTitle, SectionBody } from "../../components/Section";
@@ -7,30 +7,62 @@ import Grid from "../../components/Grid";
 import ProductCard from "../../components/ProductCard";
 import ProductView from "../../components/ProductView";
 
-import productData from "../../assets/fake-api/products";
+import axios from "axios";
 
 const Product = () => {
   const location = useLocation();
-  const productId = location.pathname.split("/")[2];
-  const product = productData.getProductById(productId);
+  const param = useParams();
+  const [allProduct, setAllProduct] = useState([]);
+  const [cateProduct, setCateProduct] = useState([]);
+  // const productId = location.pathname.split("/")[2];
+  // const product = productData.getProductById(productId);
   // console.log(productData.getProductById(productId));
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [productId]);
+  }, [param.category_id]);
+
+  useEffect(() => {
+    callAllProduct();
+    callAllCategoryProduct();
+  }, []);
+  const callAllProduct = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-all-product")
+      .then((res) => {
+        setAllProduct(res.data.products);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const callAllCategoryProduct = async () => {
+    await axios
+      .get(`http://localhost:8000/api/find-by-Category/${param.category_id}`)
+      .then((res) => {
+        setCateProduct(res.data.product);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
-    <Helmet name={product.title}>
+    <Helmet name="Chi Tiết Sản Phẩm">
       <Section>
         <SectionBody>
-          <div className="container">
-            <ProductView product={product}></ProductView>
-          </div>
+          {cateProduct?.map((item, index) => (
+            <div key={index} className="container">
+              <ProductView product={item}></ProductView>
+            </div>
+          ))}
         </SectionBody>
       </Section>
       <Section>
         <SectionTitle>sản phẩm khác</SectionTitle>
         <SectionBody>
           <Grid col={4} mdCol={2} smCol={1} gap={20}>
-            {productData.getNumberProducts(4).map((item, index) => {
+            {allProduct?.map((item, index) => {
               return <ProductCard product={item} key={index}></ProductCard>;
             })}
           </Grid>

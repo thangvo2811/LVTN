@@ -5,26 +5,43 @@ import FormInput from "../../components/FormInput";
 import Button from "../../components/Button";
 import { Link } from "react-router-dom";
 import Helmet from "../../components/Helmet";
+import axios from "axios";
 
 const Register = () => {
   const [values, setValues] = useState({
     username: "",
     password: "",
-    confirmPassword: "",
+    // confirmPassword: "",
     email: "",
+    phone: "",
   });
+
+  const callApi = async () => {
+    await axios
+      .post("http://localhost:8000/api/sign-up-user/", {
+        fullname: values.username,
+        password: values.password,
+        email: values.email,
+        phonenumber: values.phone,
+        avatar: "1212",
+      })
+      .then((res) => {
+        console.log(res);
+        setValues(res);
+      });
+  };
 
   const inputs = [
     {
-      name: "username",
-      type: "text",
-      placeholder: "Username",
-      errorMessage:
-        "Username giới hạn từ 3-16 kí tự và không bao gồm kí tự đặc biệt",
-      label: "Tài khoản",
-      pattern: "^[A-Za-z0-9]{3,16}$",
+      name: "email",
+      type: "email",
+      placeholder: "Email",
+      errorMessage: "Email không hợp lệ",
+      label: "Email",
+      pattern: "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+[a-zA-Z0-9-.]+$",
       required: true,
     },
+
     {
       name: "password",
       type: "password",
@@ -35,31 +52,32 @@ const Register = () => {
       pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
       required: true,
     },
+    // {
+    //   name: "confirmPassword",
+    //   type: "password",
+    //   placeholder: "Confirm Password",
+    //   errorMessage: "Password không trùng",
+    //   label: "Xác nhận mật khẩu",
+    //   pattern: values.password,
+    //   required: true,
+    // },
     {
-      name: "confirmPassword",
-      type: "password",
-      placeholder: "Confirm Password",
-      errorMessage: "Password không trùng",
-      label: "Xác nhận mật khẩu",
-      pattern: values.password,
-      required: true,
-    },
-    {
-      name: "email",
-      type: "email",
-      placeholder: "Email",
-      errorMessage: "Email không hợp lệ",
-      label: "Email",
-      pattern: "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+[a-zA-Z0-9-.]+$",
+      name: "Full Name",
+      type: "text",
+      placeholder: "Full name",
+      errorMessage: "Fullname không được trống",
+      label: "Full Name",
+      pattern: null,
       required: true,
     },
     {
       name: "phone",
       type: "text",
       placeholder: "Phone",
-      errorMessage: "Phone không được trống",
+      errorMessage: "Phone phải có ít nhất 10 số",
+
       label: "Phone",
-      pattern: "/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-s./0-9]*$/",
+      pattern: "[0-9]{10}",
       required: true,
     },
   ];
@@ -69,6 +87,7 @@ const Register = () => {
   };
   const onHandleSubmit = (e) => {
     e.preventDefault();
+    callApi();
   };
 
   return (

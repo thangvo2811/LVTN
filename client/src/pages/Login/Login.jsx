@@ -8,37 +8,23 @@ import Helmet from "../../components/Helmet";
 import axios from "axios";
 
 const Login = () => {
-  const [signUpUser, setSignUpUser] = useState({});
-  // useEffect(() => {
-  //   callUser();
-  // }, []);
-
   const callUser = async () => {
-    await axios
-      .post("http://localhost:8000/api/sign-up-user/", {
-        email: values.username,
-        password: values.password,
-        fullname: "phu",
-        phonenumber: "090946231",
-        avatar: "1212",
-      })
-      .then((res) => {
-        console.log(res);
-        setSignUpUser(res);
-      });
+    await axios.get("http://localhost:8000/api/get-user-login").then((res) => {
+      console.log(res);
+    });
   };
   const [values, setValues] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 
   const inputs = [
     {
-      name: "username",
-      type: "text",
+      name: "email",
+      type: "email",
       placeholder: "Tài khoản",
       errorMessage: "",
-      label: "Tài khoản",
+      label: "Email",
     },
     {
       name: "password",

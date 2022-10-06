@@ -9,7 +9,7 @@ const Table = (props) => {
       : props.bodyData;
 
   const [dataShow, setDataShow] = useState(initDataShow);
-
+  const [sildeBar, setSideBar] = useState();
   let pages = 1;
 
   let range = [];

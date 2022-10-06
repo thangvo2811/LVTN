@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import Button from "../components/Button";
 
 import numberWithCommas from "../utils/numberWithCommas";
-import brandData from "../assets/fake-api/brands";
-import categoryData from "../assets/fake-api/category";
+// import brandData from "../assets/fake-api/brands";
+// import categoryData from "../assets/fake-api/category";
 
 import { useDispatch } from "react-redux";
 import { addItem } from "../redux/cart-item/cartItemRedux";
@@ -13,20 +13,15 @@ import InputEmoji from "react-input-emoji";
 // import Picker from "emoji-picker-react";
 
 import pf from "../assets/images/UserProfile/man.jpg";
-import em from "../assets/images/EmojiSmile/emoji.png";
+import pd from "../assets/images/products/laptop-asus-rog-strix-g15-g513ih-hn015t-1.jpg";
 
 const ProductView = (props) => {
   const item = props.product;
   const dispatch = useDispatch();
-  const [product, setProduct] = useState();
+  // const [product, setProduct] = useState();
   const [quantity, setQuantity] = useState(0);
-  // const [emojiPicker, setEmojiPicker] = useState("");
-  // const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [text, setText] = useState("");
 
-  useEffect(() => {
-    setProduct(item);
-  }, [item]);
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
   };
@@ -34,24 +29,19 @@ const ProductView = (props) => {
     setQuantity(quantity - 1 < 0 ? 0 : quantity - 1);
   };
 
-  const addCartItem = () => {
-    const newItem = {
-      productId: product.productId,
-      title: product.title,
-      price: product.price,
-      brand: product.brand,
-      quantity: quantity,
-    };
-    dispatch(addItem(newItem));
-  };
-
-  // const handleClickEmoji = (event) => {
-  //   setEmojiPicker((prevEmoji) => prevEmoji + event.emoji);
-  //   setShowEmojiPicker(false);
+  // const addCartItem = () => {
+  //   const newItem = {
+  //     productId: product.productId,
+  //     title: product.title,
+  //     price: product.price,
+  //     brand: product.brand,
+  //     quantity: quantity,
+  //   };
+  //   dispatch(addItem(newItem));
   // };
 
   const handleOnEnter = (text) => {
-    console.log("enter", text);
+    console.log("User: ", text);
   };
 
   return (
@@ -59,29 +49,55 @@ const ProductView = (props) => {
       <div className="product-top">
         <div className="product-top__images">
           <div className="product-top__images__main">
-            <img src={product?.image} alt="" />
+            <img
+              src={item?.ProductImg}
+              alt=""
+              onError={(e) => {
+                e.target.setAttribute("src", pd);
+                e.target.setAttribute("alt", "454566");
+              }}
+            />
           </div>
           <div className="product-top__images__sub">
-            <img src={product?.image} alt="" />
-            <img src={product?.image} alt="" />
-            <img src={product?.image} alt="" />
+            <img
+              src={item?.ProductImg}
+              alt=""
+              onError={(e) => {
+                e.target.setAttribute("src", pd);
+                e.target.setAttribute("alt", "454566");
+              }}
+            />
+            <img
+              src={item?.ProductImg}
+              alt=""
+              onError={(e) => {
+                e.target.setAttribute("src", pd);
+                e.target.setAttribute("alt", "454566");
+              }}
+            />
+            <img
+              src={item?.ProductImg}
+              alt=""
+              onError={(e) => {
+                e.target.setAttribute("src", pd);
+                e.target.setAttribute("alt", "454566");
+              }}
+            />
           </div>
         </div>
         <div className="product-top__info">
-          <div className="product-top__info__title">{product?.title}</div>
+          <div className="product-top__info__title">{item?.name}</div>
           <div className="product-top__info__price">
-            {product ? numberWithCommas(product.price) : ""} VND
+            {item ? numberWithCommas(item?.unitprice) : ""} VND
           </div>
           <div className="product-top__info__brand">
-            Thương hiệu:{" "}
-            {product ? brandData.getDisplayById(product.brand) : ""}
+            Thương hiệu: {item ? item?.brand_id : ""}
           </div>
           <div className="product-top__info__category">
-            Danh mục:{" "}
-            {product ? categoryData.getDisplayById(product.category) : ""}
+            Danh mục: {item ? item?.category_id : ""}
           </div>
           <div className="product-top__info__status">
-            Trạng thái: {product?.stocking ? "Còn hàng" : "Hết hàng"}
+            Trạng thái: {item?.stocking ? "Còn hàng" : "Hết hàng"}
           </div>
           <div className="product-top__info__quantity">
             <i className="bx bx-minus" onClick={decreaseQuantity}></i>
@@ -92,7 +108,7 @@ const ProductView = (props) => {
             <Button size="sm" animate2={true}>
               mua ngay
             </Button>
-            <Button size="sm" animate2={true} onClick={addCartItem}>
+            <Button size="sm" animate2={true}>
               thêm vào giỏ hàng
             </Button>
           </div>
@@ -100,9 +116,7 @@ const ProductView = (props) => {
       </div>
       <div className="product-bottom">
         <div className="product-bottom__title">chi tiết sản phẩm</div>
-        <div className="product-bottom__description">
-          {product?.description}
-        </div>
+        <div className="product-bottom__description">{item?.Description}</div>
       </div>
 
       {/* start prodcut comment */}

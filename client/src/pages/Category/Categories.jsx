@@ -7,63 +7,104 @@ import ProductCard from "../../components/ProductCard";
 import PriceSlider from "../../components/PriceSlider";
 import Button from "../../components/Button";
 
-import productData from "../../assets/fake-api/products";
-import brandsData from "../../assets/fake-api/brands";
-import categoryData from "../../assets/fake-api/category";
-
 import asus from "../../assets/images/banner/asus.jpg";
+
+import axios from "axios";
 
 const Categories = () => {
   const filterToggleRef = useRef(null);
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
   const [filters, setFilters] = useState({
     brand: "",
-    price: 0,
+    unitprice: 0,
     category: [],
   });
 
+  const [allProduct, setAllProduct] = useState([]);
+  const [allCategory, setAllCategory] = useState([]);
+  const [allBrand, setAllBrand] = useState([]);
+
+  const callAllProduct = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-all-product")
+      .then((res) => {
+        setAllProduct(res.data.products);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const callAllCategory = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-Category/")
+      .then((res) => {
+        setAllCategory(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const callAllBrand = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-brand/")
+      .then((res) => {
+        setAllBrand(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
-    setProducts(productData.getAllProducts());
+    callAllProduct();
+    callAllCategory();
+    callAllBrand();
   }, []);
 
-  const handleFilterProduct = useCallback(() => {
-    let temp = productData.getAllProducts();
+  // const handleFilterProduct = useCallback(() => {
+  //   let temp = callAllProduct();
 
-    if (filters.brand !== "") {
-      temp = temp.filter(
-        (product) =>
-          product.brand.toString().indexOf(filters.brand.toString()) !== -1
-      );
-    }
-    if (filters.category.length > 0) {
-      temp = temp.filter((product) =>
-        filters.category.includes(product.category)
-      );
-    }
-    if (filters.price > 0) {
-      temp = temp.filter((product) => product.price > filters.price);
-    }
+  //   if (filters.brand_id !== "") {
+  //     temp = temp.filter(
+  //       (product) =>
+  //         product.brand_id.toString().indexOf(filters.brand_id.toString()) !==
+  //         -1
+  //     );
+  //   }
+  //   if (filters.category_id.length > 0) {
+  //     temp = temp.filter((product) =>
+  //       filters.category_id.includes(product.category_id)
+  //     );
+  //   }
+  //   if (filters.unitprice > 0) {
+  //     temp = temp.filter((product) => product.unitprice > filters.unitprice);
+  //   }
 
-    setProducts(temp);
-  }, [filters]);
+  //   setAllProduct(temp);
+  // }, [filters]);
 
-  useEffect(() => {
-    handleFilterProduct();
-  }, [handleFilterProduct]);
+  // useEffect(() => {
+  //   handleFilterProduct();
+  // }, [handleFilterProduct]);
 
-  const toggleFilterHandler = () => {
-    return filterToggleRef.current.classList.toggle("active");
-  };
+  // const toggleFilterHandler = () => {
+  //   return filterToggleRef.current.classList.toggle("active");
+  // };
 
-  const checkboxHandler = (checked, item) => {
-    if (checked) {
-      setFilters({ ...filters, category: [...filters.category, item.catId] });
-    } else {
-      // vì bỏ CHECKED nên lọc ra những thằng KHÁC thằng ĐÃ CHECK này
-      const newCat = filters.category.filter((cat) => cat !== item.catId);
-      setFilters({ ...filters, category: newCat });
-    }
-  };
+  // const checkboxHandler = (checked, item) => {
+  //   if (checked) {
+  //     setFilters({
+  //       ...filters,
+  //       allCategory: [...filters.allCategory, item.category_id],
+  //     });
+  //   } else {
+  //     // vì bỏ CHECKED nên lọc ra những thằng KHÁC thằng ĐÃ CHECK này
+  //     const newCat = filters.allCategory.filter(
+  //       (cat) => cat !== item.category_id
+  //     );
+  //     setFilters({ ...filters, allCategory: newCat });
+  //   }
+  // };
 
   return (
     <Helmet name="Danh mục">
@@ -75,7 +116,7 @@ const Categories = () => {
         <div className="category__filters" ref={filterToggleRef}>
           <div
             className="category__filters__close"
-            onClick={toggleFilterHandler}
+            /* onClick={toggleFilterHandler} */
           >
             <i className="bx bx-chevrons-left"></i>
           </div>
@@ -91,15 +132,15 @@ const Categories = () => {
             <div className="category__filters__item__title">thương hiệu</div>
             <select
               className="category__filters__item__select"
-              onChange={(e) =>
-                setFilters({ ...filters, brand: e.target.value })
-              }
+              // onChange={(e) =>
+              //   setFilters({ ...filters, brand: e.target.value })
+              // }
             >
               <option value="">Tất cả</option>
-              {brandsData.getAllBrands().map((item, index) => {
+              {allBrand?.map((item, index) => {
                 return (
-                  <option value={item.brandId} key={index}>
-                    {item.display}
+                  <option value={item.id} key={index}>
+                    {item.name}
                   </option>
                 );
               })}
@@ -108,12 +149,12 @@ const Categories = () => {
           <div className="category__filters__item">
             <div className="category__filters__item__title">Danh mục</div>
             <div className="category__filters__item__checkbox">
-              {categoryData.getAllCategory().map((item, index) => {
+              {allCategory?.map((item, index) => {
                 return (
                   <Checkbox
-                    label={item.display}
+                    label={item.name}
                     key={index}
-                    onChange={(input) => checkboxHandler(input.checked, item)}
+                    /**  onChange={(input) => checkboxHandler(input.checked, item)} */
                   ></Checkbox>
                 );
               })}
@@ -127,13 +168,12 @@ const Categories = () => {
           </div>
         </div>
         <div className="category__toggle">
-          <Button size="sm" onClick={toggleFilterHandler}>
-            lọc sản phẩm
-          </Button>
+          <Button size="sm">lọc sản phẩm</Button>
+          {/* onClick={toggleFilterHandler}  */}
         </div>
         <div className="category__products">
           <Grid col={4} mdCol={2} smCol={1} gap={20}>
-            {products?.map((item, index) => {
+            {allProduct?.map((item, index) => {
               return <ProductCard product={item} key={index}></ProductCard>;
             })}
           </Grid>

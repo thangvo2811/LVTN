@@ -6,6 +6,10 @@ import { useNavigate } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { addItem } from "../redux/cart-item/cartItemRedux";
+import { useState, useEffect } from "react";
+import pf from "../assets/images/products/laptop-asus-rog-strix-g15-g513ih-hn015t-1.jpg";
+
+import axios from "axios";
 
 const ProductCard = (props) => {
   const product = props.product;
@@ -13,37 +17,52 @@ const ProductCard = (props) => {
   const dispatch = useDispatch();
 
   const onHandleAddCartItem = () => {
-    const newItem = {
-      productId: product.productId,
-      title: product.title,
-      price: product.price,
-      brand: product.brand,
-      quantity: 1,
-    };
-    dispatch(addItem(newItem));
+    // const newItem = {
+    //   productId: product.productId,
+    //   title: product.title,
+    //   price: product.price,
+    //   brand: product.brand,
+    //   quantity: 1,
+    // };
+    // dispatch(addItem(newItem));
   };
   return (
-    <div className="product-card">
-      <div className="product-card__image">
-        <img src={product.image} alt="" />
-      </div>
-      <div className="product-card__interact">
-        <div
-          className="product-card__interact__btn"
-          onClick={() => navigate("/categories/" + product.productId)}
-        >
-          Mua ngay
+    <>
+      <div className="product-card">
+        <div className="product-card__image">
+          {/* <img src={product.image} alt="" /> */}
+          <img
+            src={product.ProductImg}
+            alt=""
+            onError={(e) => {
+              e.target.setAttribute("src", pf);
+              e.target.setAttribute("alt", "Not Found Image");
+            }}
+          />
         </div>
-        <i className="bx bxs-cart-add" onClick={onHandleAddCartItem}></i>
-        <i className="bx bx-heart-circle"></i>
-      </div>
-      <div className="product-card__info">
-        <div className="product-card__info__title">{product.title}</div>
-        <div className="product-card__info__price">
-          {numberWithCommas(product.price)} VND
+        <div className="product-card__interact">
+          <div
+            className="product-card__interact__btn"
+            // onClick={() => navigate("/categories/" + product.productId)}
+            onClick={() => navigate("/categories/" + product.category_id)}
+          >
+            Mua ngay
+          </div>
+          <i className="bx bxs-cart-add" onClick={onHandleAddCartItem}></i>
+          <i className="bx bx-heart-circle"></i>
+        </div>
+        <div className="product-card__info">
+          {/* <div className="product-card__info__title">{product.title}</div> */}
+          <div className="product-card__info__title">{product.name}</div>
+          {/* <div className="product-card__info__price">
+              {numberWithCommas(product.price)} VND
+            </div> */}
+          <div className="product-card__info__price">
+            {numberWithCommas(product.unitprice)} VNĐ
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

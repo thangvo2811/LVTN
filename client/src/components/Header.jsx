@@ -14,11 +14,28 @@ import dd6 from "../assets/images/dropdown-images/Artboard-8-copy-2-8.png";
 import category from "../assets/fake-api/category";
 
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const Header = () => {
   const headerContentRef = useRef(null);
   const headerShrink = useRef(null);
   const [totalItem, setTotalItem] = useState(0);
+  const [allCategory, setAllCategory] = useState([]);
+
+  useEffect(() => {
+    callCategories();
+  }, []);
+  const callCategories = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-Category/")
+      .then((res) => {
+        console.log(res.data);
+        setAllCategory(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const cartItem = useSelector((state) => state.cartItem.value);
   useEffect(() => {
@@ -139,14 +156,14 @@ const Header = () => {
                       Danh mục sản phẩm
                     </div>
                     <ul className="header-bottom__dropdown__left__list">
-                      {category.getAllCategory().map((item, index) => {
+                      {allCategory?.map((item, index) => {
                         return (
                           <li
                             className="header-bottom__dropdown__left__list__item"
                             key={index}
                           >
-                            <i className={item.icon}></i>
-                            {item.display}
+                            {/* <i className={item.icon}></i> */}
+                            {item.name}
                           </li>
                         );
                       })}

@@ -18,7 +18,7 @@ const Routes = () => {
       <Route path="/register" element={<Register />}></Route>
       <Route path="/userprofile" element={<UserProfile />}></Route>
       <Route path="/categories" element={<Categories />}></Route>
-      <Route path="/categories/:id" element={<Product />}></Route>
+      <Route path="/categories/:category_id" element={<Product />}></Route>
       <Route path="/cart" element={<Cart />}></Route>
       <Route path="/payment" element={<Payment />}></Route>
     </Switch>

@@ -15,7 +15,7 @@ import Layout from "./components/layout/Layout";
 
 const store = createStore(rootReducer);
 
-document.title = "Tua CRM";
+document.title = "Phu Thang";
 
 ReactDOM.render(
   <Provider store={store}>

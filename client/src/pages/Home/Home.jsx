@@ -10,10 +10,28 @@ import Blog from "../../components/Blog";
 
 import heroSilderData from "../../assets/fake-api/hero-slider";
 import policyData from "../../assets/fake-api/policy";
-import productData from "../../assets/fake-api/products";
+
 import msi from "../../assets/images/banner/msi.jpg";
 
+import { useState, useEffect } from "react";
+import axios from "axios";
+
 const Home = () => {
+  const [allProduct, setAllProduct] = useState([]);
+  useEffect(() => {
+    callAllProduct();
+  }, []);
+  const callAllProduct = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-all-product")
+      .then((res) => {
+        setAllProduct(res.data.products);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <Helmet name="Trang chủ">
       {/* Hero slider section */}
@@ -26,7 +44,7 @@ const Home = () => {
         <SectionBody>
           <div className="container">
             <Grid col={4} mdCol={2} smCol={1} gap={20}>
-              {productData.getNumberProducts(8).map((item, index) => {
+              {allProduct?.map((item, index) => {
                 return <ProductCard key={index} product={item}></ProductCard>;
               })}
             </Grid>
@@ -49,8 +67,10 @@ const Home = () => {
         <SectionBody>
           <div className="container">
             <Grid col={4} mdCol={2} smCol={1} gap={20}>
-              {productData.getNumberProducts(4).map((item, index) => {
-                return <ProductCard key={index} product={item}></ProductCard>;
+              {allProduct?.map((item, index) => {
+                if (index <= 4) {
+                  return <ProductCard key={index} product={item}></ProductCard>;
+                }
               })}
             </Grid>
           </div>
