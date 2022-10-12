@@ -3,25 +3,24 @@ import PropTypes from "prop-types";
 import Button from "../components/Button";
 
 import numberWithCommas from "../utils/numberWithCommas";
-// import brandData from "../assets/fake-api/brands";
-// import categoryData from "../assets/fake-api/category";
 
 import { useDispatch } from "react-redux";
 import { addItem } from "../redux/cart-item/cartItemRedux";
 
 import InputEmoji from "react-input-emoji";
-// import Picker from "emoji-picker-react";
 
 import pf from "../assets/images/UserProfile/man.jpg";
 import pd from "../assets/images/products/laptop-asus-rog-strix-g15-g513ih-hn015t-1.jpg";
+import { axios } from "axios";
+import { useParams } from "react-router-dom";
 
 const ProductView = (props) => {
-  const item = props.product;
   const dispatch = useDispatch();
-  // const [product, setProduct] = useState();
+  const param = useParams();
   const [quantity, setQuantity] = useState(0);
   const [text, setText] = useState("");
 
+  useEffect(() => {}, [param.id]);
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
   };
@@ -50,54 +49,51 @@ const ProductView = (props) => {
         <div className="product-top__images">
           <div className="product-top__images__main">
             <img
-              src={item?.ProductImg}
+              src={props.img}
               alt=""
               onError={(e) => {
                 e.target.setAttribute("src", pd);
-                e.target.setAttribute("alt", "454566");
               }}
             />
           </div>
           <div className="product-top__images__sub">
             <img
-              src={item?.ProductImg}
+              src={props.img}
               alt=""
               onError={(e) => {
                 e.target.setAttribute("src", pd);
-                e.target.setAttribute("alt", "454566");
               }}
             />
             <img
-              src={item?.ProductImg}
+              src={props.img}
               alt=""
               onError={(e) => {
                 e.target.setAttribute("src", pd);
-                e.target.setAttribute("alt", "454566");
               }}
             />
             <img
-              src={item?.ProductImg}
+              src={props.img}
               alt=""
               onError={(e) => {
                 e.target.setAttribute("src", pd);
-                e.target.setAttribute("alt", "454566");
               }}
             />
           </div>
         </div>
         <div className="product-top__info">
-          <div className="product-top__info__title">{item?.name}</div>
+          <div className="product-top__info__title">{props.nameProduct}</div>
           <div className="product-top__info__price">
-            {item ? numberWithCommas(item?.unitprice) : ""} VND
+            {props.priceProduct ? numberWithCommas(props.priceProduct) : ""} VND
           </div>
           <div className="product-top__info__brand">
-            Thương hiệu: {item ? item?.brand_id : ""}
+            Thương hiệu: {props.brandProduct ? props.brandProduct : ""}
           </div>
           <div className="product-top__info__category">
-            Danh mục: {item ? item?.category_id : ""}
+            Danh mục: {props.cateProduct ? props.cateProduct : ""}
           </div>
           <div className="product-top__info__status">
-            Trạng thái: {item?.stocking ? "Còn hàng" : "Hết hàng"}
+            Trạng thái:{" "}
+            {props.statusProduct?.stocking ? "Còn hàng" : "Hết hàng"}
           </div>
           <div className="product-top__info__quantity">
             <i className="bx bx-minus" onClick={decreaseQuantity}></i>
@@ -116,7 +112,7 @@ const ProductView = (props) => {
       </div>
       <div className="product-bottom">
         <div className="product-bottom__title">chi tiết sản phẩm</div>
-        <div className="product-bottom__description">{item?.Description}</div>
+        <div className="product-bottom__description">{props.desProduct}</div>
       </div>
 
       {/* start prodcut comment */}

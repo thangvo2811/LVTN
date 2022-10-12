@@ -1,8 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 
-import { Link } from "react-router-dom";
-
-import logo from "../assets/images/prologo1.png";
+import { Link, useNavigate } from "react-router-dom";
 
 import dd1 from "../assets/images/dropdown-images/729_x_356.jpg";
 import dd2 from "../assets/images/dropdown-images/Artboard-4-copy-8-2.png";
@@ -11,12 +9,11 @@ import dd4 from "../assets/images/dropdown-images/Artboard-7-copy-8.png";
 import dd5 from "../assets/images/dropdown-images/Artboard-8-8-1.png";
 import dd6 from "../assets/images/dropdown-images/Artboard-8-copy-2-8.png";
 
-import category from "../assets/fake-api/category";
-
 import { useSelector } from "react-redux";
 import axios from "axios";
 
 const Header = () => {
+  const navigate = useNavigate();
   const headerContentRef = useRef(null);
   const headerShrink = useRef(null);
   const [totalItem, setTotalItem] = useState(0);
@@ -29,7 +26,6 @@ const Header = () => {
     await axios
       .get("http://localhost:8000/api/get-Category/")
       .then((res) => {
-        console.log(res.data);
         setAllCategory(res.data);
       })
       .catch((err) => {
@@ -60,13 +56,14 @@ const Header = () => {
 
     return () => window.removeEventListener("scroll");
   }, []);
+
   return (
     <div className="header" ref={headerShrink}>
       <div className="container">
         <div className="header__toggle">
           <div className="header__toggle__logo">
             <Link to="/">
-              <img src={logo} alt="" />
+              <h1>PT</h1>
             </Link>
           </div>
           <div className="header__toggle__button" onClick={openMenuHandler}>
@@ -80,7 +77,6 @@ const Header = () => {
           <div className="header-top">
             <div className="header-top__logo">
               <Link to="/">
-                {/* <img src={logo} alt="" /> */}
                 <h1>PT</h1>
               </Link>
             </div>
@@ -161,8 +157,8 @@ const Header = () => {
                           <li
                             className="header-bottom__dropdown__left__list__item"
                             key={index}
+                            onClick={() => navigate("/findcategory/" + item.id)}
                           >
-                            {/* <i className={item.icon}></i> */}
                             {item.name}
                           </li>
                         );

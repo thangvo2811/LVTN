@@ -63,12 +63,12 @@ const Home = () => {
 
       {/* hotsalse product */}
       <Section>
-        <SectionTitle>bán chạy nhất</SectionTitle>
+        <SectionTitle>Bán chạy nhất</SectionTitle>
         <SectionBody>
           <div className="container">
             <Grid col={4} mdCol={2} smCol={1} gap={20}>
               {allProduct?.map((item, index) => {
-                if (index <= 4) {
+                if (index < 4) {
                   return <ProductCard key={index} product={item}></ProductCard>;
                 }
               })}

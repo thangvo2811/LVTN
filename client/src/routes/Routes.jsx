@@ -9,6 +9,7 @@ import Register from "../pages/Register/Register";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import UserProfile from "../pages/UserProfile";
+import FindCategory from "../pages/Category/FindCategory";
 
 const Routes = () => {
   return (
@@ -17,8 +18,12 @@ const Routes = () => {
       <Route path="/login" element={<Login />}></Route>
       <Route path="/register" element={<Register />}></Route>
       <Route path="/userprofile" element={<UserProfile />}></Route>
-      <Route path="/categories" element={<Categories />}></Route>
-      <Route path="/categories/:category_id" element={<Product />}></Route>
+      <Route
+        path="/findcategory/:category_id"
+        element={<FindCategory />}
+      ></Route>
+      <Route path="/categories/" element={<Categories />}></Route>
+      <Route path="/detailproduct/:category_id" element={<Product />}></Route>
       <Route path="/cart" element={<Cart />}></Route>
       <Route path="/payment" element={<Payment />}></Route>
     </Switch>

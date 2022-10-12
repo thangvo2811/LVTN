@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Helmet from "../../components/Helmet";
 
 import Checkbox from "../../components/Checkbox";
@@ -10,9 +10,11 @@ import Button from "../../components/Button";
 import asus from "../../assets/images/banner/asus.jpg";
 
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
-const Categories = () => {
+const FindCategory = () => {
   const filterToggleRef = useRef(null);
+  const param = useParams();
   // const [products, setProducts] = useState([]);
   const [filters, setFilters] = useState({
     brand: "",
@@ -26,9 +28,9 @@ const Categories = () => {
 
   const callAllProduct = async () => {
     await axios
-      .get("http://localhost:8000/api/get-all-product")
+      .get(`http://localhost:8000/api/find-by-Category/${param.category_id}`)
       .then((res) => {
-        setAllProduct(res.data.products);
+        setAllProduct(res.data.product);
       })
       .catch((err) => {
         console.log(err);
@@ -59,7 +61,7 @@ const Categories = () => {
     callAllProduct();
     callAllCategory();
     callAllBrand();
-  }, []);
+  }, [param.category_id]);
 
   // const handleFilterProduct = useCallback(() => {
   //   let temp = callAllProduct();
@@ -111,7 +113,7 @@ const Categories = () => {
       <div className="category-banner">
         <img src={asus} alt="" />
       </div>
-      <div className="category-title">danh sách sản phẩm</div>
+      <div className="category-title">sản phẩm tìm kiếm</div>
       <div className="category">
         <div className="category__filters" ref={filterToggleRef}>
           <div
@@ -175,5 +177,4 @@ const Categories = () => {
     </Helmet>
   );
 };
-
-export default Categories;
+export default FindCategory;

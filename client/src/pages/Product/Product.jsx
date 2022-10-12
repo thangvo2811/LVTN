@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useParams } from "react-router-dom";
 
 import Helmet from "../../components/Helmet";
 import Section, { SectionTitle, SectionBody } from "../../components/Section";
@@ -10,21 +10,32 @@ import ProductView from "../../components/ProductView";
 import axios from "axios";
 
 const Product = () => {
-  const location = useLocation();
   const param = useParams();
+  // console.log(param);
+  const rendeAfterCalled = useRef();
   const [allProduct, setAllProduct] = useState([]);
-  const [cateProduct, setCateProduct] = useState([]);
-  // const productId = location.pathname.split("/")[2];
-  // const product = productData.getProductById(productId);
-  // console.log(productData.getProductById(productId));
+  const [detailProduct, setDetailProduct] = useState({});
+
+  const callDetailProduct = useCallback(async () => {
+    await axios
+      .get(`http://localhost:8000/api/get-product/${param.category_id}`)
+      .then((res) => {
+        if (res.data && res.data.product) {
+          setDetailProduct(res.data.product);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [param.category_id]);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [param.category_id]);
 
   useEffect(() => {
     callAllProduct();
-    callAllCategoryProduct();
-  }, []);
+    callDetailProduct();
+  }, [callDetailProduct]);
   const callAllProduct = async () => {
     await axios
       .get("http://localhost:8000/api/get-all-product")
@@ -36,26 +47,29 @@ const Product = () => {
       });
   };
 
-  const callAllCategoryProduct = async () => {
-    await axios
-      .get(`http://localhost:8000/api/find-by-Category/${param.category_id}`)
-      .then((res) => {
-        setCateProduct(res.data.product);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   return (
     <Helmet name="Chi Tiết Sản Phẩm">
       <Section>
         <SectionBody>
-          {cateProduct?.map((item, index) => (
-            <div key={index} className="container">
-              <ProductView product={item}></ProductView>
-            </div>
-          ))}
+          <div className="container">
+            <ProductView
+              img={detailProduct.ProductImg ? detailProduct.ProductImg : ""}
+              nameProduct={detailProduct.name ? detailProduct.name : ""}
+              priceProduct={
+                detailProduct.unitprice ? detailProduct.unitprice : ""
+              }
+              statusProduct={detailProduct.status ? detailProduct.status : ""}
+              brandProduct={
+                detailProduct.brand_id ? detailProduct.brand_id : ""
+              }
+              cateProduct={
+                detailProduct.category_id ? detailProduct.category_id : ""
+              }
+              desProduct={
+                detailProduct.Description ? detailProduct.Description : ""
+              }
+            ></ProductView>
+          </div>
         </SectionBody>
       </Section>
       <Section>
@@ -63,7 +77,9 @@ const Product = () => {
         <SectionBody>
           <Grid col={4} mdCol={2} smCol={1} gap={20}>
             {allProduct?.map((item, index) => {
-              return <ProductCard product={item} key={index}></ProductCard>;
+              if (index < 4) {
+                return <ProductCard product={item} key={index}></ProductCard>;
+              }
             })}
           </Grid>
         </SectionBody>

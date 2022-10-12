@@ -30,33 +30,26 @@ const ProductCard = (props) => {
     <>
       <div className="product-card">
         <div className="product-card__image">
-          {/* <img src={product.image} alt="" /> */}
           <img
             src={product.ProductImg}
             alt=""
             onError={(e) => {
               e.target.setAttribute("src", pf);
-              e.target.setAttribute("alt", "Not Found Image");
             }}
           />
         </div>
         <div className="product-card__interact">
           <div
             className="product-card__interact__btn"
-            // onClick={() => navigate("/categories/" + product.productId)}
-            onClick={() => navigate("/categories/" + product.category_id)}
+            onClick={() => navigate("/detailproduct/" + product.id)}
           >
-            Mua ngay
+            Xem ngay
           </div>
           <i className="bx bxs-cart-add" onClick={onHandleAddCartItem}></i>
           <i className="bx bx-heart-circle"></i>
         </div>
         <div className="product-card__info">
-          {/* <div className="product-card__info__title">{product.title}</div> */}
           <div className="product-card__info__title">{product.name}</div>
-          {/* <div className="product-card__info__price">
-              {numberWithCommas(product.price)} VND
-            </div> */}
           <div className="product-card__info__price">
             {numberWithCommas(product.unitprice)} VNĐ
           </div>
