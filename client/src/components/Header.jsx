@@ -51,7 +51,6 @@ const Header = () => {
   const handleSearch = (e) => {
     // const patern = /^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
     e.preventDefault();
-    navigate(`/findproduct/${searchKey}`);
   };
   const cartItem = useSelector((state) => state.cartItem.value);
   useEffect(() => {
@@ -240,5 +239,4 @@ const Header = () => {
     </div>
   );
 };
-
 export default Header;
