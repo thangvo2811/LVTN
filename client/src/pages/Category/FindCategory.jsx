@@ -109,7 +109,7 @@ const FindCategory = () => {
   // };
 
   return (
-    <Helmet name="Danh mục">
+    <Helmet name="Danh mục tìm kiếm">
       <div className="category-banner">
         <img src={asus} alt="" />
       </div>

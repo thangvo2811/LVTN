@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import dd1 from "../assets/images/dropdown-images/729_x_356.jpg";
 import dd2 from "../assets/images/dropdown-images/Artboard-4-copy-8-2.png";
@@ -18,9 +18,11 @@ const Header = () => {
   const headerShrink = useRef(null);
   const [totalItem, setTotalItem] = useState(0);
   const [allCategory, setAllCategory] = useState([]);
+  const [searchKey, setSearchKey] = useState("");
 
   useEffect(() => {
     callCategories();
+    callSearchProduct();
   }, []);
   const callCategories = async () => {
     await axios
@@ -32,7 +34,25 @@ const Header = () => {
         console.log(err);
       });
   };
+  const callSearchProduct = async (searchK) => {
+    const type = searchK;
+    console.log(type);
+    await axios
+      .get(`http://localhost:8000/api/findbykeyword/${type}`)
+      .then((res) => {
+        console.log(res.data);
+        setSearchKey(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
+  const handleSearch = (e) => {
+    // const patern = /^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+    e.preventDefault();
+    navigate(`/findproduct/${searchKey}`);
+  };
   const cartItem = useSelector((state) => state.cartItem.value);
   useEffect(() => {
     setTotalItem(cartItem.reduce((total, item) => (total += item.quantity), 0));
@@ -81,10 +101,16 @@ const Header = () => {
               </Link>
             </div>
             <div className="header-top__search">
-              <div className="header-top__search__input">
-                <input type="text" placeholder="Tìm kiếm sản phẩm" />
-                <i className="bx bx-search-alt"></i>
-              </div>
+              <form onSubmit={handleSearch}>
+                <div className="header-top__search__input">
+                  <input
+                    type="text"
+                    placeholder="Tìm kiếm sản phẩm"
+                    onChange={(e) => setSearchKey(e.target.value)}
+                  />
+                  <i className="bx bx-search-alt"></i>
+                </div>
+              </form>
             </div>
             <div className="header-top__cart">
               <ul className="header-top__cart__list">
