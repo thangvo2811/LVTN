@@ -11,6 +11,7 @@ import Login from "../pages/Login/Login";
 import UserProfile from "../pages/UserProfile";
 import FindCategory from "../pages/Category/FindCategory";
 import FindProduct from "../pages/Product/FindProduct";
+import FindBrand from "../pages/Brand/FindBrand";
 
 const Routes = () => {
   return (
@@ -23,6 +24,7 @@ const Routes = () => {
         path="/findcategory/:category_id"
         element={<FindCategory />}
       ></Route>
+      <Route path="/findbrand/:brand_id" element={<FindBrand />}></Route>
       <Route path="/findproduct/:keyword" element={<FindProduct />}></Route>
       <Route path="/categories/" element={<Categories />}></Route>
       <Route path="/detailproduct/:category_id" element={<Product />}></Route>

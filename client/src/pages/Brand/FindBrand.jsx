@@ -11,17 +11,18 @@ import asus from "../../assets/images/banner/asus.jpg";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-const FindCategory = () => {
+const FindBrand = () => {
   const filterToggleRef = useRef(null);
   const navigate = useNavigate();
   const param = useParams();
+  const paramBrand = useParams();
   const [allProduct, setAllProduct] = useState([]);
   const [allCategory, setAllCategory] = useState([]);
   const [allBrand, setAllBrand] = useState([]);
 
   const callAllProduct = async () => {
     await axios
-      .get(`http://localhost:8000/api/find-by-Category/${param.category_id}`)
+      .get(`http://localhost:8000/api/find-by-brand/${paramBrand.brand_id}`)
       .then((res) => {
         setAllProduct(res.data.product);
       })
@@ -54,40 +55,10 @@ const FindCategory = () => {
     callAllProduct();
     callAllCategory();
     callAllBrand();
-  }, [param.category_id]);
-
-  // const handleFilterProduct = useCallback(() => {
-  //   let temp = callAllProduct();
-
-  //   if (filters.brand_id !== "") {
-  //     temp = temp.filter(
-  //       (product) =>
-  //         product.brand_id.toString().indexOf(filters.brand_id.toString()) !==
-  //         -1
-  //     );
-  //   }
-  //   if (filters.category_id.length > 0) {
-  //     temp = temp.filter((product) =>
-  //       filters.category_id.includes(product.category_id)
-  //     );
-  //   }
-  //   if (filters.unitprice > 0) {
-  //     temp = temp.filter((product) => product.unitprice > filters.unitprice);
-  //   }
-
-  //   setAllProduct(temp);
-  // }, [filters]);
-
-  // useEffect(() => {
-  //   handleFilterProduct();
-  // }, [handleFilterProduct]);
-
-  // const toggleFilterHandler = () => {
-  //   return filterToggleRef.current.classList.toggle("active");
-  // };
+  }, [param.brand_id]);
 
   return (
-    <Helmet name="Danh mục tìm kiếm">
+    <Helmet name="Thương hiệu tìm kiếm">
       <div className="category-banner">
         <img src={asus} alt="" />
       </div>
@@ -161,4 +132,5 @@ const FindCategory = () => {
     </Helmet>
   );
 };
-export default FindCategory;
+
+export default FindBrand;

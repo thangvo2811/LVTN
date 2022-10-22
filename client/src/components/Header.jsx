@@ -36,12 +36,10 @@ const Header = () => {
   };
   const callSearchProduct = async (searchK) => {
     const type = searchK;
-    console.log(type);
     await axios
       .get(`http://localhost:8000/api/findbykeyword/${type}`)
       .then((res) => {
-        console.log(res.data);
-        setSearchKey(res.data);
+        setSearchKey(res.data.listProduct);
       })
       .catch((err) => {
         console.log(err);
@@ -51,6 +49,7 @@ const Header = () => {
   const handleSearch = (e) => {
     // const patern = /^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
     e.preventDefault();
+    navigate("/findproduct/" + searchKey);
   };
   const cartItem = useSelector((state) => state.cartItem.value);
   useEffect(() => {
