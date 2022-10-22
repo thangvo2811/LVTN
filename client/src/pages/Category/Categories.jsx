@@ -17,7 +17,12 @@ const Categories = () => {
   const [allProduct, setAllProduct] = useState([]);
   const [allCategory, setAllCategory] = useState([]);
   const [allBrand, setAllBrand] = useState([]);
-  const [findBrand, setFindBrand] = useState([]);
+
+  const [idCategory, setIdCategory] = useState(0);
+
+  const [idBrand, setIdBrand] = useState(0);
+  const [nameBrand, setNameBrand] = useState("");
+  const [nameCategory, setNameCategory] = useState("");
 
   const callAllProduct = async () => {
     await axios
@@ -43,35 +48,63 @@ const Categories = () => {
     await axios
       .get("http://localhost:8000/api/get-brand/")
       .then((res) => {
+        console.log(res.data);
         setAllBrand(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  const callFindCategory = async () => {
+  const callFindBrand = async () => {
     await axios
-      .get(`http://localhost:8000/api/find-by-brand/${param.brand_id}`)
+      .get(`http://localhost:8000/api/find-by-brand/${idBrand}`)
       .then((res) => {
-        setFindBrand(res.data);
+        setAllProduct(res.data.product);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  const callFindCategory = async () => {
+    await axios
+      .get(`http://localhost:8000/api/find-by-Category/${idCategory}`)
+      .then((res) => {
+        setAllProduct(res.data.product);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    callFindCategory();
+  }, [idCategory]);
+
+  useEffect(() => {
+    callFindBrand();
+  }, [idBrand]);
+
   useEffect(() => {
     callAllProduct();
     callAllCategory();
     callAllBrand();
-    callFindCategory();
-  }, [param.brand_id]);
+  }, []);
 
   return (
     <Helmet name="Danh mục">
       <div className="category-banner">
         <img src={asus} alt="" />
       </div>
-      <div className="category-title">danh sách sản phẩm</div>
+      <div className="category-title">
+        {idCategory
+          ? `Danh mục ${nameCategory}`
+          : idBrand
+          ? `Thương hiệu ${nameBrand}`
+          : "Danh sách sản phẩm"}
+      </div>
+      {console.log(nameBrand)}
+
       <div className="category">
         <div className="category__filters">
           <div className="category__filters__close">
@@ -82,18 +115,18 @@ const Categories = () => {
             <div className="category__filters__item__title">thương hiệu</div>
             <select
               className="category__filters__item__select"
-              onChange={(e) =>
-                setFindBrand(navigate("/findBrand/" + e.target.value))
-              }
+              onChange={(e) => {
+                console.log("e:", e.target.name);
+                setIdBrand(e.target.value);
+                setNameBrand(e.target.selectedOptions.name);
+              }}
             >
               <option value="">Tất cả</option>
+
               {allBrand?.map((item, index) => {
                 return (
-                  <option
-                    value={item.id}
-                    key={index}
-                    onClick={() => navigate("/findbrand/" + item.id)}
-                  >
+                  <option value={item.id} name={item.name} key={index}>
+                    {console.log("item:", item.name)}
                     {item.name}
                   </option>
                 );
@@ -103,12 +136,19 @@ const Categories = () => {
           <div className="category__filters__item">
             <div className="category__filters__item__title">Danh mục</div>
             <div className="category__filters__item__checkbox">
+              <li className="header-bottom__dropdown__left__list__item">
+                Tất cả
+              </li>
               {allCategory?.map((item, index) => {
                 return (
                   <li
                     className="header-bottom__dropdown__left__list__item"
                     key={index}
-                    onClick={() => navigate("/findcategory/" + item.id)}
+                    onClick={() => {
+                      console.log("item.name:", item.name);
+                      setNameCategory(item.name);
+                      setIdCategory(item.id);
+                    }}
                   >
                     {item.name}
                   </li>

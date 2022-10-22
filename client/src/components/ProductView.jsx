@@ -11,7 +11,7 @@ import InputEmoji from "react-input-emoji";
 
 import pf from "../assets/images/UserProfile/man.jpg";
 import pd from "../assets/images/products/laptop-asus-rog-strix-g15-g513ih-hn015t-1.jpg";
-import { axios } from "axios";
+
 import { useParams } from "react-router-dom";
 
 const ProductView = (props) => {
@@ -92,8 +92,7 @@ const ProductView = (props) => {
             Danh mục: {props.cateProduct ? props.cateProduct : ""}
           </div>
           <div className="product-top__info__status">
-            Trạng thái:{" "}
-            {props.statusProduct?.stocking ? "Còn hàng" : "Hết hàng"}
+            Trạng thái: {props.statusProduct}{" "}
           </div>
           <div className="product-top__info__quantity">
             <i className="bx bx-minus" onClick={decreaseQuantity}></i>

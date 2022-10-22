@@ -58,12 +58,16 @@ const Product = () => {
               priceProduct={
                 detailProduct.unitprice ? detailProduct.unitprice : ""
               }
-              statusProduct={detailProduct.status ? detailProduct.status : ""}
+              statusProduct={
+                detailProduct.status === 1 ? "Còn Hàng" : "Hết Hàng"
+              }
               brandProduct={
-                detailProduct.brand_id ? detailProduct.brand_id : ""
+                detailProduct.brand_id ? detailProduct.ProductBrand.name : ""
               }
               cateProduct={
-                detailProduct.category_id ? detailProduct.category_id : ""
+                detailProduct.category_id
+                  ? detailProduct.CategoryProduct.name
+                  : ""
               }
               desProduct={
                 detailProduct.Description ? detailProduct.Description : ""

@@ -166,7 +166,7 @@ const Header = () => {
                 <Link to={"/"}>Trang chủ</Link>
               </li>
               <li className="header-bottom__list__item header-bottom__list__item__main">
-                <Link to={"/categories"}>
+                <Link to={"/product"}>
                   Sản phẩm
                   <i className="bx bx-chevron-down"></i>
                 </Link>
