@@ -24,6 +24,7 @@ const Header = () => {
     callCategories();
     callSearchProduct();
   }, []);
+
   const callCategories = async () => {
     await axios
       .get("http://localhost:8000/api/get-Category/")

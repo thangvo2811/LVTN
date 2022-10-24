@@ -11,6 +11,7 @@ import Login from "../pages/Login/Login";
 import UserProfile from "../pages/UserProfile";
 
 import FindProduct from "../pages/Product/FindProduct";
+import FindCategory from "./../pages/Category/FindCategory";
 
 const Routes = () => {
   return (
@@ -19,7 +20,10 @@ const Routes = () => {
       <Route path="/login" element={<Login />}></Route>
       <Route path="/register" element={<Register />}></Route>
       <Route path="/userprofile" element={<UserProfile />}></Route>
-
+      <Route
+        path="/findcategory/:category_id"
+        element={<FindCategory />}
+      ></Route>
       <Route path="/findproduct/:keyword" element={<FindProduct />}></Route>
       <Route path="/product/" element={<Categories />}></Route>
       <Route path="/detailproduct/:category_id" element={<Product />}></Route>

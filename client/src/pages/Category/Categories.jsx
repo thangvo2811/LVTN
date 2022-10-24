@@ -1,39 +1,32 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import Helmet from "../../components/Helmet";
+import { useSelector, useDispatch } from "react-redux";
 
-import Checkbox from "../../components/Checkbox";
 import Grid from "../../components/Grid";
 import ProductCard from "../../components/ProductCard";
-
+import { deleteItem } from "../../redux/cart-item/cartItemRedux.js";
 import asus from "../../assets/images/banner/asus.jpg";
 
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
 
 const Categories = () => {
-  const navigate = useNavigate();
-  const param = useParams();
-
+  const [isLoading, setIsLoading] = useState(false);
   const [allProduct, setAllProduct] = useState([]);
   const [allCategory, setAllCategory] = useState([]);
   const [allBrand, setAllBrand] = useState([]);
+  const cart = useSelector((state) => state.cartItem);
 
-  const [idCategory, setIdCategory] = useState(0);
+  console.log("cart:", cart.name);
 
-  const [idBrand, setIdBrand] = useState(0);
-  const [nameBrand, setNameBrand] = useState("");
+  const [brand, setBrand] = useState({
+    id: "",
+    name: "",
+  });
+
+  const [idCategory, setIdCategory] = useState("");
   const [nameCategory, setNameCategory] = useState("");
+  const dispatch = useDispatch();
 
-  const callAllProduct = async () => {
-    await axios
-      .get("http://localhost:8000/api/get-all-product")
-      .then((res) => {
-        setAllProduct(res.data.products);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
   const callAllCategory = async () => {
     await axios
       .get("http://localhost:8000/api/get-Category/")
@@ -55,118 +48,130 @@ const Categories = () => {
         console.log(err);
       });
   };
-  const callFindBrand = async () => {
-    await axios
-      .get(`http://localhost:8000/api/find-by-brand/${idBrand}`)
-      .then((res) => {
-        setAllProduct(res.data.product);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const callFindCategory = async () => {
-    await axios
-      .get(`http://localhost:8000/api/find-by-Category/${idCategory}`)
-      .then((res) => {
-        setAllProduct(res.data.product);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   useEffect(() => {
-    callFindCategory();
-  }, [idCategory]);
-
-  useEffect(() => {
-    callFindBrand();
-  }, [idBrand]);
-
-  useEffect(() => {
+    const callAllProduct = async () => {
+      setIsLoading(true);
+      await axios
+        .get(
+          `http://localhost:8000/api/get-all-product?brand_id=${brand.id}&category_id=${idCategory}`
+        )
+        .then((res) => {
+          setAllProduct(res.data.products);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    };
     callAllProduct();
+  }, [brand, idCategory]);
+
+  useEffect(() => {
     callAllCategory();
     callAllBrand();
   }, []);
 
   return (
-    <Helmet name="Danh mục">
-      <div className="category-banner">
-        <img src={asus} alt="" />
-      </div>
-      <div className="category-title">
-        {idCategory
-          ? `Danh mục ${nameCategory}`
-          : idBrand
-          ? `Thương hiệu ${nameBrand}`
-          : "Danh sách sản phẩm"}
-      </div>
-      {console.log(nameBrand)}
-
-      <div className="category">
-        <div className="category__filters">
-          <div className="category__filters__close">
-            <i className="bx bx-chevrons-left"></i>
+    <>
+      {isLoading === true ? (
+        <p>Loading</p>
+      ) : (
+        <Helmet name="Danh mục">
+          <div className="category-banner">
+            <img src={asus} alt="" />
+          </div>
+          <div className="category-title">
+            {idCategory
+              ? `Danh mục ${nameCategory}`
+              : brand.id
+              ? `Thương hiệu ${brand.name}`
+              : "Danh sách sản phẩm"}
           </div>
 
-          <div className="category__filters__item">
-            <div className="category__filters__item__title">thương hiệu</div>
-            <select
-              className="category__filters__item__select"
-              onChange={(e) => {
-                console.log("e:", e.target.name);
-                setIdBrand(e.target.value);
-                setNameBrand(e.target.selectedOptions.name);
-              }}
-            >
-              <option value="">Tất cả</option>
+          <div className="category">
+            <div className="category__filters">
+              <div className="category__filters__close">
+                <i className="bx bx-chevrons-left"></i>
+              </div>
 
-              {allBrand?.map((item, index) => {
-                return (
-                  <option value={item.id} name={item.name} key={index}>
-                    {console.log("item:", item.name)}
-                    {item.name}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <div className="category__filters__item">
-            <div className="category__filters__item__title">Danh mục</div>
-            <div className="category__filters__item__checkbox">
-              <li className="header-bottom__dropdown__left__list__item">
-                Tất cả
-              </li>
-              {allCategory?.map((item, index) => {
-                return (
+              <div className="category__filters__item">
+                <div className="category__filters__item__title">
+                  Thương hiệu
+                </div>
+                <select
+                  className="category__filters__item__select"
+                  onChange={(e) => {
+                    setIdCategory("");
+                    setBrand((brand) => ({
+                      ...brand,
+                      ...{
+                        id: e.target.value,
+                        name: e.target.attributes.value,
+                      },
+                    }));
+                  }}
+                >
+                  <option value="">Tất cả</option>
+                  {allBrand?.map((item, index) => {
+                    return (
+                      <option value={item.id} name={item.name} key={index}>
+                        {item.name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="category__filters__item">
+                <div className="category__filters__item__title">Danh mục</div>
+                <div className="category__filters__item__checkbox">
                   <li
                     className="header-bottom__dropdown__left__list__item"
-                    key={index}
                     onClick={() => {
-                      console.log("item.name:", item.name);
-                      setNameCategory(item.name);
-                      setIdCategory(item.id);
+                      setBrand((brand) => ({
+                        ...brand,
+                        ...{ id: "" },
+                      }));
+                      setIdCategory("");
                     }}
                   >
-                    {item.name}
+                    Tất cả
                   </li>
-                );
-              })}
+                  {allCategory?.map((item, index) => {
+                    return (
+                      <li
+                        className="header-bottom__dropdown__left__list__item"
+                        key={index}
+                        onClick={() => {
+                          setNameCategory(item.name);
+                          setBrand({
+                            id: "",
+                            name: brand.name,
+                          });
+                          setIdCategory(item.id);
+                        }}
+                      >
+                        {item.name}
+                      </li>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <div className="category__products">
+              <Grid col={4} mdCol={2} smCol={1} gap={20}>
+                {allProduct?.map((item, index) => {
+                  return <ProductCard product={item} key={index}></ProductCard>;
+                })}
+              </Grid>
             </div>
           </div>
-        </div>
-
-        <div className="category__products">
-          <Grid col={4} mdCol={2} smCol={1} gap={20}>
-            {allProduct?.map((item, index) => {
-              return <ProductCard product={item} key={index}></ProductCard>;
-            })}
-          </Grid>
-        </div>
-      </div>
-    </Helmet>
+        </Helmet>
+      )}
+    </>
   );
 };
 

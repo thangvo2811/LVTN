@@ -16,16 +16,6 @@ const ProductCard = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const onHandleAddCartItem = () => {
-    // const newItem = {
-    //   productId: product.productId,
-    //   title: product.title,
-    //   price: product.price,
-    //   brand: product.brand,
-    //   quantity: 1,
-    // };
-    // dispatch(addItem(newItem));
-  };
   return (
     <>
       <div className="product-card">
@@ -45,7 +35,7 @@ const ProductCard = (props) => {
           >
             Xem ngay
           </div>
-          <i className="bx bxs-cart-add" onClick={onHandleAddCartItem}></i>
+          <i className="bx bxs-cart-add"></i>
           <i className="bx bx-heart-circle"></i>
         </div>
         <div className="product-card__info">
