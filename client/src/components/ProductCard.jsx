@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addItem } from "../redux/cart-item/cartItemRedux";
 import { useState, useEffect } from "react";
-import pf from "../assets/images/products/laptop-asus-rog-strix-g15-g513ih-hn015t-1.jpg";
+import pd from "../assets/images/products/laptop-asus-rog-strix-g15-g513ih-hn015t-1.jpg";
 
 import axios from "axios";
 
@@ -21,10 +21,10 @@ const ProductCard = (props) => {
       <div className="product-card">
         <div className="product-card__image">
           <img
-            src={product.ProductImg}
+            src={pd}
             alt=""
             onError={(e) => {
-              e.target.setAttribute("src", pf);
+              e.target.setAttribute("src", pd);
             }}
           />
         </div>

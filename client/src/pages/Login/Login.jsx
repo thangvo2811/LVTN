@@ -9,9 +9,14 @@ import axios from "axios";
 
 const Login = () => {
   const callUser = async () => {
-    await axios.get("http://localhost:8000/api/get-user-login").then((res) => {
-      console.log(res);
-    });
+    await axios
+      .get("http://localhost:8000/api/get-user-login")
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   const [values, setValues] = useState({
     email: "",
@@ -41,7 +46,7 @@ const Login = () => {
     e.preventDefault();
     callUser();
   };
-  console.log(values);
+
   return (
     <Helmet name="Đăng nhập">
       <div className="login">
@@ -87,7 +92,12 @@ const Login = () => {
             </div>
             <div className="login__redirect">
               <Link to={"/register"}>
-                Bạn chưa có tài khoản? <span> Đăng kí</span>
+                Bạn chưa có tài khoản ? <span> Đăng kí</span>
+              </Link>
+            </div>
+            <div className="login__redirect">
+              <Link to={"/register"}>
+                <span> Quên mật khẩu ?</span>
               </Link>
             </div>
           </div>

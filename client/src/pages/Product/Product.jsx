@@ -53,7 +53,7 @@ const Product = () => {
         <SectionBody>
           <div className="container">
             <ProductView
-              img={detailProduct.ProductImg ? detailProduct.ProductImg : ""}
+              imgProduct={detailProduct.img ? detailProduct.img : ""}
               nameProduct={detailProduct.name ? detailProduct.name : ""}
               priceProduct={
                 detailProduct.unitprice ? detailProduct.unitprice : ""

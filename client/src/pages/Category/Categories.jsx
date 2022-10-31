@@ -14,17 +14,16 @@ const Categories = () => {
   const [allProduct, setAllProduct] = useState([]);
   const [allCategory, setAllCategory] = useState([]);
   const [allBrand, setAllBrand] = useState([]);
-  const cart = useSelector((state) => state.cartItem);
-
-  console.log("cart:", cart.name);
 
   const [brand, setBrand] = useState({
     id: "",
     name: "",
   });
+  const [category, setCategory] = useState({
+    idCate: "",
+    nameCate: "",
+  });
 
-  const [idCategory, setIdCategory] = useState("");
-  const [nameCategory, setNameCategory] = useState("");
   const dispatch = useDispatch();
 
   const callAllCategory = async () => {
@@ -54,7 +53,7 @@ const Categories = () => {
       setIsLoading(true);
       await axios
         .get(
-          `http://localhost:8000/api/get-all-product?brand_id=${brand.id}&category_id=${idCategory}`
+          `http://localhost:8000/api/get-all-product?brand_id=${brand.id}&category_id=${category.idCate}`
         )
         .then((res) => {
           setAllProduct(res.data.products);
@@ -67,7 +66,7 @@ const Categories = () => {
         });
     };
     callAllProduct();
-  }, [brand, idCategory]);
+  }, [brand, category]);
 
   useEffect(() => {
     callAllCategory();
@@ -84,8 +83,8 @@ const Categories = () => {
             <img src={asus} alt="" />
           </div>
           <div className="category-title">
-            {idCategory
-              ? `Danh mục ${nameCategory}`
+            {category.idCate
+              ? `Danh mục ${category.nameCate}`
               : brand.id
               ? `Thương hiệu ${brand.name}`
               : "Danh sách sản phẩm"}
@@ -104,12 +103,17 @@ const Categories = () => {
                 <select
                   className="category__filters__item__select"
                   onChange={(e) => {
-                    setIdCategory("");
+                    setCategory((category) => ({
+                      ...category,
+                      ...{
+                        idCate: "",
+                      },
+                    }));
                     setBrand((brand) => ({
                       ...brand,
                       ...{
                         id: e.target.value,
-                        name: e.target.attributes.value,
+                        name: e.target.value,
                       },
                     }));
                   }}
@@ -134,7 +138,12 @@ const Categories = () => {
                         ...brand,
                         ...{ id: "" },
                       }));
-                      setIdCategory("");
+                      setCategory((category) => ({
+                        ...category,
+                        ...{
+                          idCate: "",
+                        },
+                      }));
                     }}
                   >
                     Tất cả
@@ -145,12 +154,14 @@ const Categories = () => {
                         className="header-bottom__dropdown__left__list__item"
                         key={index}
                         onClick={() => {
-                          setNameCategory(item.name);
+                          setCategory((category) => ({
+                            idCate: item.id,
+                            nameCate: item.name,
+                          }));
                           setBrand({
                             id: "",
                             name: brand.name,
                           });
-                          setIdCategory(item.id);
                         }}
                       >
                         {item.name}

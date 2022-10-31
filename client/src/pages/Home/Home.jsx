@@ -15,7 +15,6 @@ import msi from "../../assets/images/banner/msi.jpg";
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 
 const Home = () => {
   const [allProduct, setAllProduct] = useState([]);
@@ -26,7 +25,6 @@ const Home = () => {
     await axios
       .get("http://localhost:8000/api/get-all-product?brand_id=&category_id=")
       .then((res) => {
-        console.log(res.data.products);
         setAllProduct(res.data.products);
       })
       .catch((err) => {

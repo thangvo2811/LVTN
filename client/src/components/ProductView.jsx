@@ -28,17 +28,6 @@ const ProductView = (props) => {
     setQuantity(quantity - 1 < 0 ? 0 : quantity - 1);
   };
 
-  // const addCartItem = () => {
-  //   const newItem = {
-  //     productId: product.productId,
-  //     title: product.title,
-  //     price: product.price,
-  //     brand: product.brand,
-  //     quantity: quantity,
-  //   };
-  //   dispatch(addItem(newItem));
-  // };
-
   const handleOnEnter = (text) => {
     console.log("User: ", text);
   };
@@ -49,7 +38,7 @@ const ProductView = (props) => {
         <div className="product-top__images">
           <div className="product-top__images__main">
             <img
-              src={props.img}
+              src={props.imgProduct}
               alt=""
               onError={(e) => {
                 e.target.setAttribute("src", pd);
@@ -58,21 +47,21 @@ const ProductView = (props) => {
           </div>
           <div className="product-top__images__sub">
             <img
-              src={props.img}
+              src={props.imgProduct}
               alt=""
               onError={(e) => {
                 e.target.setAttribute("src", pd);
               }}
             />
             <img
-              src={props.img}
+              src={props.imgProduct}
               alt=""
               onError={(e) => {
                 e.target.setAttribute("src", pd);
               }}
             />
             <img
-              src={props.img}
+              src={props.imgProduct}
               alt=""
               onError={(e) => {
                 e.target.setAttribute("src", pd);

@@ -9,21 +9,22 @@ import axios from "axios";
 
 const Register = () => {
   const [values, setValues] = useState({
-    username: "",
-    password: "",
-    // confirmPassword: "",
     email: "",
+    password: "",
+    username: "",
     phone: "",
+    birthday: "",
   });
 
   const callApi = async () => {
     await axios
       .post("http://localhost:8000/api/sign-up-user/", {
-        fullname: values.username,
-        password: values.password,
         email: values.email,
+        password: values.password,
+        fullname: values.username,
         phonenumber: values.phone,
-        avatar: "1212",
+        avatar: "",
+        birthday: "2000-11-28",
       })
       .then((res) => {
         console.log(res);
@@ -52,17 +53,9 @@ const Register = () => {
       pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
       required: true,
     },
-    // {
-    //   name: "confirmPassword",
-    //   type: "password",
-    //   placeholder: "Confirm Password",
-    //   errorMessage: "Password không trùng",
-    //   label: "Xác nhận mật khẩu",
-    //   pattern: values.password,
-    //   required: true,
-    // },
+
     {
-      name: "Full Name",
+      name: "username",
       type: "text",
       placeholder: "Full name",
       errorMessage: "Fullname không được trống",
@@ -75,9 +68,17 @@ const Register = () => {
       type: "text",
       placeholder: "Phone",
       errorMessage: "Phone phải có ít nhất 10 số",
-
       label: "Phone",
       pattern: "[0-9]{10}",
+      required: true,
+    },
+    {
+      name: "birthday",
+      type: "date",
+      placeholder: "Date of birth",
+      errorMessage: "Date of birth không được trống",
+      label: "Date of birth",
+      pattern: "mm-dd-yyyy",
       required: true,
     },
   ];
@@ -102,7 +103,7 @@ const Register = () => {
                   <FormInput
                     key={index}
                     {...input}
-                    value={values[input.name]}
+                    value={values[inputs.name]}
                     onChange={onChangeHandler}
                   ></FormInput>
                 );

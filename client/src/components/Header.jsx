@@ -227,7 +227,7 @@ const Header = () => {
                 </div>
               </li>
               <li className="header-bottom__list__item">
-                <Link to={"/"}>Blog</Link>
+                <Link to={"/"}>Tin Tức</Link>
               </li>
               <li className="header-bottom__list__item">
                 <Link to={"/"}>Liên hệ</Link>
