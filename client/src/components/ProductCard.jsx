@@ -4,17 +4,11 @@ import PropTypes from "prop-types";
 import numberWithCommas from "../utils/numberWithCommas";
 import { useNavigate } from "react-router-dom";
 
-import { useDispatch } from "react-redux";
-import { addItem } from "../redux/cart-item/cartItemRedux";
-import { useState, useEffect } from "react";
 import pd from "../assets/images/products/laptop-asus-rog-strix-g15-g513ih-hn015t-1.jpg";
-
-import axios from "axios";
 
 const ProductCard = (props) => {
   const product = props.product;
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   return (
     <>

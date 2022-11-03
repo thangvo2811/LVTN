@@ -52,10 +52,6 @@ const Header = () => {
     e.preventDefault();
     navigate("/findproduct/" + searchKey);
   };
-  const cartItem = useSelector((state) => state.cartItem.value);
-  useEffect(() => {
-    setTotalItem(cartItem.reduce((total, item) => (total += item.quantity), 0));
-  }, [cartItem]);
 
   const openMenuHandler = () => {
     headerContentRef.current.classList.toggle("active");

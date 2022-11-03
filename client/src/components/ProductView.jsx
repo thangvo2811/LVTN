@@ -3,10 +3,6 @@ import PropTypes from "prop-types";
 import Button from "../components/Button";
 
 import numberWithCommas from "../utils/numberWithCommas";
-
-import { useDispatch } from "react-redux";
-import { addItem } from "../redux/cart-item/cartItemRedux";
-
 import InputEmoji from "react-input-emoji";
 
 import pf from "../assets/images/UserProfile/man.jpg";
@@ -15,7 +11,6 @@ import pd from "../assets/images/products/laptop-asus-rog-strix-g15-g513ih-hn015
 import { useParams } from "react-router-dom";
 
 const ProductView = (props) => {
-  const dispatch = useDispatch();
   const param = useParams();
   const [quantity, setQuantity] = useState(0);
   const [text, setText] = useState("");

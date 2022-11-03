@@ -3,25 +3,16 @@ import React, { useEffect, useState } from "react";
 import FormInput from "../../components/FormInput";
 
 import Button from "../../components/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Helmet from "../../components/Helmet";
-import axios from "axios";
+import { login } from "../../redux/apiCalls";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
-  const callUser = async () => {
-    await axios
-      .get("http://localhost:8000/api/get-user-login")
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const [values, setValues] = useState({
-    email: "",
-    password: "",
-  });
+  const [userEmail, setUserEmail] = useState("");
+  const [passWord, setPassWord] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const inputs = [
     {
@@ -40,11 +31,13 @@ const Login = () => {
     },
   ];
   const inputHandler = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+    setUserEmail(e.target.value);
+    setPassWord(e.target.value);
   };
   const onHandleSubmit = (e) => {
     e.preventDefault();
-    callUser();
+    const newUser = { userName: userEmail, passWord: passWord };
+    login(newUser, dispatch, navigate);
   };
 
   return (
@@ -60,7 +53,6 @@ const Login = () => {
                     key={index}
                     {...input}
                     onChange={inputHandler}
-                    value={values[input.name]}
                   ></FormInput>
                 );
               })}

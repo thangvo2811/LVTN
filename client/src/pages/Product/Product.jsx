@@ -11,7 +11,6 @@ import axios from "axios";
 
 const Product = () => {
   const param = useParams();
-  // console.log(param);
   const rendeAfterCalled = useRef();
   const [allProduct, setAllProduct] = useState([]);
   const [detailProduct, setDetailProduct] = useState({});
