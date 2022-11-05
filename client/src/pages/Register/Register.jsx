@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-import FormInput from "../../components/FormInput";
-
-import Button from "../../components/Button";
 import { Link } from "react-router-dom";
 import Helmet from "../../components/Helmet";
 import axios from "axios";
+import "antd/dist/antd.css";
+import { Button, message, Space } from "antd";
+// import Button from "./../../components/Button";
 
 const Register = () => {
   const [values, setValues] = useState({
@@ -16,75 +16,107 @@ const Register = () => {
     birthday: "",
   });
 
+  const [email, setEmail] = useState("");
+  const [password, setPassWord] = useState("");
+  const [userName, setUserName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [birthDay, setBirthDay] = useState("");
+
   const callApi = async () => {
     await axios
       .post("http://localhost:8000/api/sign-up-user/", {
-        email: values.email,
-        password: values.password,
-        fullname: values.username,
-        phonenumber: values.phone,
+        email: email,
+        password: password,
+        fullname: userName,
+        phonenumber: phone,
         avatar: "",
-        birthday: "2000-11-28",
+        birthday: birthDay,
       })
       .then((res) => {
-        console.log(res);
+        if (res.data.errCode === 0) {
+          message.success("ĐĂNG KÝ THÀNH CÔNG");
+        }
+        if (res.data.errCode === 1) {
+          message.error("TRÙNG EMAIL");
+        }
+        if (res.data.errCode === 2) {
+          message.error("THIẾU THÔNG TIN");
+        }
         setValues(res);
+      })
+      .catch(() => {
+        message.error("Fail");
       });
   };
 
-  const inputs = [
-    {
-      name: "email",
-      type: "email",
-      placeholder: "Email",
-      errorMessage: "Email không hợp lệ",
-      label: "Email",
-      pattern: "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+[a-zA-Z0-9-.]+$",
-      required: true,
-    },
+  // const inputs = [
+  //   {
+  //     name: "email",
+  //     type: "email",
+  //     placeholder: "Email",
+  //     errorMessage: "Email không hợp lệ",
+  //     label: "Email",
+  //     pattern: "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+[a-zA-Z0-9-.]+$",
+  //     required: true,
+  //   },
 
-    {
-      name: "password",
-      type: "password",
-      placeholder: "Password",
-      errorMessage:
-        "Password giới hạn từ 8-20 kí tự và có ít nhất một kí tự chữ, một kí tự số",
-      label: "Mật khẩu",
-      pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
-      required: true,
-    },
+  //   {
+  //     name: "password",
+  //     type: "password",
+  //     placeholder: "Password",
+  //     errorMessage:
+  //       "Password giới hạn từ 8-20 kí tự và có ít nhất một kí tự chữ, một kí tự số",
+  //     label: "Mật khẩu",
+  //     // pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
+  //     required: true,
+  //   },
 
-    {
-      name: "username",
-      type: "text",
-      placeholder: "Full name",
-      errorMessage: "Fullname không được trống",
-      label: "Full Name",
-      pattern: null,
-      required: true,
-    },
-    {
-      name: "phone",
-      type: "text",
-      placeholder: "Phone",
-      errorMessage: "Phone phải có ít nhất 10 số",
-      label: "Phone",
-      pattern: "[0-9]{10}",
-      required: true,
-    },
-    {
-      name: "birthday",
-      type: "date",
-      placeholder: "Date of birth",
-      errorMessage: "Date of birth không được trống",
-      label: "Date of birth",
-      pattern: "mm-dd-yyyy",
-      required: true,
-    },
-  ];
+  //   {
+  //     name: "username",
+  //     type: "text",
+  //     placeholder: "Full name",
+  //     errorMessage: "Fullname không được trống",
+  //     label: "Full Name",
+  //     pattern: null,
+  //     required: true,
+  //   },
+  //   {
+  //     name: "phone",
+  //     type: "text",
+  //     placeholder: "Phone",
+  //     errorMessage: "Phone phải có ít nhất 10 số",
+  //     label: "Phone",
+  //     pattern: "[0-9]{10}",
+  //     required: true,
+  //   },
+  //   {
+  //     name: "birthday",
+  //     type: "date",
+  //     placeholder: "Date of birth",
+  //     errorMessage: "Date of birth không được trống",
+  //     label: "Date of birth",
+  //     pattern: "mm-dd-yyyy",
+  //     required: true,
+  //   },
+  // ];
 
-  const onChangeHandler = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+  // const onChangeHandler = (e) => {
+  //   setValues({ ...values, [e.target.name]: e.target.value });
+  // };
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+  };
+  const handlePassword = (e) => {
+    setPassWord(e.target.value);
+  };
+  const handleName = (e) => {
+    setUserName(e.target.value);
+  };
+  const handlePhone = (e) => {
+    setPhone(e.target.value);
+  };
+  const handleDate = (e) => {
+    setBirthDay(e.target.value);
   };
   const onHandleSubmit = (e) => {
     e.preventDefault();
@@ -97,19 +129,42 @@ const Register = () => {
         <div className="register__container">
           <div className="register__title">Đăng kí</div>
           <div className="register__content">
-            <form onSubmit={onHandleSubmit}>
-              {inputs.map((input, index) => {
-                return (
-                  <FormInput
-                    key={index}
-                    {...input}
-                    value={values[inputs.name]}
-                    onChange={onChangeHandler}
-                  ></FormInput>
-                );
-              })}
-              <Button size="sm" animate2={true}>
-                đăng kí
+            <form>
+              <div className="form-input">
+                <label>Email</label>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  onChange={handleEmail}
+                />
+                <label>Password</label>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  onChange={handlePassword}
+                />
+                <label>UserName</label>
+                <input
+                  type="text"
+                  placeholder="UserName"
+                  onChange={handleName}
+                />
+                <label>Phone</label>
+                <input
+                  type="phone"
+                  placeholder="Phone"
+                  onChange={handlePhone}
+                />
+                <label>Date of birth</label>
+                <input
+                  type="date"
+                  placeholder="Date of birth"
+                  onChange={handleDate}
+                />
+              </div>
+
+              <Button onClick={onHandleSubmit} size="large" type="primary">
+                Đăng ký
               </Button>
             </form>
             <div className="login__sign">

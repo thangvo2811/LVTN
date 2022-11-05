@@ -10,20 +10,9 @@ import { useSelector } from "react-redux";
 import numberWithCommas from "../../utils/numberWithCommas";
 
 const Cart = () => {
-  const cartItem = useSelector((state) => state.cartItem.value);
   const [products, setProducts] = useState();
   const [totalPrice, setTotalPrice] = useState();
   const [totalProduct, setTotalProduct] = useState();
-
-  useEffect(() => {
-    setProducts(cartItem);
-    setTotalPrice(
-      cartItem.reduce((total, item) => (total += item.price * item.quantity), 0)
-    );
-    setTotalProduct(
-      cartItem.reduce((total, item) => (total += item.quantity), 0)
-    );
-  }, [cartItem]);
 
   return (
     <Helmet name="Giỏ hàng">

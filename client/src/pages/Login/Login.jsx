@@ -1,43 +1,28 @@
 import React, { useEffect, useState } from "react";
 
-import FormInput from "../../components/FormInput";
-
 import Button from "../../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 import Helmet from "../../components/Helmet";
-import { login } from "../../redux/apiCalls";
+import { loginUser } from "../../redux/apiCalls";
 import { useDispatch } from "react-redux";
 
 const Login = () => {
-  const [userEmail, setUserEmail] = useState("");
-  const [passWord, setPassWord] = useState("");
+  const [emailUser, setEmail] = useState("");
+  const [passwordUser, setPassWord] = useState("");
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const inputs = [
-    {
-      name: "email",
-      type: "email",
-      placeholder: "Tài khoản",
-      errorMessage: "",
-      label: "Email",
-    },
-    {
-      name: "password",
-      type: "password",
-      placeholder: "Mật khẩu",
-      errorMessage: "",
-      label: "Mật khẩu",
-    },
-  ];
   const inputHandler = (e) => {
-    setUserEmail(e.target.value);
+    setEmail(e.target.value);
+  };
+  const handlePassWord = (e) => {
     setPassWord(e.target.value);
   };
   const onHandleSubmit = (e) => {
     e.preventDefault();
-    const newUser = { userName: userEmail, passWord: passWord };
-    login(newUser, dispatch, navigate);
+    const newUser = { email: emailUser, password: passwordUser };
+    loginUser(dispatch, newUser, navigate);
   };
 
   return (
@@ -47,15 +32,20 @@ const Login = () => {
           <div className="login__title">Đăng nhập</div>
           <div className="login__content">
             <form onSubmit={onHandleSubmit}>
-              {inputs.map((input, index) => {
-                return (
-                  <FormInput
-                    key={index}
-                    {...input}
-                    onChange={inputHandler}
-                  ></FormInput>
-                );
-              })}
+              <div className="form-input">
+                <label>Email</label>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  onChange={inputHandler}
+                />
+                <label>Password</label>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  onChange={handlePassWord}
+                />
+              </div>
               <Button size="sm" animate2={true}>
                 Đăng nhập
               </Button>

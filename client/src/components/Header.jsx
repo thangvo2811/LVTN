@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import dd1 from "../assets/images/dropdown-images/729_x_356.jpg";
 import dd2 from "../assets/images/dropdown-images/Artboard-4-copy-8-2.png";
@@ -9,7 +9,6 @@ import dd4 from "../assets/images/dropdown-images/Artboard-7-copy-8.png";
 import dd5 from "../assets/images/dropdown-images/Artboard-8-8-1.png";
 import dd6 from "../assets/images/dropdown-images/Artboard-8-copy-2-8.png";
 
-import { useSelector } from "react-redux";
 import axios from "axios";
 
 const Header = () => {

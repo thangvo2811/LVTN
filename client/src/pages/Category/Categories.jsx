@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Grid from "../../components/Grid";
 import ProductCard from "../../components/ProductCard";
-import { deleteItem } from "../../redux/cart-item/cartItemRedux.js";
 import asus from "../../assets/images/banner/asus.jpg";
 
 import axios from "axios";
@@ -24,7 +23,10 @@ const Categories = () => {
     nameCate: "",
   });
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    callAllCategory();
+    callAllBrand();
+  }, []);
 
   const callAllCategory = async () => {
     await axios
@@ -40,7 +42,6 @@ const Categories = () => {
     await axios
       .get("http://localhost:8000/api/get-brand/")
       .then((res) => {
-        console.log(res.data);
         setAllBrand(res.data);
       })
       .catch((err) => {
@@ -67,11 +68,6 @@ const Categories = () => {
     };
     callAllProduct();
   }, [brand, category]);
-
-  useEffect(() => {
-    callAllCategory();
-    callAllBrand();
-  }, []);
 
   return (
     <>

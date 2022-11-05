@@ -1,11 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import Helmet from "../../components/Helmet";
 
-import Checkbox from "../../components/Checkbox";
 import Grid from "../../components/Grid";
 import ProductCard from "../../components/ProductCard";
-import PriceSlider from "../../components/PriceSlider";
-import Button from "../../components/Button";
 
 import asus from "../../assets/images/banner/asus.jpg";
 

@@ -12,8 +12,7 @@ import { useParams } from "react-router-dom";
 const FindProdcut = () => {
   const param = useParams();
   const [allProduct, setAllProduct] = useState([]);
-  const callAllProduct = async (searchKey) => {
-    const type = searchKey;
+  const callAllProduct = async () => {
     await axios
       .get(`http://localhost:8000/api/findbykeyword/${param.keyword}`)
       .then((res) => {
