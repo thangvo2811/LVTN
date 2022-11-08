@@ -12,21 +12,42 @@ import { useParams } from "react-router-dom";
 const FindCategory = () => {
   const filterToggleRef = useRef(null);
   const param = useParams();
-
-  const [findByCategory, setFindByCategory] = useState([]);
+  console.log(param);
   const [allCategory, setAllCategory] = useState([]);
   const [allBrand, setAllBrand] = useState([]);
+  const [allProduct, setAllProduct] = useState([]);
+  const [brand, setBrand] = useState({
+    id: "",
+    name: "",
+  });
+  const [category, setCategory] = useState({
+    idCate: "",
+    nameCate: "",
+  });
+  // const [findIdCategory, setFindIdCategory] = useState([]);
 
-  const callAllProduct = async () => {
-    await axios
-      .get(`http://localhost:8000/api/find-by-Category/${param.category_id}/`)
-      .then((res) => {
-        setFindByCategory(res.data.product);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  useEffect(() => {
+    const callAllProduct = async () => {
+      await axios
+        .get(
+          `http://localhost:8000/api/get-all-product?brand_id=${brand.id}&category_id=${category.idCate}`
+        )
+        .then((res) => {
+          setAllProduct(res.data.products);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    callAllProduct();
+  }, [brand, category]);
+
+  useEffect(() => {
+    callAllCategory();
+    callAllBrand();
+    callFindIdCategory();
+  }, [param.category_id]);
+
   const callAllCategory = async () => {
     await axios
       .get("http://localhost:8000/api/get-Category/")
@@ -37,6 +58,7 @@ const FindCategory = () => {
         console.log(err);
       });
   };
+
   const callAllBrand = async () => {
     await axios
       .get("http://localhost:8000/api/get-brand/")
@@ -47,25 +69,25 @@ const FindCategory = () => {
         console.log(err);
       });
   };
-
-  useEffect(() => {
-    callAllProduct();
-    callAllCategory();
-    callAllBrand();
-  }, [param.category_id]);
-
+  const callFindIdCategory = async () => {
+    await axios
+      .get(`http://localhost:8000/api/find-by-Category/${param.category_id}/`)
+      .then((res) => {
+        setAllProduct(res.data.product);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <Helmet name="Danh mục">
       <div className="category-banner">
         <img src={asus} alt="" />
       </div>
-      <div className="category-title">sản phẩm tìm kiếm</div>
+      <div className="category-title">Sản Phẩm Tìm Kiếm</div>
       <div className="category">
         <div className="category__filters" ref={filterToggleRef}>
-          <div
-            className="category__filters__close"
-            /* onClick={toggleFilterHandler} */
-          >
+          <div className="category__filters__close">
             <i className="bx bx-chevrons-left"></i>
           </div>
 
@@ -73,9 +95,21 @@ const FindCategory = () => {
             <div className="category__filters__item__title">thương hiệu</div>
             <select
               className="category__filters__item__select"
-              // onChange={(e) =>
-              //   setFilters({ ...filters, brand: e.target.value })
-              // }
+              onChange={(e) => {
+                setCategory((category) => ({
+                  ...category,
+                  ...{
+                    idCate: "",
+                  },
+                }));
+                setBrand((brand) => ({
+                  ...brand,
+                  ...{
+                    id: e.target.value,
+                    name: e.target.value,
+                  },
+                }));
+              }}
             >
               <option value="">Tất cả</option>
               {allBrand?.map((item, index) => {
@@ -90,12 +124,38 @@ const FindCategory = () => {
           <div className="category__filters__item">
             <div className="category__filters__item__title">Danh mục</div>
             <div className="category__filters__item__checkbox">
+              <li
+                className="header-bottom__dropdown__left__list__item"
+                onClick={() => {
+                  setBrand((brand) => ({
+                    ...brand,
+                    ...{ id: "" },
+                  }));
+                  setCategory((category) => ({
+                    ...category,
+                    ...{
+                      idCate: "",
+                    },
+                  }));
+                }}
+              >
+                Tất cả
+              </li>
               {allCategory?.map((item, index) => {
                 return (
                   <li
                     className="header-bottom__dropdown__left__list__item"
                     key={index}
-                    onClick={() => {}}
+                    onClick={() => {
+                      setCategory((category) => ({
+                        idCate: item.id,
+                        nameCate: item.name,
+                      }));
+                      setBrand({
+                        id: "",
+                        name: brand.name,
+                      });
+                    }}
                   >
                     {item.name}
                   </li>
@@ -107,7 +167,7 @@ const FindCategory = () => {
 
         <div className="category__products">
           <Grid col={4} mdCol={2} smCol={1} gap={20}>
-            {findByCategory?.map((item, index) => {
+            {allProduct?.map((item, index) => {
               return <ProductCard product={item} key={index}></ProductCard>;
             })}
           </Grid>

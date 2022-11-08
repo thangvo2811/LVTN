@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import Helmet from "../../components/Helmet";
 import axios from "axios";
 import "antd/dist/antd.css";
-import { Button, message, Space } from "antd";
-// import Button from "./../../components/Button";
+import { message } from "antd";
+import Button from "./../../components/Button";
 
 const Register = () => {
   const [values, setValues] = useState({
@@ -37,15 +37,15 @@ const Register = () => {
           message.success("ĐĂNG KÝ THÀNH CÔNG");
         }
         if (res.data.errCode === 1) {
-          message.error("TRÙNG EMAIL");
+          message.error("EMAIL ĐÃ CÓ NGƯỜI SỬ DỤNG");
         }
         if (res.data.errCode === 2) {
-          message.error("THIẾU THÔNG TIN");
+          message.error("MỜI BẠN NHẬP THÔNG TIN");
         }
         setValues(res);
       })
       .catch(() => {
-        message.error("Fail");
+        message.error("ĐĂNG KÝ THẤT BẠI");
       });
   };
 
@@ -163,8 +163,8 @@ const Register = () => {
                 />
               </div>
 
-              <Button onClick={onHandleSubmit} size="large" type="primary">
-                Đăng ký
+              <Button onClick={onHandleSubmit} size="sm" animate2={true}>
+                ĐĂNG KÝ
               </Button>
             </form>
             <div className="login__sign">

@@ -1,30 +1,30 @@
 .form-input {
-    @include flex(flex-start,flex-start);
+  @include flex(flex-start, flex-start);
+  width: 100%;
+  flex-direction: column;
+
+  label {
     width: 100%;
-    flex-direction: column;
+    margin-bottom: 5px;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
 
-    label {
-        width: 100%;
-        margin-bottom: 5px;
-        font-weight: 600;
-        text-transform: capitalize;
-    }
-
-    input {
-        margin-bottom: 10px;
-        padding: 10px;
-        width: 320px;
-    }
-    span {
-        color: #790a0a;
-        margin-bottom: 5px;
-        display: none;
-    }
-    input:invalid[focused = "true"]{
-        border: solid 1px #790a0a;
-    }
-    input:invalid[focused = "true"] ~ span{
-        display: block;
-    }
-    
+  input {
+    border: 1px solid;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 320px;
+  }
+  span {
+    color: #790a0a;
+    margin-bottom: 5px;
+    display: none;
+  }
+  //   input:invalid[focused="true"] {
+  //     border: solid 1px #790a0a;
+  //   }
+  //   input:invalid[focused="true"] ~ span {
+  //     display: block;
+  //   }
 }

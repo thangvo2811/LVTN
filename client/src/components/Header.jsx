@@ -10,6 +10,8 @@ import dd5 from "../assets/images/dropdown-images/Artboard-8-8-1.png";
 import dd6 from "../assets/images/dropdown-images/Artboard-8-copy-2-8.png";
 
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { message } from "antd";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -18,6 +20,8 @@ const Header = () => {
   const [totalItem, setTotalItem] = useState(0);
   const [allCategory, setAllCategory] = useState([]);
   const [searchKey, setSearchKey] = useState("");
+
+  const newUser = useSelector((state) => state.user.currentUser);
 
   useEffect(() => {
     callCategories();
@@ -45,7 +49,6 @@ const Header = () => {
         console.log(err);
       });
   };
-
   const handleSearch = (e) => {
     // const patern = /^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
     e.preventDefault();
@@ -71,6 +74,7 @@ const Header = () => {
     return () => window.removeEventListener("scroll");
   }, []);
 
+  const handleLogout = () => {};
   return (
     <div className="header" ref={headerShrink}>
       <div className="container">
@@ -116,43 +120,75 @@ const Header = () => {
                 </Link>
 
                 <div className="dropdown">
-                  <Link to={"/login"}>
-                    <li className="header-top__cart__list__item">
-                      <i className="bx bx-user icon"></i>
-                      <span>Đăng nhập</span>
-                    </li>
-                  </Link>
-                  <ul className="dropdown__list">
-                    <Link to={"/userprofile"}>
-                      <li className="dropdown__item">
-                        <i class="bx bxs-user-circle drop__icon"></i>
-                        <span className="dropdown__text">Your Profile</span>
+                  {newUser ? (
+                    <>
+                      <li className="header-top__cart__list__item">
+                        <i className="bx bx-user icon"></i>
+                        <span>
+                          Hello, <span> {newUser.data.fullname}</span>
+                        </span>
+                      </li>
+                      <ul className="dropdown__list">
+                        <Link to={"/userprofile"}>
+                          <li className="dropdown__item">
+                            <i class="bx bxs-user-circle drop__icon"></i>
+                            <span className="dropdown__text">Your Profile</span>
+                          </li>
+                        </Link>
+                        <li className="dropdown__item">
+                          <i class="bx bxs-heart-circle drop__icon"></i>
+                          <span className="dropdown__text">Wish List</span>
+                        </li>
+                        <li className="dropdown__item">
+                          <i class="bx bxs-lock drop__icon"></i>
+                          <span className="dropdown__text">
+                            Change Password
+                          </span>
+                        </li>
+                        <li className="dropdown__item">
+                          <i class="bx bx-log-out drop__icon"></i>
+                          <span
+                            className="dropdown__text"
+                            onClick={handleLogout}
+                          >
+                            Sign out
+                          </span>
+                        </li>
+                      </ul>
+                    </>
+                  ) : (
+                    <>
+                      <Link to={"/login"}>
+                        <li className="header-top__cart__list__item">
+                          <i className="bx bx-user icon"></i>
+                          <span>Đăng nhập</span>
+                        </li>
+                      </Link>
+                    </>
+                  )}
+                </div>
+                {newUser ? (
+                  <>
+                    <Link to={"/cart"}>
+                      <li className="header-top__cart__list__item header-top__cart__list__item__main">
+                        <i className="bx bx-cart"></i>
+                        <span>Giỏ hàng</span>
+                        <div className="notification">
+                          <span>{totalItem}</span>
+                        </div>
                       </li>
                     </Link>
-                    <li className="dropdown__item">
-                      <i class="bx bxs-heart-circle drop__icon"></i>
-                      <span className="dropdown__text">Wish List</span>
-                    </li>
-                    <li className="dropdown__item">
-                      <i class="bx bxs-lock drop__icon"></i>
-                      <span className="dropdown__text">Change Password</span>
-                    </li>
-                    <li className="dropdown__item">
-                      <i class="bx bx-log-out drop__icon"></i>
-                      <span className="dropdown__text">Sign out</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <Link to={"/cart"}>
-                  <li className="header-top__cart__list__item header-top__cart__list__item__main">
-                    <i className="bx bx-cart"></i>
-                    <span>Giỏ hàng</span>
-                    <div className="notification">
-                      <span>{totalItem}</span>
-                    </div>
-                  </li>
-                </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link to={"/login"}>
+                      <li className="header-top__cart__list__item">
+                        <i className="bx bx-user icon"></i>
+                        <span>Giỏ hàng</span>
+                      </li>
+                    </Link>
+                  </>
+                )}
               </ul>
             </div>
           </div>
@@ -188,34 +224,22 @@ const Header = () => {
                   <div className="header-bottom__dropdown__right">
                     <div className="header-bottom__dropdown__right__grid">
                       <div className="header-bottom__dropdown__right__grid__item">
-                        <Link to={"/"}>
-                          <img src={dd1} alt="" />
-                        </Link>
+                        <img src={dd1} alt="" />
                       </div>
                       <div className="header-bottom__dropdown__right__grid__item">
-                        <Link to={"/"}>
-                          <img src={dd2} alt="" />
-                        </Link>
+                        <img src={dd2} alt="" />
                       </div>
                       <div className="header-bottom__dropdown__right__grid__item">
-                        <Link to={"/"}>
-                          <img src={dd3} alt="" />
-                        </Link>
+                        <img src={dd3} alt="" />
                       </div>
                       <div className="header-bottom__dropdown__right__grid__item">
-                        <Link to={"/"}>
-                          <img src={dd4} alt="" />
-                        </Link>
+                        <img src={dd4} alt="" />
                       </div>
                       <div className="header-bottom__dropdown__right__grid__item">
-                        <Link to={"/"}>
-                          <img src={dd5} alt="" />
-                        </Link>
+                        <img src={dd5} alt="" />
                       </div>
                       <div className="header-bottom__dropdown__right__grid__item">
-                        <Link to={"/"}>
-                          <img src={dd6} alt="" />
-                        </Link>
+                        <img src={dd6} alt="" />
                       </div>
                     </div>
                   </div>

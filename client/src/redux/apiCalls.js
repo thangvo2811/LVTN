@@ -11,12 +11,12 @@ export const loginUser = async (dispatch, user, navigate) => {
         message.success("ĐĂNG NHẬP THÀNH CÔNG");
         dispatch(loginSuccess(res.data));
         navigate("/");
-      } else if (res.data.errorCode === 1) {
-        message.error("SAI TÀI KHOẢN HOẶC MẬT KHẨU");
+      } else if (!res.data.password || !res.data.email) {
+        message.error("SAI MẬT KHẨU HOẶC EMAIL");
       }
     })
     .catch(() => {
-      message.error("LỖI ĐĂNG NHẬP");
+      message.error("ĐĂNG NHẬP THẤT BẠI");
       dispatch(loginFailure());
     });
 };

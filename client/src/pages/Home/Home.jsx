@@ -1,5 +1,4 @@
 import React from "react";
-
 import Helmet from "../../components/Helmet";
 import HeroSlider from "../../components/HeroSlider";
 import Section, { SectionBody, SectionTitle } from "../../components/Section";
@@ -7,15 +6,11 @@ import PolicyCard from "../../components/PolicyCard";
 import Grid from "../../components/Grid";
 import ProductCard from "../../components/ProductCard";
 import Blog from "../../components/Blog";
-
 import heroSilderData from "../../assets/fake-api/hero-slider";
 import policyData from "../../assets/fake-api/policy";
-
 import msi from "../../assets/images/banner/msi.jpg";
-
 import { useState, useEffect } from "react";
 import axios from "axios";
-
 const Home = () => {
   const [allProduct, setAllProduct] = useState([]);
   useEffect(() => {
