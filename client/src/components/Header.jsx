@@ -11,7 +11,7 @@ import dd6 from "../assets/images/dropdown-images/Artboard-8-copy-2-8.png";
 
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { message } from "antd";
+import { Alert, message } from "antd";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -21,12 +21,9 @@ const Header = () => {
   const [allCategory, setAllCategory] = useState([]);
   const [searchKey, setSearchKey] = useState("");
 
-  const newUser = useSelector((state) => state.user.currentUser);
-
-  useEffect(() => {
-    callCategories();
-    callSearchProduct();
-  }, []);
+  // const newUser = useSelector((state) => state.user.currentUser);
+  const newCustomer = localStorage.getItem("User");
+  const nameCustomer = localStorage.getItem("nameUser");
 
   const callCategories = async () => {
     await axios
@@ -39,9 +36,8 @@ const Header = () => {
       });
   };
   const callSearchProduct = async (searchK) => {
-    const type = searchK;
     await axios
-      .get(`http://localhost:8000/api/findbykeyword/${type}`)
+      .get(`http://localhost:8000/api/findbykeyword/${searchK}`)
       .then((res) => {
         setSearchKey(res.data.listProduct);
       })
@@ -49,10 +45,19 @@ const Header = () => {
         console.log(err);
       });
   };
+  useEffect(() => {
+    callCategories();
+    callSearchProduct();
+  }, []);
+
   const handleSearch = (e) => {
-    // const patern = /^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+    // let patern = /^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
     e.preventDefault();
-    navigate("/findproduct/" + searchKey);
+    if (searchKey.length > 0) {
+      navigate(`/findproduct/${searchKey.trim()}`);
+    } else {
+      message.error("MỜI BẠN NHẬP THÔNG TIN SẢN PHẨM");
+    }
   };
 
   const openMenuHandler = () => {
@@ -74,7 +79,6 @@ const Header = () => {
     return () => window.removeEventListener("scroll");
   }, []);
 
-  const handleLogout = () => {};
   return (
     <div className="header" ref={headerShrink}>
       <div className="container">
@@ -120,12 +124,12 @@ const Header = () => {
                 </Link>
 
                 <div className="dropdown">
-                  {newUser ? (
+                  {newCustomer ? (
                     <>
                       <li className="header-top__cart__list__item">
                         <i className="bx bx-user icon"></i>
                         <span>
-                          Hello, <span> {newUser.data.fullname}</span>
+                          Hello, <span> {nameCustomer}</span>
                         </span>
                       </li>
                       <ul className="dropdown__list">
@@ -149,7 +153,10 @@ const Header = () => {
                           <i class="bx bx-log-out drop__icon"></i>
                           <span
                             className="dropdown__text"
-                            onClick={handleLogout}
+                            onClick={() => {
+                              localStorage.setItem("User", "");
+                              navigate("/");
+                            }}
                           >
                             Sign out
                           </span>
@@ -167,7 +174,7 @@ const Header = () => {
                     </>
                   )}
                 </div>
-                {newUser ? (
+                {newCustomer ? (
                   <>
                     <Link to={"/cart"}>
                       <li className="header-top__cart__list__item header-top__cart__list__item__main">

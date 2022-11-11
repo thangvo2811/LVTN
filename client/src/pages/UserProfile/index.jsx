@@ -1,12 +1,38 @@
-import React from "react";
+import React, { useCallback } from "react";
 import "./_userprofile.scss";
 import pf from "../../assets/images/UserProfile/man.jpg";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import moment from "moment";
+import { DatePicker } from "antd";
+import "moment/locale/zh-cn";
+
 const UserProfile = () => {
+  const [detailUser, setDetailUser] = useState({});
+  const newCustomer = localStorage.getItem("User").toString();
+  console.log("asd");
+  const callUser = useCallback(async () => {
+    await axios
+      .get(`http://localhost:8000/api/get-by-Id/${newCustomer}`)
+      .then((res) => {
+        setDetailUser(res.data.customer);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [newCustomer]);
+  useEffect(() => {
+    callUser();
+  }, [callUser, newCustomer]);
+
+  let newDate1 = new Date();
+  newDate1 = detailUser.birthday;
+  console.log(newDate1);
   return (
     <>
       <div className="user__profile">
         <p className="user__profile__url">
-          Home / <span className="user__profile__url__main">My account</span>
+          Home | <span className="user__profile__url__main">My account</span>
         </p>
       </div>
       <div className="user__content">
@@ -18,7 +44,9 @@ const UserProfile = () => {
               alt=""
               className="user__content__left__profile__img"
             />
-            <div className="user__content__left__profile__name">User Name</div>
+            <div className="user__content__left__profile__name">
+              {detailUser.fullname}
+            </div>
           </div>
           <div className="user__content__left__card">
             <div className="user__content__left__card__item">
@@ -58,9 +86,23 @@ const UserProfile = () => {
           <div className="user__content__right__desc">
             {/* start user content right form */}
             <div className="user__content__right__desc__form">
-              <input type="text" className="form-input" placeholder="Name" />
-              <input type="email" className="form-input" placeholder="Email" />
-              <input type="date" className="form-date" />
+              <input
+                type="text"
+                className="form-input"
+                placeholder={detailUser?.fullname}
+                disabled
+              />
+              <input
+                type="email"
+                className="form-input"
+                placeholder={detailUser?.email}
+                disabled
+              />
+              {/* <input
+                className="form-date"
+                value={moment(detailUser.birthday).format("MM/DD/YYYY")}
+              /> */}
+              <DatePicker defaultValue={moment("2022-01-01", "YYYY-MM-DD")} />
               <select className="form-input">
                 <option value="0" selected disabled>
                   Select your gender
@@ -81,7 +123,7 @@ const UserProfile = () => {
               <div className="user__content__right__desc__update__info">
                 <div className="user__content__right__desc__update__info__name">
                   <i className="bx bx-user"></i>
-                  <span>Phone</span>
+                  <span>{detailUser?.phonenumber}</span>
                 </div>
                 <button className="user__content__right__desc__update__info__name__btn">
                   Update
@@ -91,7 +133,7 @@ const UserProfile = () => {
               <div className="user__content__right__desc__update__info">
                 <div className="user__content__right__desc__update__info__name">
                   <i className="bx bx-user"></i>
-                  <span>Email</span>
+                  <span>{detailUser?.email}</span>
                 </div>
                 <button className="user__content__right__desc__update__info__name__btn">
                   Update
@@ -104,7 +146,7 @@ const UserProfile = () => {
               <div className="user__content__right__desc__update__info">
                 <div className="user__content__right__desc__update__info__name">
                   <i className="bx bx-user"></i>
-                  <span>Password</span>
+                  <span>PassWord</span>
                 </div>
                 <button className="user__content__right__desc__update__info__name__btn">
                   Update

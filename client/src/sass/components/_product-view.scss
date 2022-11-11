@@ -9,7 +9,7 @@
   &-top {
     @include flex(flex-start, flex-start);
     width: 100%;
-    padding: 2rem 10rem;
+    padding: 2rem 2rem;
     margin-bottom: 20px;
     border: solid 3px #eee;
     border-radius: 20px;
@@ -23,7 +23,7 @@
     &__images {
       @include flex(flex-start, center);
       flex-direction: column;
-      flex-grow: 1;
+
       @include tablet {
         width: 50%;
         flex-grow: unset;
@@ -64,7 +64,6 @@
       @include mobile {
         padding: 0;
       }
-
       &__title {
         font-weight: 600;
         font-size: 2rem;
@@ -73,28 +72,79 @@
           font-size: 1.6rem;
         }
       }
-      &__price {
-        margin-top: 10px;
-        color: #a74444;
-        font-size: 1.8rem;
-        font-weight: 600;
-        @include mobile {
-          font-size: 1.4rem;
-        }
-      }
-      &__brand {
-        font-size: 1.4rem;
+      &__content {
+        display: flex;
+        height: 100%;
+        &__desc {
+          justify-content: center;
+          width: calc(50% - 100px);
+          &__price {
+            margin-bottom: 20px;
+            color: #a74444;
+            font-size: 1.8rem;
+            font-weight: 600;
+            @include mobile {
+              font-size: 1.4rem;
+            }
+          }
+          &__brand {
+            margin-bottom: 20px;
+            font-size: 1.4rem;
 
-        @include mobile {
-          font-size: 1.2rem;
+            @include mobile {
+              font-size: 1.2rem;
+            }
+          }
+          &__category {
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            @include mobile {
+              font-size: 1.2rem;
+            }
+          }
+        }
+        &__option {
+          &__top {
+            display: flex;
+            // width: 100%;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-left: 30px;
+            &__color {
+              min-width: calc(33.33% - 6.67px);
+              height: 50px;
+              border: 1px solid #333;
+              text-align: center;
+              border-radius: 20px;
+              &__name {
+                font-weight: 700;
+                font-weight: bold;
+              }
+            }
+          }
+          &__bottom {
+            display: flex;
+            // width: 100%;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            margin-left: 30px;
+            &__memory {
+              min-width: calc(33.33% - 10px);
+              height: 50px;
+              border: 1px solid #333;
+              text-align: center;
+              border-radius: 20px;
+              flex-direction: column-reverse;
+              &__name {
+                font-weight: 700;
+                font-weight: bold;
+              }
+            }
+          }
         }
       }
-      &__category {
-        font-size: 1.4rem;
-        @include mobile {
-          font-size: 1.2rem;
-        }
-      }
+
       &__cart > button {
         margin-right: 20px;
         @include mobile {
@@ -131,10 +181,10 @@
         }
         div {
           width: 50px;
-          height: 20px;
+          height: 25px;
           text-align: center;
           @include mobile {
-            height: 15px;
+            height: 20px;
           }
         }
       }

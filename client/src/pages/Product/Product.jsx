@@ -11,7 +11,7 @@ import axios from "axios";
 
 const Product = () => {
   const param = useParams();
-  const rendeAfterCalled = useRef();
+
   const [allProduct, setAllProduct] = useState([]);
   const [detailProduct, setDetailProduct] = useState({});
 
@@ -37,7 +37,7 @@ const Product = () => {
   }, [callDetailProduct]);
   const callAllProduct = async () => {
     await axios
-      .get("http://localhost:8000/api/get-all-product")
+      .get("http://localhost:8000/api/get-all-product?brand_id=&category_id=")
       .then((res) => {
         setAllProduct(res.data.products);
       })

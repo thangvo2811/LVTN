@@ -9,11 +9,14 @@ import pf from "../assets/images/UserProfile/man.jpg";
 import pd from "../assets/images/products/laptop-asus-rog-strix-g15-g513ih-hn015t-1.jpg";
 
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const ProductView = (props) => {
   const param = useParams();
   const [quantity, setQuantity] = useState(0);
   const [text, setText] = useState("");
+  const [optionProduct, setOptionProduct] = useState([]);
 
   useEffect(() => {}, [param.id]);
   const increaseQuantity = () => {
@@ -26,7 +29,22 @@ const ProductView = (props) => {
   const handleOnEnter = (text) => {
     console.log("User: ", text);
   };
+  const newUser = useSelector((state) => state.user.currentUser);
 
+  const callOptionProduct = async () => {
+    await axios
+      .get(`http://localhost:8000/api/get-option-by-product-id/${1}/`)
+      .then((res) => {
+        console.log(res);
+        setOptionProduct(res.data.Option);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    callOptionProduct();
+  }, []);
   return (
     <div className="product">
       <div className="product-top">
@@ -66,18 +84,47 @@ const ProductView = (props) => {
         </div>
         <div className="product-top__info">
           <div className="product-top__info__title">{props.nameProduct}</div>
-          <div className="product-top__info__price">
-            {props.priceProduct ? numberWithCommas(props.priceProduct) : ""} VND
+          <div className="product-top__info__content">
+            <div className="product-top__info__content__desc">
+              <div className="product-top__info__content__desc__price">
+                {props.priceProduct ? numberWithCommas(props.priceProduct) : ""}{" "}
+                VND
+              </div>
+              <div className="product-top__info__content__desc__brand">
+                Thương hiệu: {props.brandProduct ? props.brandProduct : ""}
+              </div>
+              <div className="product-top__info__content__desc__category">
+                Danh mục: {props.cateProduct ? props.cateProduct : ""}
+              </div>
+              <div className="product-top__info__status">
+                Trạng thái: {props.statusProduct ? props.statusProduct : ""}
+              </div>
+            </div>
+            <div className="product-top__info__content__option">
+              <div className="product-top__info__content__option__top">
+                <div className="product-top__info__content__option__top__color">
+                  <div className="product-top__info__content__option__top__color__name">
+                    White
+                  </div>
+                  <div className="product-top__info__content__option__top__color__price">
+                    3000000000000000
+                  </div>
+                </div>
+              </div>
+
+              <div className="product-top__info__content__option__bottom">
+                <div className="product-top__info__content__option__bottom__memory">
+                  <div className="product-top__info__content__option__bottom__memory__name">
+                    512GB
+                  </div>
+                  <div className="product-top__info__content__option__bottom__memory__price">
+                    3000000000000000
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="product-top__info__brand">
-            Thương hiệu: {props.brandProduct ? props.brandProduct : ""}
-          </div>
-          <div className="product-top__info__category">
-            Danh mục: {props.cateProduct ? props.cateProduct : ""}
-          </div>
-          <div className="product-top__info__status">
-            Trạng thái: {props.statusProduct}{" "}
-          </div>
+
           <div className="product-top__info__quantity">
             <i className="bx bx-minus" onClick={decreaseQuantity}></i>
             <div>{quantity}</div>
@@ -99,23 +146,29 @@ const ProductView = (props) => {
       </div>
 
       {/* start prodcut comment */}
-      <div className="product__comment">
-        <div className="product__comment__title">Comments</div>
-        <div className="product__comment__content">
-          <div className="product__comment__content__image">
-            <img src={pf} alt="" />
-          </div>
-          <div className="product__comment__content__cmt">
-            <InputEmoji
-              value={text}
-              onChange={setText}
-              // cleanOnEnter
-              onEnter={handleOnEnter}
-              placeholder="Write comments"
-            />
+      {newUser ? (
+        <div className="product__comment">
+          <div className="product__comment__title">Comments</div>
+          <div className="product__comment__content">
+            <div className="product__comment__content__image">
+              <img src={pf} alt="" />
+            </div>
+            <div className="product__comment__content__cmt">
+              <InputEmoji
+                value={text}
+                onChange={setText}
+                // cleanOnEnter
+                onEnter={handleOnEnter}
+                placeholder="Write comments"
+              />
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        ""
+      )}
+
+      {/* end product comment */}
     </div>
   );
 };

@@ -10,6 +10,8 @@ export const loginUser = async (dispatch, user, navigate) => {
       if (res.data.errorCode === 0) {
         message.success("ĐĂNG NHẬP THÀNH CÔNG");
         dispatch(loginSuccess(res.data));
+        localStorage.setItem("User", res.data.data.id);
+        localStorage.setItem("nameUser", res.data.data.fullname);
         navigate("/");
       } else if (!res.data.password || !res.data.email) {
         message.error("SAI MẬT KHẨU HOẶC EMAIL");
