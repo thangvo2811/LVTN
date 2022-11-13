@@ -51,12 +51,12 @@ const Header = () => {
   }, []);
 
   const handleSearch = (e) => {
-    // let patern = /^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+    // let pattern = `/^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/`;
+    // let pattern = "aaaaaaaaaaaaa";
     e.preventDefault();
     if (searchKey.length > 0) {
-      navigate(`/findproduct/${searchKey.trim()}`);
-    } else {
-      message.error("MỜI BẠN NHẬP THÔNG TIN SẢN PHẨM");
+      navigate(`/findproduct/${searchKey}`);
+      message.success("TÌM SẢN PHẨM THÀNH CÔNG");
     }
   };
 
@@ -149,17 +149,15 @@ const Header = () => {
                             Change Password
                           </span>
                         </li>
-                        <li className="dropdown__item">
+                        <li
+                          className="dropdown__item"
+                          onClick={() => {
+                            localStorage.setItem("User", "");
+                            navigate("/");
+                          }}
+                        >
                           <i class="bx bx-log-out drop__icon"></i>
-                          <span
-                            className="dropdown__text"
-                            onClick={() => {
-                              localStorage.setItem("User", "");
-                              navigate("/");
-                            }}
-                          >
-                            Sign out
-                          </span>
+                          <span className="dropdown__text">Sign out</span>
                         </li>
                       </ul>
                     </>

@@ -57,7 +57,7 @@ const Cart = () => {
           </div>
           <div className="cart__info__btn cart__info__btn__cart">
             <Button size="stable" animate3={true}>
-              <Link to={"/categories"}>tiếp tục mua hàng</Link>
+              <Link to={"/product"}>tiếp tục mua hàng</Link>
             </Button>
           </div>
         </div>

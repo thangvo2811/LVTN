@@ -14,16 +14,31 @@ import axios from "axios";
 
 const ProductView = (props) => {
   const param = useParams();
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [text, setText] = useState("");
   const [optionProduct, setOptionProduct] = useState([]);
+  const imgs = [
+    {
+      id: 0,
+      value: pd,
+    },
+    {
+      id: 1,
+      value: pf,
+    },
+    {
+      id: 2,
+      value: pd,
+    },
+  ];
+  const [slider, setSlider] = useState(imgs[0]);
 
   useEffect(() => {}, [param.id]);
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
   };
   const decreaseQuantity = () => {
-    setQuantity(quantity - 1 < 0 ? 0 : quantity - 1);
+    setQuantity(quantity < 2 ? 1 : quantity - 1);
   };
 
   const handleOnEnter = (text) => {
@@ -33,9 +48,11 @@ const ProductView = (props) => {
 
   const callOptionProduct = async () => {
     await axios
-      .get(`http://localhost:8000/api/get-option-by-product-id/${1}/`)
+      .get(
+        `http://localhost:8000/api/get-option-by-product-id/${param.category_id}/`
+      )
       .then((res) => {
-        console.log(res);
+        console.log(res.data.Option);
         setOptionProduct(res.data.Option);
       })
       .catch((err) => {
@@ -45,41 +62,38 @@ const ProductView = (props) => {
   useEffect(() => {
     callOptionProduct();
   }, []);
+
+  const handleClick = (index) => {
+    console.log(index);
+    const imgSlider = imgs[index];
+    setSlider(imgSlider);
+  };
+
   return (
     <div className="product">
       <div className="product-top">
         <div className="product-top__images">
           <div className="product-top__images__main">
-            <img
-              src={props.imgProduct}
-              alt=""
-              onError={(e) => {
-                e.target.setAttribute("src", pd);
-              }}
-            />
+            <img src={slider.value} alt="" />
           </div>
           <div className="product-top__images__sub">
-            <img
-              src={props.imgProduct}
-              alt=""
-              onError={(e) => {
-                e.target.setAttribute("src", pd);
-              }}
-            />
-            <img
-              src={props.imgProduct}
-              alt=""
-              onError={(e) => {
-                e.target.setAttribute("src", pd);
-              }}
-            />
-            <img
-              src={props.imgProduct}
-              alt=""
-              onError={(e) => {
-                e.target.setAttribute("src", pd);
-              }}
-            />
+            {imgs?.map((item, index) => (
+              <img src={item.value} alt="" onClick={() => handleClick(index)} />
+              /* <img
+                    src={props.imgProduct}
+                    alt=""
+                    // onError={(e) => {
+                    //   e.target.setAttribute("src", pd);
+                    // }}
+                  />
+                  <img
+                    src={props.imgProduct}
+                    alt=""
+                    // onError={(e) => {
+                    //   e.target.setAttribute("src", pd);
+                    // }}
+                  /> */
+            ))}
           </div>
         </div>
         <div className="product-top__info">
@@ -100,26 +114,14 @@ const ProductView = (props) => {
                 Trạng thái: {props.statusProduct ? props.statusProduct : ""}
               </div>
             </div>
-            <div className="product-top__info__content__option">
-              <div className="product-top__info__content__option__top">
-                <div className="product-top__info__content__option__top__color">
-                  <div className="product-top__info__content__option__top__color__name">
-                    White
-                  </div>
-                  <div className="product-top__info__content__option__top__color__price">
-                    3000000000000000
-                  </div>
-                </div>
-              </div>
 
-              <div className="product-top__info__content__option__bottom">
-                <div className="product-top__info__content__option__bottom__memory">
-                  <div className="product-top__info__content__option__bottom__memory__name">
-                    512GB
-                  </div>
-                  <div className="product-top__info__content__option__bottom__memory__price">
-                    3000000000000000
-                  </div>
+            <div className="product-top__info__content__option">
+              <div className="product-top__info__content__option__color">
+                <div className="product-top__info__content__option__color__name">
+                  White
+                </div>
+                <div className="product-top__info__content__option__color__price">
+                  29.000.000VND
                 </div>
               </div>
             </div>

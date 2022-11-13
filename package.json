@@ -2,6 +2,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.6",
     "antd": "^4.24.1",
-    "moment": "^2.29.4"
+    "moment": "^2.29.4",
+    "react-carousel-minimal": "^1.4.1"
   }
 }

@@ -149,12 +149,14 @@ const Register = () => {
                   placeholder="UserName"
                   onChange={handleName}
                 />
+
                 <label>Phone</label>
                 <input
                   type="phone"
                   placeholder="Phone"
                   onChange={handlePhone}
                 />
+
                 <label>Date of birth</label>
                 <input
                   type="date"
