@@ -42,7 +42,24 @@ const footerCustomerLink = [
     path: "/about",
   },
 ];
-
+const footerCustomerContact = [
+  {
+    display: "phunguyen@gmail.com",
+    path: "/about",
+  },
+  {
+    display: "vohoangthang2811@gmail.com",
+    path: "/about",
+  },
+  {
+    display: "0909090909",
+    path: "/about",
+  },
+  {
+    display: "0908070605",
+    path: "/about",
+  },
+];
 const Footer = () => {
   return (
     <div className="footer">
@@ -87,11 +104,18 @@ const Footer = () => {
             </div>
           </div>
           <div>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Consequatur itaque dolorem vel accusantium reprehenderit modi id
-              sunt beatae facilis nesciunt.
-            </p>
+            <div>
+              <div className="footer__title">Thông Tin Liên Hệ</div>
+              <div className="footer__content">
+                {footerCustomerContact.map((item, index) => {
+                  return (
+                    <p key={index}>
+                      <Link to={item.path}>{item.display}</Link>
+                    </p>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </Grid>
       </div>

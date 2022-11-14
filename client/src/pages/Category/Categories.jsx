@@ -82,7 +82,7 @@ const Categories = () => {
             {category.idCate
               ? `Danh mục ${category.nameCate}`
               : brand.id
-              ? `Thương hiệu ${brand.name}`
+              ? `Thương hiệu sản phẩm`
               : "Danh sách sản phẩm"}
           </div>
 

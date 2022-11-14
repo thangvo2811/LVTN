@@ -56,7 +56,9 @@ const Header = () => {
     e.preventDefault();
     if (searchKey.length > 0) {
       navigate(`/findproduct/${searchKey}`);
-      message.success("TÌM SẢN PHẨM THÀNH CÔNG");
+    } else {
+      navigate("/");
+      message.error("BẠN CHƯA NHẬP TỪ KHÓA");
     }
   };
 

@@ -58,8 +58,14 @@
     border-radius: 0;
   }
   &-sm &__txt {
-    padding: 0.5rem 1.4rem;
+    padding: 0.5rem 0.4rem;
     font-size: 11px;
+  }
+  &-sm &__txt {
+    @include mobile {
+      margin: 0px 13px;
+      padding: 4px 0px;
+    }
   }
 
   &-stable {
@@ -67,12 +73,9 @@
     width: 310px;
     border: solid 1px #000;
     padding: 2px;
-
-
   }
   &-stable &__txt {
-    padding: .8rem 1.4rem;
+    padding: 0.8rem 1.4rem;
     font-size: 1.2rem;
   }
- 
 }
