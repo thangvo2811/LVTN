@@ -139,7 +139,7 @@ const ProductView = (props) => {
                 <div>
                   {item1.OptionInProduct?.map((item, index) => (
                     <span>
-                      {item.Option_Product.option_id === 3 ? item1.name : ""}
+                      {item.Option_Product.option_id === 1 ? item1.name : ""}
                     </span>
                   ))}
                 </div>
