@@ -135,54 +135,55 @@ const ProductView = (props) => {
             {/* Start option product */}
             <div className="product-top__info__content__option">
               {/* Start option name product color */}
-              {optionName?.map((item, index) => (
+              {optionName?.map((item1, index) => (
                 <div>
-                  {item.OptionInProduct.map((data, i) => (
+                  {item1.OptionInProduct?.map((item, index) => (
                     <span>
-                      {data.Option_Product.option_id === 1 ? item.name : ""}
+                      {item.Option_Product.option_id === 3 ? item1.name : ""}
                     </span>
                   ))}
                 </div>
               ))}
+
               {/* end option name product color */}
+
               <div className="product-top__info__content__option__top">
-                {optionProduct?.map((item, index) => {
+                {/* {optionProduct?.map((item, index) => {
                   return (
-                    <div className="product-top__info__content__option__top__color">
-                      <div className="product-top__info__content__option__top__color__name">
-                        {item.option_id === 1 ? item.name : ""}
-                      </div>
-                      <div className="product-top__info__content__option__top__color__price">
-                        {item.price}
-                      </div>
-                    </div>
+                    <> */}
+                <div className="product-top__info__content__option__top__color">
+                  <div className="product-top__info__content__option__top__color__name">
+                    sdasd
+                  </div>
+                  <div className="product-top__info__content__option__top__color__price">
+                    2313212
+                  </div>
+                </div>
+                {/* </>
                   );
-                })}
+                })} */}
               </div>
+
               {/* start option memory name */}
-              {optionName?.map((item, index) => (
+              {optionName?.map((item1, index) => (
                 <div>
-                  {item.OptionInProduct.map((data, i) => (
+                  {item1.OptionInProduct?.map((item, index) => (
                     <span>
-                      {data.Option_Product.option_id === 2 ? item.name : ""}
+                      {item.Option_Product.option_id === 2 ? item1.name : ""}
                     </span>
                   ))}
                 </div>
               ))}
               {/* end option memory name */}
               <div className="product-top__info__content__option__bottom">
-                {/* {optionProduct?.map((item, index) => {
-                  return (
-                    <div className="product-top__info__content__option__bottom__memory">
-                      <div className="product-top__info__content__option__bottom__memory__name">
-                        {item.name}
-                      </div>
-                      <div className="product-top__info__content__option__bottom__memory__price">
-                        {item.price}
-                      </div>
-                    </div>
-                  );
-                })} */}
+                <div className="product-top__info__content__option__bottom__memory">
+                  <div className="product-top__info__content__option__bottom__memory__name">
+                    asd
+                  </div>
+                  <div className="product-top__info__content__option__bottom__memory__price">
+                    1545
+                  </div>
+                </div>
               </div>
             </div>
             {/* end option product */}

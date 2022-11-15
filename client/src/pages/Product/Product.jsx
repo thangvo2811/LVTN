@@ -19,9 +19,7 @@ const Product = () => {
     await axios
       .get(`http://localhost:8000/api/get-product/${param.category_id}`)
       .then((res) => {
-        if (res.data && res.data.product) {
-          setDetailProduct(res.data.product);
-        }
+        setDetailProduct(res.data.product);
       })
       .catch((err) => {
         console.log(err);
@@ -51,27 +49,19 @@ const Product = () => {
       <Section>
         <SectionBody>
           <div className="container">
-            <ProductView
-              imgProduct={detailProduct.img ? detailProduct.img : ""}
-              nameProduct={detailProduct.name ? detailProduct.name : ""}
-              priceProduct={
-                detailProduct.unitprice ? detailProduct.unitprice : ""
-              }
-              statusProduct={
-                detailProduct.status === 1 ? "Còn Hàng" : "Hết Hàng"
-              }
-              brandProduct={
-                detailProduct.brand_id ? detailProduct.ProductBrand.name : ""
-              }
-              cateProduct={
-                detailProduct.category_id
-                  ? detailProduct.CategoryProduct.name
-                  : ""
-              }
-              desProduct={
-                detailProduct.Description ? detailProduct.Description : ""
-              }
-            ></ProductView>
+            {detailProduct.product?.map((item, index) => (
+              <ProductView
+                key={index}
+                imgProduct={item.img ? item.img : ""}
+                nameProduct={item.name ? item.name : ""}
+                priceProduct={item.unitprice ? item.unitprice : ""}
+                statusProduct={item.status === 1 ? "Còn Hàng" : "Hết Hàng"}
+                brandProduct={item.brand_id ? item.ProductBrand.name : ""}
+                cateProduct={item.category_id ? item.CategoryProduct.name : ""}
+                cateIdProduct={item.category_id ? item.category_id : ""}
+                desProduct={item.Description ? item.Description : ""}
+              ></ProductView>
+            ))}
           </div>
         </SectionBody>
       </Section>
