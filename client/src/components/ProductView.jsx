@@ -18,6 +18,7 @@ const ProductView = (props) => {
   const [text, setText] = useState("");
   const [optionName, setOptionName] = useState([]);
   const [optionProduct, setOptionProduct] = useState([]);
+  const [detailProduct, setDetailProduct] = useState({});
 
   const imgs = [
     {
@@ -49,27 +50,38 @@ const ProductView = (props) => {
 
   const newUser = useSelector((state) => state.user.currentUser);
 
-  const callOptionName = async () => {
+  // const callOptionName = async () => {
+  //   await axios
+  //     .get(
+  //       `http://localhost:8000/api/get-option-by-product-id/${param.category_id}/`
+  //     )
+  //     .then((res) => {
+  //       console.log(res.data.Option);
+  //       setOptionName(res.data.Option);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+  // const callOptionProduct = async () => {
+  //   await axios
+  //     .get(
+  //       `http://localhost:8000/api/get-option-by-optionid/?option_id=${param.category_id}&product_id=${param.category_id}`
+  //     )
+  //     .then((res) => {
+  //       console.log(res);
+  //       setOptionProduct(res.data.Option);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+  const callDetailOption = async () => {
     await axios
-      .get(
-        `http://localhost:8000/api/get-option-by-product-id/${param.category_id}/`
-      )
+      .get(`http://localhost:8000/api/get-product/${param.category_id}/`)
       .then((res) => {
-        console.log(res.data.Option);
-        setOptionName(res.data.Option);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const callOptionProduct = async () => {
-    await axios
-      .get(
-        `http://localhost:8000/api/get-option-by-optionid/?option_id=${param.category_id}&product_id=${param.category_id}`
-      )
-      .then((res) => {
-        console.log(res);
-        setOptionProduct(res.data.Option);
+        console.log(res.data.product);
+        setDetailProduct(res.data.product);
       })
       .catch((err) => {
         console.log(err);
@@ -77,8 +89,9 @@ const ProductView = (props) => {
   };
 
   useEffect(() => {
-    callOptionName();
-    callOptionProduct();
+    // callOptionName();
+    // callOptionProduct();
+    callDetailOption();
   }, [param.category_id]);
 
   const handleClick = (index) => {
@@ -133,60 +146,33 @@ const ProductView = (props) => {
             </div>
 
             {/* Start option product */}
-            <div className="product-top__info__content__option">
-              {/* Start option name product color */}
-              {optionName?.map((item1, index) => (
-                <div>
-                  {item1.OptionInProduct?.map((item, index) => (
-                    <span>
-                      {item.Option_Product.option_id === 1 ? item1.name : ""}
-                    </span>
+
+            <div className="product-top__info__content__attribute">
+              {detailProduct.option?.map((item1, index) => (
+                <div className="product-top__info__content__attribute">
+                  {item1.ProductOption?.map((item, index) => (
+                    <div className="product-top__info__content__attribute__name">
+                      {item.name}
+                      {console.log(item.name)}
+                    </div>
                   ))}
                 </div>
               ))}
-
-              {/* end option name product color */}
-
-              <div className="product-top__info__content__option__top">
-                {/* {optionProduct?.map((item, index) => {
-                  return (
-                    <> */}
-                <div className="product-top__info__content__option__top__color">
-                  <div className="product-top__info__content__option__top__color__name">
-                    sdasd
-                  </div>
-                  <div className="product-top__info__content__option__top__color__price">
-                    2313212
-                  </div>
-                </div>
-                {/* </>
-                  );
-                })} */}
-              </div>
-
-              {/* start option memory name */}
-              {optionName?.map((item1, index) => (
-                <div>
-                  {item1.OptionInProduct?.map((item, index) => (
-                    <span>
-                      {item.Option_Product.option_id === 2 ? item1.name : ""}
-                    </span>
-                  ))}
-                </div>
-              ))}
-              {/* end option memory name */}
-              <div className="product-top__info__content__option__bottom">
-                <div className="product-top__info__content__option__bottom__memory">
-                  <div className="product-top__info__content__option__bottom__memory__name">
-                    asd
-                  </div>
-                  <div className="product-top__info__content__option__bottom__memory__price">
-                    1545
-                  </div>
-                </div>
-              </div>
             </div>
-            {/* end option product */}
+            <div className="product-top__info__content__option">
+              {detailProduct.Optionproduct?.map((item, index) => (
+                <div className="product-top__info__content__option__select">
+                  <div className="product-top__info__content__option__select__name">
+                    {item.name}
+                  </div>
+                  <div className="product-top__info__content__option__select__price">
+                    {item.price}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* end */}
           </div>
         </div>
       </div>
