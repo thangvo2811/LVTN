@@ -50,49 +50,36 @@ const ProductView = (props) => {
 
   const newUser = useSelector((state) => state.user.currentUser);
 
-  // const callOptionName = async () => {
-  //   await axios
-  //     .get(
-  //       `http://localhost:8000/api/get-option-by-product-id/${param.category_id}/`
-  //     )
-  //     .then((res) => {
-  //       console.log(res.data.Option);
-  //       setOptionName(res.data.Option);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
   // const callOptionProduct = async () => {
   //   await axios
   //     .get(
   //       `http://localhost:8000/api/get-option-by-optionid/?option_id=${param.category_id}&product_id=${param.category_id}`
   //     )
   //     .then((res) => {
-  //       console.log(res);
-  //       setOptionProduct(res.data.Option);
+  //       console.log(res.data.Option);
+  //       setDetailProduct(res.data.Option);
   //     })
   //     .catch((err) => {
   //       console.log(err);
   //     });
   // };
-  const callDetailOption = async () => {
-    await axios
-      .get(`http://localhost:8000/api/get-product/${param.category_id}/`)
-      .then((res) => {
-        console.log(res.data.product);
-        setDetailProduct(res.data.product);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const callDetailOption = async () => {
+  //   await axios
+  //     .get(`http://localhost:8000/api/get-product/${param.category_id}/`)
+  //     .then((res) => {
+  //       console.log(res.data.product);
+  //       setDetailProduct(res.data.product);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
-  useEffect(() => {
-    // callOptionName();
-    // callOptionProduct();
-    callDetailOption();
-  }, [param.category_id]);
+  // useEffect(() => {
+  //   // callOptionName();
+  //   callOptionProduct();
+  //   // callDetailOption();
+  // }, [param.category_id]);
 
   const handleClick = (index) => {
     console.log(index);
@@ -146,40 +133,30 @@ const ProductView = (props) => {
             </div>
 
             {/* Start option product */}
-
-            <div className="product-top__info__content__attribute">
-              {detailProduct.option?.map((item1, index) => (
-                <div className="product-top__info__content__attribute">
-                  {item1.ProductOption?.map((item, index) => (
-                    <div className="product-top__info__content__attribute__name">
-                      {item.name}
-                      {console.log(item.name)}
-                    </div>
-                  ))}
+            <div className="product-top__info__content__select">
+              {/* start option name product */}
+              <div className=" product-top__info__content__select__left">
+                <div className="product-top__info__content__select__left__title">
+                  {props.optionNameProduct}
                 </div>
-              ))}
-            </div>
-            <div className="product-top__info__content__option">
-              {detailProduct.Optionproduct?.map((item, index) => (
-                <div className="product-top__info__content__option__select">
-                  <div className="product-top__info__content__option__select__name">
-                    {item.name}
-                  </div>
-                  <div className="product-top__info__content__option__select__price">
-                    {item.price}
-                  </div>
-                </div>
-              ))}
-            </div>
+              </div>
 
+              {/* end option name product */}
+
+              {/* start option attribute product */}
+              <div className=" product-top__info__content__select__right">
+                {props.optionAttribute}
+              </div>
+              {/* end */}
+            </div>
             {/* end */}
           </div>
         </div>
       </div>
-      <div className="product-bottom">
+      {/* <div className="product-bottom">
         <div className="product-bottom__title">chi tiết sản phẩm</div>
         <div className="product-bottom__description">{props.desProduct}</div>
-      </div>
+      </div> */}
 
       {/* start prodcut comment */}
       {newUser ? (

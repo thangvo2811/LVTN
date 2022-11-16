@@ -60,6 +60,25 @@ const Product = () => {
                 cateProduct={item.category_id ? item.CategoryProduct.name : ""}
                 cateIdProduct={item.category_id ? item.category_id : ""}
                 desProduct={item.Description ? item.Description : ""}
+                // optionNameProduct={detailProduct.option?.map((item, index) =>
+                //   item.ProductOption?.map((item, index) => (
+                //     <div className="product-top__info__content__select__left__title__name">
+                //       {item.name}
+                //     </div>
+                //   ))
+                // )}
+                optionAttribute={detailProduct.Optionproduct?.map(
+                  (item, index) => (
+                    <div className="product-top__info__content__select__right__attribute">
+                      <div className="product-top__info__content__select__right__attribute__name">
+                        {item.name}
+                      </div>
+                      <div className="product-top__info__content__select__right__attribute__price">
+                        {item.price}
+                      </div>
+                    </div>
+                  )
+                )}
               ></ProductView>
             ))}
           </div>
