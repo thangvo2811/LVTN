@@ -1,6 +1,8 @@
 import axios from "axios";
+import React from "react";
 import { loginFailure, loginStart, loginSuccess } from "./userLogin";
 import { message } from "antd";
+import { addCartSuccess, addStart } from "./cartRedux";
 
 export const loginUser = async (dispatch, user, navigate) => {
   dispatch(loginStart());
@@ -20,5 +22,26 @@ export const loginUser = async (dispatch, user, navigate) => {
     .catch(() => {
       message.error("ĐĂNG NHẬP THẤT BẠI");
       dispatch(loginFailure());
+    });
+};
+export const addCart = async (dispatch, user, idProduct) => {
+  dispatch(addStart());
+  await axios
+    .post("http://localhost:8000/api/add-to-cart", {
+      cus_id: parseInt(user),
+      product_id: idProduct,
+    })
+    .then((res) => {
+      if (res.data.errCode === -2) {
+        message.success("THÊM SẢN PHẨM THÀNH CÔNG");
+      }
+      localStorage.setItem(
+        "cartItem",
+        parseInt(localStorage.getItem("cartItem")) + 1
+      );
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };

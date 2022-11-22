@@ -8,12 +8,13 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import numberWithCommas from "../../utils/numberWithCommas";
+import axios from "axios";
+import { AddProductToCart } from "../../redux/apiCalls";
 
 const Cart = () => {
   const [products, setProducts] = useState();
-  const [totalPrice, setTotalPrice] = useState();
-  const [totalProduct, setTotalProduct] = useState();
-
+  // const [totalPrice, setTotalPrice] = useState();
+  // const [totalProduct, setTotalProduct] = useState();
   return (
     <Helmet name="Giỏ hàng">
       <div className="cart">
@@ -24,7 +25,7 @@ const Cart = () => {
         </div>
         <div className="cart__info">
           <div className="cart__info__content">
-            <div className="cart__info__content__title">tổng kết</div>
+            <div className="cart__info__content__title">Tổng Kết</div>
             <div className="cart__info__content__item">
               <div className="cart__info__content__item__title">Tiền ship</div>
               <div className="cart__info__content__item__price">0,000 VND</div>
@@ -34,19 +35,19 @@ const Cart = () => {
                 Tổng sản phẩm
               </div>
               <div className="cart__info__content__item__price">
-                {totalProduct ? totalProduct : ""}
+                {/* {totalProduct ? totalProduct : ""} */}
               </div>
             </div>
             <div className="cart__info__content__item">
               <div className="cart__info__content__item__title">Thanh toán</div>
               <div className="cart__info__content__item__price">
-                {totalPrice ? numberWithCommas(totalPrice) : ""} VND
+                {/* {totalPrice ? numberWithCommas(totalPrice) : ""} VND */}
               </div>
             </div>
             <div className="cart__info__content__item cart__info__content__item__main">
               <div className="cart__info__content__item__title">Tổng</div>
               <div className="cart__info__content__item__price">
-                {totalPrice ? numberWithCommas(totalPrice) : ""} VND
+                {/* {totalPrice ? numberWithCommas(totalPrice) : ""} VND */}
               </div>
             </div>
           </div>

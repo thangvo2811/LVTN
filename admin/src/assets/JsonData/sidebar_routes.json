@@ -15,6 +15,16 @@
     "icon": "bx bx-package"
   },
   {
+    "display_name": "categories",
+    "route": "/categories",
+    "icon": "bx bx-list-ol"
+  },
+  {
+    "display_name": "Brand",
+    "route": "/brand",
+    "icon": "bx bx-list-ol"
+  },
+  {
     "display_name": "Orders",
     "route": "/orders",
     "icon": "bx bx-cart"
@@ -23,11 +33,6 @@
     "display_name": "Comment",
     "route": "/analytics",
     "icon": "bx bx-comment"
-  },
-  {
-    "display_name": "categories",
-    "route": "/categories",
-    "icon": "bx bx-list-ol"
   },
   {
     "display_name": "discount",

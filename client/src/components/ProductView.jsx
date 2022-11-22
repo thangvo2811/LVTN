@@ -1,24 +1,27 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import Button from "../components/Button";
 
+import Button from "../components/Button";
 import numberWithCommas from "../utils/numberWithCommas";
 import InputEmoji from "react-input-emoji";
+import { FaStar } from "react-icons/fa";
+
+import Rating from "@mui/material/Rating";
+import Stack from "@mui/material/Stack";
 
 import pf from "../assets/images/products/laptop-asus-tuf-gaming-f15-fx506lh_4_.jpg";
 import pd from "../assets/images/products/laptop-asus-rog-strix-g15-g513ih-hn015t-1.jpg";
 
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { addCart } from "../redux/apiCalls.js";
 import axios from "axios";
 
 const ProductView = (props) => {
   const param = useParams();
   const [quantity, setQuantity] = useState(1);
   const [text, setText] = useState("");
-  const [optionName, setOptionName] = useState([]);
-  const [optionProduct, setOptionProduct] = useState([]);
-  const [detailProduct, setDetailProduct] = useState({});
+  const [commentProduct, setCommentProduct] = useState([]);
 
   const imgs = [
     {
@@ -36,6 +39,23 @@ const ProductView = (props) => {
   ];
   const [slider, setSlider] = useState(imgs[0]);
 
+  const callCommentProduct = async () => {
+    await axios
+      .get(
+        `http://localhost:8000/api/get-comment-of-product/${param.category_id}/`
+      )
+      .then((res) => {
+        console.log(res.data.Comment);
+        setCommentProduct(res.data.Comment);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    callCommentProduct();
+  }, [param.category_id]);
+
   useEffect(() => {}, [param.id]);
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -45,46 +65,24 @@ const ProductView = (props) => {
   };
 
   const handleOnEnter = (text) => {
-    console.log("User: ", text);
+    console.log("Customer:", text);
   };
 
-  const newUser = useSelector((state) => state.user.currentUser);
+  // const newUser = useSelector((state) => state.user.currentUser);
 
-  // const callOptionProduct = async () => {
-  //   await axios
-  //     .get(
-  //       `http://localhost:8000/api/get-option-by-optionid/?option_id=${param.category_id}&product_id=${param.category_id}`
-  //     )
-  //     .then((res) => {
-  //       console.log(res.data.Option);
-  //       setDetailProduct(res.data.Option);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-  // const callDetailOption = async () => {
-  //   await axios
-  //     .get(`http://localhost:8000/api/get-product/${param.category_id}/`)
-  //     .then((res) => {
-  //       console.log(res.data.product);
-  //       setDetailProduct(res.data.product);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   // callOptionName();
-  //   callOptionProduct();
-  //   // callDetailOption();
-  // }, [param.category_id]);
+  const newCustomer = localStorage.getItem("User");
 
   const handleClick = (index) => {
     console.log(index);
     const imgSlider = imgs[index];
     setSlider(imgSlider);
+  };
+
+  const dispatch = useDispatch();
+  const handleAddCart = () => {
+    console.log("add cart");
+    const newProduct = props.product_id;
+    addCart(dispatch, newCustomer, newProduct);
   };
 
   return (
@@ -126,7 +124,13 @@ const ProductView = (props) => {
                 <Button size="sm" animate2={true}>
                   mua ngay
                 </Button>
-                <Button size="sm" animate2={true}>
+                <Button
+                  size="sm"
+                  animate2={true}
+                  onClick={() => {
+                    handleAddCart();
+                  }}
+                >
                   thêm vào giỏ hàng
                 </Button>
               </div>
@@ -153,13 +157,16 @@ const ProductView = (props) => {
           </div>
         </div>
       </div>
-      {/* <div className="product-bottom">
+
+      {/* detail Product */}
+      <div className="product-bottom">
         <div className="product-bottom__title">chi tiết sản phẩm</div>
         <div className="product-bottom__description">{props.desProduct}</div>
-      </div> */}
+      </div>
+      {/* end detail product */}
 
       {/* start prodcut comment */}
-      {newUser ? (
+      {newCustomer ? (
         <div className="product__comment">
           <div className="product__comment__title">Comments</div>
           <div className="product__comment__content">
@@ -167,18 +174,89 @@ const ProductView = (props) => {
               <img src={pf} alt="" />
             </div>
             <div className="product__comment__content__cmt">
-              <InputEmoji
-                value={text}
-                onChange={setText}
-                // cleanOnEnter
-                onEnter={handleOnEnter}
-                placeholder="Write comments"
-              />
+              <div className="product__comment__content__cmt__type">
+                <InputEmoji
+                  value={text}
+                  onChange={setText}
+                  // cleanOnEnter
+                  onEnter={handleOnEnter}
+                  placeholder="Write comments"
+                />
+              </div>
+              <div className="product__comment__content__cmt__rate">
+                <Rating name="half-rating" defaultValue={0} precision={0.5} />
+              </div>
             </div>
           </div>
+          {commentProduct?.map((item, index) => {
+            return (
+              <div className="product__comment__content__desc">
+                <div className="product__comment__content__desc__img">
+                  <img src={pf} alt="" />
+                </div>
+                <div className="product__comment__content__desc__type">
+                  <div className="product__comment__content__desc__type__user">
+                    {item?.commentUser?.fullname}
+                  </div>
+                  <div className="product__comment__content__desc__type__key">
+                    {item?.description}{" "}
+                  </div>
+                  <div className="product__comment__content__desc__type__rate">
+                    {item?.rate ? (
+                      <Rating
+                        name="half-rating"
+                        defaultValue={item.rate}
+                        readOnly
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div className="product__comment__content__desc__type__features">
+                    <div className="product__comment__content__desc__type__features__delete">
+                      Xóa
+                    </div>
+                    <div className="product__comment__content__desc__type__features__update">
+                      Sửa
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       ) : (
-        ""
+        <div className="product__comment">
+          <div className="product__comment__title">Comments</div>
+          {commentProduct?.map((item, index) => {
+            return (
+              <div className="product__comment__content__desc">
+                <div className="product__comment__content__desc__img">
+                  <img src={pf} alt="" />
+                </div>
+                <div className="product__comment__content__desc__type">
+                  <div className="product__comment__content__desc__type__user">
+                    {item?.commentUser?.fullname}
+                  </div>
+                  <div className="product__comment__content__desc__type__key">
+                    {item?.description}{" "}
+                  </div>
+                  <div className="product__comment__content__desc__type__rate">
+                    {item?.rate ? (
+                      <Rating
+                        name="half-rating"
+                        defaultValue={item.rate}
+                        readOnly
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       )}
 
       {/* end product comment */}

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import "../../scss/index.scss";
 
-import logo from "../../assets/images/man.jpg";
+import logo from "../../assets/images/1.jpg";
 
 import sidebar_items from "../../assets/JsonData/sidebar_routes.json";
 

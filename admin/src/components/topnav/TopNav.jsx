@@ -10,7 +10,7 @@ import ThemeMenu from "../thememenu/ThemeMenu";
 
 import notifications from "../../assets/JsonData/notification.json";
 
-import user_image from "../../assets/images/man.jpg";
+import user_image from "../../assets/images/1.jpg";
 
 import user_menu from "../../assets/JsonData/user_menus.json";
 
@@ -48,8 +48,8 @@ const Topnav = () => {
   return (
     <div className="topnav">
       <div className="topnav__search">
-        <input type="text" placeholder="Search here..." />
-        <i className="bx bx-search"></i>
+        {/* <input type="text" placeholder="Search here..." />
+        <i className="bx bx-search"></i> */}
       </div>
       <div className="topnav__right">
         <div className="topnav__right-item">

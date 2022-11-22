@@ -1,8 +1,8 @@
 import React from "react";
 
-import Table from "../components/table/Table";
+import Table from "../../components/table/Table";
 
-import customerList from "../assets/JsonData/customers-list.json";
+import customerList from "../../assets/JsonData/customers-list.json";
 
 const customerTableHead = [
   "",

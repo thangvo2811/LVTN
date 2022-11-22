@@ -1,5 +1,5 @@
 {
-  "name": "vguno-client",
+  "name": "phuthang-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -19,13 +19,16 @@
     "axios": "^0.27.2",
     "emoji-picker-react": "^4.0.3",
     "node-sass": "^7.0.1",
+    "rate": "^0.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-icons": "^4.6.0",
     "react-input-emoji": "^4.2.0",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
     "react-star-ratings": "^2.3.0",
+    "rsuite": "^5.22.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

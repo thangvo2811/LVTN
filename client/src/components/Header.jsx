@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import dd1 from "../assets/images/dropdown-images/729_x_356.jpg";
 import dd2 from "../assets/images/dropdown-images/Artboard-4-copy-8-2.png";
@@ -10,20 +10,23 @@ import dd5 from "../assets/images/dropdown-images/Artboard-8-8-1.png";
 import dd6 from "../assets/images/dropdown-images/Artboard-8-copy-2-8.png";
 
 import axios from "axios";
+
+import { message } from "antd";
 import { useSelector } from "react-redux";
-import { Alert, message } from "antd";
 
 const Header = () => {
   const navigate = useNavigate();
   const headerContentRef = useRef(null);
   const headerShrink = useRef(null);
-  const [totalItem, setTotalItem] = useState(0);
+  const [totalItem, setTotalItem] = useState({});
   const [allCategory, setAllCategory] = useState([]);
   const [searchKey, setSearchKey] = useState("");
 
   // const newUser = useSelector((state) => state.user.currentUser);
   const newCustomer = localStorage.getItem("User");
   const nameCustomer = localStorage.getItem("nameUser");
+  const cart = useSelector((state) => state.cart);
+  console.log(newCustomer);
 
   const callCategories = async () => {
     await axios
@@ -45,20 +48,33 @@ const Header = () => {
         console.log(err);
       });
   };
+
+  const callTotalItems = useCallback(async () => {
+    await axios
+      .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}`)
+      .then((res) => {
+        console.log(res.data);
+        setTotalItem(res.data);
+        localStorage.setItem("cartItem", res.data.Sum);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [newCustomer, localStorage.getItem("cartItem")]);
   useEffect(() => {
     callCategories();
     callSearchProduct();
-  }, []);
+    callTotalItems();
+  }, [callTotalItems]);
 
   const handleSearch = (e) => {
-    // let pattern = `/^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/`;
-    // let pattern = "aaaaaaaaaaaaa";
+    let pattern = /^[a-zA-Z0-9_ ]*$/g;
     e.preventDefault();
-    if (searchKey.length > 0) {
+    if (searchKey && pattern.test(searchKey) && searchKey !== "") {
       navigate(`/findproduct/${searchKey}`);
     } else {
       navigate("/");
-      message.error("BẠN CHƯA NHẬP TỪ KHÓA");
+      message.error("SẢN PHẨM KHÔNG TỒN TẠI");
     }
   };
 
@@ -181,7 +197,7 @@ const Header = () => {
                         <i className="bx bx-cart"></i>
                         <span>Giỏ hàng</span>
                         <div className="notification">
-                          <span>{totalItem}</span>
+                          <span>{localStorage.getItem("cartItem")}</span>
                         </div>
                       </li>
                     </Link>

@@ -9,10 +9,10 @@ const CartItem = (props) => {
   const itemCart = props.item;
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(0);
-  useEffect(() => {
-    setProduct(productData.getProductById(itemCart.productId));
-    setQuantity(itemCart.quantity);
-  }, [itemCart]);
+  // useEffect(() => {
+  //   setProduct(productData.getProductById(itemCart.productId));
+  //   setQuantity(itemCart.quantity);
+  // }, [itemCart]);
 
   const increaseQuantity = () => {
     setQuantity(quantity + 1);

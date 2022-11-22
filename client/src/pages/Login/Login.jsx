@@ -3,13 +3,12 @@ import React, { useEffect, useState } from "react";
 import Button from "../../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 import Helmet from "../../components/Helmet";
-import { loginUser } from "../../redux/apiCalls";
+import { loginUser, AddProductToCart } from "../../redux/apiCalls";
 import { useDispatch } from "react-redux";
 
 const Login = () => {
   const [emailUser, setEmail] = useState("");
   const [passwordUser, setPassWord] = useState("");
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

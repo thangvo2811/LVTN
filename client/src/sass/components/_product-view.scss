@@ -231,6 +231,51 @@
 
       &__cmt {
         flex: 3;
+        &__rate {
+          cursor: pointer;
+          margin-left: 12px;
+        }
+      }
+      &__desc {
+        display: flex;
+        padding-top: 10px;
+        align-items: center;
+        width: 100%;
+        &__img {
+          img {
+            max-width: 50px;
+            max-height: 50px;
+            min-width: 50px;
+            min-height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+        }
+        &__type {
+          flex: 3;
+          margin-left: 20px;
+        }
+        &__type {
+          &__user {
+            font-weight: bold;
+            font-weight: 700;
+          }
+          &__features {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            &__delete {
+              cursor: pointer;
+              color: rgb(98, 96, 96);
+              font-weight: 400;
+            }
+            &__update {
+              cursor: pointer;
+              color: rgb(98, 96, 96);
+            }
+          }
+        }
       }
     }
   }

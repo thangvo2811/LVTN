@@ -1,6 +1,5 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import Helmet from "../../components/Helmet";
-import { useSelector, useDispatch } from "react-redux";
 
 import Grid from "../../components/Grid";
 import ProductCard from "../../components/ProductCard";

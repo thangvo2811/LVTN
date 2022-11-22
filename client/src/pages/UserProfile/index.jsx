@@ -54,23 +54,23 @@ const UserProfile = () => {
               <span>Personal Information</span>
             </div>
             <div className="user__content__left__card__item">
-              <i className="bx bx-user "></i>
+              <i className="bx bx-location-plus "></i>
               <span>My Address</span>
             </div>
             <div className="user__content__left__card__item">
-              <i className="bx bx-user "></i>
+              <i className="bx bx-heart "></i>
               <span>My Wishlist</span>
             </div>
             <div className="user__content__left__card__item">
-              <i className="bx bx-user "></i>
+              <i class="bx bxs-shopping-bag-alt"></i>
               <span>Order List</span>
             </div>
             <div className="user__content__left__card__item">
-              <i className="bx bx-user "></i>
-              <span>My Voucher</span>
+              <i className="bx bxs-discount"></i>
+              <span>Viewed</span>
             </div>
             <div className="user__content__left__card__item">
-              <i className="bx bx-user "></i>
+              <i className="bx bxs-discount"></i>
               <span>My Voucher</span>
             </div>
           </div>
@@ -122,8 +122,8 @@ const UserProfile = () => {
               <h3>Phone and Email</h3>
               <div className="user__content__right__desc__update__info">
                 <div className="user__content__right__desc__update__info__name">
-                  <i className="bx bx-user"></i>
-                  <span>{detailUser?.phonenumber}</span>
+                  <i className="bx bx-phone"></i>
+                  <span>Phone</span>
                 </div>
                 <button className="user__content__right__desc__update__info__name__btn">
                   Update
@@ -132,8 +132,8 @@ const UserProfile = () => {
 
               <div className="user__content__right__desc__update__info">
                 <div className="user__content__right__desc__update__info__name">
-                  <i className="bx bx-user"></i>
-                  <span>{detailUser?.email}</span>
+                  <i className="bx bx-envelope"></i>
+                  <span>Email</span>
                 </div>
                 <button className="user__content__right__desc__update__info__name__btn">
                   Update
@@ -145,7 +145,7 @@ const UserProfile = () => {
               </h3>
               <div className="user__content__right__desc__update__info">
                 <div className="user__content__right__desc__update__info__name">
-                  <i className="bx bx-user"></i>
+                  <i className="bx bxs-key"></i>
                   <span>PassWord</span>
                 </div>
                 <button className="user__content__right__desc__update__info__name__btn">
