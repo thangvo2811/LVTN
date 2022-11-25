@@ -76,4 +76,10 @@
       }
     }
   }
+  &__delete {
+    padding-left: 50px;
+    font-size: 25px;
+    color: red;
+    cursor: pointer;
+  }
 }

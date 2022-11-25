@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Table from "../../components/table/Table";
+
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const Categories = () => {
   const [allCategory, setAllCategory] = useState([]);
+  const param = useParams();
 
   const callAllCategory = async () => {
     await axios
@@ -16,6 +18,18 @@ const Categories = () => {
         console.log(err);
       });
   };
+  const callDeleteCategory = async (id, e) => {
+    e.preventDefault();
+    await axios
+      .delete(`http://localhost:8000/api/delete-Category/${id}/`)
+      .then((res) => {
+        console.log(res);
+        callAllCategory();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   useEffect(() => {
     callAllCategory();
   }, []);
@@ -23,7 +37,10 @@ const Categories = () => {
     <div>
       <div className="page-header">
         <h2 className="page-header__title">Category</h2>
-        <button>ADD NEW</button>
+        <div className="page-header__add">
+          <i className="bx bx-plus"></i>
+          <div>Add New</div>
+        </div>
       </div>
       <div className="row">
         <div className="col-12">
@@ -50,7 +67,10 @@ const Categories = () => {
                         <span className="card__body__edit">
                           <i className="bx bxs-edit"></i>
                         </span>
-                        <span className="card__body__delete">
+                        <span
+                          className="card__body__delete"
+                          onClick={(e) => callDeleteCategory(item.id, e)}
+                        >
                           <i className="bx bx-trash"></i>
                         </span>
                       </td>

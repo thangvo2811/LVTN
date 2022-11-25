@@ -25,8 +25,6 @@ const Header = () => {
   // const newUser = useSelector((state) => state.user.currentUser);
   const newCustomer = localStorage.getItem("User");
   const nameCustomer = localStorage.getItem("nameUser");
-  const cart = useSelector((state) => state.cart);
-  console.log(newCustomer);
 
   const callCategories = async () => {
     await axios
@@ -53,9 +51,9 @@ const Header = () => {
     await axios
       .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}`)
       .then((res) => {
-        console.log(res.data);
-        setTotalItem(res.data);
-        localStorage.setItem("cartItem", res.data.Sum);
+        console.log(res.data.cart.Sum);
+        setTotalItem(res.data.cart.Sum);
+        localStorage.setItem("cartItem", res.data.cart.Sum);
       })
       .catch((err) => {
         console.log(err);

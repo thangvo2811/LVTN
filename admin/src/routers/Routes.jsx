@@ -7,6 +7,9 @@ import Customers from "../pages/Customers/Customers";
 import Categories from "../pages/Categories/Categories";
 import Brand from "../pages/Brand/Brand";
 import Products from "../pages/Products/Products";
+import Blog from "../pages/Blog/Blog";
+import Option from "../pages/Option/Option";
+import Comments from "../pages/Comments/Comments";
 
 const Routes = () => {
   return (
@@ -16,6 +19,10 @@ const Routes = () => {
       <Route path="/categories" component={Categories} />
       <Route path="/brand" component={Brand} />
       <Route path="/products" component={Products} />
+      <Route path="/option" component={Option} />
+      <Route path="/comment" component={Comments} />
+
+      <Route path="/blog" component={Blog} />
     </Switch>
   );
 };

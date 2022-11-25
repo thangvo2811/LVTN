@@ -15,6 +15,12 @@
     "icon": "bx bx-package"
   },
   {
+    "display_name": "Option",
+    "route": "/option",
+    "icon": "bx bx-package"
+  },
+
+  {
     "display_name": "categories",
     "route": "/categories",
     "icon": "bx bx-list-ol"
@@ -24,25 +30,32 @@
     "route": "/brand",
     "icon": "bx bx-list-ol"
   },
+
+  {
+    "display_name": "Comment",
+    "route": "/comment",
+    "icon": "bx bx-comment"
+  },
+  {
+    "display_name": "Blog",
+    "route": "/blog",
+    "icon": "bx bx-news"
+  },
   {
     "display_name": "Orders",
     "route": "/orders",
     "icon": "bx bx-cart"
   },
   {
-    "display_name": "Comment",
-    "route": "/analytics",
-    "icon": "bx bx-comment"
-  },
-  {
     "display_name": "discount",
     "route": "/discount",
     "icon": "bx bx-gift"
   },
+
   {
-    "display_name": "Blog",
-    "route": "/inventory",
-    "icon": "bx bx-store-alt"
+    "display_name": "settings",
+    "route": "/settings",
+    "icon": "bx bx-cog"
   },
   {
     "display_name": "settings",

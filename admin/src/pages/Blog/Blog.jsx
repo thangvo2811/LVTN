@@ -1,38 +1,38 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const Products = () => {
-  const [allProduct, setAllProduct] = useState([]);
-  const callAllProduct = async () => {
+const Blog = () => {
+  const [allBlog, setAllBlog] = useState([]);
+  const callAllBlog = async () => {
     await axios
-      .get("http://localhost:8000/api/get-all-product?brand_id=&category_id=")
+      .get("http://localhost:8000/api/get-all-blog/")
       .then((res) => {
-        console.log(res.data.products);
-        setAllProduct(res.data.products);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const handleDeleteProduct = async (id, e) => {
-    e.preventDefault();
-    await axios
-      .delete(`http://localhost:8000/api/delete-product/${id}/`)
-      .then((res) => {
-        console.log(res);
-        callAllProduct();
+        setAllBlog(res.data.blog);
       })
       .catch((err) => {
         console.log(err);
       });
   };
   useEffect(() => {
-    callAllProduct();
+    callAllBlog();
   }, []);
+
+  const handleDeleteBlog = async (id, e) => {
+    e.preventDefault();
+    await axios
+      .delete(`http://localhost:8000/api/delete-blog/${id}`)
+      .then((res) => {
+        console.log(res);
+        callAllBlog();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div>
       <div className="page-header">
-        <h2 className="page-header__title">Product</h2>
+        <h2 className="page-header__title">Blog</h2>
         <div className="page-header__add">
           <i className="bx bx-plus"></i>
           <div>Add New</div>
@@ -46,38 +46,29 @@ const Products = () => {
                 <thead>
                   <tr>
                     <td>ID</td>
-                    <td>Name</td>
-                    <td>unitPrice</td>
-                    <td>CurrentQuantity</td>
-                    <td>IntialQuantity</td>
                     <td>Description</td>
                     <td>Status</td>
-                    <td>Brand_id</td>
-                    <td>Category_id</td>
                     <td>Img</td>
+                    <td>Name</td>
                     <td>Settings</td>
                   </tr>
                 </thead>
                 <thead>
-                  {allProduct?.map((item, index) => (
+                  {allBlog?.map((item, index) => (
                     <tr key={index}>
                       <td>{item.id}</td>
-                      <td>{item.name}</td>
-                      <td>{item.unitprice}</td>
-                      <td>{item.currentQuantity}</td>
-                      <td>{item.IntialQuantity}</td>
                       <td>{item.Description}</td>
-                      <td>{item.status}</td>
-                      <td>{item.brand_id}</td>
-                      <td>{item.category_id}</td>
+                      <td>{item.sta_id}</td>
                       <td>{item.img}</td>
+                      <td>{item.name}</td>
+
                       <td>
                         <span className="card__body__edit">
                           <i className="bx bxs-edit"></i>
                         </span>
                         <span
                           className="card__body__delete"
-                          onClick={(e) => handleDeleteProduct(item.id, e)}
+                          onClick={(e) => handleDeleteBlog(item.id, e)}
                         >
                           <i className="bx bx-trash"></i>
                         </span>
@@ -94,4 +85,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default Blog;

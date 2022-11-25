@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
-const Customers = () => {
-  const [allCustomer, setAllCustomer] = useState([]);
+const Comments = () => {
+  const [allComment, setAllComment] = useState([]);
+  const param = useParams();
 
-  const callAllCustomer = async () => {
+  const callAllComment = async (id) => {
     await axios
-      .get("http://localhost:8000/api/get-all-user")
+      .get(`http://localhost:8000/api/get-comment-of-product/${id}/`)
       .then((res) => {
-        setAllCustomer(res.data);
+        setAllComment(res.data.Comment);
       })
       .catch((err) => {
         console.log(err);
       });
   };
   useEffect(() => {
-    callAllCustomer();
+    callAllComment();
   }, []);
   return (
     <div>
       <div className="page-header">
-        <h2 className="page-header__title">Customer</h2>
+        <h2 className="page-header__title">Option</h2>
         <div className="page-header__add">
           <i className="bx bx-plus"></i>
           <div>Add New</div>
@@ -34,25 +36,23 @@ const Customers = () => {
                 <thead>
                   <tr>
                     <td>ID</td>
-                    <td>Email</td>
-                    <td>FullName</td>
-                    <td>PhoneNumber</td>
-                    <td>Avatar</td>
-                    <td>BirthDay</td>
-                    <td>Address</td>
+                    <td>CustomerID</td>
+                    <td>ProductID</td>
+                    <td>Description</td>
+                    <td>Rate</td>
+                    <td>Status</td>
+                    <td>Settings</td>
                   </tr>
                 </thead>
                 <thead>
-                  {allCustomer?.map((item, index) => (
+                  {allComment?.map((item, index) => (
                     <tr key={index}>
                       <td>{item.id}</td>
-                      <td>{item.email}</td>
-                      <td>{item.fullname}</td>
-                      <td>{item.phonenumber}</td>
-                      <td>{item.avatar}</td>
-
-                      <td>{item.birthday}</td>
-                      <td>{item.address}</td>
+                      <td>{item.cus_id}</td>
+                      <td>{item.product_id}</td>
+                      <td>{item.description}</td>
+                      <td>{item.rate}</td>
+                      <td>{item.status}</td>
                       <td>
                         <span className="card__body__edit">
                           <i className="bx bxs-edit"></i>
@@ -73,4 +73,4 @@ const Customers = () => {
   );
 };
 
-export default Customers;
+export default Comments;

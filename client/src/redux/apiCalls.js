@@ -32,7 +32,7 @@ export const addCart = async (dispatch, user, idProduct) => {
       product_id: idProduct,
     })
     .then((res) => {
-      if (res.data.errCode === -2) {
+      if (res.data.errCode === 0) {
         message.success("THÊM SẢN PHẨM THÀNH CÔNG");
       }
       localStorage.setItem(
