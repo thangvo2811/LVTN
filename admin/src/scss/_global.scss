@@ -75,15 +75,12 @@ input:focus {
   box-shadow: var(--box-shadow);
   border-radius: $border-radius;
   &__body {
-    &__edit {
+    &__features {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      gap: 10px;
       cursor: pointer;
-      font-size: 25px;
-      color: #0e20e9;
-    }
-    &__delete {
-      cursor: pointer;
-      font-size: 25px;
-      color: #da0004;
     }
   }
 }

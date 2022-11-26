@@ -30,7 +30,7 @@ const Header = () => {
     await axios
       .get("http://localhost:8000/api/get-Category/")
       .then((res) => {
-        setAllCategory(res.data);
+        setAllCategory(res.data.category);
       })
       .catch((err) => {
         console.log(err);

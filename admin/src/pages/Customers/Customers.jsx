@@ -8,7 +8,7 @@ const Customers = () => {
     await axios
       .get("http://localhost:8000/api/get-all-user")
       .then((res) => {
-        setAllCustomer(res.data);
+        setAllCustomer(res.data.customer);
       })
       .catch((err) => {
         console.log(err);
@@ -43,26 +43,26 @@ const Customers = () => {
                   </tr>
                 </thead>
                 <thead>
-                  {allCustomer?.map((item, index) => (
-                    <tr key={index}>
-                      <td>{item.id}</td>
-                      <td>{item.email}</td>
-                      <td>{item.fullname}</td>
-                      <td>{item.phonenumber}</td>
-                      <td>{item.avatar}</td>
+                  {/* {allCustomer?.map((item, index) => ( */}
+                  <tr>
+                    <td>{allCustomer.id}</td>
+                    <td>{allCustomer.email}</td>
+                    <td>{allCustomer.fullname}</td>
+                    <td>{allCustomer.phonenumber}</td>
+                    <td>{allCustomer.avatar}</td>
 
-                      <td>{item.birthday}</td>
-                      <td>{item.address}</td>
-                      <td>
-                        <span className="card__body__edit">
-                          <i className="bx bxs-edit"></i>
-                        </span>
-                        <span className="card__body__delete">
-                          <i className="bx bx-trash"></i>
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
+                    <td>{allCustomer.birthday}</td>
+                    <td>{allCustomer.address}</td>
+                    <td>
+                      <span className="card__body__edit">
+                        <i className="bx bxs-edit"></i>
+                      </span>
+                      <span className="card__body__delete">
+                        <i className="bx bx-trash"></i>
+                      </span>
+                    </td>
+                  </tr>
+                  {/* ))} */}
                 </thead>
               </table>
             </div>

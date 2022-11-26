@@ -2,88 +2,36 @@ import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 import AddBrand from "./AddBrand/AddBrand";
-import { Button, Modal } from "antd";
+
 import "./style.scss";
+import DeleteBrand from "./DeleteBrand/DeleteBrand";
+import EditBrand from "./EditBrand/EditBrand";
 
 const Brand = () => {
   const [allBrand, setAllBrand] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [nameBrand, setNameBrand] = useState("");
+  const data = useState(Date.now());
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  // const handleOk = () => {
-  //   setIsModalOpen(false);
-  // };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
   const callAllBrand = async () => {
     await axios
       .get("http://localhost:8000/api/get-brand/")
       .then((res) => {
-        console.log(res.data);
-        setAllBrand(res.data);
+        setAllBrand(res.data.brand);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  const callDeleteBrand = async (id, e) => {
-    e.preventDefault();
-    await axios
-      .delete(`http://localhost:8000/api/delete-brand/${id}/`)
-      .then((res) => {
-        console.log(res);
-        callAllBrand();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const handleAddBrand = async (e) => {
-    e.preventDefault();
 
-    await axios
-      .post(`http://localhost:8000/api/get-create-brand`, {
-        nameBrand: "",
-      })
-      .then((res) => {
-        if (!nameBrand) {
-          console.log(res);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    setIsModalOpen(false);
-  };
   useEffect(() => {
     callAllBrand();
-  }, []);
+  }, [data]);
 
   return (
     <div>
       <div className="page-header">
         <h2 className="page-header__title">Brand</h2>
         <div>
-          <Button type="primary" onClick={showModal}>
-            Add Brand
-          </Button>
-          <Modal
-            title="NEW BRAND"
-            open={isModalOpen}
-            onOk={(e) => handleAddBrand(e, e.target.value)}
-            onCancel={handleCancel}
-            width={300}
-          >
-            <div className="form-input">
-              <form>
-                <input type="text" placeholder="Name" />
-              </form>
-            </div>
-          </Modal>
+          <AddBrand></AddBrand>
         </div>
       </div>
       <div className="row">
@@ -104,15 +52,16 @@ const Brand = () => {
                       <td>{item.id}</td>
                       <td>{item.name}</td>
                       <td>
-                        <span className="card__body__edit">
-                          <i className="bx bxs-edit"></i>
-                        </span>
-                        <span
-                          className="card__body__delete"
-                          onClick={(e) => callDeleteBrand(item.id, e)}
-                        >
-                          <i className="bx bx-trash"></i>
-                        </span>
+                        <div className="card__body__features">
+                          <span className="card__body__features__edit">
+                            {/* <i className="bx bxs-edit"></i> */}
+                            {/* <DeleteBrand id={item.id} item={item}></DeleteBrand> */}
+                            <EditBrand name={item.name}></EditBrand>
+                          </span>
+                          <span className="card__body__features__delete">
+                            <DeleteBrand item={item.id}></DeleteBrand>
+                          </span>
+                        </div>
                       </td>
                     </tr>
                   ))}

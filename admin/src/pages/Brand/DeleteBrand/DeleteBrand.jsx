@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import axios from "axios";
+import { message } from "antd";
 
-const DeleteBrand = () => {
+const DeleteBrand = (props) => {
   const [open, setOpen] = React.useState(false);
+  const [allBrand, setALLBrand] = useState([]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -17,10 +20,39 @@ const DeleteBrand = () => {
     setOpen(false);
   };
 
+  const handleDeleteBrand = async (e, id) => {
+    e.preventDefault();
+    await axios
+      .delete(`http://localhost:8000/api/delete-brand/${id}/`)
+      .then((res) => {
+        console.log(res);
+
+        message.success("XÓA THƯƠNG HIỆU THÀNH CÔNG");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setOpen(false);
+  };
+  const callAllBrand = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-brand/")
+      .then((res) => {
+        setALLBrand(res.data.brand);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    callAllBrand();
+  }, []);
+
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Open alert dialog
+        <i className="bx bx-trash"></i>
       </Button>
       <Dialog
         open={open}
@@ -28,20 +60,11 @@ const DeleteBrand = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending
-            anonymous location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent>
+        <DialogTitle id="alert-dialog-title"></DialogTitle>
+        <DialogContent>Bạn có muốn xóa không ?</DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
-          </Button>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={(e) => handleDeleteBrand(e, props.item)}>OK</Button>
         </DialogActions>
       </Dialog>
     </div>
