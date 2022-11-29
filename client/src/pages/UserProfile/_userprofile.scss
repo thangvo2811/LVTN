@@ -7,39 +7,39 @@
   line-height: 24px;
   &__url {
     &__main {
-      color: #f62682;
+      color: #1890ff;
     }
   }
 }
 .user__content {
-  display: flex;
-  margin-top: 50px;
-
   &__left {
-    width: 20%;
-    display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    row-gap: 40px;
-    border-right: 1px solid #ccc;
-    &__profile {
-      &__img {
-        max-width: 100px;
-        max-height: 100px;
-      }
-      &__name {
-        text-align: center;
-        font-size: 14px;
-        font-weight: 700;
-      }
+    img {
+      max-width: 100px;
+      max-height: 100px;
+      margin-left: 80px;
     }
+
+    // &__profile {
+    //   &__img {
+    //     max-width: 100px;
+    //     max-height: 100px;
+    //     margin-right: 20px;
+    //   }
+    //   &__name {
+    //     text-align: center;
+    //     font-size: 14px;
+    //     font-weight: 700;
+    //   }
+    // }
     &__card {
       &__item {
         display: flex;
+        justify-content: center;
         align-items: center;
         column-gap: 20px;
-        padding: 12px 24px;
         cursor: pointer;
         transition: all 0.2s linear;
         i {
@@ -50,13 +50,10 @@
           font-weight: 400;
         }
       }
-      &__item:hover {
-        color: #4267b2;
-      }
     }
   }
   &__right {
-    width: 80%;
+    width: 100%;
     padding-left: 20px;
     &__profile {
       display: flex;
@@ -67,7 +64,7 @@
     }
     &__desc {
       display: flex;
-      margin-top: 110px;
+      margin-top: 40px;
       &__form {
         display: flex;
         width: 50%;
@@ -126,7 +123,7 @@
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-top: 20px;
+          margin-top: 30px;
           &__name {
             display: flex;
             column-gap: 10px;
@@ -151,7 +148,7 @@
         }
 
         &__pw {
-          padding-top: 20px;
+          padding-top: 50px;
         }
       }
     }

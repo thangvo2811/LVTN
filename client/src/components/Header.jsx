@@ -12,9 +12,12 @@ import dd6 from "../assets/images/dropdown-images/Artboard-8-copy-2-8.png";
 import axios from "axios";
 
 import { message } from "antd";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addNumberCartSuccess } from "../redux/cartRedux";
 
 const Header = () => {
+  const newItem = useSelector((state) => state.cart.numberCart);
+
   const navigate = useNavigate();
   const headerContentRef = useRef(null);
   const headerShrink = useRef(null);
@@ -25,6 +28,7 @@ const Header = () => {
   // const newUser = useSelector((state) => state.user.currentUser);
   const newCustomer = localStorage.getItem("User");
   const nameCustomer = localStorage.getItem("nameUser");
+  const dispatch = useDispatch();
 
   const callCategories = async () => {
     await axios
@@ -51,14 +55,15 @@ const Header = () => {
     await axios
       .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}`)
       .then((res) => {
-        console.log(res.data.cart.Sum);
-        setTotalItem(res.data.cart.Sum);
-        localStorage.setItem("cartItem", res.data.cart.Sum);
+        console.log(res.data.Sum);
+        setTotalItem(res.data.Sum);
+        localStorage.setItem("cartItem", res.data.Sum);
+        dispatch(addNumberCartSuccess(res.data.Sum));
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [newCustomer, localStorage.getItem("cartItem")]);
+  }, [newCustomer]);
   useEffect(() => {
     callCategories();
     callSearchProduct();
@@ -132,20 +137,13 @@ const Header = () => {
             </div>
             <div className="header-top__cart">
               <ul className="header-top__cart__list">
-                <Link to={"/"}>
-                  <li className="header-top__cart__list__item">
-                    <i className="bx bx-bell"></i>
-                    <span>Thông báo</span>
-                  </li>
-                </Link>
-
                 <div className="dropdown">
                   {newCustomer ? (
                     <>
                       <li className="header-top__cart__list__item">
                         <i className="bx bx-user icon"></i>
                         <span>
-                          Hello, <span> {nameCustomer}</span>
+                          Xin Chào <span> {nameCustomer}</span>
                         </span>
                       </li>
                       <ul className="dropdown__list">
@@ -160,10 +158,8 @@ const Header = () => {
                           <span className="dropdown__text">Wish List</span>
                         </li>
                         <li className="dropdown__item">
-                          <i class="bx bxs-lock drop__icon"></i>
-                          <span className="dropdown__text">
-                            Change Password
-                          </span>
+                          <i class="bx bx-hide drop__icon"></i>
+                          <span className="dropdown__text">Viewed</span>
                         </li>
                         <li
                           className="dropdown__item"
@@ -195,7 +191,7 @@ const Header = () => {
                         <i className="bx bx-cart"></i>
                         <span>Giỏ hàng</span>
                         <div className="notification">
-                          <span>{localStorage.getItem("cartItem")}</span>
+                          <span>{newItem || 0}</span>
                         </div>
                       </li>
                     </Link>

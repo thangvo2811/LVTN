@@ -10,7 +10,6 @@ import { message } from "antd";
 
 const DeleteBrand = (props) => {
   const [open, setOpen] = React.useState(false);
-  const [allBrand, setALLBrand] = useState([]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -26,28 +25,14 @@ const DeleteBrand = (props) => {
       .delete(`http://localhost:8000/api/delete-brand/${id}/`)
       .then((res) => {
         console.log(res);
-
-        message.success("XÓA THƯƠNG HIỆU THÀNH CÔNG");
+        props.parentCallback(Date.now());
+        message.success("Xóa Thương Hiệu Thành Công");
       })
       .catch((err) => {
         console.log(err);
       });
     setOpen(false);
   };
-  const callAllBrand = async () => {
-    await axios
-      .get("http://localhost:8000/api/get-brand/")
-      .then((res) => {
-        setALLBrand(res.data.brand);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    callAllBrand();
-  }, []);
 
   return (
     <div>

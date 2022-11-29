@@ -1,7 +1,7 @@
 .register {
   @include flex(center, center);
   margin-top: calc(#{$header-height} * -1);
-  height: 900px;
+  height: 100%;
   background-image: url("../../assets/images/background/mainbg.jpg");
   background-repeat: no-repeat;
   background-size: 100% 100%;

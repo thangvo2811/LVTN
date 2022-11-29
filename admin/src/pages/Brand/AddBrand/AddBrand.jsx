@@ -11,7 +11,7 @@ import { message } from "antd";
 const AddBrand = (props) => {
   const [open, setOpen] = React.useState(false);
   const [nameBrand, setNameBrand] = useState("");
-  const [newBrand, setNewBrand] = useState([]);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -28,12 +28,18 @@ const AddBrand = (props) => {
       })
       .then((res) => {
         if (nameBrand === "") {
-          message.error("BẠN CHƯA NHẬP THƯƠNG HIỆU");
-        } else if (res.data.brand.errCode === 1) {
-          message.error("THƯƠNG HIỆU ĐÃ TỒN TẠI");
-        } else {
+          message.error("Bạn chưa nhập thương hiệu");
+          return;
+        }
+        if (res.data.brand.errCode === 1) {
+          message.error("Thương hiệu đã tồn tại");
+          return;
+        }
+        if (res.data.brand.errCode === 0) {
           console.log(res.data.brand);
-          message.success("THÊM THƯƠNG HIỆU THÀNH CÔNG");
+          props.parentCallback(Date.now());
+          message.success("Thêm Thương Hiệu Thành Công");
+          return;
         }
       })
       .catch((err) => {
@@ -62,7 +68,7 @@ const AddBrand = (props) => {
       >
         <DialogTitle id="alert-dialog-title"></DialogTitle>
         <DialogContent>
-          <div className="form-title">NEW BRAND</div>
+          <div className="form-title">Thêm Thương Hiệu Mới</div>
           <div className="form-input">
             <form>
               <input

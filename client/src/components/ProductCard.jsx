@@ -15,7 +15,7 @@ const ProductCard = (props) => {
       <div className="product-card">
         <div className="product-card__image">
           <img
-            src={pd}
+            src={product.img}
             alt=""
             onError={(e) => {
               e.target.setAttribute("src", pd);

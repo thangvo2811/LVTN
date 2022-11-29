@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Button from "../../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 import Helmet from "../../components/Helmet";
-import { loginUser, AddProductToCart } from "../../redux/apiCalls";
+import { loginUser } from "../../redux/apiCalls";
 import { useDispatch } from "react-redux";
 
 const Login = () => {

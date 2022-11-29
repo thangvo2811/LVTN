@@ -1,0 +1,86 @@
+import React, { useState } from "react";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { message } from "antd";
+import axios from "axios";
+
+const ChangePhone = (props) => {
+  const [open, setOpen] = useState(false);
+  const [newPhone, setNewPhone] = useState("");
+  const IdCus = localStorage.getItem("User");
+  const nameCus = props.name;
+  console.log(IdCus);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const callChangePhone = async (idCustomer, newPhone) => {
+    console.log(newPhone);
+    await axios
+      .put("http://localhost:8000/api/update-user/", {
+        id: idCustomer,
+        fullname: nameCus,
+        phonenumber: newPhone,
+        avatar: "",
+      })
+      .then((res) => {
+        console.log(res.data);
+        props.refresh();
+        message.success("CẬP NHẬT THÀNH CÔNG");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setOpen(false);
+  };
+  const handlePhone = (e) => {
+    e.preventDefault();
+    setNewPhone(e.target.value);
+  };
+
+  return (
+    <div>
+      <Button variant="outlined" onClick={handleClickOpen}>
+        Update
+      </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <div className="form-title">Update Phone</div>
+          <div className="form-input">
+            <form>
+              <input
+                type="text"
+                defaultValue={props.phone}
+                onChange={handlePhone}
+                pattern="[0-9]{10}"
+              />
+            </form>
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>
+            <span className="name-cancel">Cancel</span>
+          </Button>
+          <Button onClick={() => callChangePhone(IdCus, newPhone)} autoFocus>
+            <span className="name-save">Save</span>
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+};
+
+export default ChangePhone;

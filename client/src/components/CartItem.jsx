@@ -3,32 +3,51 @@ import PropTypes from "prop-types";
 
 import numberWithCommas from "../utils/numberWithCommas";
 import lp from "../assets/images/products/chuot-choi-game-co-day-logitech-g502-hero.jpg";
-import axios from "axios";
-import { message } from "antd";
-import Button from "./Button";
+import { useDispatch, useSelector } from "react-redux";
+import { addNumberCart, deleteCart } from "../redux/apiCalls";
+import {
+  addCartByCartIdAction,
+  addCartByProductIdAction,
+  addNumberCartDecrease,
+  addNumberCartIncrease,
+  removeCartByCartIdAction,
+} from "../redux/cartRedux";
 
 const CartItem = (props) => {
   const itemCart = props.cartItem;
+  const [quantity, setQuantity] = useState("");
 
-  const [quantity, setQuantity] = useState(0);
-
-  const handleDeleteProduct = async (id, e) => {
-    e.preventDefault();
-    await axios
-      .delete(`http://localhost:8000/api/handle-Delete-Cartitem/${id}/`)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  const newItem = useSelector((state) => state.cart.numberCart);
+  const newItemFromState = useSelector(
+    (state) => state.cart.numberCartByCartId
+  );
+  const newItemByCartId = newItemFromState[itemCart.id];
+  const dispatch = useDispatch();
 
   const increaseQuantity = () => {
-    setQuantity(quantity + 1);
+    // setQuantity(quantity + 1);
+    addNumberCart(dispatch, itemCart.id, "+");
+    dispatch(
+      addCartByCartIdAction({
+        cartId: itemCart.id,
+        currentAmount: itemCart.amount,
+      })
+    );
   };
   const decreaseQuantity = () => {
-    setQuantity(quantity - 1 < 0 ? 0 : quantity - 1);
+    // setQuantity(quantity - 1 < 0 ? 0 : quantity - 1);
+    addNumberCart(dispatch, itemCart.id, "-");
+    dispatch(
+      removeCartByCartIdAction({
+        cartId: itemCart.id,
+        currentAmount: itemCart.amount,
+      })
+    );
+  };
+
+  const handleDeleteCartItem = (e) => {
+    e.preventDefault();
+    deleteCart(dispatch, itemCart.id);
   };
 
   return (
@@ -38,32 +57,28 @@ const CartItem = (props) => {
           <img src={lp} alt="" />
         </div>
         <div className="cart-item__info">
-          <div className="cart-item__info__title">{itemCart.title}</div>
-          <div className="cart-item__info__price">
-            Đơn giá: {numberWithCommas(itemCart.unitprice)} VND
+          <div className="cart-item__info__title"></div>
+          <div className="cart-item__info__id">
+            Tên sản phẩm: {itemCart.CartItemProduct.name}
           </div>
           <div className="cart-item__info__brand">
-            Thương hiệu: {itemCart.brand_id}
+            Thương hiệu: {itemCart.CartItemProduct.ProductBrand.name}
           </div>
-
-          <div className="cart-item__info__id">Mã sp: {itemCart.id}</div>
+          <div className="cart-item__info__price">
+            Đơn giá: {numberWithCommas(itemCart.price)} VND
+          </div>
         </div>
         <div className="cart-item__total">
           <div className="cart-item__total__quantity">
             <i className="bx bx-minus" onClick={decreaseQuantity}></i>
-            <div>{itemCart.Cartitem.amount}</div>
+            <div>{newItemByCartId || 0}</div>
             <i className="bx bx-plus" onClick={increaseQuantity}></i>
           </div>
           <div className="cart-item__total__total">
-            Tổng :{" "}
-            {numberWithCommas(itemCart.Cartitem.amount * itemCart.unitprice)}{" "}
-            VND
+            Tổng : {numberWithCommas(itemCart.amount * itemCart.price)} VND
           </div>
         </div>
-        <div
-          className="cart-item__delete"
-          onClick={(e) => handleDeleteProduct(itemCart.id, e)}
-        >
+        <div className="cart-item__delete" onClick={handleDeleteCartItem}>
           <i className="bx bx-trash"></i>
         </div>
       </div>

@@ -2,10 +2,16 @@ import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import DeleteCategory from "./DeleteCategory/DeleteCategory";
+import UpdateCategory from "./UpdateCategory/UpdateCategory";
+import AddCategory from "./AddCategory/AddCategory";
 
 const Categories = () => {
   const [allCategory, setAllCategory] = useState([]);
-  const param = useParams();
+  const [reloadPage, setReloadPage] = useState("");
+  const callbackFunction = (childData) => {
+    setReloadPage(childData);
+  };
 
   const callAllCategory = async () => {
     await axios
@@ -17,28 +23,16 @@ const Categories = () => {
         console.log(err);
       });
   };
-  const callDeleteCategory = async (id, e) => {
-    e.preventDefault();
-    await axios
-      .delete(`http://localhost:8000/api/delete-Category/${id}/`)
-      .then((res) => {
-        console.log(res);
-        callAllCategory();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+
   useEffect(() => {
     callAllCategory();
-  }, []);
+  }, [reloadPage]);
   return (
     <div>
       <div className="page-header">
         <h2 className="page-header__title">Category</h2>
-        <div className="page-header__add">
-          <i className="bx bx-plus"></i>
-          <div>Add New</div>
+        <div>
+          <AddCategory parentCallback={callbackFunction}></AddCategory>
         </div>
       </div>
       <div className="row">
@@ -63,15 +57,23 @@ const Categories = () => {
                       <td>{item.description}</td>
                       <td>{item.parent_id}</td>
                       <td>
-                        <span className="card__body__edit">
-                          <i className="bx bxs-edit"></i>
-                        </span>
-                        <span
-                          className="card__body__delete"
-                          onClick={(e) => callDeleteCategory(item.id, e)}
-                        >
-                          <i className="bx bx-trash"></i>
-                        </span>
+                        <div className="card__body__features">
+                          <span className="card__body__features__edit">
+                            <UpdateCategory
+                              idcate={item.id}
+                              nameCate={item.name}
+                              parentIdCate={item.parent_id}
+                              descCate={item.description}
+                              parentCallback={callbackFunction}
+                            ></UpdateCategory>
+                          </span>
+                          <span className="card__body__features__delete">
+                            <DeleteCategory
+                              item={item.id}
+                              parentCallback={callbackFunction}
+                            ></DeleteCategory>
+                          </span>
+                        </div>
                       </td>
                     </tr>
                   ))}

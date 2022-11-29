@@ -1,38 +1,81 @@
 import React, { useCallback } from "react";
 import "./_userprofile.scss";
 import pf from "../../assets/images/UserProfile/man.jpg";
-import axios from "axios";
-import { useState, useEffect } from "react";
-import moment from "moment";
-import { DatePicker } from "antd";
-import "moment/locale/zh-cn";
 
-const UserProfile = () => {
+import { useState } from "react";
+
+import WishList from "./WishList";
+import { Tabs } from "antd";
+import MyAccount from "./MyAccount";
+import Viewed from "./Viewed";
+import Voucher from "./Voucher";
+import OrderList from "./OrderList/index";
+
+const UserProfile = (props) => {
   const [detailUser, setDetailUser] = useState({});
   const newCustomer = localStorage.getItem("User").toString();
-  console.log("asd");
-  const callUser = useCallback(async () => {
-    await axios
-      .get(`http://localhost:8000/api/get-by-Id/${newCustomer}`)
-      .then((res) => {
-        setDetailUser(res.data.customer);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [newCustomer]);
-  useEffect(() => {
-    callUser();
-  }, [callUser, newCustomer]);
+  const [tabPosition, setTabPosition] = useState("left");
+  // const changeTabPosition = (e) => {
+  //   setTabPosition(e.target.value);
+  // };
 
-  let newDate1 = new Date();
-  newDate1 = detailUser.birthday;
-  console.log(newDate1);
+  const tabContent = [
+    {
+      label: (
+        <div className="user__content__left__card__item">
+          <i className="bx bx-user "></i>
+          <span>Thông Tin Cá Nhân</span>
+        </div>
+      ),
+      key: 1,
+      children: <MyAccount />,
+    },
+    {
+      label: (
+        <div className="user__content__left__card__item">
+          <i className="bx bx-heart "></i>
+          <span>Danh Sách Yêu Thích</span>
+        </div>
+      ),
+      key: 2,
+      children: <WishList />,
+    },
+    {
+      label: (
+        <div className="user__content__left__card__item">
+          <i className="bx bx-hide"></i>
+          <span>Sản Phẩm Đã Xem</span>
+        </div>
+      ),
+      key: 3,
+      children: <Viewed />,
+    },
+    {
+      label: (
+        <div className="user__content__left__card__item">
+          <i class="bx bxs-shopping-bag-alt"></i>
+          <span>Danh Sách Đơn Hàng</span>
+        </div>
+      ),
+      key: 4,
+      children: <OrderList />,
+    },
+    {
+      label: (
+        <div className="user__content__left__card__item">
+          <i className="bx bxs-discount"></i>
+          <span>Mã Giảm Giá</span>
+        </div>
+      ),
+      key: 5,
+      children: <Voucher />,
+    },
+  ];
   return (
     <>
       <div className="user__profile">
         <p className="user__profile__url">
-          Home | <span className="user__profile__url__main">My account</span>
+          Home | <span className="user__profile__url__main">Tài Khoản</span>
         </p>
       </div>
       <div className="user__content">
@@ -44,118 +87,20 @@ const UserProfile = () => {
               alt=""
               className="user__content__left__profile__img"
             />
-            <div className="user__content__left__profile__name">
-              {detailUser.fullname}
-            </div>
           </div>
           <div className="user__content__left__card">
-            <div className="user__content__left__card__item">
-              <i className="bx bx-user "></i>
-              <span>Personal Information</span>
-            </div>
-            <div className="user__content__left__card__item">
-              <i className="bx bx-location-plus "></i>
-              <span>My Address</span>
-            </div>
-            <div className="user__content__left__card__item">
-              <i className="bx bx-heart "></i>
-              <span>My Wishlist</span>
-            </div>
-            <div className="user__content__left__card__item">
-              <i class="bx bxs-shopping-bag-alt"></i>
-              <span>Order List</span>
-            </div>
-            <div className="user__content__left__card__item">
-              <i className="bx bxs-discount"></i>
-              <span>Viewed</span>
-            </div>
-            <div className="user__content__left__card__item">
-              <i className="bx bxs-discount"></i>
-              <span>My Voucher</span>
-            </div>
+            <Tabs
+              tabPosition={tabPosition}
+              items={tabContent.map((tab) => {
+                return tab;
+              })}
+            />
           </div>
         </div>
         {/* end user content left */}
 
         {/* start user content right */}
-        <div className="user__content__right">
-          <div className="user__content__right__profile">
-            Personal Information
-          </div>
 
-          <div className="user__content__right__desc">
-            {/* start user content right form */}
-            <div className="user__content__right__desc__form">
-              <input
-                type="text"
-                className="form-input"
-                placeholder={detailUser?.fullname}
-                disabled
-              />
-              <input
-                type="email"
-                className="form-input"
-                placeholder={detailUser?.email}
-                disabled
-              />
-              {/* <input
-                className="form-date"
-                value={moment(detailUser.birthday).format("MM/DD/YYYY")}
-              /> */}
-              <DatePicker defaultValue={moment("2022-01-01", "YYYY-MM-DD")} />
-              <select className="form-input">
-                <option value="0" selected disabled>
-                  Select your gender
-                </option>
-                <option value="1">Male</option>
-                <option value="2">Female</option>
-                <option value="3">Other</option>
-              </select>
-              <div className="user__content__right__desc__form__submit">
-                <input type="submit" value="Save" className="form-submit" />
-              </div>
-            </div>
-            {/* end user content right form */}
-
-            {/* start user content right update */}
-            <div className="user__content__right__desc__update">
-              <h3>Phone and Email</h3>
-              <div className="user__content__right__desc__update__info">
-                <div className="user__content__right__desc__update__info__name">
-                  <i className="bx bx-phone"></i>
-                  <span>Phone</span>
-                </div>
-                <button className="user__content__right__desc__update__info__name__btn">
-                  Update
-                </button>
-              </div>
-
-              <div className="user__content__right__desc__update__info">
-                <div className="user__content__right__desc__update__info__name">
-                  <i className="bx bx-envelope"></i>
-                  <span>Email</span>
-                </div>
-                <button className="user__content__right__desc__update__info__name__btn">
-                  Update
-                </button>
-              </div>
-
-              <h3 className="user__content__right__desc__update__pw">
-                Security
-              </h3>
-              <div className="user__content__right__desc__update__info">
-                <div className="user__content__right__desc__update__info__name">
-                  <i className="bx bxs-key"></i>
-                  <span>PassWord</span>
-                </div>
-                <button className="user__content__right__desc__update__info__name__btn">
-                  Update
-                </button>
-              </div>
-            </div>
-            {/* end user content right update */}
-          </div>
-        </div>
         {/* end user content right */}
       </div>
     </>

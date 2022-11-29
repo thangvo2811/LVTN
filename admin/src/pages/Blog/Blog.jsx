@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import DeleteBlog from "./DeleteBlog/DeleteBlog";
+import AddBlog from "./AddBlog/AddBlog";
+import UpdateBlog from "./UpdateBlog/UpdateBlog";
 
 const Blog = () => {
   const [allBlog, setAllBlog] = useState([]);
+  const [reloadPage, setReloadPage] = useState("");
+  const callbackFunction = (childData) => {
+    setReloadPage(childData);
+  };
   const callAllBlog = async () => {
     await axios
       .get("http://localhost:8000/api/get-all-blog/")
@@ -15,28 +22,13 @@ const Blog = () => {
   };
   useEffect(() => {
     callAllBlog();
-  }, []);
+  }, [reloadPage]);
 
-  const handleDeleteBlog = async (id, e) => {
-    e.preventDefault();
-    await axios
-      .delete(`http://localhost:8000/api/delete-blog/${id}`)
-      .then((res) => {
-        console.log(res);
-        callAllBlog();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
   return (
     <div>
       <div className="page-header">
         <h2 className="page-header__title">Blog</h2>
-        <div className="page-header__add">
-          <i className="bx bx-plus"></i>
-          <div>Add New</div>
-        </div>
+        <AddBlog parentCallback={callbackFunction}></AddBlog>
       </div>
       <div className="row">
         <div className="col-12">
@@ -63,15 +55,23 @@ const Blog = () => {
                       <td>{item.name}</td>
 
                       <td>
-                        <span className="card__body__edit">
-                          <i className="bx bxs-edit"></i>
-                        </span>
-                        <span
-                          className="card__body__delete"
-                          onClick={(e) => handleDeleteBlog(item.id, e)}
-                        >
-                          <i className="bx bx-trash"></i>
-                        </span>
+                        <div className="card__body__features">
+                          <span className="card__body__edit">
+                            <UpdateBlog
+                              id={item.id}
+                              descBlog={item.Description}
+                              statusBlog={item.sta_id}
+                              nameBlog={item.name}
+                              parentCallback={callbackFunction}
+                            ></UpdateBlog>
+                          </span>
+                          <span className="card__body__delete">
+                            <DeleteBlog
+                              item={item.id}
+                              parentCallback={callbackFunction}
+                            ></DeleteBlog>
+                          </span>
+                        </div>
                       </td>
                     </tr>
                   ))}

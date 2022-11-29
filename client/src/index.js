@@ -5,16 +5,18 @@ import Layout from "./components/Layout";
 
 import { Provider } from "react-redux";
 import store from "./redux/store";
-
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
 import "../src/assets/boxicons-2.1.1/css/boxicons.min.css";
 import "../src/sass/index.scss";
+let persistor = persistStore(store);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
       <Layout />
-    </Provider>
-  </React.StrictMode>,
+    </PersistGate>
+  </Provider>,
   document.getElementById("root")
 );
 

@@ -4,10 +4,8 @@ import PropTypes from "prop-types";
 import Button from "../components/Button";
 import numberWithCommas from "../utils/numberWithCommas";
 import InputEmoji from "react-input-emoji";
-import { FaStar } from "react-icons/fa";
 
 import Rating from "@mui/material/Rating";
-import Stack from "@mui/material/Stack";
 
 import pf from "../assets/images/products/laptop-asus-tuf-gaming-f15-fx506lh_4_.jpg";
 import pd from "../assets/images/products/laptop-asus-rog-strix-g15-g513ih-hn015t-1.jpg";
@@ -16,28 +14,34 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addCart } from "../redux/apiCalls.js";
 import axios from "axios";
+import {
+  addNumberCartDecrease,
+  addNumberCartIncrease,
+} from "../redux/cartRedux";
 
 const ProductView = (props) => {
   const param = useParams();
-  const [quantity, setQuantity] = useState(1);
+  // const [quantity, setQuantity] = useState(1);
   const [text, setText] = useState("");
   const [commentProduct, setCommentProduct] = useState([]);
+  const dispatch = useDispatch();
+  const newCustomer = localStorage.getItem("User");
 
-  const imgs = [
-    {
-      id: 0,
-      value: pd,
-    },
-    {
-      id: 1,
-      value: pf,
-    },
-    {
-      id: 2,
-      value: pd,
-    },
-  ];
-  const [slider, setSlider] = useState(imgs[0]);
+  // const imgs = [
+  //   {
+  //     id: 0,
+  //     value: pd,
+  //   },
+  //   {
+  //     id: 1,
+  //     value: pf,
+  //   },
+  //   {
+  //     id: 2,
+  //     value: pd,
+  //   },
+  // ];
+  // const [slider, setSlider] = useState(imgs[0]);
 
   const callCommentProduct = async () => {
     await axios
@@ -56,29 +60,26 @@ const ProductView = (props) => {
     callCommentProduct();
   }, [param.category_id]);
 
-  useEffect(() => {}, [param.id]);
   const increaseQuantity = () => {
-    setQuantity(quantity + 1);
+    // setQuantity(dispatch(addNumberCartIncrease));
+    dispatch(addNumberCartIncrease());
   };
   const decreaseQuantity = () => {
-    setQuantity(quantity < 2 ? 1 : quantity - 1);
+    // setQuantity(quantity < 2 ? 1 : quantity - 1);
+    // setQuantity(dispatch(addNumberCartDecrease));
+    dispatch(addNumberCartDecrease());
   };
 
   const handleOnEnter = (text) => {
     console.log("Customer:", text);
   };
 
-  // const newUser = useSelector((state) => state.user.currentUser);
+  // const handleClick = (index) => {
+  //   console.log(index);
+  //   const imgSlider = imgs[index];
+  //   setSlider(imgSlider);
+  // };
 
-  const newCustomer = localStorage.getItem("User");
-
-  const handleClick = (index) => {
-    console.log(index);
-    const imgSlider = imgs[index];
-    setSlider(imgSlider);
-  };
-
-  const dispatch = useDispatch();
   const handleAddCart = () => {
     console.log("add cart");
     const newProduct = props.product_id;
@@ -90,13 +91,13 @@ const ProductView = (props) => {
       <div className="product-top">
         <div className="product-top__images">
           <div className="product-top__images__main">
-            <img src={slider.value} alt="" />
+            <img src={props.imgProduct} alt="" />
           </div>
-          <div className="product-top__images__sub">
+          {/* <div className="product-top__images__sub">
             {imgs?.map((item, index) => (
               <img src={item.value} alt="" onClick={() => handleClick(index)} />
             ))}
-          </div>
+          </div> */}
         </div>
         <div className="product-top__info">
           <div className="product-top__info__title">{props.nameProduct}</div>
@@ -117,20 +118,12 @@ const ProductView = (props) => {
               </div>
               <div className="product-top__info__quantity">
                 <i className="bx bx-minus" onClick={decreaseQuantity}></i>
-                <div>{quantity}</div>
+                <div>1</div>
                 <i className="bx bx-plus" onClick={increaseQuantity}></i>
               </div>
+
               <div className="product-top__info__cart">
-                <Button size="sm" animate2={true}>
-                  mua ngay
-                </Button>
-                <Button
-                  size="sm"
-                  animate2={true}
-                  onClick={() => {
-                    handleAddCart();
-                  }}
-                >
+                <Button size="sm" animate2={true} onClick={handleAddCart}>
                   thêm vào giỏ hàng
                 </Button>
               </div>
@@ -144,7 +137,6 @@ const ProductView = (props) => {
                   {props.optionNameProduct}
                 </div>
               </div>
-
               {/* end option name product */}
 
               {/* start option attribute product */}

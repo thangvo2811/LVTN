@@ -21,10 +21,33 @@
     margin-bottom: 5px;
     display: none;
   }
-  //   input:invalid[focused="true"] {
-  //     border: solid 1px #790a0a;
-  //   }
-  //   input:invalid[focused="true"] ~ span {
-  //     display: block;
-  //   }
+  select {
+    width: 100%;
+    height: 44px;
+  }
+  input:invalid[focused="true"] {
+    border: solid 1px #790a0a;
+  }
+  input:invalid[focused="true"] ~ span {
+    display: block;
+  }
+}
+.form-title {
+  font-size: 20px;
+  color: #000;
+  text-align: center;
+}
+.name-cancel {
+  color: rgb(52, 50, 50);
+}
+.name-save {
+  color: #1976d2;
+}
+.form-input-pw {
+  input {
+    width: 100%;
+    border: 1px solid;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
 }

@@ -55,6 +55,7 @@ const Product = () => {
                 product_id={item.id ? item.id : ""}
                 imgProduct={item.img ? item.img : ""}
                 nameProduct={item.name ? item.name : ""}
+                quantityProduct={item.IntialQuantity ? item.IntialQuantity : ""}
                 priceProduct={item.unitprice ? item.unitprice : ""}
                 statusProduct={item.status === 1 ? "Còn Hàng" : "Hết Hàng"}
                 brandProduct={item.brand_id ? item.ProductBrand.name : ""}

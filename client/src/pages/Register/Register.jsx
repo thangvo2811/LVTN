@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 import Helmet from "../../components/Helmet";
@@ -6,6 +6,7 @@ import axios from "axios";
 import "antd/dist/antd.css";
 import { message } from "antd";
 import Button from "./../../components/Button";
+import FormInput from "../../components/FormInput";
 
 const Register = () => {
   const [values, setValues] = useState({
@@ -19,8 +20,13 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassWord] = useState("");
   const [userName, setUserName] = useState("");
+  const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [birthDay, setBirthDay] = useState("");
+  const [allCity, setAllCity] = useState([]);
+  const [allDistrict, setAllDistrict] = useState([]);
+  const [cityById, setCityById] = useState("");
+  const [districtById, setDistrictById] = useState("");
 
   const callApi = async () => {
     await axios
@@ -31,6 +37,7 @@ const Register = () => {
         phonenumber: phone,
         avatar: "",
         birthday: birthDay,
+        address: address,
       })
       .then((res) => {
         if (res.data.errCode === 0) {
@@ -49,60 +56,71 @@ const Register = () => {
       });
   };
 
-  // const inputs = [
-  //   {
-  //     name: "email",
-  //     type: "email",
-  //     placeholder: "Email",
-  //     errorMessage: "Email không hợp lệ",
-  //     label: "Email",
-  //     pattern: "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+[a-zA-Z0-9-.]+$",
-  //     required: true,
-  //   },
+  const inputs = [
+    {
+      key: 1,
+      name: "email",
+      type: "email",
+      placeholder: "Email",
+      errorMessage: "Email không hợp lệ",
+      label: "Email",
+      // pattern: "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+[a-zA-Z0-9-.]+$",
+      required: true,
+    },
 
-  //   {
-  //     name: "password",
-  //     type: "password",
-  //     placeholder: "Password",
-  //     errorMessage:
-  //       "Password giới hạn từ 8-20 kí tự và có ít nhất một kí tự chữ, một kí tự số",
-  //     label: "Mật khẩu",
-  //     // pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
-  //     required: true,
-  //   },
+    {
+      key: 2,
+      name: "password",
+      type: "password",
+      placeholder: "Mật khẩu",
+      errorMessage: "8-20 kí tự và có ít nhất một kí tự chữ, một kí tự số",
+      label: "Mật khẩu",
+      // pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
+      required: true,
+    },
 
-  //   {
-  //     name: "username",
-  //     type: "text",
-  //     placeholder: "Full name",
-  //     errorMessage: "Fullname không được trống",
-  //     label: "Full Name",
-  //     pattern: null,
-  //     required: true,
-  //   },
-  //   {
-  //     name: "phone",
-  //     type: "text",
-  //     placeholder: "Phone",
-  //     errorMessage: "Phone phải có ít nhất 10 số",
-  //     label: "Phone",
-  //     pattern: "[0-9]{10}",
-  //     required: true,
-  //   },
-  //   {
-  //     name: "birthday",
-  //     type: "date",
-  //     placeholder: "Date of birth",
-  //     errorMessage: "Date of birth không được trống",
-  //     label: "Date of birth",
-  //     pattern: "mm-dd-yyyy",
-  //     required: true,
-  //   },
-  // ];
+    {
+      key: 3,
+      name: "username",
+      type: "text",
+      placeholder: "Họ tên",
+      errorMessage: "Họ tên không được trống",
+      label: "Họ tên",
+      pattern: null,
+      required: true,
+    },
+    {
+      key: 4,
+      name: "phone",
+      type: "text",
+      placeholder: "Phone",
+      errorMessage: "Phone phải có ít nhất 10 số",
+      label: "Phone",
+      pattern: "[0-9]{10}",
+      required: true,
+    },
+    {
+      key: 5,
+      name: "birthday",
+      type: "date",
+      placeholder: "Date of birth",
+      errorMessage: "Năm sinh không được trống",
+      label: "Date of birth",
+      pattern: "YYYY-MM-DD",
+      required: true,
+    },
+    {
+      key: 6,
+      name: "address",
+      type: "text",
+      placeholder: "Địa chỉ",
+      errorMessage: "Địa chỉ không được trống",
+      label: "Đỉa chỉ",
+      pattern: null,
+      required: true,
+    },
+  ];
 
-  // const onChangeHandler = (e) => {
-  //   setValues({ ...values, [e.target.name]: e.target.value });
-  // };
   const handleEmail = (e) => {
     setEmail(e.target.value);
   };
@@ -118,54 +136,78 @@ const Register = () => {
   const handleDate = (e) => {
     setBirthDay(e.target.value);
   };
+  const handleAddress = (e) => {
+    setAddress(e.target.value);
+  };
   const onHandleSubmit = (e) => {
     e.preventDefault();
     callApi();
   };
 
+  const callAllCity = async (id) => {
+    await axios
+      .get("https://vapi.vnappmob.com/api/province/")
+      .then((res) => {
+        console.log(res.data.results);
+        setAllCity(res.data.results);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const callAllDistrict = async (id) => {
+    await axios
+      .get(`https://vapi.vnappmob.com//api/province/district/${id}`)
+      .then((res) => {
+        console.log(res.data.results);
+        setAllDistrict(res.data.results);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    callAllCity();
+    callAllDistrict(cityById);
+  }, [cityById]);
+
+  console.log({ cityById, districtById });
   return (
     <Helmet name="Đăng kí">
       <div className="register">
         <div className="register__container">
           <div className="register__title">Đăng kí</div>
           <div className="register__content">
-            <form>
+            <form onSubmit={onHandleSubmit}>
               <div className="form-input">
-                <label>Email</label>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  onChange={handleEmail}
-                />
-                <label>Password</label>
-                <input
-                  type="password"
-                  placeholder="Password"
-                  onChange={handlePassword}
-                />
-                <label>UserName</label>
-                <input
-                  type="text"
-                  placeholder="UserName"
-                  onChange={handleName}
-                />
-
-                <label>Phone</label>
-                <input
-                  type="phone"
-                  placeholder="Phone"
-                  onChange={handlePhone}
-                />
-
-                <label>Date of birth</label>
-                <input
-                  type="date"
-                  placeholder="Date of birth"
-                  onChange={handleDate}
-                />
+                <FormInput {...inputs[0]} onChange={handleEmail}></FormInput>
+                <FormInput {...inputs[1]} onChange={handlePassword}></FormInput>
+                <FormInput {...inputs[2]} onChange={handleName}></FormInput>
+                <FormInput {...inputs[3]} onChange={handlePhone}></FormInput>
+                <FormInput {...inputs[4]} onChange={handleDate}></FormInput>
+                <label>Thành Phố</label>
+                <select onChange={(e) => setCityById(e.target.value)}>
+                  <option>Chọn Thành Phố/ Tỉnh</option>
+                  {allCity?.map((item, index) => (
+                    <option key={index} value={item.province_id}>
+                      {item.province_name}
+                    </option>
+                  ))}
+                </select>
+                <label>Quận/ Huyện</label>
+                <select onChange={(e) => setDistrictById(e.target.value)}>
+                  <option>Chọn Quận/ Huyện</option>
+                  {allDistrict?.map((item, index) => (
+                    <option key={index} value={item.district_id}>
+                      {item.district_id ? item.district_name : ""}
+                    </option>
+                  ))}
+                </select>
+                <FormInput {...inputs[5]} onChange={handleAddress}></FormInput>
               </div>
-
-              <Button onClick={onHandleSubmit} size="sm" animate2={true}>
+              <Button size="sm" animate2={true}>
                 ĐĂNG KÝ
               </Button>
             </form>

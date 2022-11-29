@@ -8,34 +8,38 @@ import { Link } from "react-router-dom";
 
 import numberWithCommas from "../../utils/numberWithCommas";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import {
+  addCartByCartIdAction,
+  initialCartByCartIdAction,
+} from "../../redux/cartRedux";
 
 const Cart = () => {
-  const [products, setProducts] = useState();
+  const [cartItem, setCartItem] = useState([]);
   // const [totalPrice, setTotalPrice] = useState();
   // const [totalProduct, setTotalProduct] = useState();
   const newCustomer = localStorage.getItem("User");
+  const dispatch = useDispatch();
   const callCartItem = async () => {
     await axios
-      .get("http://localhost:8000/api/get-all-cart")
+      .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}/`)
       .then((res) => {
-        console.log(res.data.Cart);
-        setProducts(res.data.Cart);
+        console.log(res.data.Cartitem);
+        setCartItem(res.data.Cartitem);
+        res.data.Cartitem.forEach((item) => {
+          dispatch(
+            initialCartByCartIdAction({
+              cartId: item.id,
+              currentAmount: item.amount,
+            })
+          );
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  const handleDeleteAll = async (id, e) => {
-    e.preventDefault();
-    await axios
-      .delete(`http://localhost:8000/api/handle-Delete-All-Cartitem/${id}/`)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+
   useEffect(() => {
     callCartItem();
   }, []);
@@ -44,26 +48,20 @@ const Cart = () => {
       <div className="cart">
         <div className="cart__desc">
           <div className="cart__desc__item">
-            {newCustomer
-              ? products?.map((item, index) =>
-                  item.ProductItemInCart.map((data, i) => {
-                    return <CartItem cartItem={data} key={i}></CartItem>;
-                  })
-                )
-              : ""}
+            {cartItem?.map((item, index) => {
+              return <CartItem cartItem={item} key={index}></CartItem>;
+            })}
           </div>
           <div className="cart__desc__clear">
-            {products?.map((item, index) =>
-              item?.ProductItemInCart?.map((data, i) => (
-                <Button
-                  size="sm"
-                  animate2={true}
-                  onClick={(e) => handleDeleteAll(data.Cartitem.cart_id, e)}
-                >
-                  Clear All
-                </Button>
-              ))
-            )}
+            {/* {cartItem?.map((item, index) => (
+              <Button
+                size="sm"
+                animate2={true}
+                onClick={(e) => handleDeleteAll(item.cart_id, e)}
+              >
+                Clear All
+              </Button>
+            ))} */}
           </div>
         </div>
 

@@ -5,12 +5,14 @@ import AddBrand from "./AddBrand/AddBrand";
 
 import "./style.scss";
 import DeleteBrand from "./DeleteBrand/DeleteBrand";
-import EditBrand from "./EditBrand/EditBrand";
+import UpdateBrand from "./UpdateBrand/UpdateBrand";
 
 const Brand = () => {
   const [allBrand, setAllBrand] = useState([]);
-  const data = useState(Date.now());
-
+  const [reloadPage, setReloadPage] = useState("");
+  const callbackFunction = (childData) => {
+    setReloadPage(childData);
+  };
   const callAllBrand = async () => {
     await axios
       .get("http://localhost:8000/api/get-brand/")
@@ -24,14 +26,14 @@ const Brand = () => {
 
   useEffect(() => {
     callAllBrand();
-  }, [data]);
+  }, [reloadPage]);
 
   return (
     <div>
       <div className="page-header">
         <h2 className="page-header__title">Brand</h2>
         <div>
-          <AddBrand></AddBrand>
+          <AddBrand parentCallback={callbackFunction}></AddBrand>
         </div>
       </div>
       <div className="row">
@@ -55,11 +57,18 @@ const Brand = () => {
                         <div className="card__body__features">
                           <span className="card__body__features__edit">
                             {/* <i className="bx bxs-edit"></i> */}
-                            {/* <DeleteBrand id={item.id} item={item}></DeleteBrand> */}
-                            <EditBrand name={item.name}></EditBrand>
+
+                            <UpdateBrand
+                              name={item.name}
+                              id={item.id}
+                              parentCallback={callbackFunction}
+                            ></UpdateBrand>
                           </span>
                           <span className="card__body__features__delete">
-                            <DeleteBrand item={item.id}></DeleteBrand>
+                            <DeleteBrand
+                              item={item.id}
+                              parentCallback={callbackFunction}
+                            ></DeleteBrand>
                           </span>
                         </div>
                       </td>

@@ -31,7 +31,7 @@ const Categories = () => {
     await axios
       .get("http://localhost:8000/api/get-Category/")
       .then((res) => {
-        setAllCategory(res.data);
+        setAllCategory(res.data.category);
       })
       .catch((err) => {
         console.log(err);
@@ -41,7 +41,7 @@ const Categories = () => {
     await axios
       .get("http://localhost:8000/api/get-brand/")
       .then((res) => {
-        setAllBrand(res.data);
+        setAllBrand(res.data.brand);
       })
       .catch((err) => {
         console.log(err);
