@@ -36,12 +36,12 @@ const Comments = () => {
                 <thead>
                   <tr>
                     <td>ID</td>
-                    <td>CustomerID</td>
-                    <td>ProductID</td>
-                    <td>Description</td>
-                    <td>Rate</td>
-                    <td>Status</td>
-                    <td>Settings</td>
+                    <td>Mã Khách Hàng</td>
+                    <td>Mã Sản Phẩm</td>
+                    <td>Nội Dung</td>
+                    <td>Đánh Giá</td>
+                    <td>Tình Trạng</td>
+                    <td>Cài Đặt</td>
                   </tr>
                 </thead>
                 <thead>

@@ -6,7 +6,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
-import { message } from "antd";
+import { message, Input } from "antd";
+import TextArea from "antd/es/input/TextArea";
 const AddBlog = (props) => {
   const [open, setOpen] = React.useState(false);
   const [descBlog, setDescBlog] = useState("");
@@ -53,7 +54,7 @@ const AddBlog = (props) => {
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
         <div className="form-name">
-          <i className="bx bx-plus">Add New</i>
+          <i className="bx bx-plus">Thêm Bài Blog</i>
         </div>
       </Button>
       <Dialog
@@ -67,29 +68,29 @@ const AddBlog = (props) => {
           <div className="form-title">Thêm Bài Viết Mới</div>
           <div className="form-input">
             <form>
+              <label>Name</label>
+              <Input type="text" placeholder="Name" onChange={handleNameBlog} />
               <label>Mô tả</label>
-              <textarea
-                rows="4"
-                cols="70"
+              <TextArea
+                rows="8"
+                cols="111"
                 type="text"
                 placeholder="Name"
                 onChange={handleDescBlog}
               />
               <label>Status</label>
-              <input
+              <Input
                 type="text"
                 placeholder="Status"
                 onChange={handleStatusBlog}
               />
-              <label>Name</label>
-              <input type="text" placeholder="Name" onChange={handleNameBlog} />
             </form>
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Hủy</Button>
           <Button onClick={() => handleAddBlog(descBlog, statusBlog, nameBlog)}>
-            OK
+            Thêm
           </Button>
         </DialogActions>
       </Dialog>

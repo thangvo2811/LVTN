@@ -10,11 +10,13 @@ import Products from "../pages/Products/Products";
 import Blog from "../pages/Blog/Blog";
 import Option from "../pages/Option/Option";
 import Comments from "../pages/Comments/Comments";
+import Login from "../pages/Login/Login";
 
 const Routes = () => {
   return (
     <Switch>
       <Route path="/" exact component={Dashboard} />
+      <Route path="/login" exact component={Login} />
       <Route path="/customers" component={Customers} />
       <Route path="/categories" component={Categories} />
       <Route path="/brand" component={Brand} />

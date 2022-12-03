@@ -23,7 +23,7 @@ const DeleteBlog = (props) => {
       .then((res) => {
         console.log(res.data);
         props.parentCallback(Date.now());
-        message.success("XÓA BLOG THÀNH CÔNG");
+        message.success("Xòa Bài Blog Thành Công");
       });
     setOpen(false);
   };
@@ -41,8 +41,8 @@ const DeleteBlog = (props) => {
         <DialogTitle id="alert-dialog-title"></DialogTitle>
         <DialogContent>Bạn có muốn xóa không ?</DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={(e) => handleDeleteBlog(e, props.item)}>OK</Button>
+          <Button onClick={handleClose}>Hủy</Button>
+          <Button onClick={(e) => handleDeleteBlog(e, props.item)}>Thêm</Button>
         </DialogActions>
       </Dialog>
     </div>

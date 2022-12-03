@@ -77,7 +77,7 @@ const Login = () => {
               </Link>
             </div>
             <div className="login__redirect">
-              <Link to={"/register"}>
+              <Link to={"/user"}>
                 <span> Quên mật khẩu ?</span>
               </Link>
             </div>

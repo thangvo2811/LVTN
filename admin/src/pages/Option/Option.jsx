@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import DeleteOption from "./DeleteOption/DeleteOption";
+import AddOption from "./AddOption/AddOption";
+import UpdateOption from "./UpdateOption/UpdateOption";
 
 const Option = () => {
   const [allOption, setAllOption] = useState([]);
+  const [reloadPage, setReloadPage] = useState("");
+  const callbackFunction = (childData) => {
+    setReloadPage(childData);
+  };
   const callAllOption = async () => {
     await axios
-      .get(
-        "http://localhost:8000/api/get-option-by-optionid/?option_id=&product_id="
-      )
+      .get("http://localhost:8000/api/get-option-product/")
       .then((res) => {
         setAllOption(res.data.Option);
       })
@@ -19,29 +24,13 @@ const Option = () => {
 
   useEffect(() => {
     callAllOption();
-  }, []);
+  }, [reloadPage]);
 
-  const param = useParams();
-  const handleDeleteOption = async (id, e) => {
-    e.preventDefault();
-    await axios
-      .delete(`http://localhost:8000/api/delete-option/${param.id}/`)
-      .then((res) => {
-        console.log(res.data.Option);
-        callAllOption();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
   return (
     <div>
       <div className="page-header">
-        <h2 className="page-header__title">Option</h2>
-        <div className="page-header__add">
-          <i className="bx bx-plus"></i>
-          <div>Add New</div>
-        </div>
+        <h2 className="page-header__title">Thuộc Tính</h2>
+        <AddOption parentCallback={callbackFunction}></AddOption>
       </div>
       <div className="row">
         <div className="col-12">
@@ -51,36 +40,45 @@ const Option = () => {
                 <thead>
                   <tr>
                     <td>ID</td>
-                    <td>Name</td>
-                    <td>Price</td>
-                    <td>Quantity</td>
-                    <td>ProductID</td>
-                    <td>OptionID</td>
-                    <td>Settings</td>
+                    <td>Tên</td>
+                    <td>Giá</td>
+                    <td>Mã Sản Phẩm</td>
+                    <td>Mã Thuộc Tính</td>
+                    <td>Cài Đặt</td>
                   </tr>
                 </thead>
                 <thead>
-                  {allOption?.map((item, index) => (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{item.name}</td>
-                      <td>{item.price}</td>
-                      <td>{item.quantity}</td>
-                      <td>{item.product_id}</td>
-                      <td>{item.option_id}</td>
-                      <td>
-                        <span className="card__body__edit">
-                          <i className="bx bxs-edit"></i>
-                        </span>
-                        <span
-                          className="card__body__delete"
-                          onClick={(e) => handleDeleteOption(item.option_id, e)}
-                        >
-                          <i className="bx bx-trash"></i>
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
+                  {allOption
+                    ?.sort((a, b) => a.id - b.id)
+                    .map((item, index) => (
+                      <tr key={index}>
+                        <td>{item.id}</td>
+                        <td>{item.name}</td>
+                        <td>{item.price}</td>
+                        <td>{item.product_id}</td>
+                        <td>{item.option_id}</td>
+                        <td>
+                          <div className="card__body__features">
+                            <span className="card__body__features__edit">
+                              <UpdateOption
+                                id={item.id}
+                                name={item.name}
+                                price={item.price}
+                                idProduct={item.product_id}
+                                idOption={item.option_id}
+                                parentCallback={callbackFunction}
+                              ></UpdateOption>
+                            </span>
+                            <span className="card__body__features__delete">
+                              <DeleteOption
+                                item={item.id}
+                                parentCallback={callbackFunction}
+                              ></DeleteOption>
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                 </thead>
               </table>
             </div>

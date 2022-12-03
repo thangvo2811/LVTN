@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DeleteProduct from "./DeleteProduct/DeleteProduct";
+import AddProduct from "./AddProduct/AddProduct";
+import "./style.scss";
+import UploadProduct from "./UpdateProduct/UploadProduct";
 
 const Products = () => {
   const [allProduct, setAllProduct] = useState([]);
@@ -27,10 +30,9 @@ const Products = () => {
   return (
     <div>
       <div className="page-header">
-        <h2 className="page-header__title">Product</h2>
-        <div className="page-header__add">
-          <i className="bx bx-plus"></i>
-          <div>Add New</div>
+        <h2 className="page-header__title">Sản Phẩm</h2>
+        <div>
+          <AddProduct parentCallback={callbackFunction}></AddProduct>
         </div>
       </div>
       <div className="row">
@@ -41,49 +43,66 @@ const Products = () => {
                 <thead>
                   <tr>
                     <td>ID</td>
-                    <td>Name</td>
-                    <td>unitPrice</td>
-                    <td>CurrentQuantity</td>
-                    <td>IntialQuantity</td>
-                    <td>Description</td>
-                    <td>Status</td>
-                    <td>Brand_id</td>
-                    <td>Category_id</td>
-                    <td>Img</td>
-                    <td>Settings</td>
+                    <td>Tên Sản Phẩm</td>
+                    <td>Hình Ảnh</td>
+                    <td>Giá</td>
+                    <td>Số Lượng Hiện Tại</td>
+                    <td>Số Lượng Ban Đầu</td>
+                    <td>Mô Tả</td>
+                    <td>Mã Danh Mục</td>
+                    <td>Mã Thương Hiệu</td>
+                    <td>Tình Trạng</td>
+                    <td>Cài Đặt</td>
                   </tr>
                 </thead>
                 <thead>
-                  {allProduct?.map((item, index) => (
-                    <tr key={index}>
-                      <td>{item.id}</td>
-                      <td>{item.name}</td>
-                      <td>{item.unitprice}</td>
-                      <td>{item.currentQuantity}</td>
-                      <td>{item.IntialQuantity}</td>
-                      <td>{item.Description}</td>
-                      <td>{item.status}</td>
-                      <td>{item.brand_id}</td>
-                      <td>{item.category_id}</td>
-                      <td>{item.img}</td>
-                      <td>
-                        <div className="card__body__features">
-                          <span className="card__body__features__edit">
-                            <DeleteProduct
-                              item={item.id}
-                              parentCallback={callbackFunction}
-                            ></DeleteProduct>
-                          </span>
-                          <span className="card__body__features__delete">
-                            <DeleteProduct
-                              item={item.id}
-                              parentCallback={callbackFunction}
-                            ></DeleteProduct>
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
+                  {allProduct
+                    ?.sort((a, b) => a.id - b.id)
+                    .map((item, index) => (
+                      <tr key={index}>
+                        <td>{item.id}</td>
+                        <td>
+                          <div className="word-wrap">{item.name}</div>
+                        </td>
+                        <td>
+                          <img
+                            className="product-img"
+                            src={item.img ? item.img : item.name}
+                          />
+                        </td>
+                        <td>{item.unitprice}</td>
+                        <td>{item.currentQuantity}</td>
+                        <td>{item.IntialQuantity}</td>
+                        <td>
+                          <div className="word-wrap">{item.Description}</div>
+                        </td>
+                        <td>{item.category_id}</td>
+                        <td>{item.brand_id}</td>
+                        <td>{item.status}</td>
+                        <td>
+                          <div className="card__body__features">
+                            <span className="card__body__features__edit">
+                              <UploadProduct
+                                id={item.id}
+                                nameProduct={item.name}
+                                idCate={item.category_id}
+                                idBrand={item.brand_id}
+                                price={item.unitprice}
+                                imgProduct={item.img}
+                                descProduct={item.Description}
+                                parentCallback={callbackFunction}
+                              ></UploadProduct>
+                            </span>
+                            <span className="card__body__features__delete">
+                              <DeleteProduct
+                                item={item.id}
+                                parentCallback={callbackFunction}
+                              ></DeleteProduct>
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                 </thead>
               </table>
             </div>

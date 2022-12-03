@@ -5,7 +5,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { message } from "antd";
+import { Input, message } from "antd";
 import axios from "axios";
 
 const ChangePhone = (props) => {
@@ -49,7 +49,7 @@ const ChangePhone = (props) => {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Update
+        Cập Nhật
       </Button>
       <Dialog
         open={open}
@@ -58,10 +58,10 @@ const ChangePhone = (props) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogContent>
-          <div className="form-title">Update Phone</div>
+          <div className="form-title">Cập Nhật Số Điện Thoại</div>
           <div className="form-input">
             <form>
-              <input
+              <Input
                 type="text"
                 defaultValue={props.phone}
                 onChange={handlePhone}
@@ -72,10 +72,10 @@ const ChangePhone = (props) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>
-            <span className="name-cancel">Cancel</span>
+            <span className="name-cancel">Hủy</span>
           </Button>
           <Button onClick={() => callChangePhone(IdCus, newPhone)} autoFocus>
-            <span className="name-save">Save</span>
+            <span className="name-save">Lưu</span>
           </Button>
         </DialogActions>
       </Dialog>

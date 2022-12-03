@@ -5,8 +5,10 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { Input } from "antd";
 import axios from "axios";
 import { message } from "antd";
+import TextArea from "antd/es/input/TextArea";
 
 const UpdateCategory = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -77,19 +79,19 @@ const UpdateCategory = (props) => {
           <div className="form-input">
             <form>
               <label>Mã</label>
-              <input type="number" defaultValue={props.idcate} disabled />
+              <Input type="number" defaultValue={props.idcate} disabled />
               <label>Tên danh mục</label>
-              <input
+              <Input
                 type="text"
                 defaultValue={props.nameCate}
                 onChange={handleNameCate}
               />
               <label>Mã Danh Mục</label>
-              <input type="number" defaultValue={props.parentIdCate} disabled />
+              <Input type="number" defaultValue={props.parentIdCate} />
               <label>Mô Tả Danh Mục</label>
-              <input
-                // rows="4"
-                // cols="111"
+              <TextArea
+                rows="4"
+                cols="111"
                 type="text"
                 defaultValue={props.descCate}
                 onChange={handleDescCate}
@@ -98,13 +100,13 @@ const UpdateCategory = (props) => {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Hủy</Button>
           <Button
             onClick={() =>
               callUpdateCategory(id, nameCategory, parentID, newDesc)
             }
           >
-            OK
+            Cập Nhật
           </Button>
         </DialogActions>
       </Dialog>

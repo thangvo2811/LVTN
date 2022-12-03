@@ -6,6 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
+import { Input } from "antd";
 import { message } from "antd";
 
 const UpdateBrand = (props) => {
@@ -59,9 +60,9 @@ const UpdateBrand = (props) => {
           <div className="form-input">
             <form>
               <label>Id</label>
-              <input type="number" defaultValue={props.id} disabled />
-              <label>Tên danh mục</label>
-              <input
+              <Input type="number" defaultValue={props.id} disabled />
+              <label>Tên thương hiệu</label>
+              <Input
                 type="text"
                 defaultValue={props.name}
                 onChange={onChange}
@@ -70,8 +71,10 @@ const UpdateBrand = (props) => {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={() => handleUpdateBrand(id, nameBrand)}>OK</Button>
+          <Button onClick={handleClose}>Hủy</Button>
+          <Button onClick={() => handleUpdateBrand(id, nameBrand)}>
+            Cập Nhật
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

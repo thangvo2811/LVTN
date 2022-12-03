@@ -43,26 +43,27 @@ const Customers = () => {
                   </tr>
                 </thead>
                 <thead>
-                  {/* {allCustomer?.map((item, index) => ( */}
-                  <tr>
-                    <td>{allCustomer.id}</td>
-                    <td>{allCustomer.email}</td>
-                    <td>{allCustomer.fullname}</td>
-                    <td>{allCustomer.phonenumber}</td>
-                    <td>{allCustomer.avatar}</td>
-
-                    <td>{allCustomer.birthday}</td>
-                    <td>{allCustomer.address}</td>
-                    <td>
-                      <span className="card__body__edit">
-                        <i className="bx bxs-edit"></i>
-                      </span>
-                      <span className="card__body__delete">
-                        <i className="bx bx-trash"></i>
-                      </span>
-                    </td>
-                  </tr>
-                  {/* ))} */}
+                  {allCustomer
+                    ?.sort((a, b) => a.id - b.id)
+                    .map((item, index) => (
+                      <tr>
+                        <td>{item.id}</td>
+                        <td>{item.email}</td>
+                        <td>{item.fullname}</td>
+                        <td>{item.phonenumber}</td>
+                        <td>{item.avatar}</td>
+                        <td>{item.birthday}</td>
+                        <td>{item.address}</td>
+                        <td>
+                          <span className="card__body__edit">
+                            <i className="bx bxs-edit"></i>
+                          </span>
+                          <span className="card__body__delete">
+                            <i className="bx bx-trash"></i>
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
                 </thead>
               </table>
             </div>

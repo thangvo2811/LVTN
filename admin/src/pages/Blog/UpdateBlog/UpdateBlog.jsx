@@ -78,13 +78,13 @@ const UpdateBlog = (props) => {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Hủy</Button>
           <Button
             onClick={() =>
               callUpdateBlog(idBlog, descBlog, statusBlog, nameBlog)
             }
           >
-            OK
+            Cập Nhật
           </Button>
         </DialogActions>
       </Dialog>

@@ -5,6 +5,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { Input } from "antd";
 import axios from "axios";
 import { message } from "antd";
 
@@ -48,7 +49,7 @@ const AddCategory = (props) => {
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
         <div className="form-name">
-          <i className="bx bx-plus">Add New</i>
+          <i className="bx bx-plus">Thêm Danh Mục</i>
         </div>
       </Button>
       <Dialog
@@ -59,24 +60,24 @@ const AddCategory = (props) => {
       >
         <DialogTitle id="alert-dialog-title"></DialogTitle>
         <DialogContent>
-          <div className="form-title">Thêm Danh Mục Mới</div>
+          <div className="form-title">Thêm Danh Mục</div>
           <div className="form-input">
             <form>
               <label>Tên Thương Hiệu</label>
-              <input
+              <Input
                 type="text"
                 placeholder="Tên"
                 onChange={handleNameCategory}
               />
               <label>Mã Danh Mục</label>
-              <input type="text" placeholder="Tên" onChange={handleParentId} />
+              <Input type="number" placeholder="Mã" onChange={handleParentId} />
             </form>
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Hủy</Button>
           <Button onClick={() => callAddCategory(nameCategory, parentID)}>
-            OK
+            Thêm
           </Button>
         </DialogActions>
       </Dialog>

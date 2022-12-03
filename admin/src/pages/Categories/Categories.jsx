@@ -30,7 +30,7 @@ const Categories = () => {
   return (
     <div>
       <div className="page-header">
-        <h2 className="page-header__title">Category</h2>
+        <h2 className="page-header__title">Danh Mục</h2>
         <div>
           <AddCategory parentCallback={callbackFunction}></AddCategory>
         </div>
@@ -43,40 +43,46 @@ const Categories = () => {
                 <thead>
                   <tr>
                     <td>ID</td>
-                    <td>Name</td>
-                    <td>Description</td>
-                    <td>Parent_id</td>
-                    <td>Settings</td>
+                    <td>Tên</td>
+                    <td>Mô Tả</td>
+                    <td>Mã Danh Mục</td>
+                    <td>Cài Đặt</td>
                   </tr>
                 </thead>
                 <thead>
-                  {allCategory?.map((item, index) => (
-                    <tr key={index}>
-                      <td>{item.id}</td>
-                      <td>{item.name}</td>
-                      <td>{item.description}</td>
-                      <td>{item.parent_id}</td>
-                      <td>
-                        <div className="card__body__features">
-                          <span className="card__body__features__edit">
-                            <UpdateCategory
-                              idcate={item.id}
-                              nameCate={item.name}
-                              parentIdCate={item.parent_id}
-                              descCate={item.description}
-                              parentCallback={callbackFunction}
-                            ></UpdateCategory>
-                          </span>
-                          <span className="card__body__features__delete">
-                            <DeleteCategory
-                              item={item.id}
-                              parentCallback={callbackFunction}
-                            ></DeleteCategory>
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
+                  {allCategory
+                    ?.sort((a, b) => a.id - b.id)
+                    .map((item, index) => (
+                      <tr key={index}>
+                        <td>{item.id}</td>
+                        <td>
+                          <div className="word-wrap"> {item.name}</div>
+                        </td>
+                        <td>
+                          <div className="word-wrap">{item.description}</div>
+                        </td>
+                        <td>{item.parent_id}</td>
+                        <td>
+                          <div className="card__body__features">
+                            <span className="card__body__features__edit">
+                              <UpdateCategory
+                                idcate={item.id}
+                                nameCate={item.name}
+                                parentIdCate={item.parent_id}
+                                descCate={item.description}
+                                parentCallback={callbackFunction}
+                              ></UpdateCategory>
+                            </span>
+                            <span className="card__body__features__delete">
+                              <DeleteCategory
+                                item={item.id}
+                                parentCallback={callbackFunction}
+                              ></DeleteCategory>
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                 </thead>
               </table>
             </div>

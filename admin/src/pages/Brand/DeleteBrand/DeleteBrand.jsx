@@ -48,8 +48,8 @@ const DeleteBrand = (props) => {
         <DialogTitle id="alert-dialog-title"></DialogTitle>
         <DialogContent>Bạn có muốn xóa không ?</DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={(e) => handleDeleteBrand(e, props.item)}>OK</Button>
+          <Button onClick={handleClose}>Hủy</Button>
+          <Button onClick={(e) => handleDeleteBrand(e, props.item)}>Xóa</Button>
         </DialogActions>
       </Dialog>
     </div>

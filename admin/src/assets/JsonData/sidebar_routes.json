@@ -5,61 +5,50 @@
     "icon": "bx bx-category-alt"
   },
   {
-    "display_name": "Customers",
+    "display_name": "Khách Hàng",
     "route": "/customers",
     "icon": "bx bx-user-pin"
   },
   {
-    "display_name": "Products",
+    "display_name": "Sản Phẩm",
     "route": "/products",
     "icon": "bx bx-package"
   },
   {
-    "display_name": "Option",
+    "display_name": "Thuộc Tính",
     "route": "/option",
     "icon": "bx bx-package"
   },
 
   {
-    "display_name": "categories",
+    "display_name": "Danh Mục",
     "route": "/categories",
     "icon": "bx bx-list-ol"
   },
   {
-    "display_name": "Brand",
+    "display_name": "Thương Hiệu",
     "route": "/brand",
     "icon": "bx bx-list-ol"
   },
 
   {
-    "display_name": "Comment",
+    "display_name": "Đánh Giá",
     "route": "/comment",
     "icon": "bx bx-comment"
   },
   {
-    "display_name": "Blog",
+    "display_name": "Bài Viết",
     "route": "/blog",
     "icon": "bx bx-news"
   },
   {
-    "display_name": "Orders",
+    "display_name": "Đơn Hàng",
     "route": "/orders",
     "icon": "bx bx-cart"
   },
   {
-    "display_name": "discount",
+    "display_name": "Voucher",
     "route": "/discount",
     "icon": "bx bx-gift"
-  },
-
-  {
-    "display_name": "settings",
-    "route": "/settings",
-    "icon": "bx bx-cog"
-  },
-  {
-    "display_name": "settings",
-    "route": "/settings",
-    "icon": "bx bx-cog"
   }
 ]

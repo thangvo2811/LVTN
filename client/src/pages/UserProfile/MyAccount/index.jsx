@@ -1,6 +1,7 @@
 import axios from "axios";
 import moment from "moment";
 import React, { useCallback, useEffect, useState } from "react";
+import { SectionTitle } from "../../../components/Section";
 import ChangeName from "../ChangeName";
 import ChangePassWord from "../ChangePassWord";
 import ChangePhone from "../ChangePhone";
@@ -24,7 +25,7 @@ const MyAccount = () => {
   }, [callUser, newCustomer]);
   return (
     <div className="user__content__right">
-      <div className="user__content__right__profile">Thông Tin Cá Nhân</div>
+      <SectionTitle>Thông Tin Cá Nhân</SectionTitle>
       <div className="user__content__right__desc">
         {/* start user content right form */}
         <div className="user__content__right__desc__form">
@@ -49,7 +50,7 @@ const MyAccount = () => {
           <input
             type="date"
             className="form-date"
-            defaultValue={moment(detailUser?.birthday).format("YYYY-MM-DD")}
+            value={moment(detailUser?.birthday).format("YYYY-MM-DD")}
           />
           <input
             type="text"

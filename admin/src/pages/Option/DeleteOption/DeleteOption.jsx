@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 import { message } from "antd";
 
-const DeleteCategory = (props) => {
+const DeleteOption = (props) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -18,14 +18,14 @@ const DeleteCategory = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleDeleteCategory = async (e, id) => {
+  const handleDeleteOption = async (e, id) => {
     e.preventDefault();
     await axios
-      .delete(`http://localhost:8000/api/delete-Category/${id}/`)
+      .delete(`http://localhost:8000/api/delete-option-product/${id}/`)
       .then((res) => {
         console.log(res.data);
         props.parentCallback(Date.now());
-        message.success("Xóa Danh Mục Thành Công");
+        message.success("Xóa Thuộc Tính Thành Công");
       })
       .catch((err) => {
         console.log(err);
@@ -47,7 +47,7 @@ const DeleteCategory = (props) => {
         <DialogContent>Bạn có muốn xóa không ?</DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Hủy</Button>
-          <Button onClick={(e) => handleDeleteCategory(e, props.item)}>
+          <Button onClick={(e) => handleDeleteOption(e, props.item)}>
             Xóa
           </Button>
         </DialogActions>
@@ -56,4 +56,4 @@ const DeleteCategory = (props) => {
   );
 };
 
-export default DeleteCategory;
+export default DeleteOption;

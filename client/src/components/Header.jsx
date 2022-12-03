@@ -14,6 +14,7 @@ import axios from "axios";
 import { message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { addNumberCartSuccess } from "../redux/cartRedux";
+import WishList from "../pages/UserProfile/WishList";
 
 const Header = () => {
   const newItem = useSelector((state) => state.cart.numberCart);
@@ -150,16 +151,22 @@ const Header = () => {
                         <Link to={"/userprofile"}>
                           <li className="dropdown__item">
                             <i class="bx bxs-user-circle drop__icon"></i>
-                            <span className="dropdown__text">Your Profile</span>
+                            <span className="dropdown__text">
+                              Thông Tin Cá Nhân
+                            </span>
                           </li>
                         </Link>
                         <li className="dropdown__item">
                           <i class="bx bxs-heart-circle drop__icon"></i>
-                          <span className="dropdown__text">Wish List</span>
+                          <span className="dropdown__text">
+                            Danh Sách Yêu Thích
+                          </span>
                         </li>
                         <li className="dropdown__item">
                           <i class="bx bx-hide drop__icon"></i>
-                          <span className="dropdown__text">Viewed</span>
+                          <span className="dropdown__text">
+                            Sản Phẩm Đã Xem
+                          </span>
                         </li>
                         <li
                           className="dropdown__item"
@@ -169,7 +176,7 @@ const Header = () => {
                           }}
                         >
                           <i class="bx bx-log-out drop__icon"></i>
-                          <span className="dropdown__text">Sign out</span>
+                          <span className="dropdown__text">Đăng Xuất</span>
                         </li>
                       </ul>
                     </>
@@ -263,7 +270,7 @@ const Header = () => {
                 </div>
               </li>
               <li className="header-bottom__list__item">
-                <Link to={"/"}>Tin Tức</Link>
+                <Link to={"/blog"}>Tin Tức</Link>
               </li>
               <li className="header-bottom__list__item">
                 <Link to={"/"}>Liên hệ</Link>

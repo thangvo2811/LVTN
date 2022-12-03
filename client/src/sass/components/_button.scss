@@ -53,11 +53,20 @@
     border-radius: 50px;
     border: solid 1px #000;
   }
+  &-animate4:hover &__txt {
+    background-color: #fff;
+    color: #000;
+    border: solid 2px #000;
+  }
 
   &-sm {
     border-radius: 0;
   }
   &-sm &__txt {
+    padding: 0.5rem 0.4rem;
+    font-size: 11px;
+  }
+  &-xl &__txt {
     padding: 0.5rem 0.4rem;
     font-size: 11px;
   }

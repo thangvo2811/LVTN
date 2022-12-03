@@ -38,21 +38,21 @@ const Blog = () => {
                 <thead>
                   <tr>
                     <td>ID</td>
-                    <td>Description</td>
-                    <td>Status</td>
-                    <td>Img</td>
-                    <td>Name</td>
-                    <td>Settings</td>
+                    <td>Tên</td>
+                    <td>Mô Tả</td>
+                    <td>Hình Ảnh</td>
+                    <td>Tình Trạng</td>
+                    <td>Cài Đặt</td>
                   </tr>
                 </thead>
                 <thead>
                   {allBlog?.map((item, index) => (
                     <tr key={index}>
                       <td>{item.id}</td>
-                      <td>{item.Description}</td>
-                      <td>{item.sta_id}</td>
-                      <td>{item.img}</td>
                       <td>{item.name}</td>
+                      <td>{item.Description}</td>
+                      <td>{item.img}</td>
+                      <td>{item.sta_id}</td>
 
                       <td>
                         <div className="card__body__features">
@@ -68,6 +68,7 @@ const Blog = () => {
                           <span className="card__body__delete">
                             <DeleteBlog
                               item={item.id}
+                              img={item.img}
                               parentCallback={callbackFunction}
                             ></DeleteBlog>
                           </span>

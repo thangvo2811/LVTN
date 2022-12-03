@@ -10,21 +10,20 @@ import { message } from "antd";
 import ColumnGroup from "antd/lib/table/ColumnGroup";
 import FormInput from "./../../../components/FormInput";
 
-const ChangePassWord = () => {
+const ChangePassWord = (props) => {
   const [open, setOpen] = useState(false);
   const [oldPassWord, setOldPassWord] = useState("");
   const [newPassWord, setNewPassWord] = useState("");
   const [reNewPassWord, setReNewPassWord] = useState("");
 
-  const [error, setError] = useState();
   const IdCus = localStorage.getItem("User");
-  const [values, setValues] = useState({
-    username: "",
-    email: "",
-    birthday: "",
-    password: "",
-    confirmPassword: "",
-  });
+  // const [values, setValues] = useState({
+  //   username: "",
+  //   email: "",
+  //   birthday: "",
+  //   password: "",
+  //   confirmPassword: "",
+  // });
 
   const inputs = [
     {
@@ -78,11 +77,14 @@ const ChangePassWord = () => {
         oldpassword: oldPw,
       })
       .then((res) => {
-        if (!oldPw) {
-          console.log(res.data);
-          message.error("Đổi mật khẩu không thành công");
-        }
+        // if (res.errCode === 1) {
+        //   console.log(res.data);
+        //   message.error("Đổi mật khẩu không thành công");
+        //   return;
+        // }
+        props.refresh();
         console.log(res.data);
+        message.success("Đổi Mật Khẩu Thàn Công");
       })
       .catch((err) => {
         console.log(err);
@@ -104,7 +106,7 @@ const ChangePassWord = () => {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Update
+        Cập Nhật
       </Button>
       <Dialog
         open={open}
@@ -127,10 +129,10 @@ const ChangePassWord = () => {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>
-              <span className="name-cancel">Cancel</span>
+              <span className="name-cancel">Hủy</span>
             </Button>
             <Button type="submit">
-              <span className="name-save">Save</span>
+              <span className="name-save">Lưu</span>
             </Button>
           </DialogActions>
         </form>

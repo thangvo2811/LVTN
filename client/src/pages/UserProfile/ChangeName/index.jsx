@@ -6,7 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
-import { message } from "antd";
+import { Input, message } from "antd";
 import { useSelector } from "react-redux";
 
 const ChangeName = (props) => {
@@ -34,7 +34,7 @@ const ChangeName = (props) => {
       .then((res) => {
         console.log(res.data);
         props.refresh();
-        message.success("CẬP NHẬT THÀNH CÔNG");
+        message.success("Cập Nhật Thành Công");
       })
       .catch((err) => {
         console.log(err);
@@ -49,7 +49,7 @@ const ChangeName = (props) => {
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        Update
+        Cập Nhật
       </Button>
       <Dialog
         open={open}
@@ -58,10 +58,10 @@ const ChangeName = (props) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogContent>
-          <div className="form-title">Update Name</div>
+          <div className="form-title">Cập Nhật Tên</div>
           <div className="form-input">
             <form>
-              <input
+              <Input
                 type={props.name}
                 defaultValue={props.name}
                 onChange={handleName}
@@ -71,10 +71,10 @@ const ChangeName = (props) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>
-            <span className="name-cancel">Cancel</span>
+            <span className="name-cancel">Hủy</span>
           </Button>
           <Button onClick={() => callChangeName(IdCus, newName)} autoFocus>
-            <span className="name-save">Save</span>
+            <span className="name-save">Lưu</span>
           </Button>
         </DialogActions>
       </Dialog>

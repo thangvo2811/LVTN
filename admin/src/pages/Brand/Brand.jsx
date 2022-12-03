@@ -31,7 +31,7 @@ const Brand = () => {
   return (
     <div>
       <div className="page-header">
-        <h2 className="page-header__title">Brand</h2>
+        <h2 className="page-header__title">Thương Hiệu</h2>
         <div>
           <AddBrand parentCallback={callbackFunction}></AddBrand>
         </div>
@@ -44,36 +44,37 @@ const Brand = () => {
                 <thead>
                   <tr>
                     <td>ID</td>
-                    <td>Name</td>
-                    <td>Settings</td>
+                    <td>Tên</td>
+                    <td>Cài Đặt</td>
                   </tr>
                 </thead>
                 <thead>
-                  {allBrand?.map((item, index) => (
-                    <tr key={index}>
-                      <td>{item.id}</td>
-                      <td>{item.name}</td>
-                      <td>
-                        <div className="card__body__features">
-                          <span className="card__body__features__edit">
-                            {/* <i className="bx bxs-edit"></i> */}
-
-                            <UpdateBrand
-                              name={item.name}
-                              id={item.id}
-                              parentCallback={callbackFunction}
-                            ></UpdateBrand>
-                          </span>
-                          <span className="card__body__features__delete">
-                            <DeleteBrand
-                              item={item.id}
-                              parentCallback={callbackFunction}
-                            ></DeleteBrand>
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
+                  {allBrand
+                    ?.sort((a, b) => a.id - b.id)
+                    .map((item, index) => (
+                      <tr key={index}>
+                        <td>{item.id}</td>
+                        <td>{item.name}</td>
+                        <td>
+                          <div className="card__body__features">
+                            <span className="card__body__features__edit">
+                              {/* <i className="bx bxs-edit"></i> */}
+                              <UpdateBrand
+                                name={item.name}
+                                id={item.id}
+                                parentCallback={callbackFunction}
+                              ></UpdateBrand>
+                            </span>
+                            <span className="card__body__features__delete">
+                              <DeleteBrand
+                                item={item.id}
+                                parentCallback={callbackFunction}
+                              ></DeleteBrand>
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                 </thead>
               </table>
             </div>

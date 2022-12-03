@@ -13,12 +13,13 @@ const Product = () => {
   const param = useParams();
 
   const [allProduct, setAllProduct] = useState([]);
-  const [detailProduct, setDetailProduct] = useState({});
+  const [detailProduct, setDetailProduct] = useState([]);
 
   const callDetailProduct = useCallback(async () => {
     await axios
       .get(`http://localhost:8000/api/get-product/${param.category_id}`)
       .then((res) => {
+        console.log(res.data.product);
         setDetailProduct(res.data.product);
       })
       .catch((err) => {
@@ -37,7 +38,7 @@ const Product = () => {
     await axios
       .get("http://localhost:8000/api/get-all-product?brand_id=&category_id=")
       .then((res) => {
-        setAllProduct(res.data.products);
+        setAllProduct(res.data.product);
       })
       .catch((err) => {
         console.log(err);
@@ -49,7 +50,7 @@ const Product = () => {
       <Section>
         <SectionBody>
           <div className="container">
-            {detailProduct.product?.map((item, index) => (
+            {detailProduct.map((item, index) => (
               <ProductView
                 key={index}
                 product_id={item.id ? item.id : ""}
@@ -58,22 +59,21 @@ const Product = () => {
                 quantityProduct={item.IntialQuantity ? item.IntialQuantity : ""}
                 priceProduct={item.unitprice ? item.unitprice : ""}
                 statusProduct={item.status === 1 ? "Còn Hàng" : "Hết Hàng"}
-                brandProduct={item.brand_id ? item.ProductBrand.name : ""}
-                cateProduct={item.category_id ? item.CategoryProduct.name : ""}
+                brandProduct={item.brand_id ? item.ProductBrand : ""}
+                cateProduct={item.category_id ? item.CategoryProduct : ""}
                 cateIdProduct={item.category_id ? item.category_id : ""}
                 desProduct={item.Description ? item.Description : ""}
-                optionAttribute={detailProduct.Optionproduct?.map(
-                  (item, index) => (
-                    <div className="product-top__info__content__select__right__attribute">
-                      <div className="product-top__info__content__select__right__attribute__name">
-                        {item.name}
-                      </div>
-                      <div className="product-top__info__content__select__right__attribute__price">
-                        {item.price}
-                      </div>
+                optionAttribute={item.ProductOption?.map((item, index) => (
+                  <div className="product-top__info__content__select__right__attribute">
+                    <div>{item.name}</div>
+                    <div className="product-top__info__content__select__right__attribute__name">
+                      {item.Option_Product.name}
                     </div>
-                  )
-                )}
+                    {/* <div className="product-top__info__content__select__right__attribute__price">
+                      {item.price}
+                    </div> */}
+                  </div>
+                ))}
               ></ProductView>
             ))}
           </div>

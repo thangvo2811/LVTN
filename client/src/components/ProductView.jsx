@@ -10,7 +10,7 @@ import Rating from "@mui/material/Rating";
 import pf from "../assets/images/products/laptop-asus-tuf-gaming-f15-fx506lh_4_.jpg";
 import pd from "../assets/images/products/laptop-asus-rog-strix-g15-g513ih-hn015t-1.jpg";
 
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addCart } from "../redux/apiCalls.js";
 import axios from "axios";
@@ -18,6 +18,7 @@ import {
   addNumberCartDecrease,
   addNumberCartIncrease,
 } from "../redux/cartRedux";
+import { message } from "antd";
 
 const ProductView = (props) => {
   const param = useParams();
@@ -26,22 +27,6 @@ const ProductView = (props) => {
   const [commentProduct, setCommentProduct] = useState([]);
   const dispatch = useDispatch();
   const newCustomer = localStorage.getItem("User");
-
-  // const imgs = [
-  //   {
-  //     id: 0,
-  //     value: pd,
-  //   },
-  //   {
-  //     id: 1,
-  //     value: pf,
-  //   },
-  //   {
-  //     id: 2,
-  //     value: pd,
-  //   },
-  // ];
-  // const [slider, setSlider] = useState(imgs[0]);
 
   const callCommentProduct = async () => {
     await axios
@@ -74,30 +59,28 @@ const ProductView = (props) => {
     console.log("Customer:", text);
   };
 
-  // const handleClick = (index) => {
-  //   console.log(index);
-  //   const imgSlider = imgs[index];
-  //   setSlider(imgSlider);
-  // };
-
   const handleAddCart = () => {
     console.log("add cart");
     const newProduct = props.product_id;
     addCart(dispatch, newCustomer, newProduct);
   };
-
+  const handleClick = (e) => {
+    e.preventDefault();
+    message.error("Bạn Chưa Đăng Nhập");
+  };
   return (
     <div className="product">
       <div className="product-top">
         <div className="product-top__images">
           <div className="product-top__images__main">
-            <img src={props.imgProduct} alt="" />
+            <img
+              src={props.imgProduct}
+              alt=""
+              onError={(e) => {
+                e.target.setAttribute("src", pd);
+              }}
+            />
           </div>
-          {/* <div className="product-top__images__sub">
-            {imgs?.map((item, index) => (
-              <img src={item.value} alt="" onClick={() => handleClick(index)} />
-            ))}
-          </div> */}
         </div>
         <div className="product-top__info">
           <div className="product-top__info__title">{props.nameProduct}</div>
@@ -121,12 +104,21 @@ const ProductView = (props) => {
                 <div>1</div>
                 <i className="bx bx-plus" onClick={increaseQuantity}></i>
               </div>
-
-              <div className="product-top__info__cart">
-                <Button size="sm" animate2={true} onClick={handleAddCart}>
-                  thêm vào giỏ hàng
-                </Button>
-              </div>
+              {newCustomer ? (
+                <div className="product-top__info__cart">
+                  <Button size="sm" animate2={true} onClick={handleAddCart}>
+                    thêm vào giỏ hàng
+                  </Button>
+                </div>
+              ) : (
+                <div className="product-top__info__cart" onClick={handleClick}>
+                  <Link to={"/Login"}>
+                    <Button size="sm" animate2={true}>
+                      thêm vào giỏ hàng
+                    </Button>
+                  </Link>
+                </div>
+              )}
             </div>
 
             {/* Start option product */}

@@ -17,15 +17,16 @@ const HeroSliderItem = (props) => {
           <span>{item.description}</span>
         </div>
         <div className="hero-slider__item__info__btn">
-            <Link to={item.path}>
-              <Button icon="bx-cart" animate={true}>Mua ngay</Button>
-            </Link>
+          <Link to={"/product"}>
+            <Button icon="bx-cart" animate={true}>
+              Mua ngay
+            </Button>
+          </Link>
         </div>
       </div>
       <div className="hero-slider__item__image">
         <img src={item.img} alt="" />
-        <div className="shape">
-        </div>
+        <div className="shape"></div>
       </div>
     </div>
   );

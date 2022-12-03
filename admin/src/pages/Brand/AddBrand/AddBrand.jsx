@@ -5,12 +5,14 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { Input } from "antd";
 import axios from "axios";
 import { message } from "antd";
 
 const AddBrand = (props) => {
   const [open, setOpen] = React.useState(false);
   const [nameBrand, setNameBrand] = useState("");
+  const [isLoadding, setIsLoading] = message.useMessage();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -57,7 +59,7 @@ const AddBrand = (props) => {
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
         <div className="form-name">
-          <i className="bx bx-plus">Add New</i>
+          <i className="bx bx-plus">Thêm Thương Hiệu</i>
         </div>
       </Button>
       <Dialog
@@ -66,12 +68,13 @@ const AddBrand = (props) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
+        {<></>}
         <DialogTitle id="alert-dialog-title"></DialogTitle>
         <DialogContent>
-          <div className="form-title">Thêm Thương Hiệu Mới</div>
+          <div className="form-title">Thương Hiệu</div>
           <div className="form-input">
             <form>
-              <input
+              <Input
                 type="text"
                 placeholder="Name"
                 value={nameBrand}
@@ -81,8 +84,15 @@ const AddBrand = (props) => {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={(e) => handleAddBrand(e, e.target.value)}>OK</Button>
+          <Button onClick={handleClose}>Hủy</Button>
+
+          <Button
+            onClick={(e) => {
+              handleAddBrand(e, e.target.value);
+            }}
+          >
+            Thêm
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

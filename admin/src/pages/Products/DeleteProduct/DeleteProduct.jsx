@@ -26,7 +26,7 @@ const DeleteProduct = (props) => {
       .then((res) => {
         console.log(res.data);
         props.parentCallback(Date.now());
-        message.success("XÓA SẢN PHẨM THÀNH CÔNG");
+        message.success("Xóa Sản Phẩm Thành Công");
       })
       .catch((err) => {
         console.log(err);
