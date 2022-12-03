@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const adminSlice = createSlice({
   name: "admin",
-  intialState: {
+  initialState: {
     currentAdmin: null,
     isFetching: false,
     error: false,

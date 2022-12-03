@@ -12,16 +12,15 @@ import "./assets/boxicons-2.1.2/css/boxicons.min.css";
 import "./scss/index.scss";
 
 import Layout from "./components/layout/Layout";
+import Login from "./pages/Login/Login";
 
 const store = createStore(rootReducer);
-
+const idAdmin = localStorage.getItem("admin");
 document.title = "PT";
 
 ReactDOM.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <Layout />
-    </React.StrictMode>
+    <React.StrictMode>{idAdmin ? <Layout /> : <Login />}</React.StrictMode>
   </Provider>,
   document.getElementById("root")
 );

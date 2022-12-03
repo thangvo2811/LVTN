@@ -28,6 +28,7 @@ const Sidebar = (props) => {
   );
 
   return (
+    // {role === "1" ? ():()}
     <div className="sidebar">
       <div className="sidebar__logo">
         <img src={logo} alt="company logo" />

@@ -20,7 +20,7 @@ const Customers = () => {
   return (
     <div>
       <div className="page-header">
-        <h2 className="page-header__title">Customer</h2>
+        <h2 className="page-header__title">Khách Hàng</h2>
         <div className="page-header__add">
           <i className="bx bx-plus"></i>
           <div>Add New</div>

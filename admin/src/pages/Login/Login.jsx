@@ -1,8 +1,23 @@
 import { Button, Input } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import "./style.scss";
+import { useDispatch } from "react-redux";
+
+import { loginAdmin } from "../../redux/reducers/apiCall";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const newAdmin = { email: email, password: password };
+    loginAdmin(dispatch, newAdmin, "");
+
+    // window.history.pushState("nextState", "nextTitle", "/");
+  };
+
   return (
     <div className="login">
       <div className="login__container">
@@ -11,13 +26,21 @@ const Login = () => {
           <form>
             <div className="form-input">
               <label>Email</label>
-              <Input type="email" placeholder="Email" />
+              <Input
+                type="email"
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
               <label>Mật Khẩu</label>
-              <Input type="password" placeholder="Password" />
+              <Input
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
-            <Button size="sm" animate2={true}>
+            <button type="submit" onClick={handleLogin}>
               Đăng nhập
-            </Button>
+            </button>
           </form>
         </div>
       </div>

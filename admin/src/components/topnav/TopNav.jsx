@@ -14,8 +14,9 @@ import user_image from "../../assets/images/1.jpg";
 
 import user_menu from "../../assets/JsonData/user_menus.json";
 
+const nameAdmin = localStorage.getItem("nameAdmin");
 const curr_user = {
-  display_name: "PT",
+  display_name: nameAdmin,
   image: user_image,
 };
 
