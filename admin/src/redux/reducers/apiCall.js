@@ -2,7 +2,7 @@ import { loginFailure, loginStart, loginSuccess } from "./adminLogin";
 import axios from "axios";
 import { message } from "antd";
 
-export const loginAdmin = async (dispatch, admin, navigate) => {
+export const loginAdmin = async (dispatch, admin) => {
   dispatch(loginStart());
   await axios
     .post("http://localhost:8000/api/login-admin/", admin)
@@ -12,7 +12,7 @@ export const loginAdmin = async (dispatch, admin, navigate) => {
         dispatch(loginSuccess());
         localStorage.setItem("admin", res.data.data.id);
         localStorage.setItem("nameAdmin", res.data.data.fullname);
-        navigate(window.history.back());
+
         return;
       }
       if (!res.data.password || !res.data.email) {

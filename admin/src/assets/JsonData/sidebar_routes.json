@@ -55,5 +55,10 @@
     "display_name": "Voucher",
     "route": "/discount",
     "icon": "bx bx-gift"
+  },
+  {
+    "display_name": "Kho",
+    "route": "/discount",
+    "icon": "bx bx-store"
   }
 ]

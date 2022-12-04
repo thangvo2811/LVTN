@@ -6,13 +6,17 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
-import { message } from "antd";
+import { Input, message } from "antd";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 const UpdateBlog = (props) => {
+  const id = props.id;
   const [open, setOpen] = React.useState(false);
   const [descBlog, setDescBlog] = useState("");
   const [statusBlog, setSatusBlog] = useState("");
   const [nameBlog, setNameBlog] = useState("");
+  const [file, setFile] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const idBlog = props.id;
 
   const handleClickOpen = () => {
@@ -22,13 +26,14 @@ const UpdateBlog = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const callUpdateBlog = async (id, desc, status, name) => {
+  const handleUpdateBlog = async (url) => {
     await axios
       .put("http://localhost:8000/api/update-blog/", {
         id: id,
-        Description: desc,
-        sta_id: status,
-        name: name,
+        Description: descBlog,
+        sta_id: statusBlog,
+        name: nameBlog,
+        img: url,
       })
       .then((res) => {
         console.log(res.data);
@@ -37,17 +42,28 @@ const UpdateBlog = (props) => {
       });
     setOpen(false);
   };
-  const handleDescBlog = (e) => {
-    e.preventDefault();
-    setDescBlog(e.target.value);
-  };
-  const handleStatusBlog = (e) => {
-    e.preventDefault();
-    setSatusBlog(e.target.value);
-  };
-  const handleNameBlog = (e) => {
-    e.preventDefault();
-    setNameBlog(e.target.value);
+  const handleUpdateBlogImage = async () => {
+    setIsLoading(true);
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      await axios
+        .post("http://localhost:8000/api/create-img-product", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          // setFile(file.secure_url);
+          console.log(res?.data?.res?.url);
+          handleUpdateBlog(res?.data?.res?.url);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    setIsLoading(false);
+    setOpen(false);
   };
   return (
     <div>
@@ -66,26 +82,52 @@ const UpdateBlog = (props) => {
           <div className="form-title">Cập Nhật Bài Viết</div>
           <div className="form-input">
             <form>
-              <label>Id</label>
-              <input type="number" defaultValue={idBlog} disabled />
-              <label>Mô Tả Bài Viết</label>
-              <input type="text" defaultValue={props.descBlog} />
-              <label>Tình Trạng</label>
-              <input type="text" defaultValue={props.statusBlog} />
+              <label>ID</label>
+              <Input type="number" value={idBlog} disabled />
               <label>Tên Bài Viết</label>
-              <input type="text" defaultValue={props.nameBlog} />
+              <Input
+                type="text"
+                defaultValue={props.nameBlog}
+                onChange={(e) => setNameBlog(e.target.value)}
+              />
+              <label>Mô Tả Bài Viết</label>
+              <Input
+                type="text"
+                defaultValue={props.descBlog}
+                onChange={(e) => setDescBlog(e.target.value)}
+              />
+              <label>Tình Trạng</label>
+              <Input
+                type="text"
+                defaultValue={props.statusBlog}
+                onChange={(e) => setSatusBlog(e.target.value)}
+              />
+              <label>Hình Ảnh</label>
+              <Input type="file" onChange={(e) => setFile(e.target.files[0])} />
+              {file && <img src={URL.createObjectURL(file)} alt="" /> ? (
+                file && <img src={URL.createObjectURL(file)} alt="" />
+              ) : (
+                <img src={props.imgBlog} alt="" />
+              )}
             </form>
           </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Hủy</Button>
-          <Button
-            onClick={() =>
-              callUpdateBlog(idBlog, descBlog, statusBlog, nameBlog)
-            }
-          >
-            Cập Nhật
-          </Button>
+          {isLoading ? (
+            <Backdrop
+              sx={{
+                color: "#fff",
+                zIndex: (theme) => theme.zIndex.drawer + 1,
+              }}
+              open={open}
+              onClick={handleClose}
+            >
+              <CircularProgress color="inherit" />
+            </Backdrop>
+          ) : (
+            <Button onClick={() => handleUpdateBlogImage()}>Cập Nhật</Button>
+          )}
         </DialogActions>
       </Dialog>
     </div>

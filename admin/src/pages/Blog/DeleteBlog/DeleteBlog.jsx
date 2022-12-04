@@ -42,7 +42,7 @@ const DeleteBlog = (props) => {
         <DialogContent>Bạn có muốn xóa không ?</DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Hủy</Button>
-          <Button onClick={(e) => handleDeleteBlog(e, props.item)}>Thêm</Button>
+          <Button onClick={(e) => handleDeleteBlog(e, props.item)}>Xóa</Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -6,9 +6,11 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
+import "../style.scss";
 import { Input, message } from "antd";
 import Item from "antd/es/list/Item";
 import TextArea from "antd/es/input/TextArea";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 const UploadProduct = (props) => {
   const id = props.id;
@@ -19,16 +21,7 @@ const UploadProduct = (props) => {
   const [newPrice, setNewPrice] = useState("");
   const [newDesc, setNewDesc] = useState("");
   const [file, setFile] = useState("");
-  const [isLoadding, setIsLoading] = message.useMessage();
-  const success = () => {
-    isLoadding
-      .open({
-        type: "loading",
-        content: "Sản Phẩm Đang Được Cập Nhật",
-        duration: 2.5,
-      })
-      .then(() => message.success("", 2.5));
-  };
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -60,6 +53,7 @@ const UploadProduct = (props) => {
     setOpen(false);
   };
   const handleUploadImage = async () => {
+    setIsLoading(true);
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
@@ -78,6 +72,8 @@ const UploadProduct = (props) => {
           console.log(err);
         });
     }
+    setIsLoading(false);
+    setOpen(false);
   };
   return (
     <div>
@@ -98,7 +94,6 @@ const UploadProduct = (props) => {
           <div className="form-title">Cập Nhật Sản Phẩm </div>
           <div className="form-input">
             <form>
-              {setIsLoading}
               <label>ID</label>
               <Input type="number" value={props.id} disabled />
               <label>Tên sản phẩm</label>
@@ -133,26 +128,42 @@ const UploadProduct = (props) => {
                 onChange={(e) => setNewDesc(e.target.value)}
               />
               <label>Hình Ảnh</label>
+
               <Input
                 type="file"
                 onChange={(e) => setFile(e.target.files[0])}
-              />{" "}
-              <br />
-              <image src={file.url} />
+              ></Input>
+              {file && <img src={URL.createObjectURL(file)} alt="" /> ? (
+                file && <img src={URL.createObjectURL(file)} alt="" />
+              ) : (
+                <img src={props.imgProduct} alt="" />
+              )}
             </form>
           </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Hủy</Button>
-
-          <Button
-            onClick={() => {
-              success();
-              handleUploadImage();
-            }}
-          >
-            Cập Nhật
-          </Button>
+          {isLoading ? (
+            <Backdrop
+              sx={{
+                color: "#fff",
+                zIndex: (theme) => theme.zIndex.drawer + 1,
+              }}
+              open={open}
+              onClick={handleClose}
+            >
+              <CircularProgress color="inherit" />
+            </Backdrop>
+          ) : (
+            <Button
+              onClick={() => {
+                handleUploadImage();
+              }}
+            >
+              Cập Nhật
+            </Button>
+          )}
+          {/*  */}
         </DialogActions>
       </Dialog>
     </div>

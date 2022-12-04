@@ -15,6 +15,7 @@ import user_image from "../../assets/images/1.jpg";
 import user_menu from "../../assets/JsonData/user_menus.json";
 
 const nameAdmin = localStorage.getItem("nameAdmin");
+
 const curr_user = {
   display_name: nameAdmin,
   image: user_image,
@@ -37,8 +38,14 @@ const renderUserToggle = (user) => (
 );
 
 const renderUserMenu = (item, index) => (
-  <Link to="/" key={index}>
-    <div className="notification-item">
+  <Link to="/login" key={index}>
+    <div
+      className="notification-item"
+      onClick={() => {
+        localStorage.getItem("admin", "");
+        window.location.href = "/login";
+      }}
+    >
       <i className={item.icon}></i>
       <span>{item.content}</span>
     </div>

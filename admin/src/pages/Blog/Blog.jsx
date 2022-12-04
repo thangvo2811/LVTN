@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DeleteBlog from "./DeleteBlog/DeleteBlog";
 import AddBlog from "./AddBlog/AddBlog";
 import UpdateBlog from "./UpdateBlog/UpdateBlog";
+import "./style.scss";
 
 const Blog = () => {
   const [allBlog, setAllBlog] = useState([]);
@@ -48,27 +50,35 @@ const Blog = () => {
                 <thead>
                   {allBlog?.map((item, index) => (
                     <tr key={index}>
-                      <td>{item.id}</td>
-                      <td>{item.name}</td>
-                      <td>{item.Description}</td>
-                      <td>{item.img}</td>
-                      <td>{item.sta_id}</td>
+                      <td>{item?.id}</td>
+                      <td>{item?.name}</td>
+                      <td>
+                        <div className="word-wrap">{item?.Description}</div>
+                      </td>
+                      <td>
+                        <img
+                          className="blog-img"
+                          src={item.img ? item.img : item.name}
+                        />
+                      </td>
+                      <td>{item?.sta_id}</td>
 
                       <td>
                         <div className="card__body__features">
                           <span className="card__body__edit">
                             <UpdateBlog
-                              id={item.id}
-                              descBlog={item.Description}
-                              statusBlog={item.sta_id}
-                              nameBlog={item.name}
+                              id={item?.id}
+                              descBlog={item?.Description}
+                              statusBlog={item?.sta_id}
+                              nameBlog={item?.name}
+                              imgBlog={item?.img}
                               parentCallback={callbackFunction}
                             ></UpdateBlog>
                           </span>
                           <span className="card__body__delete">
                             <DeleteBlog
-                              item={item.id}
-                              img={item.img}
+                              item={item?.id}
+                              img={item?.img}
                               parentCallback={callbackFunction}
                             ></DeleteBlog>
                           </span>

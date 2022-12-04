@@ -91,13 +91,15 @@ const ProductView = (props) => {
                 VND
               </div>
               <div className="product-top__info__content__desc__brand">
-                Thương hiệu: {props.brandProduct ? props.brandProduct : ""}
+                {/* Thương hiệu: {props.brandProduct ? props.brandProduct : ""} */}
+                Thương hiệu:
               </div>
               <div className="product-top__info__content__desc__category">
-                Danh mục: {props.cateProduct ? props.cateProduct : ""}
+                {/* Danh mục: {props.cateProduct ? props.cateProduct : ""} */}
+                Danh mục:
               </div>
               <div className="product-top__info__status">
-                Trạng thái: {props.statusProduct ? props.statusProduct : ""}
+                {/* Trạng thái: {props.statusProduct ? props.statusProduct : ""} */}
               </div>
               <div className="product-top__info__quantity">
                 <i className="bx bx-minus" onClick={decreaseQuantity}></i>
@@ -126,7 +128,7 @@ const ProductView = (props) => {
               {/* start option name product */}
               <div className=" product-top__info__content__select__left">
                 <div className="product-top__info__content__select__left__title">
-                  {props.optionNameProduct}
+                  {props.optionAttribute}
                 </div>
               </div>
               {/* end option name product */}

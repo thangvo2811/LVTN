@@ -15,17 +15,20 @@ const Product = () => {
   const [allProduct, setAllProduct] = useState([]);
   const [detailProduct, setDetailProduct] = useState([]);
 
-  const callDetailProduct = useCallback(async () => {
-    await axios
-      .get(`http://localhost:8000/api/get-product/${param.category_id}`)
-      .then((res) => {
-        console.log(res.data.product);
-        setDetailProduct(res.data.product);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [param.category_id]);
+  const callDetailProduct = useCallback(
+    async (id) => {
+      await axios
+        .get(`http://localhost:8000/api/get-product/${param.id}`)
+        .then((res) => {
+          console.log(res.data.data);
+          setDetailProduct(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    [param.id]
+  );
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [param.category_id]);
@@ -38,7 +41,7 @@ const Product = () => {
     await axios
       .get("http://localhost:8000/api/get-all-product?brand_id=&category_id=")
       .then((res) => {
-        setAllProduct(res.data.product);
+        setAllProduct(res.data.products);
       })
       .catch((err) => {
         console.log(err);
@@ -50,32 +53,47 @@ const Product = () => {
       <Section>
         <SectionBody>
           <div className="container">
-            {detailProduct.map((item, index) => (
-              <ProductView
-                key={index}
-                product_id={item.id ? item.id : ""}
-                imgProduct={item.img ? item.img : ""}
-                nameProduct={item.name ? item.name : ""}
-                quantityProduct={item.IntialQuantity ? item.IntialQuantity : ""}
-                priceProduct={item.unitprice ? item.unitprice : ""}
-                statusProduct={item.status === 1 ? "Còn Hàng" : "Hết Hàng"}
-                brandProduct={item.brand_id ? item.ProductBrand : ""}
-                cateProduct={item.category_id ? item.CategoryProduct : ""}
-                cateIdProduct={item.category_id ? item.category_id : ""}
-                desProduct={item.Description ? item.Description : ""}
-                optionAttribute={item.ProductOption?.map((item, index) => (
+            <ProductView
+              product_id={detailProduct.id ? detailProduct.id : ""}
+              imgProduct={detailProduct.img ? detailProduct.img : ""}
+              nameProduct={detailProduct.name ? detailProduct.name : ""}
+              quantityProduct={
+                detailProduct.currentQuantity
+                  ? detailProduct.currentQuantity
+                  : ""
+              }
+              priceProduct={
+                detailProduct.unitprice ? detailProduct.unitprice : ""
+              }
+              // statusProduct={
+              //   detailProduct.status === 1 ? "Còn Hàng" : "Hết Hàng"
+              // }
+              // brandProduct={
+              //   detailProduct.brand_id ? detailProduct.ProductBrand : ""
+              // }
+              // cateProduct={
+              //   detailProduct.category_id ? detailProduct.CategoryProduct : ""
+              // }
+              // cateIdProduct={
+              //   detailProduct.category_id ? detailProduct.category_id : ""
+              // }
+              desProduct={
+                detailProduct.Description ? detailProduct.Description : ""
+              }
+              optionAttribute={detailProduct.existingOptions?.map(
+                (item, index) => (
                   <div className="product-top__info__content__select__right__attribute">
                     <div>{item.name}</div>
                     <div className="product-top__info__content__select__right__attribute__name">
-                      {item.Option_Product.name}
+                      {/* {item.Option_Product.name} */}
                     </div>
                     {/* <div className="product-top__info__content__select__right__attribute__price">
                       {item.price}
                     </div> */}
                   </div>
-                ))}
-              ></ProductView>
-            ))}
+                )
+              )}
+            ></ProductView>
           </div>
         </SectionBody>
       </Section>

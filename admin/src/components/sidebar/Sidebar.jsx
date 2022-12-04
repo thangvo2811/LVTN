@@ -6,7 +6,8 @@ import "../../scss/index.scss";
 
 import logo from "../../assets/images/1.jpg";
 
-import sidebar_items from "../../assets/JsonData/sidebar_routes.json";
+// import sidebar_items from "../../assets/JsonData/sidebar_routes";
+import sidebar_items from "../../assets/JsonData/sidebar_routes";
 
 const SidebarItem = (props) => {
   const active = props.active ? "active" : "";

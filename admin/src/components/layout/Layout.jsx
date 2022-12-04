@@ -50,12 +50,11 @@ const Layout = () => {
                     </div>
                   </div>
                 </div>
-                <div></div>
               </>
             )}
           />
 
-          <Route path="/" exact component={Login} />
+          {/* <Route path="/" exact component={Login} /> */}
         </BrowserRouter>
       )}
     </>

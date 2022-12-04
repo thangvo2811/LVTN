@@ -17,7 +17,7 @@ const Employee = () => {
                   <tr>
                     <td>ID</td>
                     <td>Email</td>
-                    <td>FullName</td>
+                    <td>Nhân Viên</td>
                     <td>Phân Quyền</td>
                     <td>Cài Đặt</td>
                   </tr>

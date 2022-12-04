@@ -83,6 +83,7 @@ input:focus {
       cursor: pointer;
     }
     .word-wrap {
+      width: 100px;
       display: -webkit-box;
       -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;

@@ -18,17 +18,17 @@ export const loginUser = async (dispatch, user, navigate) => {
     .post("http://localhost:8000/api/get-user-login", user)
     .then((res) => {
       if (res.data.errorCode === 0) {
-        message.success("ĐĂNG NHẬP THÀNH CÔNG");
+        message.success("Đăng Nhập Thành Công");
         dispatch(loginSuccess(res.data));
         localStorage.setItem("User", res.data.data.id);
         localStorage.setItem("nameUser", res.data.data.fullname);
         navigate("/");
       } else if (!res.data.password || !res.data.email) {
-        message.error("SAI MẬT KHẨU HOẶC EMAIL");
+        message.error("Sai Mật Khẩu Hoặc Email");
       }
     })
     .catch(() => {
-      message.error("ĐĂNG NHẬP THẤT BẠI");
+      message.error("Đăng Nhập Thất Bại");
       dispatch(loginFailure());
     });
 };
@@ -43,7 +43,7 @@ export const addCart = async (dispatch, user, idProduct) => {
     .then((res) => {
       console.log(res);
       if (res.data.errCode === 0) {
-        message.success("THÊM SẢN PHẨM THÀNH CÔNG");
+        message.success("Thêm Sản Phẩm Thành Công");
       }
       // let cartNumber = parseInt(localStorage.getItem("cartItem")) + 1;
       dispatch(addCartAction());
@@ -63,7 +63,7 @@ export const deleteCart = async (dispatch, cartId) => {
     .delete(`http://localhost:8000/api/handle-Delete-Cartitem/${cartId}/`)
     .then((res) => {
       console.log(res.data);
-      message.success("XÓA SẢN PHẨM THÀNH CÔNG");
+      message.success("Xóa Sản Phẩm Thành Công");
       dispatch(deleteCartSuccess());
     })
     .catch((err) => {

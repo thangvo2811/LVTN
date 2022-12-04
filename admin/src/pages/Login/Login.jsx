@@ -4,17 +4,20 @@ import "./style.scss";
 import { useDispatch } from "react-redux";
 
 import { loginAdmin } from "../../redux/reducers/apiCall";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleLogin = (e) => {
     e.preventDefault();
     const newAdmin = { email: email, password: password };
-    loginAdmin(dispatch, newAdmin, "");
-
+    loginAdmin(dispatch, newAdmin);
+    // window.history.push("/");
+    window.location.href = "/";
     // window.history.pushState("nextState", "nextTitle", "/");
   };
 

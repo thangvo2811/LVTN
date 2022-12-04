@@ -20,7 +20,9 @@ document.title = "PT";
 
 ReactDOM.render(
   <Provider store={store}>
-    <React.StrictMode>{idAdmin ? <Layout /> : <Login />}</React.StrictMode>
+    <React.StrictMode>
+      <Layout />
+    </React.StrictMode>
   </Provider>,
   document.getElementById("root")
 );

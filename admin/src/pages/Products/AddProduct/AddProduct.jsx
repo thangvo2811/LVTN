@@ -9,6 +9,7 @@ import { Input, message, Upload } from "antd";
 
 import axios from "axios";
 import TextArea from "antd/es/input/TextArea";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 const AddProduct = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -18,16 +19,7 @@ const AddProduct = (props) => {
   const [priceProduct, setPriceProduct] = useState("");
   const [descProduct, setDescProduct] = useState("");
   const [file, setFile] = useState("");
-  const [isLoadding, setIsLoading] = message.useMessage();
-  const success = () => {
-    isLoadding
-      .open({
-        type: "loading",
-        content: "Sản Phẩm Đang Được Thêm",
-        duration: 2.5,
-      })
-      .then(() => message.success("Thêm Sản Phẩm Thành Công", 2.5));
-  };
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -51,7 +43,6 @@ const AddProduct = (props) => {
           message.error("Sản Phẩm Đã Tồn Tại");
           return;
         }
-
         console.log(res.data);
         props.parentCallback(Date.now());
         message.success("Thêm Sản Phẩm Thành Công");
@@ -63,6 +54,7 @@ const AddProduct = (props) => {
     setOpen(false);
   };
   const handleUploadImage = async () => {
+    setIsLoading(true);
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
@@ -80,6 +72,8 @@ const AddProduct = (props) => {
         .catch((err) => {
           console.log(err);
         });
+      setIsLoading(false);
+      setOpen(false);
     }
   };
 
@@ -134,20 +128,32 @@ const AddProduct = (props) => {
               />
               <label>Hình Ảnh</label>
               <Input type="file" onChange={(e) => setFile(e.target.files[0])} />
+              {file && <img src={URL.createObjectURL(file)} alt="" />}
             </form>
           </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Hủy</Button>
-          {setIsLoading}
-          <Button
-            onClick={() => {
-              success();
-              handleUploadImage();
-            }}
-          >
-            Thêm
-          </Button>
+          {isLoading ? (
+            <Backdrop
+              sx={{
+                color: "#fff",
+                zIndex: (theme) => theme.zIndex.drawer + 1,
+              }}
+              open={open}
+              onClick={handleClose}
+            >
+              <CircularProgress color="inherit" />
+            </Backdrop>
+          ) : (
+            <Button
+              onClick={() => {
+                handleUploadImage();
+              }}
+            >
+              Thêm
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
     </div>
