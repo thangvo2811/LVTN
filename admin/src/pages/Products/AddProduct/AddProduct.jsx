@@ -1,21 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Input, message, Upload } from "antd";
+import { Input, message, Select, Upload } from "antd";
 
 import axios from "axios";
 import TextArea from "antd/es/input/TextArea";
 import { Backdrop, CircularProgress } from "@mui/material";
+import { Option } from "antd/es/mentions";
 
 const AddProduct = (props) => {
   const [open, setOpen] = React.useState(false);
+  const [allCategory, setAllCategory] = useState([]);
+  const [allBrand, setAllBrand] = useState([]);
   const [nameProduct, setNameProduct] = useState("");
-  const [brandProduct, setBrandProduct] = useState("");
-  const [cateProduct, setCateProduct] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState(allBrand[0]);
+  const [selectedCate, setSelectedCate] = useState(allCategory[0]);
   const [priceProduct, setPriceProduct] = useState("");
   const [descProduct, setDescProduct] = useState("");
   const [file, setFile] = useState("");
@@ -34,8 +37,8 @@ const AddProduct = (props) => {
         name: nameProduct,
         unitprice: priceProduct,
         Description: descProduct,
-        brand_id: brandProduct,
-        category_id: cateProduct,
+        brand_id: selectedBrand,
+        category_id: selectedCate,
         img: url,
       })
       .then((res) => {
@@ -53,6 +56,7 @@ const AddProduct = (props) => {
 
     setOpen(false);
   };
+
   const handleUploadImage = async () => {
     setIsLoading(true);
     if (file) {
@@ -76,6 +80,32 @@ const AddProduct = (props) => {
       setOpen(false);
     }
   };
+
+  const callAllCategory = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-Category/")
+      .then((res) => {
+        setAllCategory(res.data.category);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const callAllBrand = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-brand/")
+      .then((res) => {
+        setAllBrand(res.data.brand);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    callAllCategory();
+    callAllBrand();
+  }, []);
 
   return (
     <div>
@@ -101,18 +131,33 @@ const AddProduct = (props) => {
                 placeholder="Name"
                 onChange={(e) => setNameProduct(e.target.value)}
               />
-              <label>Mã Danh Mục</label>
-              <Input
-                type="number"
-                placeholder="Mã Danh Mục"
-                onChange={(e) => setCateProduct(e.target.value)}
-              />
-              <label>Mã Thương Hiệu</label>
-              <Input
-                type="number"
-                placeholder="Mã Thương Hiệu"
-                onChange={(e) => setBrandProduct(e.target.value)}
-              />
+              <label>Tên Danh Mục</label>
+              <br />
+              <select
+                value={selectedCate}
+                onChange={(e) => setSelectedCate(e.target.value)}
+              >
+                <option>Chọn Danh Mục</option>
+                {allCategory?.map((item, index) => (
+                  <option key={index} value={item?.id}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+              <br />
+              <label>Tên Thương Hiệu</label>
+              <br />
+              <select
+                value={selectedBrand}
+                onChange={(e) => setSelectedBrand(e.target.value)}
+              >
+                <option>Chọn Thương Hiệu</option>
+                {allBrand?.map((item, index) => (
+                  <option key={index} value={item?.id}>
+                    {item?.name}
+                  </option>
+                ))}
+              </select>
               <label>Giá</label>
               <Input
                 type="number"

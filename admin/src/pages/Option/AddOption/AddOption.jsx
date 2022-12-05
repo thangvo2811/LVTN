@@ -30,8 +30,11 @@ const AddOption = (props) => {
         option_id: idOption,
       })
       .catch((res) => {
+        if (newName === "") {
+          message.error("Thiếu Tên Thuộc Tính");
+          return;
+        }
         console.log(res.data.Option);
-        props.parentCallback(Date.now());
         message.success("Thêm Thuộc Tính Thành Công");
       })
       .catch((err) => {

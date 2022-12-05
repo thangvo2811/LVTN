@@ -91,12 +91,10 @@ const ProductView = (props) => {
                 VND
               </div>
               <div className="product-top__info__content__desc__brand">
-                {/* Thương hiệu: {props.brandProduct ? props.brandProduct : ""} */}
-                Thương hiệu:
+                Thương hiệu: {props.nameBrand ? props.nameBrand : ""}
               </div>
               <div className="product-top__info__content__desc__category">
-                {/* Danh mục: {props.cateProduct ? props.cateProduct : ""} */}
-                Danh mục:
+                Danh mục: {props.nameCategory ? props.nameCategory : ""}
               </div>
               <div className="product-top__info__status">
                 {/* Trạng thái: {props.statusProduct ? props.statusProduct : ""} */}
@@ -122,24 +120,9 @@ const ProductView = (props) => {
                 </div>
               )}
             </div>
-
-            {/* Start option product */}
-            <div className="product-top__info__content__select">
-              {/* start option name product */}
-              <div className=" product-top__info__content__select__left">
-                <div className="product-top__info__content__select__left__title">
-                  {props.optionAttribute}
-                </div>
-              </div>
-              {/* end option name product */}
-
-              {/* start option attribute product */}
-              <div className=" product-top__info__content__select__right">
-                {props.optionAttribute}
-              </div>
-              {/* end */}
+            <div className="product-top__info__content__left">
+              {props.optionName}
             </div>
-            {/* end */}
           </div>
         </div>
       </div>

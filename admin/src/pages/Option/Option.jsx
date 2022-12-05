@@ -30,7 +30,7 @@ const Option = () => {
     <div>
       <div className="page-header">
         <h2 className="page-header__title">Thuộc Tính</h2>
-        <AddOption parentCallback={callbackFunction}></AddOption>
+        <AddOption></AddOption>
       </div>
       <div className="row">
         <div className="col-12">

@@ -50,8 +50,8 @@ const Products = () => {
                     <td>Số Lượng Hiện Tại</td>
                     <td>Số Lượng Ban Đầu</td>
                     <td>Mô Tả</td>
-                    <td>Mã Danh Mục</td>
-                    <td>Mã Thương Hiệu</td>
+                    <td>Tên Danh Mục</td>
+                    <td>Tên Thương Hiệu</td>
                     <td>Tình Trạng</td>
                     <td>Cài Đặt</td>
                   </tr>
@@ -61,42 +61,42 @@ const Products = () => {
                     ?.sort((a, b) => a.id - b.id)
                     .map((item, index) => (
                       <tr key={index}>
-                        <td>{item.id}</td>
+                        <td>{item?.id}</td>
                         <td>
-                          <div className="word-wrap">{item.name}</div>
+                          <div className="word-wrap">{item?.name}</div>
                         </td>
                         <td>
                           <img
                             className="product-img"
-                            src={item.img ? item.img : item.name}
+                            src={item?.img ? item?.img : item?.name}
                           />
                         </td>
-                        <td>{item.unitprice}</td>
-                        <td>{item.currentQuantity}</td>
-                        <td>{item.IntialQuantity}</td>
+                        <td>{item?.unitprice}</td>
+                        <td>{item?.currentQuantity}</td>
+                        <td>{item?.IntialQuantity}</td>
                         <td>
-                          <div className="word-wrap">{item.Description}</div>
+                          <div className="word-wrap">{item?.Description}</div>
                         </td>
-                        <td>{item.category_id}</td>
-                        <td>{item.brand_id}</td>
-                        <td>{item.status}</td>
+                        <td>{item?.CategoryProduct.name}</td>
+                        <td>{item?.ProductBrand.name}</td>
+                        <td>{item?.status}</td>
                         <td>
                           <div className="card__body__features">
                             <span className="card__body__features__edit">
                               <UploadProduct
-                                id={item.id}
-                                nameProduct={item.name}
-                                idCate={item.category_id}
-                                idBrand={item.brand_id}
-                                price={item.unitprice}
-                                imgProduct={item.img}
-                                descProduct={item.Description}
+                                id={item?.id}
+                                nameProduct={item?.name}
+                                nameCate={item?.CategoryProduct.name}
+                                nameBrand={item?.ProductBrand.name}
+                                price={item?.unitprice}
+                                imgProduct={item?.img}
+                                descProduct={item?.Description}
                                 parentCallback={callbackFunction}
                               ></UploadProduct>
                             </span>
                             <span className="card__body__features__delete">
                               <DeleteProduct
-                                item={item.id}
+                                item={item?.id}
                                 parentCallback={callbackFunction}
                               ></DeleteProduct>
                             </span>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -15,9 +15,11 @@ import { Backdrop, CircularProgress } from "@mui/material";
 const UploadProduct = (props) => {
   const id = props.id;
   const [open, setOpen] = useState(false);
+  const [allCategory, setAllCategory] = useState([]);
+  const [allBrand, setAllBrand] = useState([]);
   const [newName, setNewName] = useState("");
-  const [newIdCate, setNewIdCate] = useState("");
-  const [newIdBrand, setNewIdBrand] = useState("");
+  const [selectedBrand, setSelectedBrand] = useState(allBrand[0]);
+  const [selectedCate, setSelectedCate] = useState(allCategory[0]);
   const [newPrice, setNewPrice] = useState("");
   const [newDesc, setNewDesc] = useState("");
   const [file, setFile] = useState("");
@@ -36,8 +38,8 @@ const UploadProduct = (props) => {
         id: id,
         name: newName,
         unitprice: newPrice,
-        brand_id: newIdBrand,
-        category_id: newIdCate,
+        brand_id: selectedBrand,
+        category_id: selectedCate,
         img: url,
         Description: newDesc,
       })
@@ -75,6 +77,31 @@ const UploadProduct = (props) => {
     setIsLoading(false);
     setOpen(false);
   };
+  const callAllCategory = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-Category/")
+      .then((res) => {
+        setAllCategory(res.data.category);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const callAllBrand = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-brand/")
+      .then((res) => {
+        setAllBrand(res.data.brand);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    callAllCategory();
+    callAllBrand();
+  }, []);
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -102,18 +129,33 @@ const UploadProduct = (props) => {
                 defaultValue={props.nameProduct}
                 onChange={(e) => setNewName(e.target.value)}
               />
-              <label>Mã Danh Mục</label>
-              <Input
-                type="text"
-                defaultValue={props.idCate}
-                onChange={(e) => setNewIdCate(e.target.value)}
-              />
-              <label>Mã Thương Hiệu</label>
-              <Input
-                type="text"
-                defaultValue={props.idBrand}
-                onChange={(e) => setNewIdBrand(e.target.value)}
-              />
+              <label>Tên Danh Mục</label>
+              <br />
+              <select
+                value={selectedCate}
+                onChange={(e) => setSelectedCate(e.target.value)}
+              >
+                <option>{props.nameCate}</option>
+                {allCategory?.map((item, index) => (
+                  <option key={index} value={item.id}>
+                    {item?.name}
+                  </option>
+                ))}
+              </select>
+              <br />
+              <label>Tên Thương Hiệu</label>
+              <br />
+              <select
+                value={selectedBrand}
+                onChange={(e) => setSelectedBrand(e.target.value)}
+              >
+                <option>{props.nameBrand}</option>
+                {allBrand?.map((item, index) => (
+                  <option key={index} value={item.id}>
+                    {item?.name}
+                  </option>
+                ))}
+              </select>
               <label>Giá</label>
               <Input
                 type="number"

@@ -15,7 +15,6 @@ import Layout from "./components/layout/Layout";
 import Login from "./pages/Login/Login";
 
 const store = createStore(rootReducer);
-const idAdmin = localStorage.getItem("admin");
 document.title = "PT";
 
 ReactDOM.render(

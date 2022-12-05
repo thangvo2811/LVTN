@@ -10,14 +10,14 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useHistory();
+  const isLoggin = localStorage.getItem("admin");
 
   const handleLogin = (e) => {
     e.preventDefault();
     const newAdmin = { email: email, password: password };
     loginAdmin(dispatch, newAdmin);
     // window.history.push("/");
-    window.location.href = "/";
     // window.history.pushState("nextState", "nextTitle", "/");
   };
 

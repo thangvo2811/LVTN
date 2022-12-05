@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 const Comments = () => {
   const [allComment, setAllComment] = useState([]);
   const param = useParams();
-
   const callAllComment = async (id) => {
     await axios
       .get(`http://localhost:8000/api/get-comment-of-product/${id}/`)
@@ -23,10 +22,6 @@ const Comments = () => {
     <div>
       <div className="page-header">
         <h2 className="page-header__title">Option</h2>
-        <div className="page-header__add">
-          <i className="bx bx-plus"></i>
-          <div>Add New</div>
-        </div>
       </div>
       <div className="row">
         <div className="col-12">
@@ -36,7 +31,7 @@ const Comments = () => {
                 <thead>
                   <tr>
                     <td>ID</td>
-                    <td>Mã Khách Hàng</td>
+                    <td>Tên Khách Hàng</td>
                     <td>Mã Sản Phẩm</td>
                     <td>Nội Dung</td>
                     <td>Đánh Giá</td>
@@ -48,8 +43,8 @@ const Comments = () => {
                   {allComment?.map((item, index) => (
                     <tr key={index}>
                       <td>{item.id}</td>
-                      <td>{item.cus_id}</td>
-                      <td>{item.product_id}</td>
+                      <td>{item.commentUser.name}</td>
+                      <td>{item.CommentProduct.name}</td>
                       <td>{item.description}</td>
                       <td>{item.rate}</td>
                       <td>{item.status}</td>
