@@ -50,7 +50,7 @@ const MyAccount = () => {
           <input
             type="date"
             className="form-date"
-            value={moment(detailUser?.birthday).format("YYYY-MM-DD")}
+            defaultValue={moment(detailUser?.birthday).format("YYYY-MM-DD")}
           />
           <input
             type="text"

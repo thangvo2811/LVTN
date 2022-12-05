@@ -258,6 +258,9 @@
         margin-right: 5px;
         border-radius: 20px;
         border-top: none;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        max-height: 500px;
 
         &__list {
           width: 100%;

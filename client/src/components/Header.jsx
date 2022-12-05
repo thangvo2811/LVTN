@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
 
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import dd1 from "../assets/images/dropdown-images/729_x_356.jpg";
 import dd2 from "../assets/images/dropdown-images/Artboard-4-copy-8-2.png";
@@ -11,10 +11,9 @@ import dd6 from "../assets/images/dropdown-images/Artboard-8-copy-2-8.png";
 
 import axios from "axios";
 
-import { message } from "antd";
+import { Menu, message, Space } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { addNumberCartSuccess } from "../redux/cartRedux";
-import WishList from "../pages/UserProfile/WishList";
 
 const Header = () => {
   const newItem = useSelector((state) => state.cart.numberCart);
