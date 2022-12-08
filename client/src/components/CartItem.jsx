@@ -60,7 +60,7 @@ const CartItem = (props) => {
         <div className="cart-item__info">
           <div className="cart-item__info__title"></div>
           <div className="cart-item__info__id">
-            Tên sản phẩm: {itemCart.name}
+            Tên sản phẩm: {itemCart.CartItemProduct.name}
           </div>
           <div className="cart-item__info__brand">
             Thương hiệu: {itemCart.CartItemProduct.ProductBrand.name}

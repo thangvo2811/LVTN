@@ -14,6 +14,7 @@ const Pay = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("");
   const [value, setValue] = useState(1);
 
   const [payment, setPayMent] = useState({});
@@ -54,45 +55,63 @@ const Pay = () => {
   //       console.log(err);
   //     });
   // };
-  const callCreateOrder = async () => {
-    await axios.post("http://localhost:8000/api/create-order-user/", {
-      fullname: name,
-      email: "anhdansgvn@gmail.com",
-      Address: address,
-      phonenumber: phone,
-      voucher_id: "",
-      method_id: 1,
-      cus_id: newCustomer,
-      warehouse_id: 1,
-      cartitem: [6],
-    });
-  };
+
   const callPayMent = async () => {
     await axios
       .post("http://localhost:8000/api/get-momo-payment-link/", {
-        orderId: 1,
+        orderId: 5,
       })
       .then((res) => {
-        setPayMent(res.data.qrCodeUrl);
-        // navigate(
-        //   "https://test-payment.momo.vn/v2/gateway/pay?t=TU9NT3xNT01PMTY3MDQwMDI5MDc1Mg=="
-        // );
+        if (res && res.status === 200) {
+          setPayMent(res?.data?.data.qrCodeUrl);
+          console.log(res?.data?.data.qrCodeUrl);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
+  const callCreateOrder = async () => {
+    await axios
+      .post("http://localhost:8000/api/create-order-user/", {
+        fullname: name,
+        email: email,
+        Address: address,
+        phonenumber: phone,
+        voucher_id: "",
+        method_id: 1,
+        cus_id: newCustomer,
+        warehouse_id: 1,
+        cartitem: [9, 10],
+      })
+      .then((res) => {
+        console.log(res.data);
+        callPayMent();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const linkMoMo =
+    "https://test-payment.momo.vn/v2/gateway/app?isScanQr=true&t=TU9NT3xNT01PMTY3MDUyMTUyMTEyNw==";
   useEffect(() => {
     callAllCity();
     callAllDistrict(cityById);
   }, [cityById]);
-  const handleClick = () => {
-    callPayMent();
-  };
+
   const inputs = [
     {
       key: 1,
+      name: "email",
+      type: "email",
+      placeholder: "Email",
+      errorMessage: "Email không hợp lệ",
+      label: "Email",
+      pattern: "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+[a-zA-Z0-9-.]+$",
+      required: true,
+    },
+    {
+      key: 2,
       name: "username",
       type: "text",
       placeholder: "Họ tên",
@@ -102,7 +121,7 @@ const Pay = () => {
       required: true,
     },
     {
-      key: 2,
+      key: 3,
       name: "phone",
       type: "text",
       placeholder: "Phone",
@@ -112,7 +131,7 @@ const Pay = () => {
       required: true,
     },
     {
-      key: 3,
+      key: 4,
       name: "address",
       type: "text",
       placeholder: "Địa chỉ",
@@ -130,10 +149,14 @@ const Pay = () => {
             <div className="form-input">
               <FormInput
                 {...inputs[0]}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               ></FormInput>
               <FormInput
                 {...inputs[1]}
+                onChange={(e) => setName(e.target.value)}
+              ></FormInput>
+              <FormInput
+                {...inputs[2]}
                 onChange={(e) => setPhone(e.target.value)}
               ></FormInput>
               <label>Thành Phố</label>
@@ -155,7 +178,7 @@ const Pay = () => {
                 ))}
               </select>
               <FormInput
-                {...inputs[2]}
+                {...inputs[3]}
                 onChange={(e) => setAddress(e.target.value)}
               ></FormInput>
             </div>
@@ -207,8 +230,23 @@ const Pay = () => {
           </div>
         </div>
         <div className="payment__card">
-          <button className="btn-pay" onClick={handleClick}>
-            Thanh Toán
+          <button
+            className="btn-pay"
+            onClick={() => {
+              callCreateOrder(
+                name,
+                email,
+                address,
+                phone,
+                "",
+                1,
+                newCustomer,
+                1,
+                ""
+              );
+            }}
+          >
+            <a href={linkMoMo}> Thanh Toán</a>
           </button>
         </div>
       </form>

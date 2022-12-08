@@ -29,6 +29,8 @@ const ProductView = (props) => {
   const [commentProduct, setCommentProduct] = useState([]);
   const dispatch = useDispatch();
   const newCustomer = localStorage.getItem("User");
+
+  const [selected, setSelected] = useState([0]);
   const newItemFromState = useSelector(
     (state) => state.cart.numberCartByCartId
   );
@@ -78,7 +80,8 @@ const ProductView = (props) => {
   const handleOnEnter = (text) => {
     console.log("Customer:", text);
   };
-
+  // const id = props.iDOption;
+  // console.log("ID OPTION", id);
   const handleAddCart = () => {
     console.log("add cart");
     const newProduct = props.product_id;

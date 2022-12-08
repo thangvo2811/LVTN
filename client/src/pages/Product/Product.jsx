@@ -15,7 +15,7 @@ const Product = () => {
 
   const [allProduct, setAllProduct] = useState([]);
   const [detailProduct, setDetailProduct] = useState({});
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState([""]);
 
   // const callDetailProduct = useCallback(
   //   async (id) => {
@@ -64,12 +64,13 @@ const Product = () => {
       });
   };
 
-  // const handleChange = (e) => {
-  //   setSelected(e.target.checked);
-  //   if (!selected) {
-  //     message.success("Thuộc Tính Đã Được Chọn");
-  //   }
-  // };
+  const handleClick = (e) => {
+    // setSelected(e.target.checked);
+    // pre => setArr(...pre,valueNew)
+    if (selected) {
+      setSelected(...selected);
+    }
+  };
   return (
     <Helmet name="Chi Tiết Sản Phẩm">
       <Section>
@@ -128,6 +129,9 @@ const Product = () => {
                   </>
                 );
               })}
+              iDOption={detailProduct?.existingOptions?.map((item, index) =>
+                item?.values?.map((data, i) => data.id)
+              )}
               // attributeName={detailProduct?.existingOptions?.map(
               //   (item, index) =>
               //     item?.values?.map((data, i) => (
