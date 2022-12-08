@@ -8,12 +8,14 @@ import ProductCard from "../../components/ProductCard";
 import ProductView from "../../components/ProductView";
 
 import axios from "axios";
+import { Checkbox, Input, message } from "antd";
 
 const Product = () => {
   const param = useParams();
 
   const [allProduct, setAllProduct] = useState([]);
   const [detailProduct, setDetailProduct] = useState({});
+  const [selected, setSelected] = useState("");
 
   // const callDetailProduct = useCallback(
   //   async (id) => {
@@ -62,6 +64,12 @@ const Product = () => {
       });
   };
 
+  // const handleChange = (e) => {
+  //   setSelected(e.target.checked);
+  //   if (!selected) {
+  //     message.success("Thuộc Tính Đã Được Chọn");
+  //   }
+  // };
   return (
     <Helmet name="Chi Tiết Sản Phẩm">
       <Section>
@@ -113,7 +121,7 @@ const Product = () => {
                           key={i}
                           className="product-top__info__content__left__attribute__name"
                         >
-                          {data.name}
+                          <Checkbox> {data.name}</Checkbox>
                         </div>
                       ))}
                     </div>

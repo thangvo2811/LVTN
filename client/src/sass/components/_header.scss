@@ -292,6 +292,36 @@
             }
           }
         }
+        &__sub {
+          padding-top: 10px;
+          &__btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: solid 1px #eee;
+            font-weight: normal;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 15px;
+            margin-top: 5px;
+            cursor: pointer;
+          }
+          &__item {
+            &__list {
+              border: solid 1px #eee;
+              font-weight: normal;
+              padding: 10px;
+              width: 100%;
+              cursor: pointer;
+              border-radius: 15px;
+              margin-top: 5px;
+              &__text:hover {
+                color: #4267b2;
+              }
+            }
+          }
+        }
       }
 
       &__right {

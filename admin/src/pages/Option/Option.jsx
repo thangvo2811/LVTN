@@ -43,7 +43,7 @@ const Option = () => {
                     <td>Tên</td>
                     <td>Giá</td>
                     <td>Mã Sản Phẩm</td>
-                    <td>Mã Thuộc Tính</td>
+                    <td>Tên Thuộc Tính</td>
                     <td>Cài Đặt</td>
                   </tr>
                 </thead>
@@ -56,7 +56,7 @@ const Option = () => {
                         <td>{item.name}</td>
                         <td>{item.price}</td>
                         <td>{item.product_id}</td>
-                        <td>{item.option_id}</td>
+                        <td>{item.name}</td>
                         <td>
                           <div className="card__body__features">
                             <span className="card__body__features__edit">

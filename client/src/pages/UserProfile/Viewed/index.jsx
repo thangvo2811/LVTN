@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Grid from "../../../components/Grid";
 import ProductCard from "../../../components/ProductCard";
 import { SectionBody, SectionTitle } from "../../../components/Section";
@@ -12,7 +12,7 @@ const Viewed = () => {
   const callbackFunction = (childData) => {
     setReloadPage(childData);
   };
-  const callAllViewed = async () => {
+  const callAllViewed = useCallback(async () => {
     await axios
       .get(
         `http://localhost:8000/api/get-product-view-by-customer-id/${idCus}/`
@@ -23,10 +23,10 @@ const Viewed = () => {
       .catch((err) => {
         console.log(err);
       });
-  };
+  }, [idCus]);
   useEffect(() => {
     callAllViewed();
-  }, [reloadPage]);
+  }, [callAllViewed, reloadPage]);
   return (
     <>
       <SectionTitle>Sản Phẩm Đã Xem</SectionTitle>

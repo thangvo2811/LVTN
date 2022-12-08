@@ -4,15 +4,16 @@ import Helmet from "../../components/Helmet";
 import Grid from "../../components/Grid";
 import ProductCard from "../../components/ProductCard";
 import asus from "../../assets/images/banner/asus.jpg";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 import axios from "axios";
 
 const Categories = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = React.useState(false);
   const [allProduct, setAllProduct] = useState([]);
   const [allCategory, setAllCategory] = useState([]);
   const [allBrand, setAllBrand] = useState([]);
-
   const [brand, setBrand] = useState({
     id: "",
     name: "",
@@ -21,6 +22,10 @@ const Categories = () => {
     idCate: "",
     nameCate: "",
   });
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     callAllCategory();
@@ -49,8 +54,8 @@ const Categories = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     const callAllProduct = async () => {
-      setIsLoading(true);
       await axios
         .get(
           `http://localhost:8000/api/get-all-product?brand_id=${brand.id}&category_id=${category.idCate}`
@@ -60,18 +65,25 @@ const Categories = () => {
         })
         .catch((err) => {
           console.log(err);
-        })
-        .finally(() => {
-          setIsLoading(false);
         });
     };
+    setIsLoading(false);
     callAllProduct();
   }, [brand, category]);
 
   return (
     <>
-      {isLoading === true ? (
-        <p>Loading</p>
+      {isLoading ? (
+        <Backdrop
+          sx={{
+            color: "#fff",
+            zIndex: (theme) => theme.zIndex.drawer + 1,
+          }}
+          open={open}
+          onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
       ) : (
         <Helmet name="Danh mục">
           <div className="category-banner">
@@ -80,9 +92,7 @@ const Categories = () => {
           <div className="category-title">
             {category.idCate
               ? `Danh mục ${category.nameCate}`
-              : brand.id
-              ? `Thương hiệu sản phẩm`
-              : "Danh sách sản phẩm"}
+              : "Danh Sách Sản Phẩm"}
           </div>
 
           <div className="category">
@@ -96,6 +106,7 @@ const Categories = () => {
                   Thương hiệu
                 </div>
                 <select
+                  value={brand.name}
                   className="category__filters__item__select"
                   onChange={(e) => {
                     setCategory((category) => ({

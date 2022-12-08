@@ -7,12 +7,13 @@ import axios from "axios";
 const ProductCardViewed = (props) => {
   const idCus = localStorage.getItem("User");
   const product = props.product;
+  console.log(product.id);
   const navigate = useNavigate();
   const handleAddListProduct = async () => {
     await axios
       .post("http://localhost:8000/api/add-too-wish-list/", {
         cus_id: idCus,
-        product_id: props.id,
+        product_id: product.id,
       })
       .then((res) => {
         if (res.data.errCode === 3) {
@@ -20,7 +21,7 @@ const ProductCardViewed = (props) => {
           return;
         }
         console.log(res.data);
-        // props.parentCallback(Date.now());
+        props.parentCallback(Date.now());
         message.success("Đã Thêm Vào Danh Sách Yêu Thích");
       })
       .catch((err) => {

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import numberWithCommas from "../utils/numberWithCommas";
 import lp from "../assets/images/products/chuot-choi-game-co-day-logitech-g502-hero.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { addNumberCart, deleteCart } from "../redux/apiCalls";
+import { addCart, addNumberCart, deleteCart } from "../redux/apiCalls";
 import {
   addCartByCartIdAction,
   addCartByProductIdAction,
@@ -22,6 +22,7 @@ const CartItem = (props) => {
     (state) => state.cart.numberCartByCartId
   );
   const newItemByCartId = newItemFromState[itemCart.id];
+  console.log("Sluong", newItemByCartId);
   const dispatch = useDispatch();
 
   const increaseQuantity = () => {
@@ -35,7 +36,7 @@ const CartItem = (props) => {
     );
   };
   const decreaseQuantity = () => {
-    // setQuantity(quantity - 1 < 0 ? 0 : quantity - 1);
+    setQuantity(quantity < 2 ? 1 : quantity - 1);
     addNumberCart(dispatch, itemCart.id, "-");
     dispatch(
       removeCartByCartIdAction({
@@ -54,7 +55,7 @@ const CartItem = (props) => {
     <>
       <div className="cart-item">
         <div className="cart-item__image">
-          <img src={lp} alt="" />
+          <img src={itemCart.CartItemProduct.img} alt="" />
         </div>
         <div className="cart-item__info">
           <div className="cart-item__info__title"></div>
@@ -63,6 +64,9 @@ const CartItem = (props) => {
           </div>
           <div className="cart-item__info__brand">
             Thương hiệu: {itemCart.CartItemProduct.ProductBrand.name}
+          </div>
+          <div className="cart-item__info__brand">
+            Danh mục: {itemCart.CartItemProduct.CategoryProduct.name}
           </div>
           <div className="cart-item__info__price">
             Đơn giá: {numberWithCommas(itemCart.price)} VND
@@ -78,8 +82,8 @@ const CartItem = (props) => {
             Tổng : {numberWithCommas(itemCart.amount * itemCart.price)} VND
           </div>
         </div>
-        <div className="cart-item__delete" onClick={handleDeleteCartItem}>
-          <i className="bx bx-trash"></i>
+        <div className="cart-item__delete">
+          <i className="bx bx-trash" onClick={handleDeleteCartItem}></i>
         </div>
       </div>
     </>

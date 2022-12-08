@@ -7,13 +7,15 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Input, message } from "antd";
 import axios from "axios";
+import { useEffect } from "react";
 
 const AddOption = (props) => {
   const [open, setOpen] = useState(false);
+  const [allOption, setAllOption] = useState([]);
   const [newName, setNewName] = useState("");
   const [newPrice, setNewPrice] = useState("");
   const [idProduct, setIdProduct] = useState("");
-  const [idOption, setIdOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -27,7 +29,7 @@ const AddOption = (props) => {
         name: newName,
         price: newPrice,
         product_id: idProduct,
-        option_id: idOption,
+        option_id: selectedOption,
       })
       .catch((res) => {
         if (newName === "") {
@@ -42,6 +44,19 @@ const AddOption = (props) => {
       });
     setOpen(false);
   };
+  const callAllOption = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-option/")
+      .then((res) => {
+        setAllOption(res.data.option);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    callAllOption();
+  }, []);
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -78,12 +93,18 @@ const AddOption = (props) => {
                 placeholder="Mã Sản Phẩm"
                 onChange={(e) => setIdProduct(e.target.value)}
               />
-              <label>Mã Thuộc Tính</label>
-              <Input
-                type="number"
-                placeholder="Mã Thuộc Tính"
-                onChange={(e) => setIdOption(e.target.value)}
-              />
+              <label>Tên Thuộc Tính</label>
+              <select
+                value={selectedOption}
+                onChange={(e) => setSelectedOption(e.target.value)}
+              >
+                <option>Chọn Thuộc Tính</option>
+                {allOption?.map((item, index) => (
+                  <option key={index} value={item?.id}>
+                    {item?.name}
+                  </option>
+                ))}
+              </select>
             </form>
           </div>
         </DialogContent>
@@ -91,7 +112,7 @@ const AddOption = (props) => {
           <Button onClick={handleClose}>Hủy</Button>
           <Button
             onClick={() => {
-              handleAddOption(newName, newPrice, idProduct, idOption);
+              handleAddOption(newName, newPrice, idProduct, selectedOption);
             }}
           >
             Thêm

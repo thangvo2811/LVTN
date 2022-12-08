@@ -12,6 +12,7 @@ import Option from "../pages/Option/Option";
 import Comments from "../pages/Comments/Comments";
 import Login from "../pages/Login/Login";
 import Employee from "../pages/Employee/Employee";
+import Order from "../pages/Order/Order";
 const isLogin = localStorage.getItem("admin") ? true : false;
 const Routes = () => {
   return (
@@ -27,6 +28,7 @@ const Routes = () => {
           <Route path="/option" exact component={Option} />
           <Route path="/comment" exact component={Comments} />
           <Route path="/blog" exact component={Blog} />
+          <Route path="/orders" exect component={Order} />
         </>
       ) : (
         <Redirect from="" to="login" />

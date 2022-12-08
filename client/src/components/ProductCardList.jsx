@@ -8,6 +8,7 @@ import { message } from "antd";
 const ProductCardList = (props) => {
   const product = props.product;
   const idWishList = props.idWishList;
+
   const navigate = useNavigate();
   const callDeleteProduct = async () => {
     await axios

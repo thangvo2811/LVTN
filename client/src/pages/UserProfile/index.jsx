@@ -12,8 +12,6 @@ import Voucher from "./Voucher";
 import OrderList from "./OrderList/index";
 
 const UserProfile = (props) => {
-  const [detailUser, setDetailUser] = useState({});
-  const newCustomer = localStorage.getItem("User").toString();
   const [tabPosition, setTabPosition] = useState("left");
   // const changeTabPosition = (e) => {
   //   setTabPosition(e.target.value);

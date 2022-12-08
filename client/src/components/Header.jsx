@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import dd1 from "../assets/images/dropdown-images/729_x_356.jpg";
 import dd2 from "../assets/images/dropdown-images/Artboard-4-copy-8-2.png";
@@ -22,24 +22,17 @@ const Header = () => {
   const headerContentRef = useRef(null);
   const headerShrink = useRef(null);
   const [totalItem, setTotalItem] = useState({});
-  const [allCategory, setAllCategory] = useState([]);
+
   const [searchKey, setSearchKey] = useState("");
+  const [allCategory, setAllCategory] = useState([]);
 
   // const newUser = useSelector((state) => state.user.currentUser);
   const newCustomer = localStorage.getItem("User");
   const nameCustomer = localStorage.getItem("nameUser");
   const dispatch = useDispatch();
+  const [open, setOpen] = React.useState(false);
+  const param = useParams();
 
-  const callCategories = async () => {
-    await axios
-      .get("http://localhost:8000/api/get-Category/")
-      .then((res) => {
-        setAllCategory(res.data.category);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
   const callSearchProduct = async (searchK) => {
     await axios
       .get(`http://localhost:8000/api/findbykeyword/${searchK}`)
@@ -57,18 +50,45 @@ const Header = () => {
       .then((res) => {
         console.log(res.data.Sum);
         setTotalItem(res.data.Sum);
-        localStorage.setItem("cartItem", res.data.Sum);
-        dispatch(addNumberCartSuccess(res.data.Sum));
+        localStorage.setItem("cartItem", res.data.quantity);
+        dispatch(addNumberCartSuccess(res.data.quantity));
       })
       .catch((err) => {
         console.log(err);
       });
   }, [newCustomer]);
+
+  // const callCategories = async () => {
+  //   await axios
+  //     .get("http://localhost:8000/api/get-Category/")
+  //     .then((res) => {
+  //       setAllCategory(res.data.category);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+  const callAllIdCategory = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-category-parent/?parent_id=")
+      .then((res) => {
+        console.log(res.data.Category);
+        setAllCategory(res.data.Category);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const handleOpen = () => {
+    setOpen(!open);
+  };
   useEffect(() => {
-    callCategories();
     callSearchProduct();
     callTotalItems();
   }, [callTotalItems]);
+  useEffect(() => {
+    callAllIdCategory();
+  }, []);
 
   const handleSearch = (e) => {
     let pattern = /^[a-zA-Z0-9_ ]*$/g;
@@ -230,19 +250,43 @@ const Header = () => {
                     <div className="header-bottom__dropdown__left__list__title">
                       Danh mục sản phẩm
                     </div>
-                    <ul className="header-bottom__dropdown__left__list">
-                      {allCategory?.map((item, index) => {
-                        return (
-                          <li
-                            className="header-bottom__dropdown__left__list__item"
-                            key={index}
-                            onClick={() => navigate("/findcategory/" + item.id)}
-                          >
+                    {/* <ul className="header-bottom__dropdown__left__list">
+                      <li
+                        className="header-bottom__dropdown__left__list__item"
+
+                        // onClick={() => navigate("/findcategory/" + item.id)}
+                      ></li>
+                    </ul> */}
+                    <div className="header-bottom__dropdown__left__sub">
+                      {allCategory?.map((item, index) => (
+                        <div className="header-bottom__dropdown__left__sub__btn">
+                          <div className="header-bottom__dropdown__left__sub__btn__text">
                             {item.name}
+                          </div>
+                          <div className="header-bottom__dropdown__left__sub__btn__icon">
+                            <i
+                              class="bx bx-chevron-down"
+                              onClick={handleOpen}
+                            ></i>
+                          </div>
+                        </div>
+                      ))}
+
+                      {open ? (
+                        <ul className="header-bottom__dropdown__left__sub__item">
+                          <li className="header-bottom__dropdown__left__sub__item__list">
+                            <div className="header-bottom__dropdown__left__sub__item__list__text">
+                              LapTop Gaming
+                            </div>
                           </li>
-                        );
-                      })}
-                    </ul>
+                          <li className="header-bottom__dropdown__left__sub__item__list">
+                            <div className="header-bottom__dropdown__left__sub__item__list__text">
+                              LapTop Văn Phòng
+                            </div>
+                          </li>
+                        </ul>
+                      ) : null}
+                    </div>
                   </div>
                   <div className="header-bottom__dropdown__right">
                     <div className="header-bottom__dropdown__right__grid">

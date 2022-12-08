@@ -24,8 +24,8 @@ const Cart = () => {
     await axios
       .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}/`)
       .then((res) => {
-        console.log(res.data.Cartitem);
-        setCartItem(res.data.Cartitem);
+        console.log(res.data.cartitem);
+        setCartItem(res.data.cartitem);
         res.data.Cartitem.forEach((item) => {
           dispatch(
             initialCartByCartIdAction({

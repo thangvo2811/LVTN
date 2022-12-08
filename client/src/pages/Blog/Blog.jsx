@@ -1,36 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import img1 from "../assets/images/blog/2.png";
 import img2 from "../assets/images/blog/JBL_Quantum400_Lifestyle1.png";
 import Button from "./Button";
+import { axios } from "axios";
 
 const Blog = () => {
+  const [allBlog, setAllBlog] = useState([]);
+
+  const callAllBlog = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-all-blog/")
+      .then((res) => {
+        console.log(res.data.blog);
+        setAllBlog(res.data.blog);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    callAllBlog();
+  }, []);
   return (
     <div className="blog">
-      <div className="blog__item">
-        <div className="blog__item__image">
-          <img src={img2} alt="" />
-        </div>
-        <div className="blog__item__content">
-          <div className="blog__item__content__title">
-            công nghệ định vị âm thanh không gian chuẩn xác.
+      {allBlog?.map((item, index) => (
+        <div className="blog__item">
+          <div className="blog__item__image">
+            <img src={img2} alt="" />
           </div>
-          <div className="blog__item__content__description">
-            Một chiếc tai nghe game thủ mang đến lợi thế âm thanh đa hướng chuẩn
-            mực và chính xác đỉnh cao nhất. Công nghệ JBL QuantumSURROUND™ đưa
-            bạn vào trung tâm của trải nghiệm, để bạn vươn tầm chiến thắng. Từ
-            tiếng bước chân mong manh đến những pha cháy nổ khốc liệt, đưa mọi
-            cảnh game hoành tráng hơn và mỗi game thủ quyền năng cạnh tranh hơn.
-            Âm thanh độc quyền của chúng tôi được kiến tạo từ driver lớn tới
-            50mm cùng công nghệ JBL QuantumSOUND cho không gian âm thanh đa
-            hướng chân thực và mang tới lợi thế âm thanh thực thụ trong mỗi trận
-            chiến.
+          <div className="blog__item__content">
+            <div className="blog__item__content__title">
+              {/* công nghệ định vị âm thanh không gian chuẩn xác. */}
+              {item.name}
+            </div>
+            <div className="blog__item__content__description">
+              {/* Một chiếc tai nghe game thủ mang đến lợi thế âm thanh đa hướng
+              chuẩn mực và chính xác đỉnh cao nhất. Công nghệ JBL
+              QuantumSURROUND™ đưa bạn vào trung tâm của trải nghiệm, để bạn
+              vươn tầm chiến thắng. Từ tiếng bước chân mong manh đến những pha
+              cháy nổ khốc liệt, đưa mọi cảnh game hoành tráng hơn và mỗi game
+              thủ quyền năng cạnh tranh hơn. Âm thanh độc quyền của chúng tôi
+              được kiến tạo từ driver lớn tới 50mm cùng công nghệ JBL
+              QuantumSOUND cho không gian âm thanh đa hướng chân thực và mang
+              tới lợi thế âm thanh thực thụ trong mỗi trận chiến. */}
+              {item.Description}
+            </div>
+            <Button size="sm" animate={true} icon="bx-bx-hide">
+              Chi tiết
+            </Button>
           </div>
-          <Button size="sm" animate={true} icon="bx-bx-hide">
-            Chi tiết
-          </Button>
         </div>
-      </div>
-      <div className="blog__item blog__item__main">
+      ))}
+
+      {/* <div className="blog__item blog__item__main">
         <div className="blog__item__content">
           <div className="blog__item__content__title">
             Thiết kế tối ưu trải nghiệm chơi game.
@@ -54,7 +76,7 @@ const Blog = () => {
         <div className="blog__item__image">
           <img src={img1} alt="" />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

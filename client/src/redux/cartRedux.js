@@ -1,13 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// { "ProductId" : soLuong}
-// VD : {14 : 6, 15 : 2}
-// { amount : 5 } =>{ cartID : taora , amount : 5}
-// dispatch(addCart(productId))
-// => action.payload => productId => 123abc
-// if (state.numberCartByProductId[123abc]) => undefined => state.numberCartByProductId[15] = 2
-//  VD : {"123abc" : 6}
-// => state.numberCartByProductId[123abc] =  state.numberCartByProductId[123abc](6) + 1 = 7
 const cartSlice = createSlice({
   name: "cart",
   initialState: {

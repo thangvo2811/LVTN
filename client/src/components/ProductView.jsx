@@ -12,21 +12,27 @@ import pd from "../assets/images/products/laptop-asus-rog-strix-g15-g513ih-hn015
 
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addCart } from "../redux/apiCalls.js";
+import { addCart, addNumberCart } from "../redux/apiCalls.js";
 import axios from "axios";
 import {
+  addCartByCartIdAction,
   addNumberCartDecrease,
   addNumberCartIncrease,
+  removeCartByCartIdAction,
 } from "../redux/cartRedux";
 import { message } from "antd";
 
 const ProductView = (props) => {
   const param = useParams();
-  // const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(1);
   const [text, setText] = useState("");
   const [commentProduct, setCommentProduct] = useState([]);
   const dispatch = useDispatch();
   const newCustomer = localStorage.getItem("User");
+  const newItemFromState = useSelector(
+    (state) => state.cart.numberCartByCartId
+  );
+  const newItemByCartId = newItemFromState[props.id];
 
   const callCommentProduct = async () => {
     await axios
@@ -47,12 +53,25 @@ const ProductView = (props) => {
 
   const increaseQuantity = () => {
     // setQuantity(dispatch(addNumberCartIncrease));
-    dispatch(addNumberCartIncrease());
+    setQuantity(quantity + 1);
+    // addNumberCart(dispatch, props.id, "+");
+    // dispatch(
+    //   addCartByCartIdAction({
+    //     cartId: props.id,
+    //     currentAmount: quantity + 1,
+    //   })
+    // );
   };
   const decreaseQuantity = () => {
-    // setQuantity(quantity < 2 ? 1 : quantity - 1);
+    setQuantity(quantity < 2 ? 1 : quantity - 1);
     // setQuantity(dispatch(addNumberCartDecrease));
-    dispatch(addNumberCartDecrease());
+    // addNumberCart(dispatch, props.id, "-");
+    // dispatch(
+    //   removeCartByCartIdAction({
+    //     cartId: props.id,
+    //     currentAmount: quantity < 2 ? 1 : quantity - 1,
+    //   })
+    // );
   };
 
   const handleOnEnter = (text) => {
@@ -101,7 +120,7 @@ const ProductView = (props) => {
               </div>
               <div className="product-top__info__quantity">
                 <i className="bx bx-minus" onClick={decreaseQuantity}></i>
-                <div>1</div>
+                <div>{quantity}</div>
                 <i className="bx bx-plus" onClick={increaseQuantity}></i>
               </div>
               {newCustomer ? (
