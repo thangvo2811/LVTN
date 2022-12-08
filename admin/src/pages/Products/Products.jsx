@@ -15,10 +15,12 @@ const Products = () => {
 
   const callAllProduct = async () => {
     await axios
-      .get("http://localhost:8000/api/get-all-product?brand_id=&category_id=")
+      .get(
+        "http://localhost:8000/api/get-all-product-admin/?brand_id=&category_id="
+      )
       .then((res) => {
-        console.log(res.data.products);
-        setAllProduct(res.data.products);
+        console.log(res.data);
+        setAllProduct(res.data);
       })
       .catch((err) => {
         console.log(err);

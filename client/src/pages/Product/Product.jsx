@@ -121,7 +121,7 @@ const Product = () => {
                           key={i}
                           className="product-top__info__content__left__attribute__name"
                         >
-                          <Checkbox> {data.name}</Checkbox>
+                          {data.name}
                         </div>
                       ))}
                     </div>

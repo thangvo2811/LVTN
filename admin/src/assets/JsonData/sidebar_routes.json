@@ -58,7 +58,7 @@
   },
   {
     "display_name": "Kho",
-    "route": "/discount",
+    "route": "/store",
     "icon": "bx bx-store"
   }
 ]

@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const Employee = () => {
-  const idAdmin = localStorage.getItem("admin");
+  const [allStaff, setAllStaff] = useState([]);
 
+  const callAllStaff = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-all-staff/")
+      .then((res) => {
+        setAllStaff(res.data.staff);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    callAllStaff();
+  }, []);
   return (
     <div>
       <div className="page-header">
@@ -17,12 +31,21 @@ const Employee = () => {
                   <tr>
                     <td>ID</td>
                     <td>Email</td>
-                    <td>Nhân Viên</td>
+                    <td>Tên</td>
                     <td>Phân Quyền</td>
                     <td>Cài Đặt</td>
                   </tr>
                 </thead>
-                <thead></thead>
+                <thead>
+                  {allStaff?.map((item, index) => (
+                    <tr>
+                      <td>{item.id}</td>
+                      <td>{item.email}</td>
+                      <td>{item.fullname}</td>
+                      <td>{item.role_id}</td>
+                    </tr>
+                  ))}
+                </thead>
               </table>
             </div>
           </div>

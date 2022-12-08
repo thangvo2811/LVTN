@@ -48,8 +48,8 @@ const Header = () => {
     await axios
       .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}`)
       .then((res) => {
-        console.log(res.data.Sum);
-        setTotalItem(res.data.Sum);
+        console.log(res.data.quantity);
+        setTotalItem(res.data.quantity);
         localStorage.setItem("cartItem", res.data.quantity);
         dispatch(addNumberCartSuccess(res.data.quantity));
       })

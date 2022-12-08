@@ -33,6 +33,7 @@ const ProductView = (props) => {
     (state) => state.cart.numberCartByCartId
   );
   const newItemByCartId = newItemFromState[props.id];
+  console.log(newItemByCartId);
 
   const callCommentProduct = async () => {
     await axios
@@ -52,8 +53,8 @@ const ProductView = (props) => {
   }, [param.category_id]);
 
   const increaseQuantity = () => {
-    // setQuantity(dispatch(addNumberCartIncrease));
     setQuantity(quantity + 1);
+    // setQuantity(dispatch(addNumberCartIncrease));
     // addNumberCart(dispatch, props.id, "+");
     // dispatch(
     //   addCartByCartIdAction({
@@ -81,7 +82,7 @@ const ProductView = (props) => {
   const handleAddCart = () => {
     console.log("add cart");
     const newProduct = props.product_id;
-    addCart(dispatch, newCustomer, newProduct);
+    addCart(dispatch, newCustomer, newProduct, quantity);
   };
   const handleClick = (e) => {
     e.preventDefault();

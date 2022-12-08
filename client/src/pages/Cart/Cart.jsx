@@ -26,6 +26,7 @@ const Cart = () => {
       .then((res) => {
         console.log(res.data.cartitem);
         setCartItem(res.data.cartitem);
+
         res.data.Cartitem.forEach((item) => {
           dispatch(
             initialCartByCartIdAction({
@@ -49,7 +50,9 @@ const Cart = () => {
         <div className="cart__desc">
           <div className="cart__desc__item">
             {cartItem?.map((item, index) => {
-              return <CartItem cartItem={item} key={index}></CartItem>;
+              return (
+                <CartItem cartItem={item} id={item.id} key={index}></CartItem>
+              );
             })}
           </div>
           <div className="cart__desc__clear">
@@ -69,8 +72,8 @@ const Cart = () => {
           <div className="cart__info__content">
             <div className="cart__info__content__title">Tổng Kết</div>
             <div className="cart__info__content__item">
-              <div className="cart__info__content__item__title">Tiền ship</div>
-              <div className="cart__info__content__item__price">0,000 VND</div>
+              {/* <div className="cart__info__content__item__title">Tiền ship</div>
+              <div className="cart__info__content__item__price">0,000 VND</div> */}
             </div>
             <div className="cart__info__content__item">
               <div className="cart__info__content__item__title">
@@ -81,7 +84,7 @@ const Cart = () => {
               </div>
             </div>
             <div className="cart__info__content__item">
-              <div className="cart__info__content__item__title">Thanh toán</div>
+              {/* <div className="cart__info__content__item__title">Thanh toán</div> */}
               <div className="cart__info__content__item__price">
                 {/* {totalPrice ? numberWithCommas(totalPrice) : ""} VND */}
               </div>

@@ -17,7 +17,7 @@ const CartItem = (props) => {
   const itemCart = props.cartItem;
   const [quantity, setQuantity] = useState("");
 
-  const newItem = useSelector((state) => state.cart.numberCart);
+  // const newItem = useSelector((state) => state.cart.numberCart);
   const newItemFromState = useSelector(
     (state) => state.cart.numberCartByCartId
   );
@@ -36,7 +36,7 @@ const CartItem = (props) => {
     );
   };
   const decreaseQuantity = () => {
-    setQuantity(quantity < 2 ? 1 : quantity - 1);
+    // setQuantity(quantity < 2 ? 1 : quantity - 1);
     addNumberCart(dispatch, itemCart.id, "-");
     dispatch(
       removeCartByCartIdAction({
@@ -60,7 +60,7 @@ const CartItem = (props) => {
         <div className="cart-item__info">
           <div className="cart-item__info__title"></div>
           <div className="cart-item__info__id">
-            Tên sản phẩm: {itemCart.CartItemProduct.name}
+            Tên sản phẩm: {itemCart.name}
           </div>
           <div className="cart-item__info__brand">
             Thương hiệu: {itemCart.CartItemProduct.ProductBrand.name}

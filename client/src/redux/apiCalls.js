@@ -32,13 +32,14 @@ export const loginUser = async (dispatch, user, navigate) => {
       dispatch(loginFailure());
     });
 };
-export const addCart = async (dispatch, user, idProduct) => {
+export const addCart = async (dispatch, user, idProduct, number, qty) => {
   dispatch(addStart());
   await axios
     .post("http://localhost:8000/api/add-to-cart", {
       cus_id: parseInt(user),
       product_id: idProduct,
-      optionvalue: [],
+      optionvalue: [number],
+      amount: qty,
     })
     .then((res) => {
       console.log(res);
@@ -80,6 +81,7 @@ export const addNumberCart = async (dispatch, cartId, keyCart) => {
     })
     .then((res) => {
       console.log(res.data);
+
       // dispatch(addNumberCartIncrease());
       // dispatch(addNumberCartDecrease());
     })
