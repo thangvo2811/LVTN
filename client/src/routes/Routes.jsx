@@ -12,8 +12,9 @@ import UserProfile from "../pages/UserProfile";
 
 import FindProduct from "../pages/Product/FindProduct";
 import FindCategory from "./../pages/Category/FindCategory";
-import ForgetPassWord from "../pages/Login/ForgetPassWord";
+
 import Blog from "../components/Blog";
+import ForgetPassWord from "../pages/ForgetPassWord/ForgetPassWord";
 
 const Routes = () => {
   return (

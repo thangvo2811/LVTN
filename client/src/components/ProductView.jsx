@@ -24,13 +24,13 @@ import { message } from "antd";
 
 const ProductView = (props) => {
   const param = useParams();
+
   const [quantity, setQuantity] = useState(1);
   const [text, setText] = useState("");
   const [commentProduct, setCommentProduct] = useState([]);
   const dispatch = useDispatch();
-  const newCustomer = localStorage.getItem("User");
 
-  const [selected, setSelected] = useState([0]);
+  const newCustomer = localStorage.getItem("User");
   const newItemFromState = useSelector(
     (state) => state.cart.numberCartByCartId
   );
@@ -85,12 +85,14 @@ const ProductView = (props) => {
   const handleAddCart = () => {
     console.log("add cart");
     const newProduct = props.product_id;
-    addCart(dispatch, newCustomer, newProduct, quantity);
+
+    addCart(dispatch, newCustomer, newProduct, props.idOptionValue, quantity);
   };
   const handleClick = (e) => {
     e.preventDefault();
     message.error("Bạn Chưa Đăng Nhập");
   };
+
   return (
     <div className="product">
       <div className="product-top">

@@ -5,8 +5,9 @@ import React, { useEffect, useState } from "react";
 import FormInput from "../../../components/FormInput";
 import "./style.scss";
 import { useNavigate } from "react-router-dom";
+import numberWithCommas from "../../../utils/numberWithCommas";
 
-const Pay = () => {
+const Confirm = () => {
   const [allCity, setAllCity] = useState([]);
   const [allDistrict, setAllDistrict] = useState([]);
   const [cityById, setCityById] = useState("");
@@ -15,12 +16,9 @@ const Pay = () => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
-  const [value, setValue] = useState(1);
-
-  const [payment, setPayMent] = useState({});
 
   const newCustomer = localStorage.getItem("User");
-  const navigate = useNavigate();
+
   const callAllCity = async (id) => {
     await axios
       .get("https://vapi.vnappmob.com/api/province/")
@@ -44,33 +42,7 @@ const Pay = () => {
         console.log(err);
       });
   };
-  // const callCartItem = async () => {
-  //   await axios
-  //     .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}/`)
-  //     .then((res) => {
-  //       console.log(res.data.cartitem);
-  //       setCartItem(res.data.cartitem);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
 
-  const callPayMent = async () => {
-    await axios
-      .post("http://localhost:8000/api/get-momo-payment-link/", {
-        orderId: 5,
-      })
-      .then((res) => {
-        if (res && res.status === 200) {
-          setPayMent(res?.data?.data.qrCodeUrl);
-          console.log(res?.data?.data.qrCodeUrl);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
   const callCreateOrder = async () => {
     await axios
       .post("http://localhost:8000/api/create-order-user/", {
@@ -82,22 +54,20 @@ const Pay = () => {
         method_id: 1,
         cus_id: newCustomer,
         warehouse_id: 1,
-        cartitem: [9, 10],
+        cartitem: [4, 5, 6],
       })
       .then((res) => {
         console.log(res.data);
-        callPayMent();
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  const linkMoMo =
-    "https://test-payment.momo.vn/v2/gateway/app?isScanQr=true&t=TU9NT3xNT01PMTY3MDUyMTUyMTEyNw==";
+
   useEffect(() => {
     callAllCity();
     callAllDistrict(cityById);
-  }, [cityById]);
+  }, [cityById, newCustomer]);
 
   const inputs = [
     {
@@ -159,7 +129,7 @@ const Pay = () => {
                 {...inputs[2]}
                 onChange={(e) => setPhone(e.target.value)}
               ></FormInput>
-              <label>Thành Phố</label>
+              {/* <label>Thành Phố</label>
               <select onChange={(e) => setCityById(e.target.value)}>
                 <option>Chọn Thành Phố/ Tỉnh</option>
                 {allCity?.map((item, index) => (
@@ -176,82 +146,22 @@ const Pay = () => {
                     {item.district_id ? item.district_name : ""}
                   </option>
                 ))}
-              </select>
+              </select> */}
               <FormInput
                 {...inputs[3]}
                 onChange={(e) => setAddress(e.target.value)}
               ></FormInput>
-            </div>
-          </div>
-          <div className="payment__content__detail">
-            <div className="payment__content__detail__desc">
-              <div className="payment__content__detail__desc__title">
-                Chi Tiết Đơn hàng
-              </div>
-              <div className="payment__content__detail__desc__product">
-                <div className="payment__content__detail__desc__product__name">
-                  Tên Sản Phẩm
-                </div>
-                <div className="payment__content__detail__desc__product__price">
-                  Tổng Giá
-                </div>
-              </div>
-              <div className="payment__content__detail__desc__product">
-                <div className="payment__content__detail__desc__product__name">
-                  Bàn Phím
-                </div>
-                <div className="payment__content__detail__desc__product__price">
-                  200000
-                </div>
-              </div>
-              <div className="payment__content__detail__desc__product">
-                <div className="payment__content__detail__desc__product__name">
-                  Shipping
-                </div>
-                <div className="payment__content__detail__desc__product__price">
-                  200000
-                </div>
-              </div>
-
-              <div className="payment__content__detail__desc__method">
-                <div className="payment__content__detail__desc__method__name">
-                  Phương Thức Thanh Toán
-                </div>
-                <Radio.Group
-                  onChange={(e) => setValue(e.target.value)}
-                  value={value}
-                >
-                  <Space direction="vertical">
-                    <Radio value={1}>Thanh Toán MoMo</Radio>
-                  </Space>
-                </Radio.Group>
+              <div className="btn-info">
+                <button type="submit" className="btn-click">
+                  Tiếp Tục
+                </button>
               </div>
             </div>
           </div>
-        </div>
-        <div className="payment__card">
-          <button
-            className="btn-pay"
-            onClick={() => {
-              callCreateOrder(
-                name,
-                email,
-                address,
-                phone,
-                "",
-                1,
-                newCustomer,
-                1,
-                ""
-              );
-            }}
-          >
-            <a href={linkMoMo}> Thanh Toán</a>
-          </button>
         </div>
       </form>
     </div>
   );
 };
 
-export default Pay;
+export default Confirm;

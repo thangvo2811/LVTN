@@ -71,11 +71,13 @@ const Login = () => {
                 <div className="login__btnfb">Tiếp tục với facebook</div>
               </div>
             </div>
-            <div className="login__redirect">
+            <span className="login__account">
+              Bạn chưa có tài khoản ?{" "}
               <Link to={"/register"}>
-                Bạn chưa có tài khoản ? <span> Đăng kí</span>
+                <span> Đăng kí</span>
               </Link>
-            </div>
+            </span>
+
             <div className="login__redirect">
               <Link to={"/user"}>
                 <span> Quên mật khẩu ?</span>

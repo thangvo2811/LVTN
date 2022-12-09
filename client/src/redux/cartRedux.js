@@ -27,10 +27,12 @@ const cartSlice = createSlice({
     initialCartByCartIdAction: (state, action) => {
       const { cartId, currentAmount } = action.payload;
       state.isFetching = false;
-      if (!(state.numberCartByCartId[cartId] || false)) {
-        // Chua co trong state
-        state.numberCartByCartId[cartId] = currentAmount;
-      }
+      // if (!(state.numberCartByCartId[cartId] || false)) {
+      //   // Chua co trong state
+      //   state.numberCartByCartId[cartId] = currentAmount;
+      // }
+      state.numberCartByCartId[cartId] = currentAmount;
+      console.log("CartID", state.numberCartByCartId[cartId]);
     },
     addCartByCartIdAction: (state, action) => {
       // console.log(action.payload);

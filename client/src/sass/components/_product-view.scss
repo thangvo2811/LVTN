@@ -127,6 +127,12 @@
               cursor: pointer;
               transition: all linear 0.3s;
             }
+            .active {
+              border: 1px solid rgb(60, 0, 255);
+            }
+            .active-option {
+              border: 1px solid rgb(234, 8, 8);
+            }
           }
         }
         // &__select {

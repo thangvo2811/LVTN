@@ -3,19 +3,21 @@ import { Button, message, Steps } from "antd";
 
 import "./style.scss";
 import CheckProduct from "./CheckProduct/CheckProduct";
-import Pay from "./Pay/Pay";
+import Pay from "./Confirm/Confirm";
+import Confirm from "./Confirm/Confirm";
+import PaymentDetail from "./Pay/PaymentDetail";
 const steps = [
   {
     title: "Kiểm Tra Sản Phẩm",
     content: <CheckProduct />,
   },
   {
-    title: "Thanh Toán",
-    content: <Pay />,
+    title: "Thông Tin Khách Hàng",
+    content: <Confirm />,
   },
   {
-    title: "Xác Nhận",
-    content: <CheckProduct />,
+    title: "Thanh Toán",
+    content: <PaymentDetail />,
   },
 ];
 const Payment = () => {

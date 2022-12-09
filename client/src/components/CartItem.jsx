@@ -23,11 +23,17 @@ const CartItem = (props) => {
   );
   const newItemByCartId = newItemFromState[itemCart.id];
   console.log("Sluong", newItemByCartId);
+
   const dispatch = useDispatch();
 
   const increaseQuantity = () => {
     // setQuantity(quantity + 1);
-    addNumberCart(dispatch, itemCart.id, "+");
+    addNumberCart(
+      dispatch,
+      itemCart.id,
+      itemCart.CartItemProduct.id,
+      quantity + 1
+    );
     dispatch(
       addCartByCartIdAction({
         cartId: itemCart.id,
@@ -37,7 +43,12 @@ const CartItem = (props) => {
   };
   const decreaseQuantity = () => {
     // setQuantity(quantity < 2 ? 1 : quantity - 1);
-    addNumberCart(dispatch, itemCart.id, "-");
+    addNumberCart(
+      dispatch,
+      itemCart.id,
+      itemCart.CartItemProduct.id,
+      quantity < 2 ? 1 : quantity - 1
+    );
     dispatch(
       removeCartByCartIdAction({
         cartId: itemCart.id,
@@ -60,7 +71,7 @@ const CartItem = (props) => {
         <div className="cart-item__info">
           <div className="cart-item__info__title"></div>
           <div className="cart-item__info__id">
-            Tên sản phẩm: {itemCart.CartItemProduct.name}
+            Tên sản phẩm: {itemCart.name}
           </div>
           <div className="cart-item__info__brand">
             Thương hiệu: {itemCart.CartItemProduct.ProductBrand.name}
@@ -79,7 +90,7 @@ const CartItem = (props) => {
             <i className="bx bx-plus" onClick={increaseQuantity}></i>
           </div>
           <div className="cart-item__total__total">
-            Tổng : {numberWithCommas(itemCart.amount * itemCart.price)} VND
+            Tổng : {numberWithCommas(itemCart.ttprice)} VND
           </div>
         </div>
         <div className="cart-item__delete">

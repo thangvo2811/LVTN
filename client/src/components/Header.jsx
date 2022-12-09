@@ -250,14 +250,18 @@ const Header = () => {
                     <div className="header-bottom__dropdown__left__list__title">
                       Danh mục sản phẩm
                     </div>
-                    {/* <ul className="header-bottom__dropdown__left__list">
-                      <li
-                        className="header-bottom__dropdown__left__list__item"
-
-                        // onClick={() => navigate("/findcategory/" + item.id)}
-                      ></li>
-                    </ul> */}
-                    <div className="header-bottom__dropdown__left__sub">
+                    <ul className="header-bottom__dropdown__left__list">
+                      {allCategory?.map((item, index) => (
+                        <li
+                          className="header-bottom__dropdown__left__list__item"
+                          onClick={() => navigate("/findcategory/" + item.id)}
+                        >
+                          {item.name}
+                        </li>
+                      ))}
+                    </ul>
+                    {/* Start Category sub Category */}
+                    {/* <div className="header-bottom__dropdown__left__sub">
                       {allCategory?.map((item, index) => (
                         <div className="header-bottom__dropdown__left__sub__btn">
                           <div className="header-bottom__dropdown__left__sub__btn__text">
@@ -286,7 +290,8 @@ const Header = () => {
                           </li>
                         </ul>
                       ) : null}
-                    </div>
+                    </div> */}
+                    {/* end Category sub category */}
                   </div>
                   <div className="header-bottom__dropdown__right">
                     <div className="header-bottom__dropdown__right__grid">

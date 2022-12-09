@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import Button from "../../components/Button";
 import CartItem from "../../components/CartItem";
@@ -20,14 +20,13 @@ const Cart = () => {
   // const [totalProduct, setTotalProduct] = useState();
   const newCustomer = localStorage.getItem("User");
   const dispatch = useDispatch();
-  const callCartItem = async () => {
+  const callCartItem = useCallback(async () => {
     await axios
       .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}/`)
       .then((res) => {
-        console.log(res.data.cartitem);
         setCartItem(res.data.cartitem);
-
-        res.data.Cartitem.forEach((item) => {
+        res.data.cartitem.forEach((item) => {
+          console.log("Item", item);
           dispatch(
             initialCartByCartIdAction({
               cartId: item.id,
@@ -39,11 +38,11 @@ const Cart = () => {
       .catch((err) => {
         console.log(err);
       });
-  };
+  }, [dispatch, newCustomer]);
 
   useEffect(() => {
     callCartItem();
-  }, []);
+  }, [callCartItem]);
   return (
     <Helmet name="Giỏ hàng">
       <div className="cart">

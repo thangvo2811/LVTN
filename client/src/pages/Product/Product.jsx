@@ -10,41 +10,23 @@ import ProductView from "../../components/ProductView";
 import axios from "axios";
 import { Checkbox, Input, message } from "antd";
 
-const Product = () => {
+const Product = (props) => {
   const param = useParams();
 
   const [allProduct, setAllProduct] = useState([]);
   const [detailProduct, setDetailProduct] = useState({});
-  const [selected, setSelected] = useState([""]);
-
-  // const callDetailProduct = useCallback(
-  //   async (id) => {
-  //     await axios
-  //       .get(`http://localhost:8000/api/get-product/${id}`)
-  //       .then((res) => {
-  //         console.log(res.data.data);
-  //         setDetailProduct(res.data.data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   },
-  //   [param.id]
-  // );
-  const callDetailProduct = useCallback(
-    async (id) => {
-      await axios
-        .get(`http://localhost:8000/api/get-product/${param.category_id}`)
-        .then((res) => {
-          console.log(res.data.data);
-          setDetailProduct(res.data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-    [param.category_id]
-  );
+  const [selected, setSelected] = useState([]);
+  const callDetailProduct = useCallback(async () => {
+    await axios
+      .get(`http://localhost:8000/api/get-product/${param.category_id}`)
+      .then((res) => {
+        console.log(res.data.data);
+        setDetailProduct(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [param.category_id]);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [param.category_id]);
@@ -63,31 +45,31 @@ const Product = () => {
         console.log(err);
       });
   };
-
-  const handleClick = (e) => {
-    // setSelected(e.target.checked);
+  const handleChange = (id) => {
+    // setSelected((pre) => {
+    //   return pre.map((item) => {
+    //     if (item.id === id) {
+    //       return { ...item, check: !item.check };
+    //     } else {
+    //       return { ...item };
+    //     }
+    //   });
+    // });
     // pre => setArr(...pre,valueNew)
-    if (selected) {
-      setSelected(...selected);
-    }
+    setSelected(id);
   };
+  console.log("ID OPTION", selected);
+
   return (
     <Helmet name="Chi Tiết Sản Phẩm">
       <Section>
         <SectionBody>
           <div className="container">
             <ProductView
+              idOptionValue={selected}
               product_id={detailProduct?.id ? detailProduct?.id : ""}
               imgProduct={detailProduct?.img ? detailProduct?.img : ""}
               nameProduct={detailProduct?.name ? detailProduct?.name : ""}
-              // nameBrand={
-              //   detailProduct?.name ? detailProduct?.ProductBrand.name : ""
-              // }
-              // nameCategory={
-              //   detailProduct?.CategoryProduct.name
-              //     ? detailProduct?.CategoryProduct.name
-              //     : ""
-              // }
               nameBrand={
                 detailProduct?.id ? detailProduct?.ProductBrand.name : ""
               }
@@ -119,8 +101,13 @@ const Product = () => {
                     <div className="product-top__info__content__left__attribute">
                       {item?.values?.map((data, i) => (
                         <div
-                          key={i}
-                          className="product-top__info__content__left__attribute__name"
+                          key={data.id}
+                          className={
+                            data.id === selected
+                              ? "product-top__info__content__left__attribute__name active"
+                              : "product-top__info__content__left__attribute__name "
+                          }
+                          onClick={() => handleChange(data.id)}
                         >
                           {data.name}
                         </div>
@@ -130,7 +117,7 @@ const Product = () => {
                 );
               })}
               iDOption={detailProduct?.existingOptions?.map((item, index) =>
-                item?.values?.map((data, i) => data.id)
+                item?.values?.map((data, i) => <div>{data.id}</div>)
               )}
               // attributeName={detailProduct?.existingOptions?.map(
               //   (item, index) =>
