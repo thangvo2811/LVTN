@@ -28,6 +28,8 @@ const Header = () => {
 
   // const newUser = useSelector((state) => state.user.currentUser);
   const newCustomer = localStorage.getItem("User");
+  const newCustomerGoogle = localStorage.getItem("loginGoogle");
+  const nameCustomerGoogle = localStorage.getItem("loginNameGoogle");
   const nameCustomer = localStorage.getItem("nameUser");
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);

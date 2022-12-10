@@ -5,10 +5,14 @@ import { Link, useNavigate } from "react-router-dom";
 import Helmet from "../../components/Helmet";
 import { loginUser } from "../../redux/apiCalls";
 import { useDispatch } from "react-redux";
-
+import { auth, google } from "../../assets/firebase/FireBase";
+import { signInWithPopup } from "firebase/auth";
+import { message } from "antd";
 const Login = () => {
   const [emailUser, setEmail] = useState("");
   const [passwordUser, setPassWord] = useState("");
+
+  const [userLogin, setUserLogin] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -23,7 +27,15 @@ const Login = () => {
     const newUser = { email: emailUser, password: passwordUser };
     loginUser(dispatch, newUser, navigate);
   };
-
+  const handleLoginGoogle = async (provider) => {
+    const results = await signInWithPopup(auth, provider);
+    setUserLogin(results);
+    navigate("/");
+    localStorage.setItem("loginNameGoogle", results.user.displayName);
+    localStorage.setItem("loginGoogle", results.user.uid);
+    console.log(results);
+    message.success("Đăng Nhập Thành Công");
+  };
   return (
     <Helmet name="Đăng nhập">
       <div className="login">
@@ -50,24 +62,30 @@ const Login = () => {
               </Button>
             </form>
             <div className="login__sign">
-              <div className="login__sign__phone">
+              {/* <div className="login__sign__phone">
                 <div className="login__sign__phone__icon">
                   <i class="bx bxs-user"></i>
                 </div>
                 <div className="login__btnphone">
                   Sử dụng email/ Số điện thoại
                 </div>
-              </div>
+              </div> */}
               <div className="login__sign__gg">
                 <div className="login__sign__gg__icon">
                   <i class="bx bxl-google"></i>
                 </div>
-                <div className="login__btngg">Tiếp tục với Google</div>
+                <div
+                  className="login__btngg"
+                  onClick={() => handleLoginGoogle(google)}
+                >
+                  Tiếp tục với Google
+                </div>
               </div>
               <div className="login__sign__fb">
                 <div className="login__sign__fb__icon">
                   <i class="bx bxl-facebook-circle"></i>
                 </div>
+
                 <div className="login__btnfb">Tiếp tục với facebook</div>
               </div>
             </div>
