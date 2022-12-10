@@ -80,11 +80,7 @@ const UserProfile = (props) => {
         {/* star user content left */}
         <div className="user__content__left">
           <div className="user__content__left__profile">
-            <img
-              src={pf}
-              alt=""
-              className="user__content__left__profile__img"
-            />
+            <img src="" alt="" className="user__content__left__profile__img" />
           </div>
           <div className="user__content__left__card">
             <Tabs

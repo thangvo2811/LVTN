@@ -15,6 +15,8 @@ import {
 
 const CartItem = (props) => {
   const itemCart = props.cartItem;
+  const reloadPage = props.reload;
+
   const [quantity, setQuantity] = useState("");
 
   // const newItem = useSelector((state) => state.cart.numberCart);
@@ -60,6 +62,7 @@ const CartItem = (props) => {
   const handleDeleteCartItem = (e) => {
     e.preventDefault();
     deleteCart(dispatch, itemCart.id);
+    reloadPage();
   };
 
   return (

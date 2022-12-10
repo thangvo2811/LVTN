@@ -15,6 +15,8 @@ import FindCategory from "./../pages/Category/FindCategory";
 
 import Blog from "../components/Blog";
 import ForgetPassWord from "../pages/ForgetPassWord/ForgetPassWord";
+import WishList from "../pages/UserProfile/WishList";
+import Viewed from "../pages/UserProfile/Viewed";
 
 const Routes = () => {
   return (
@@ -24,6 +26,9 @@ const Routes = () => {
       <Route path="/user" element={<ForgetPassWord />}></Route>
       <Route path="/register" element={<Register />}></Route>
       <Route path="/userprofile" element={<UserProfile />}></Route>
+      <Route path="/wishlist" element={<WishList />}></Route>
+      <Route path="/view" element={<Viewed />}></Route>
+
       <Route
         path="/findcategory/:category_id"
         element={<FindCategory />}

@@ -16,6 +16,7 @@ const Product = (props) => {
   const [allProduct, setAllProduct] = useState([]);
   const [detailProduct, setDetailProduct] = useState({});
   const [selected, setSelected] = useState([]);
+  const [selectOption, setSelectOption] = useState([]);
   const callDetailProduct = useCallback(async () => {
     await axios
       .get(`http://localhost:8000/api/get-product/${param.category_id}`)
@@ -56,7 +57,9 @@ const Product = (props) => {
     //   });
     // });
     // pre => setArr(...pre,valueNew)
+
     setSelected(id);
+    console.log(id);
   };
   console.log("ID OPTION", selected);
 

@@ -8,6 +8,8 @@ import {
   addNumberCartIncrease,
   addNumberCartStart,
   addStart,
+  deleteAllCartStart,
+  deleteAllCartSuccess,
   deleteCartStart,
   deleteCartSuccess,
 } from "./cartRedux";
@@ -66,6 +68,19 @@ export const deleteCart = async (dispatch, cartId) => {
       console.log(res.data);
       message.success("Xóa Sản Phẩm Thành Công");
       dispatch(deleteCartSuccess());
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+export const deleteAllCart = async (dispatch, [cartId]) => {
+  dispatch(deleteAllCartStart());
+  await axios
+    .delete(`http://localhost:8000/api/handle-Delete-All-Cartitem/${cartId}/`)
+    .then((res) => {
+      console.log(res.data);
+      message.success("Xóa Sản Phẩm Thành Công");
+      dispatch(deleteAllCartSuccess());
     })
     .catch((err) => {
       console.log(err);

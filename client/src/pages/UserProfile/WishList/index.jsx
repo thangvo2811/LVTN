@@ -23,7 +23,7 @@ const WishList = () => {
       .catch((err) => {
         console.log(err);
       });
-  });
+  }, [idCus]);
   useEffect(() => {
     callAllList();
   }, [reloadPage, callAllList]);

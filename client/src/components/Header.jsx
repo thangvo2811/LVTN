@@ -175,18 +175,24 @@ const Header = () => {
                             </span>
                           </li>
                         </Link>
-                        <li className="dropdown__item">
-                          <i class="bx bxs-heart-circle drop__icon"></i>
-                          <span className="dropdown__text">
-                            Danh Sách Yêu Thích
-                          </span>
-                        </li>
-                        <li className="dropdown__item">
-                          <i class="bx bx-hide drop__icon"></i>
-                          <span className="dropdown__text">
-                            Sản Phẩm Đã Xem
-                          </span>
-                        </li>
+                        <Link to={"/wishlist"}>
+                          <li className="dropdown__item">
+                            <i class="bx bxs-heart-circle drop__icon"></i>
+
+                            <span className="dropdown__text">
+                              Danh Sách Yêu Thích
+                            </span>
+                          </li>
+                        </Link>
+                        <Link to={"/view"}>
+                          <li className="dropdown__item">
+                            <i class="bx bx-hide drop__icon"></i>
+                            <span className="dropdown__text">
+                              Sản Phẩm Đã Xem
+                            </span>
+                          </li>
+                        </Link>
+
                         <li
                           className="dropdown__item"
                           onClick={() => {

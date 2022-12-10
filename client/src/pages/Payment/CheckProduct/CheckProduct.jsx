@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { initialCartByCartIdAction } from "../../../redux/cartRedux";
 import numberWithCommas from "../../../utils/numberWithCommas";
@@ -9,7 +9,7 @@ const CheckProduct = () => {
 
   const newCustomer = localStorage.getItem("User");
   const dispatch = useDispatch();
-  const callCartItem = async () => {
+  const callCartItem = useCallback(async () => {
     await axios
       .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}/`)
       .then((res) => {
@@ -19,14 +19,13 @@ const CheckProduct = () => {
       .catch((err) => {
         console.log(err);
       });
-  };
+  }, [newCustomer]);
 
   useEffect(() => {
     callCartItem();
-  }, [newCustomer]);
+  }, [callCartItem, newCustomer]);
   return (
     <>
-      {" "}
       {cartItem?.map((item, index) => {
         return (
           <>

@@ -13,18 +13,22 @@ import {
   addCartByCartIdAction,
   initialCartByCartIdAction,
 } from "../../redux/cartRedux";
+import { deleteAllCart } from "../../redux/apiCalls";
 
 const Cart = () => {
   const [cartItem, setCartItem] = useState([]);
-  // const [totalPrice, setTotalPrice] = useState();
-  // const [totalProduct, setTotalProduct] = useState();
+  const [totalProduct, setTotalProduct] = useState();
+  const [totalPrice, setToTalPrice] = useState(0);
+
   const newCustomer = localStorage.getItem("User");
+
   const dispatch = useDispatch();
   const callCartItem = useCallback(async () => {
     await axios
       .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}/`)
       .then((res) => {
         setCartItem(res.data.cartitem);
+        setTotalProduct(res.data.quantity);
         res.data.cartitem.forEach((item) => {
           console.log("Item", item);
           dispatch(
@@ -40,9 +44,19 @@ const Cart = () => {
       });
   }, [dispatch, newCustomer]);
 
+  const idCartItem = cartItem?.map((item, index) => item.CartItemProduct.id);
+
+  console.log("ID CART ITEM", idCartItem);
   useEffect(() => {
     callCartItem();
   }, [callCartItem]);
+
+  const handleDeleteAllCart = (e) => {
+    e.preventDefault();
+    deleteAllCart(dispatch, idCartItem);
+    callCartItem();
+  };
+
   return (
     <Helmet name="Giỏ hàng">
       <div className="cart">
@@ -50,20 +64,20 @@ const Cart = () => {
           <div className="cart__desc__item">
             {cartItem?.map((item, index) => {
               return (
-                <CartItem cartItem={item} id={item.id} key={index}></CartItem>
+                <CartItem
+                  cartItem={item}
+                  id={item.id}
+                  key={index}
+                  reload={callCartItem}
+                  idCartItem={item.CartItemProduct.id}
+                ></CartItem>
               );
             })}
           </div>
           <div className="cart__desc__clear">
-            {/* {cartItem?.map((item, index) => (
-              <Button
-                size="sm"
-                animate2={true}
-                onClick={(e) => handleDeleteAll(item.cart_id, e)}
-              >
-                Clear All
-              </Button>
-            ))} */}
+            <Button size="sm" animate2={true} onClick={handleDeleteAllCart}>
+              Xóa Tất Cả
+            </Button>
           </div>
         </div>
 
@@ -79,7 +93,7 @@ const Cart = () => {
                 Tổng sản phẩm
               </div>
               <div className="cart__info__content__item__price">
-                {/* {totalProduct ? totalProduct : ""} */}
+                {totalProduct ? totalProduct : 0}
               </div>
             </div>
             <div className="cart__info__content__item">
@@ -89,9 +103,9 @@ const Cart = () => {
               </div>
             </div>
             <div className="cart__info__content__item cart__info__content__item__main">
-              <div className="cart__info__content__item__title">Tổng</div>
+              <div className="cart__info__content__item__title">Tổng giá</div>
               <div className="cart__info__content__item__price">
-                {/* {totalPrice ? numberWithCommas(totalPrice) : ""} VND */}
+                {totalPrice ? numberWithCommas(totalPrice) : ""} VND
               </div>
             </div>
           </div>

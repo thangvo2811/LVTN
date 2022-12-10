@@ -57,8 +57,13 @@
     "icon": "bx bx-gift"
   },
   {
-    "display_name": "Kho",
+    "display_name": "Kho Sản Phẩm",
     "route": "/store",
+    "icon": "bx bx-store"
+  },
+  {
+    "display_name": "Chi Nhánh",
+    "route": "/branch",
     "icon": "bx bx-store"
   }
 ]

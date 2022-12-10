@@ -1,15 +1,16 @@
 import { Radio, Space } from "antd";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import numberWithCommas from "../../../utils/numberWithCommas";
 import "./style.scss";
 
-const PaymentDetail = () => {
+const PaymentDetail = (props) => {
   const newCustomer = localStorage.getItem("User");
   const [cartItem, setCartItem] = useState([]);
   const [payment, setPayMent] = useState({});
   const [value, setValue] = useState(1);
-  const callCartItem = async () => {
+
+  const callCartItem = useCallback(async () => {
     await axios
       .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}/`)
       .then((res) => {
@@ -19,19 +20,21 @@ const PaymentDetail = () => {
       .catch((err) => {
         console.log(err);
       });
-  };
+  }, [newCustomer]);
   useEffect(() => {
     callCartItem();
-  }, [newCustomer]);
+  }, [callCartItem, newCustomer]);
   const callPayMent = async () => {
     await axios
       .post("http://localhost:8000/api/get-momo-payment-link/", {
-        orderId: 3,
+        orderId: props.idOrder,
       })
+
       .then((res) => {
         if (res && res.status === 200) {
           setPayMent(res?.data?.data.qrCodeUrl);
           console.log(res?.data?.data.qrCodeUrl);
+          window.location.href = res?.data?.data.qrCodeUrl;
         }
       })
       .catch((err) => {
@@ -77,7 +80,9 @@ const PaymentDetail = () => {
         </div>
       </div>
       <div className="payment__card">
-        <button className="btn-pay">Thanh Toán</button>
+        <button className="btn-pay" onClick={callPayMent}>
+          Thanh Toán
+        </button>
       </div>
     </div>
   );

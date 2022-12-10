@@ -67,6 +67,14 @@ const cartSlice = createSlice({
       state._products = action.payload;
       state.numberCart = action.payload._products.length;
     },
+    deleteAllCartStart: (state) => {
+      state.isFetching = true;
+    },
+    deleteAllCartSuccess: (state, action) => {
+      state.isFetching = false;
+      state._products = action.payload;
+      state.numberCart = action.payload._products.length;
+    },
 
     addNumberCartStart: (state) => {
       state.isFetching = true;
@@ -93,6 +101,8 @@ export const {
   addCartAction,
   deleteCartStart,
   deleteCartSuccess,
+  deleteAllCartStart,
+  deleteAllCartSuccess,
   addNumberCartStart,
   addNumberCartSuccess,
   addNumberCartIncrease,

@@ -1,73 +1,70 @@
 import { Input, Radio, Space } from "antd";
 import Link from "antd/lib/typography/Link";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import FormInput from "../../../components/FormInput";
 import "./style.scss";
 import { useNavigate } from "react-router-dom";
 import numberWithCommas from "../../../utils/numberWithCommas";
 
-const Confirm = () => {
-  const [allCity, setAllCity] = useState([]);
-  const [allDistrict, setAllDistrict] = useState([]);
-  const [cityById, setCityById] = useState("");
-  const [districtById, setDistrictById] = useState("");
+const Confirm = (props) => {
+  // const [allCity, setAllCity] = useState([]);
+  // const [allDistrict, setAllDistrict] = useState([]);
+  // const [cityById, setCityById] = useState("");
+  // const [districtById, setDistrictById] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
+  const [cartItem, setCartItem] = useState([]);
 
   const newCustomer = localStorage.getItem("User");
 
-  const callAllCity = async (id) => {
-    await axios
-      .get("https://vapi.vnappmob.com/api/province/")
-      .then((res) => {
-        console.log(res.data.results);
-        setAllCity(res.data.results);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const callAllCity = async (id) => {
+  //   await axios
+  //     .get("https://vapi.vnappmob.com/api/province/")
+  //     .then((res) => {
+  //       console.log(res.data.results);
+  //       setAllCity(res.data.results);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
-  const callAllDistrict = async (id) => {
+  // const callAllDistrict = async (id) => {
+  //   await axios
+  //     .get(`https://vapi.vnappmob.com//api/province/district/${id}`)
+  //     .then((res) => {
+  //       console.log(res.data.results);
+  //       setAllDistrict(res.data.results);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+  const callAllCartItem = useCallback(async () => {
     await axios
-      .get(`https://vapi.vnappmob.com//api/province/district/${id}`)
+      .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}/`)
       .then((res) => {
-        console.log(res.data.results);
-        setAllDistrict(res.data.results);
+        console.log(res);
+        setCartItem(res.data.cartitem);
       })
       .catch((err) => {
         console.log(err);
       });
-  };
+  }, [newCustomer]);
 
-  const callCreateOrder = async () => {
-    await axios
-      .post("http://localhost:8000/api/create-order-user/", {
-        fullname: name,
-        email: email,
-        Address: address,
-        phonenumber: phone,
-        voucher_id: "",
-        method_id: 1,
-        cus_id: newCustomer,
-        warehouse_id: 1,
-        cartitem: [4, 5, 6],
-      })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  const idCart = cartItem.map((item, index) => item.id);
+  console.log("ID Cart", idCart);
 
   useEffect(() => {
-    callAllCity();
-    callAllDistrict(cityById);
-  }, [cityById, newCustomer]);
+    callAllCartItem();
+  }, [callAllCartItem, newCustomer]);
+  // useEffect(() => {
+  //   callAllCity();
+  //   callAllDistrict(cityById);
+  // }, [cityById, newCustomer]);
 
   const inputs = [
     {
@@ -152,7 +149,21 @@ const Confirm = () => {
                 onChange={(e) => setAddress(e.target.value)}
               ></FormInput>
               <div className="btn-info">
-                <button type="submit" className="btn-click">
+                <button
+                  type="submit"
+                  className="btn-click"
+                  onClick={() => {
+                    props.createOrder(
+                      name,
+                      email,
+                      address,
+                      phone,
+                      newCustomer,
+                      idCart
+                    );
+                    props.continue();
+                  }}
+                >
                   Tiếp Tục
                 </button>
               </div>

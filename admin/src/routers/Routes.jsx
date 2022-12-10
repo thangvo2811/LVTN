@@ -14,6 +14,7 @@ import Login from "../pages/Login/Login";
 import Employee from "../pages/Employee/Employee";
 import Order from "../pages/Order/Order";
 import Store from "../pages/Store/Store";
+import Branch from "../pages/Branches/Branch";
 const isLogin = localStorage.getItem("admin") ? true : false;
 const Routes = () => {
   return (
@@ -29,8 +30,9 @@ const Routes = () => {
           <Route path="/option" exact component={Option} />
           <Route path="/comment" exact component={Comments} />
           <Route path="/blog" exact component={Blog} />
-          <Route path="/orders" exect component={Order} />
-          <Route path="/store" exect component={Store} />
+          <Route path="/orders" exact component={Order} />
+          <Route path="/store" exact component={Store} />
+          <Route path="/branch" exact component={Branch} />
         </>
       ) : (
         <Redirect from="" to="login" />
