@@ -13,7 +13,7 @@ const ProductCardViewed = (props) => {
     await axios
       .post("http://localhost:8000/api/add-too-wish-list/", {
         cus_id: idCus,
-        product_id: product.id,
+        product_id: product.ViewProduct.id,
       })
       .then((res) => {
         if (res.data.errCode === 3) {
@@ -47,9 +47,7 @@ const ProductCardViewed = (props) => {
           >
             Xem ngay
           </div>
-          <div>
-            <i className="bx bxs-cart-add"></i>
-          </div>
+
           <div onClick={() => handleAddListProduct(idCus, product.id)}>
             <i className="bx bx-heart-circle"></i>
           </div>

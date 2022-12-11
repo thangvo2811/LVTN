@@ -28,13 +28,29 @@ const Header = () => {
 
   // const newUser = useSelector((state) => state.user.currentUser);
   const newCustomer = localStorage.getItem("User");
+
+  // Google
   const newCustomerGoogle = localStorage.getItem("loginGoogle");
   const nameCustomerGoogle = localStorage.getItem("loginNameGoogle");
+  // end Google
+
   const nameCustomer = localStorage.getItem("nameUser");
+  const newNameUser = localStorage.getItem("updateName");
+  console.log("Update Name User", newNameUser);
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
   const param = useParams();
-
+  // const [reloadUser, setReloadUser] = useState({});
+  // const callReloadUser = useCallback(async () => {
+  //   await axios
+  //     .get(`http://localhost:8000/api/get-by-Id/${newCustomer}/`)
+  //     .then((res) => {
+  //       setReloadUser(res.data.customer.user.fullname);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [newCustomer]);
   const callSearchProduct = async (searchK) => {
     await axios
       .get(`http://localhost:8000/api/findbykeyword/${searchK}`)
@@ -58,18 +74,8 @@ const Header = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [newCustomer]);
+  }, [dispatch, newCustomer]);
 
-  // const callCategories = async () => {
-  //   await axios
-  //     .get("http://localhost:8000/api/get-Category/")
-  //     .then((res) => {
-  //       setAllCategory(res.data.category);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
   const callAllIdCategory = async () => {
     await axios
       .get("http://localhost:8000/api/get-category-parent/?parent_id=")
@@ -90,7 +96,11 @@ const Header = () => {
   }, [callTotalItems]);
   useEffect(() => {
     callAllIdCategory();
-  }, []);
+  }, [newNameUser]);
+
+  // useEffect(() => {
+  //   callReloadUser();
+  // }, [callReloadUser, reloadUser]);
 
   const handleSearch = (e) => {
     let pattern = /^[a-zA-Z0-9_ ]*$/g;
@@ -165,7 +175,7 @@ const Header = () => {
                       <li className="header-top__cart__list__item">
                         <i className="bx bx-user icon"></i>
                         <span>
-                          Xin Chào <span> {nameCustomer}</span>
+                          Xin Chào <span> {nameCustomer || newCustomer}</span>
                         </span>
                       </li>
                       <ul className="dropdown__list">

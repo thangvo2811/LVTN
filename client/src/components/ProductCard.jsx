@@ -81,7 +81,7 @@ const ProductCard = (props) => {
             </div>
           )}
 
-          {idCus ? (
+          {/* {idCus ? (
             <div>
               <i className="bx bxs-cart-add"></i>
             </div>
@@ -92,7 +92,7 @@ const ProductCard = (props) => {
                 <i className="bx bxs-cart-add"></i>
               </Link>
             </div>
-          )}
+          )} */}
 
           {idCus ? (
             <div>

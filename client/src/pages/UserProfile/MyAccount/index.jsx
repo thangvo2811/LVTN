@@ -15,6 +15,7 @@ const MyAccount = () => {
       .then((res) => {
         console.log(res.data.customer.user);
         setDetailUser(res.data.customer.user);
+        localStorage.setItem("updateName", res.data.customer.user.fullname);
       })
       .catch((err) => {
         console.log(err);

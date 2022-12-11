@@ -42,7 +42,7 @@ const ProductCardList = (props) => {
           >
             Xem ngay
           </div>
-          <i className="bx bxs-cart-add"></i>
+
           <i className="bx bx-trash" onClick={() => callDeleteProduct()}></i>
         </div>
         <div className="product-card-list__info">

@@ -85,8 +85,7 @@ const ProductView = (props) => {
   const handleAddCart = () => {
     console.log("add cart");
     const newProduct = props.product_id;
-
-    addCart(dispatch, newCustomer, newProduct, props.idOptionValue, quantity);
+    addCart(dispatch, newCustomer, newProduct, props.arr, quantity);
   };
   const handleClick = (e) => {
     e.preventDefault();
@@ -145,8 +144,13 @@ const ProductView = (props) => {
                 </div>
               )}
             </div>
-            <div className="product-top__info__content__left">
-              {props.optionName}
+            <div className="product-top__info__content__option">
+              <div className="product-top__info__content__option__left">
+                {props.color}
+              </div>
+              <div className="product-top__info__content__option__right">
+                {props.ssd}
+              </div>
             </div>
           </div>
         </div>

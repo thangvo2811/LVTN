@@ -15,7 +15,8 @@ const Product = (props) => {
 
   const [allProduct, setAllProduct] = useState([]);
   const [detailProduct, setDetailProduct] = useState({});
-  const [selected, setSelected] = useState([]);
+
+  const [selectColor, setSelectColor] = useState([]);
   const [selectOption, setSelectOption] = useState([]);
   const callDetailProduct = useCallback(async () => {
     await axios
@@ -46,22 +47,13 @@ const Product = (props) => {
         console.log(err);
       });
   };
-  const handleChange = (id) => {
-    // setSelected((pre) => {
-    //   return pre.map((item) => {
-    //     if (item.id === id) {
-    //       return { ...item, check: !item.check };
-    //     } else {
-    //       return { ...item };
-    //     }
-    //   });
-    // });
-    // pre => setArr(...pre,valueNew)
 
-    setSelected(id);
-    console.log(id);
-  };
-  console.log("ID OPTION", selected);
+  console.log("ssd:", selectOption);
+  console.log("colors: ", selectColor);
+  // console.log("total: ", selectOption.concat(selectColor));
+  // array
+  console.log("total:", selectOption, selectColor);
+  // selectOption.push(selectColor ?? []);
 
   return (
     <Helmet name="Chi Tiết Sản Phẩm">
@@ -69,7 +61,8 @@ const Product = (props) => {
         <SectionBody>
           <div className="container">
             <ProductView
-              idOptionValue={selected}
+              // idOptionValue={selected}
+              arr={[selectOption, selectColor]}
               product_id={detailProduct?.id ? detailProduct?.id : ""}
               imgProduct={detailProduct?.img ? detailProduct?.img : ""}
               nameProduct={detailProduct?.name ? detailProduct?.name : ""}
@@ -90,35 +83,87 @@ const Product = (props) => {
               desProduct={
                 detailProduct?.Description ? detailProduct?.Description : ""
               }
-              optionName={detailProduct?.existingOptions?.map((item, index) => {
+              // color
+              color={detailProduct?.existingOptions?.map((item, index) => {
                 return (
                   <>
                     <div
                       key={index}
-                      className="product-top__info__content__left__option"
+                      className="product-top__info__content__option__left__option-color"
                     >
-                      <div className="product-top__info__content__left__option__name">
-                        {item.name}
-                      </div>
+                      {item.id === 1 ? item.name : null}
                     </div>
-                    <div className="product-top__info__content__left__attribute">
+
+                    <div className="product-top__info__content__option__left__option-color__attribute">
                       {item?.values?.map((data, i) => (
-                        <div
-                          key={data.id}
-                          className={
-                            data.id === selected
-                              ? "product-top__info__content__left__attribute__name active"
-                              : "product-top__info__content__left__attribute__name "
-                          }
-                          onClick={() => handleChange(data.id)}
-                        >
-                          {data.name}
-                        </div>
+                        <>
+                          {data.option_id === 1 ? (
+                            <div
+                              key={data.id}
+                              // className={
+                              //   data.id === selected
+                              //     ? "product-top__info__content__left__attribute__name active"
+                              //     : "product-top__info__content__left__attribute__name "
+                              // }
+                              onClick={() => {
+                                setSelectColor(data.id);
+                              }}
+                              className={
+                                data.id === selectColor
+                                  ? "product-top__info__content__option__left__option-color__attribute__name active"
+                                  : "product-top__info__content__option__left__option-color__attribute__name"
+                              }
+                            >
+                              {data.name}
+                            </div>
+                          ) : null}
+                        </>
                       ))}
                     </div>
                   </>
                 );
               })}
+              // ssd
+              ssd={
+                detailProduct.existingOptions ? (
+                  <>
+                    {detailProduct?.existingOptions?.map((item, index) => {
+                      return (
+                        <>
+                          <div
+                            key={index}
+                            className="product-top__info__content__option__right__option-ssd"
+                          >
+                            {item.id === 2 ? item.name : null}
+                          </div>
+
+                          <div className="product-top__info__content__option__right__option-ssd__attribute">
+                            {item?.values?.map((data, i) => (
+                              <>
+                                {data.option_id === 2 ? (
+                                  <div
+                                    key={data.id}
+                                    onClick={() => {
+                                      setSelectOption(data.id);
+                                    }}
+                                    className={
+                                      data.id === selectOption
+                                        ? "product-top__info__content__option__right__option-ssd__attribute__name active"
+                                        : "product-top__info__content__option__right__option-ssd__attribute__name"
+                                    }
+                                  >
+                                    {data.name}
+                                  </div>
+                                ) : null}
+                              </>
+                            ))}
+                          </div>
+                        </>
+                      );
+                    })}
+                  </>
+                ) : null
+              }
               iDOption={detailProduct?.existingOptions?.map((item, index) =>
                 item?.values?.map((data, i) => <div>{data.id}</div>)
               )}
