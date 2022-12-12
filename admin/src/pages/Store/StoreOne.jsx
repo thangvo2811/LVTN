@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AddStore from "./AddStoreOne/AddStore";
 import { useCallback } from "react";
+import "./style.scss";
 
 const StoreOne = (props) => {
   const [allStore, setAllStore] = useState([]);
@@ -63,10 +64,9 @@ const StoreOne = (props) => {
                         <td>{item.quantity}</td>
                         <td className="option-value">
                           {item.optionvalue.map((data, i) => (
-                            <td>{data}</td>
+                            <td className="option-name">{data}</td>
                           ))}
                         </td>
-                        {/* <td>{item.optionvalue.map((data, i) => data)}</td> */}
                       </tr>
                     ))}
                 </thead>

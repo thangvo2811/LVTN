@@ -21,10 +21,6 @@ const Customers = () => {
     <div>
       <div className="page-header">
         <h2 className="page-header__title">Khách Hàng</h2>
-        <div className="page-header__add">
-          <i className="bx bx-plus"></i>
-          <div>Add New</div>
-        </div>
       </div>
       <div className="row">
         <div className="col-12">
@@ -54,14 +50,6 @@ const Customers = () => {
                         <td>{item.avatar}</td>
                         <td>{item.birthday}</td>
                         <td>{item.address}</td>
-                        <td>
-                          <span className="card__body__edit">
-                            <i className="bx bxs-edit"></i>
-                          </span>
-                          <span className="card__body__delete">
-                            <i className="bx bx-trash"></i>
-                          </span>
-                        </td>
                       </tr>
                     ))}
                 </thead>

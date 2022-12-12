@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -12,8 +12,10 @@ const UpdateOption = (props) => {
   const [open, setOpen] = React.useState(false);
   const [newName, setNewName] = useState("");
   const [newPrice, setNewPrice] = useState("");
-  const [newIdProduct, setNewIdProduct] = useState("");
-  const [newIdOption, setNewIdOption] = useState("");
+  const [selectProduct, setSelectProduct] = useState("");
+  const [allProductOption, setAllProductOption] = useState([]);
+  const [selectOption, setSelectOption] = useState("");
+  const [allOption, setAllOption] = useState([]);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -21,6 +23,30 @@ const UpdateOption = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
+  const callAllOption = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-option/")
+      .then((res) => {
+        setAllOption(res.data.option);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const callAllProduct = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-option-product/")
+      .then((res) => {
+        setAllProductOption(res.data.Option);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    callAllOption();
+    callAllProduct();
+  }, []);
   const handleUpdateOption = async (
     id,
     nameOption,
@@ -76,18 +102,32 @@ const UpdateOption = (props) => {
                 defaultValue={props.price}
                 onChange={(e) => setNewPrice(e.target.value)}
               />
-              <label>Mã sản phẩm</label>
-              <Input
-                type="number"
-                defaultValue={props.idProduct}
-                onChange={(e) => setNewIdProduct(e.target.value)}
-              />
-              <label>Mã thuộc tính</label>
-              <Input
-                type="number"
-                defaultValue={props.idOption}
-                onChange={(e) => setNewIdOption(e.target.value)}
-              />
+              <label>Tên Sản Phẩm</label>
+              <br />
+              <select
+                value={selectProduct}
+                onChange={(e) => setSelectProduct(e.target.value)}
+              >
+                <option>{props.nameProduct}</option>
+                {allProductOption?.map((item, index) => (
+                  <option key={index} value={item?.Product?.id}>
+                    {item?.Product?.name}
+                  </option>
+                ))}
+              </select>
+              <label>Tên Thuộc Tính</label>
+              <br />
+              <select
+                value={selectOption}
+                onChange={(e) => setSelectOption(e.target.value)}
+              >
+                <option>{props.name}</option>
+                {allOption?.map((item, index) => (
+                  <option key={index} value={item?.id}>
+                    {item?.name}
+                  </option>
+                ))}
+              </select>
             </form>
           </div>
         </DialogContent>
@@ -99,8 +139,8 @@ const UpdateOption = (props) => {
                 id,
                 newName,
                 newPrice,
-                newIdProduct,
-                newIdOption
+                selectProduct,
+                selectOption
               )
             }
           >

@@ -42,6 +42,7 @@ const Option = () => {
                     <td>ID</td>
                     <td>Tên Thuộc Tính</td>
                     <td>Giá</td>
+                    <td>Tên Sản Phẩm</td>
                     <td>Mã Sản Phẩm</td>
                     <td>Cài Đặt</td>
                   </tr>
@@ -51,25 +52,27 @@ const Option = () => {
                     ?.sort((a, b) => a.id - b.id)
                     .map((item, index) => (
                       <tr key={index}>
-                        <td>{item.id}</td>
-                        <td>{item.name}</td>
-                        <td>{item.price}</td>
-                        <td>{item.product_id}</td>
+                        <td>{item?.id}</td>
+                        <td>{item?.name}</td>
+                        <td>{item?.price}</td>
+                        <td>{item?.Product?.name}</td>
+                        <td>{item?.product_id}</td>
                         <td>
                           <div className="card__body__features">
                             <span className="card__body__features__edit">
                               <UpdateOption
-                                id={item.id}
-                                name={item.name}
-                                price={item.price}
-                                idProduct={item.product_id}
-                                idOption={item.option_id}
+                                id={item?.id}
+                                name={item?.name}
+                                price={item?.price}
+                                idProduct={item?.product_id}
+                                idOption={item?.option_id}
                                 parentCallback={callbackFunction}
+                                nameProduct={item?.Product?.name}
                               ></UpdateOption>
                             </span>
                             <span className="card__body__features__delete">
                               <DeleteOption
-                                item={item.id}
+                                item={item?.id}
                                 parentCallback={callbackFunction}
                               ></DeleteOption>
                             </span>

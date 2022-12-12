@@ -16,7 +16,8 @@ const AddStore = (props) => {
   const [idProduct, setIdProduct] = useState("");
 
   const [quantity, setQuantity] = useState("");
-  const [optionValue, setOptionValue] = useState("");
+  const [optionValue, setOptionValue] = useState([]);
+  const [optionValue1, setOptionValue1] = useState([]);
   const [selected, setSelected] = useState("");
 
   const handleClickOpen = () => {
@@ -49,6 +50,7 @@ const AddStore = (props) => {
       .get("http://localhost:8000/api/get-warehouse/")
       .then((res) => {
         setAllWareHouse(res.data.Warehouse);
+        props.parentCallback(Date.now());
       })
       .catch((err) => {
         console.log(err);
@@ -57,6 +59,8 @@ const AddStore = (props) => {
   useEffect(() => {
     callAllWareHouse();
   }, []);
+
+  console.log("ID", optionValue, optionValue1);
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -100,11 +104,21 @@ const AddStore = (props) => {
                 placeholder="Số Lượng"
                 onChange={(e) => setQuantity(e.target.value)}
               />
-              <label>Thuộc Tính</label>
+              <label>Thuộc Tính Màu </label>
               <Input
                 type="number"
                 placeholder="Thuộc Tính"
-                onChange={(e) => setOptionValue([e.target.value])}
+                onChange={(e) => {
+                  setOptionValue(e.target.value);
+                }}
+              />
+              <label>Thuộc Tính Bộ Nhớ </label>
+              <Input
+                type="number"
+                placeholder="Thuộc Tính"
+                onChange={(e) => {
+                  setOptionValue1(e.target.value);
+                }}
               />
             </form>
           </div>
@@ -113,7 +127,10 @@ const AddStore = (props) => {
           <Button onClick={handleClose}>Hủy</Button>
           <Button
             onClick={() =>
-              handleAddWareHouse(idProduct, selected, quantity, optionValue)
+              handleAddWareHouse(idProduct, selected, quantity, [
+                optionValue,
+                optionValue1,
+              ])
             }
           >
             Thêm

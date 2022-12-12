@@ -8,6 +8,7 @@ import AddStore from "./AddStoreTwo/AddStore";
 const StoreTwo = () => {
   const [allStore, setAllStore] = useState([]);
   const [reloadPage, setReloadPage] = useState("");
+
   const idBranch = 2;
   console.log("ID KHO 1", idBranch);
 
@@ -31,7 +32,7 @@ const StoreTwo = () => {
   return (
     <div>
       <div className="page-header">
-        <AddStore></AddStore>
+        <AddStore parentCallback={callbackFunction}></AddStore>
       </div>
       <div className="row">
         <div className="col-12">
@@ -58,7 +59,11 @@ const StoreTwo = () => {
                         <td>{item.product_id}</td>
                         <td>{item.UserwarehouseProduct.name}</td>
                         <td>{item.quantity}</td>
-                        <td>{item.optionvalue}</td>
+                        <td className="option-value">
+                          {item.optionvalue.map((data, i) => (
+                            <td className="option-name">{data}</td>
+                          ))}
+                        </td>
                       </tr>
                     ))}
                 </thead>

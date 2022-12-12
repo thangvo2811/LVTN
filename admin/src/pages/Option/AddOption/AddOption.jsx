@@ -15,7 +15,9 @@ const AddOption = (props) => {
   const [open, setOpen] = useState(false);
   const [newName, setNewName] = useState("");
   const [newPrice, setNewPrice] = useState("");
-  const [newIdProduct, setNewIdProduct] = useState("");
+  // const [newIdProduct, setNewIdProduct] = useState("");
+  const [selectProduct, setSelectProduct] = useState("");
+  const [allProductOption, setAllProductOption] = useState([]);
   const [selected, setSelected] = useState("");
   const [allOption, setAllOption] = useState([]);
   const handleClickOpen = () => {
@@ -30,7 +32,7 @@ const AddOption = (props) => {
       .post("http://localhost:8000/api/create-option-product", {
         name: newName,
         price: newPrice,
-        product_id: newIdProduct,
+        product_id: selectProduct,
         option_id: selected,
       })
       .then((res) => {
@@ -53,8 +55,19 @@ const AddOption = (props) => {
         console.log(err);
       });
   };
+  const callAllProduct = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-option-product/")
+      .then((res) => {
+        setAllProductOption(res.data.Option);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   useEffect(() => {
     callAllOption();
+    callAllProduct();
   }, []);
   return (
     <div>
@@ -86,12 +99,19 @@ const AddOption = (props) => {
                 placeholder="Giá"
                 onChange={(e) => setNewPrice(e.target.value)}
               />
-              <label>Mã Sản Phẩm</label>
-              <Input
-                type="number"
-                placeholder="Mã Sản Phẩm"
-                onChange={(e) => setNewIdProduct(e.target.value)}
-              />
+              <label>Tên Sản Phẩm</label>
+              <br />
+              <select
+                value={selectProduct}
+                onChange={(e) => setSelectProduct(e.target.value)}
+              >
+                <option>Chọn Sản Phẩm</option>
+                {allProductOption?.map((item, index) => (
+                  <option key={index} value={item?.Product?.id}>
+                    {item?.Product?.name}
+                  </option>
+                ))}
+              </select>
               <label>Tên Thuộc Tính</label>
               <br />
               <select
@@ -112,7 +132,7 @@ const AddOption = (props) => {
           <Button onClick={handleClose}>Hủy</Button>
           <Button
             onClick={() =>
-              callAddOption(newName, newPrice, newIdProduct, selected)
+              callAddOption(newName, newPrice, selectProduct, selected)
             }
           >
             Thêm
