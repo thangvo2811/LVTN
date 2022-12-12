@@ -100,9 +100,9 @@ const AddBlog = (props) => {
               <label>Mô tả</label>
               <TextArea
                 rows="8"
-                cols="111"
+                cols="500"
                 type="text"
-                placeholder="Name"
+                placeholder="Mô tả"
                 onChange={handleDescBlog}
               />
               <label>Status</label>

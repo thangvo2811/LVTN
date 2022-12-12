@@ -4,8 +4,6 @@ import { loginFailure, loginStart, loginSuccess } from "./userLogin";
 import { message } from "antd";
 import {
   addCartAction,
-  addNumberCartDecrease,
-  addNumberCartIncrease,
   addNumberCartStart,
   addStart,
   deleteAllCartStart,
@@ -40,12 +38,16 @@ export const addCart = async (dispatch, user, idProduct, idOption, qty) => {
     .post("http://localhost:8000/api/add-to-cart", {
       cus_id: parseInt(user),
       product_id: idProduct,
-      optionvalue: [1, 3],
+      optionvalue: idOption,
       amount: qty,
     })
     .then((res) => {
       console.log(res);
-      if (res.data.errCode === 0) {
+      if (res.data.errCode === 5) {
+        message.error("Mời Bạn Chọn Thuộc Tính");
+        return;
+      }
+      if (res.data.errCode === 0 || res.data.errCode === -1) {
         message.success("Thêm Sản Phẩm Thành Công");
       }
       // let cartNumber = parseInt(localStorage.getItem("cartItem")) + 1;
@@ -97,9 +99,6 @@ export const addNumberCart = async (dispatch, cartId, idProduct, qty) => {
     })
     .then((res) => {
       console.log(res.data);
-
-      // dispatch(addNumberCartIncrease());
-      // dispatch(addNumberCartDecrease());
     })
     .catch((err) => {
       console.log(err);

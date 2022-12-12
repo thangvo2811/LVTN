@@ -1,23 +1,22 @@
-import React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Input } from "antd";
+import { Input, message } from "antd";
 import axios from "axios";
-import { message } from "antd";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 
-const AddOption = (props) => {
-  const [open, setOpen] = useState(false);
-  const [newName, setNewName] = useState("");
-  const [newPrice, setNewPrice] = useState("");
-  const [newIdProduct, setNewIdProduct] = useState("");
+const AddStore = (props) => {
+  const [open, setOpen] = React.useState(false);
+  const [allWareHouse, setAllWareHouse] = useState([]);
+  const [idProduct, setIdProduct] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [optionValue, setOptionValue] = useState("");
   const [selected, setSelected] = useState("");
-  const [allOption, setAllOption] = useState([]);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -25,42 +24,43 @@ const AddOption = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const callAddOption = async () => {
+  const handleAddWareHouse = async () => {
     await axios
-      .post("http://localhost:8000/api/create-option-product", {
-        name: newName,
-        price: newPrice,
-        product_id: newIdProduct,
-        option_id: selected,
+      .post("http://localhost:8000/api/create-warehouse-product/", {
+        product_id: idProduct,
+        warehouse_id: selected,
+        quantity: quantity,
+        optionvalue: [optionValue],
       })
       .then((res) => {
         console.log(res.data);
         props.parentCallback(Date.now());
-        message.success("Thêm Thuộc Tính Thành Công");
+        message.success("Đã Thêm Sản Phẩm Trong Kho");
       })
       .catch((err) => {
         console.log(err);
       });
     setOpen(false);
   };
-  const callAllOption = async () => {
+  const callAllWareHouse = async () => {
     await axios
-      .get("http://localhost:8000/api/get-option/")
+      .get("http://localhost:8000/api/get-warehouse/")
       .then((res) => {
-        setAllOption(res.data.option);
+        setAllWareHouse(res.data.Warehouse);
       })
       .catch((err) => {
         console.log(err);
       });
   };
   useEffect(() => {
-    callAllOption();
+    callAllWareHouse();
   }, []);
+
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
         <div className="form-name">
-          <i className="bx bx-plus">Thêm Thuộc Tính</i>
+          <i className="bx bx-plus">Thêm Sản Phẩm Kho</i>
         </div>
       </Button>
       <Dialog
@@ -71,40 +71,40 @@ const AddOption = (props) => {
       >
         <DialogTitle id="alert-dialog-title"></DialogTitle>
         <DialogContent>
-          <div className="form-title">Thuộc Tính</div>
+          <div className="form-title">Thêm Sản Phẩm Kho</div>
           <div className="form-input">
             <form>
-              <label>Tên Thuộc Tính</label>
-              <Input
-                type="text"
-                placeholder="Tên Thuộc Tính"
-                onChange={(e) => setNewName(e.target.value)}
-              />
-              <label>Giá</label>
-              <Input
-                type="number"
-                placeholder="Giá"
-                onChange={(e) => setNewPrice(e.target.value)}
-              />
               <label>Mã Sản Phẩm</label>
               <Input
                 type="number"
                 placeholder="Mã Sản Phẩm"
-                onChange={(e) => setNewIdProduct(e.target.value)}
+                onChange={(e) => setIdProduct(e.target.value)}
               />
-              <label>Tên Thuộc Tính</label>
+              <label>Tên Kho</label>
               <br />
               <select
                 value={selected}
                 onChange={(e) => setSelected(e.target.value)}
               >
-                <option>Chọn Thuộc Tính</option>
-                {allOption?.map((item, index) => (
+                <option>Chọn Kho</option>
+                {allWareHouse?.map((item, index) => (
                   <option key={index} value={item?.id}>
                     {item?.name}
                   </option>
                 ))}
               </select>
+              <label>Số Lượng</label>
+              <Input
+                type="number"
+                placeholder="Số Lượng"
+                onChange={(e) => setQuantity(e.target.value)}
+              />
+              <label>Thuộc Tính</label>
+              <Input
+                type="number"
+                placeholder="Thuộc Tính"
+                onChange={(e) => setOptionValue([e.target.value])}
+              />
             </form>
           </div>
         </DialogContent>
@@ -112,7 +112,7 @@ const AddOption = (props) => {
           <Button onClick={handleClose}>Hủy</Button>
           <Button
             onClick={() =>
-              callAddOption(newName, newPrice, newIdProduct, selected)
+              handleAddWareHouse(idProduct, selected, quantity, optionValue)
             }
           >
             Thêm
@@ -123,4 +123,4 @@ const AddOption = (props) => {
   );
 };
 
-export default AddOption;
+export default AddStore;

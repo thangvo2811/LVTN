@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import DeleteOption from "./DeleteOption/DeleteOption";
-import AddOption from "./AddOption/AddOption";
 import UpdateOption from "./UpdateOption/UpdateOption";
+import AddOption from "./AddOption/AddOption";
 
 const Option = () => {
   const [allOption, setAllOption] = useState([]);
@@ -30,7 +30,7 @@ const Option = () => {
     <div>
       <div className="page-header">
         <h2 className="page-header__title">Thuộc Tính</h2>
-        <AddOption></AddOption>
+        <AddOption parentCallback={callbackFunction}></AddOption>
       </div>
       <div className="row">
         <div className="col-12">
@@ -40,10 +40,9 @@ const Option = () => {
                 <thead>
                   <tr>
                     <td>ID</td>
-                    <td>Tên</td>
+                    <td>Tên Thuộc Tính</td>
                     <td>Giá</td>
                     <td>Mã Sản Phẩm</td>
-                    <td>Tên Thuộc Tính</td>
                     <td>Cài Đặt</td>
                   </tr>
                 </thead>
@@ -56,7 +55,6 @@ const Option = () => {
                         <td>{item.name}</td>
                         <td>{item.price}</td>
                         <td>{item.product_id}</td>
-                        <td>{item.name}</td>
                         <td>
                           <div className="card__body__features">
                             <span className="card__body__features__edit">

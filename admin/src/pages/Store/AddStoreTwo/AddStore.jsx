@@ -1,3 +1,4 @@
+import React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -6,14 +7,17 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Input, message } from "antd";
 import axios from "axios";
-import React, { useState } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const AddStore = (props) => {
   const [open, setOpen] = React.useState(false);
+  const [allWareHouse, setAllWareHouse] = useState([]);
   const [idProduct, setIdProduct] = useState("");
-  const [idWareHouse, setIdWareHouse] = useState("");
+
   const [quantity, setQuantity] = useState("");
   const [optionValue, setOptionValue] = useState("");
+  const [selected, setSelected] = useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -26,7 +30,7 @@ const AddStore = (props) => {
     await axios
       .post("http://localhost:8000/api/create-warehouse-product/", {
         product_id: idProduct,
-        warehouse_id: idWareHouse,
+        warehouse_id: selected,
         quantity: quantity,
         optionvalue: [optionValue],
       })
@@ -40,6 +44,19 @@ const AddStore = (props) => {
       });
     setOpen(false);
   };
+  const callAllWareHouse = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-warehouse/")
+      .then((res) => {
+        setAllWareHouse(res.data.Warehouse);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    callAllWareHouse();
+  }, []);
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -64,12 +81,19 @@ const AddStore = (props) => {
                 placeholder="Mã Sản Phẩm"
                 onChange={(e) => setIdProduct(e.target.value)}
               />
-              <label>Mã Kho</label>
-              <Input
-                type="number"
-                placeholder="Mã Kho"
-                onChange={(e) => setIdWareHouse(e.target.value)}
-              />
+              <label>Tên Kho</label>
+              <br />
+              <select
+                value={selected}
+                onChange={(e) => setSelected(e.target.value)}
+              >
+                <option>Chọn Kho</option>
+                {allWareHouse?.map((item, index) => (
+                  <option key={index} value={item?.id}>
+                    {item?.name}
+                  </option>
+                ))}
+              </select>
               <label>Số Lượng</label>
               <Input
                 type="number"
@@ -89,7 +113,7 @@ const AddStore = (props) => {
           <Button onClick={handleClose}>Hủy</Button>
           <Button
             onClick={() =>
-              handleAddWareHouse(idProduct, idWareHouse, quantity, optionValue)
+              handleAddWareHouse(idProduct, selected, quantity, optionValue)
             }
           >
             Thêm

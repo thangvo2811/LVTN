@@ -13,8 +13,9 @@ import Comments from "../pages/Comments/Comments";
 import Login from "../pages/Login/Login";
 import Employee from "../pages/Employee/Employee";
 import Order from "../pages/Order/Order";
-import Store from "../pages/Store/Store";
+
 import Branch from "../pages/Branches/Branch";
+import Tab from "../pages/Store/Tab";
 const isLogin = localStorage.getItem("admin") ? true : false;
 const Routes = () => {
   return (
@@ -31,7 +32,7 @@ const Routes = () => {
           <Route path="/comment" exact component={Comments} />
           <Route path="/blog" exact component={Blog} />
           <Route path="/orders" exact component={Order} />
-          <Route path="/store" exact component={Store} />
+          <Route path="/store" exact component={Tab} />
           <Route path="/branch" exact component={Branch} />
         </>
       ) : (

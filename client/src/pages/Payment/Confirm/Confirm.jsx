@@ -8,10 +8,6 @@ import { useNavigate } from "react-router-dom";
 import numberWithCommas from "../../../utils/numberWithCommas";
 
 const Confirm = (props) => {
-  // const [allCity, setAllCity] = useState([]);
-  // const [allDistrict, setAllDistrict] = useState([]);
-  // const [cityById, setCityById] = useState("");
-  // const [districtById, setDistrictById] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
@@ -20,29 +16,6 @@ const Confirm = (props) => {
 
   const newCustomer = localStorage.getItem("User");
 
-  // const callAllCity = async (id) => {
-  //   await axios
-  //     .get("https://vapi.vnappmob.com/api/province/")
-  //     .then((res) => {
-  //       console.log(res.data.results);
-  //       setAllCity(res.data.results);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
-  // const callAllDistrict = async (id) => {
-  //   await axios
-  //     .get(`https://vapi.vnappmob.com//api/province/district/${id}`)
-  //     .then((res) => {
-  //       console.log(res.data.results);
-  //       setAllDistrict(res.data.results);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
   const callAllCartItem = useCallback(async () => {
     await axios
       .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}/`)
@@ -61,10 +34,6 @@ const Confirm = (props) => {
   useEffect(() => {
     callAllCartItem();
   }, [callAllCartItem, newCustomer]);
-  // useEffect(() => {
-  //   callAllCity();
-  //   callAllDistrict(cityById);
-  // }, [cityById, newCustomer]);
 
   const inputs = [
     {
@@ -108,9 +77,10 @@ const Confirm = (props) => {
       required: true,
     },
   ];
+
   return (
     <div className="payment">
-      <form>
+      <form name="form">
         <div className="payment__content">
           <div className="payment__content__form">
             <div className="form-input">
@@ -126,24 +96,6 @@ const Confirm = (props) => {
                 {...inputs[2]}
                 onChange={(e) => setPhone(e.target.value)}
               ></FormInput>
-              {/* <label>Thành Phố</label>
-              <select onChange={(e) => setCityById(e.target.value)}>
-                <option>Chọn Thành Phố/ Tỉnh</option>
-                {allCity?.map((item, index) => (
-                  <option key={index} value={item.province_id}>
-                    {item.province_name}
-                  </option>
-                ))}
-              </select>
-              <label>Quận/ Huyện</label>
-              <select onChange={(e) => setDistrictById(e.target.value)}>
-                <option>Chọn Quận/ Huyện</option>
-                {allDistrict?.map((item, index) => (
-                  <option key={index} value={item.district_id}>
-                    {item.district_id ? item.district_name : ""}
-                  </option>
-                ))}
-              </select> */}
               <FormInput
                 {...inputs[3]}
                 onChange={(e) => setAddress(e.target.value)}

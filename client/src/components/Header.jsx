@@ -175,7 +175,7 @@ const Header = () => {
                       <li className="header-top__cart__list__item">
                         <i className="bx bx-user icon"></i>
                         <span>
-                          Xin Chào <span> {nameCustomer || newCustomer}</span>
+                          Xin Chào <span> {nameCustomer}</span>
                         </span>
                       </li>
                       <ul className="dropdown__list">

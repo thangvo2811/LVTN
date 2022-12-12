@@ -2,6 +2,9 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
+import AddBranch from "./AddBranch/AddBranch";
+import DeleteBranch from "./DeleteBranch/DeleteBranch";
+import UpdateBranch from "./UpdateBranch/UpdateBranch";
 
 const Branch = () => {
   const [allBranch, setAllBranch] = useState([]);
@@ -11,7 +14,7 @@ const Branch = () => {
   };
   const callAllBranch = async () => {
     await axios
-      .get("http://localhost:8000/api/get-brand/")
+      .get("http://localhost:8000/api/get-warehouse/")
       .then((res) => {
         setAllBranch(res.data.Warehouse);
       })
@@ -27,6 +30,7 @@ const Branch = () => {
     <div>
       <div className="page-header">
         <h2 className="page-header__title">Chi Nhánh</h2>
+        <AddBranch parentCallback={callbackFunction}></AddBranch>
       </div>
       <div className="row">
         <div className="col-12">
@@ -47,12 +51,24 @@ const Branch = () => {
                       <tr key={index}>
                         <td>{item.id}</td>
                         <td>{item.name}</td>
+                        <td>{item.address}</td>
                         <td>
                           <div className="card__body__features">
                             <span className="card__body__features__edit">
                               {/* <i className="bx bxs-edit"></i> */}
+                              <UpdateBranch
+                                idBranch={item.id}
+                                nameBranch={item.name}
+                                addressBranch={item.address}
+                                parentCallback={callbackFunction}
+                              ></UpdateBranch>
                             </span>
-                            <span className="card__body__features__delete"></span>
+                            <span className="card__body__features__delete">
+                              <DeleteBranch
+                                idBranch={item.id}
+                                parentCallback={callbackFunction}
+                              ></DeleteBranch>
+                            </span>
                           </div>
                         </td>
                       </tr>

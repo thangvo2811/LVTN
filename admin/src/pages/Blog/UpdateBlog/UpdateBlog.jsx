@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 import { Input, message } from "antd";
 import { Backdrop, CircularProgress } from "@mui/material";
-
+import TextArea from "antd/es/input/TextArea";
 const UpdateBlog = (props) => {
   const id = props.id;
   const [open, setOpen] = React.useState(false);
@@ -91,7 +91,9 @@ const UpdateBlog = (props) => {
                 onChange={(e) => setNameBlog(e.target.value)}
               />
               <label>Mô Tả Bài Viết</label>
-              <Input
+              <TextArea
+                rows="8"
+                cols="500"
                 type="text"
                 defaultValue={props.descBlog}
                 onChange={(e) => setDescBlog(e.target.value)}
@@ -99,7 +101,7 @@ const UpdateBlog = (props) => {
               <label>Tình Trạng</label>
               <Input
                 type="text"
-                defaultValue={props.statusBlog}
+                // defaultValue={props.statusBlog}
                 onChange={(e) => setSatusBlog(e.target.value)}
               />
               <label>Hình Ảnh</label>

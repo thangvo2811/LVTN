@@ -1,32 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useCallback } from "react";
 import axios from "axios";
-import AddStore from "./AddStore/AddStore";
+import { useEffect } from "react";
+import { useState } from "react";
+import AddStore from "./AddStoreTwo/AddStore";
 
-const Store = () => {
+const StoreTwo = () => {
   const [allStore, setAllStore] = useState([]);
   const [reloadPage, setReloadPage] = useState("");
+  const idBranch = 2;
+  console.log("ID KHO 1", idBranch);
+
   const callbackFunction = (childData) => {
     setReloadPage(childData);
   };
 
-  const callAllStore = async () => {
+  const callAllStore = useCallback(async () => {
     await axios
-      .get("http://localhost:8000/api/Get-all-warehouse/")
+      .get(`http://localhost:8000/api/Get-all-warehouse/?id=${idBranch}`)
       .then((res) => {
         setAllStore(res.data.product);
       })
       .catch((err) => {
         console.log(err);
       });
-  };
+  }, [idBranch]);
   useEffect(() => {
     callAllStore();
-  }, [reloadPage]);
+  }, [callAllStore, reloadPage]);
   return (
     <div>
       <div className="page-header">
-        <h2 className="page-header__title">Kho</h2>
-        <AddStore parentCallback={callbackFunction}></AddStore>
+        <AddStore></AddStore>
       </div>
       <div className="row">
         <div className="col-12">
@@ -38,22 +43,24 @@ const Store = () => {
                     <td>ID</td>
                     <td>Tên</td>
                     <td>Mã Sản Phẩm</td>
-                    <td>Mã Kho</td>
+                    <td>Tên Kho</td>
                     <td>Số Lượng</td>
                     <td>Thuộc Tính</td>
                   </tr>
                 </thead>
                 <thead>
-                  {allStore?.map((item, index) => (
-                    <tr>
-                      <td>{index + 1}</td>
-                      <td>{item.name}</td>
-                      <td>{item.product_id}</td>
-                      <td>{item.warehouse_id}</td>
-                      <td>{item.quantity}</td>
-                      <td>{item.optionvalue}</td>
-                    </tr>
-                  ))}
+                  {allStore
+                    ?.sort((a, b) => a.id - b.id)
+                    .map((item, index) => (
+                      <tr>
+                        <td>{item.id}</td>
+                        <td>{item.name}</td>
+                        <td>{item.product_id}</td>
+                        <td>{item.UserwarehouseProduct.name}</td>
+                        <td>{item.quantity}</td>
+                        <td>{item.optionvalue}</td>
+                      </tr>
+                    ))}
                 </thead>
               </table>
             </div>
@@ -64,4 +71,4 @@ const Store = () => {
   );
 };
 
-export default Store;
+export default StoreTwo;

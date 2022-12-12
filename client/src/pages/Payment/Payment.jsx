@@ -45,6 +45,7 @@ const Payment = () => {
     setCurrent(current + 1);
     console.log("Step", current);
   };
+
   const prev = () => {
     setCurrent(current - 1);
   };
