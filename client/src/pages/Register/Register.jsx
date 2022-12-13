@@ -27,24 +27,28 @@ const Register = () => {
   const [allDistrict, setAllDistrict] = useState([]);
   const [cityById, setCityById] = useState("");
   const [districtById, setDistrictById] = useState("");
+
   const [idUser, setIdUser] = useState({});
 
-  const callAllUser = async (id) => {
-    await axios
-      .get(`http://localhost:8000/api/get-by-Id/${id}/`)
-      .then((res) => {
-        setIdUser(res.data.customer);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const newId = idUser.user;
-  console.log("ID User", newId);
+  const localUrl = "http://localhost:3000";
+  const currentUrl = localUrl;
 
-  useEffect(() => {
-    callAllUser();
-  }, []);
+  // const callAllUser = async (id) => {
+  //   await axios
+  //     .get(`http://localhost:8000/api/get-by-Id/${id}/`)
+  //     .then((res) => {
+  //       setIdUser(res.data.customer);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+  // const newId = idUser.user;
+  // console.log("ID User", newId);
+
+  // useEffect(() => {
+  //   callAllUser();
+  // }, [newId]);
   const callApi = async () => {
     await axios
       .post("http://localhost:8000/api/sign-up-user/", {
@@ -76,9 +80,9 @@ const Register = () => {
         message.error("ĐĂNG KÝ THẤT BẠI");
       });
   };
-  const callClickEmail = async () => {
+  const callClickEmail = async (id) => {
     await axios
-      .put(`http://localhost:8000/api/acctive-user-account/${newId}/`)
+      .put(`http://localhost:8000/api/acctive-user-account/${id}/`)
       .then((res) => {
         console.log(res.data);
       })

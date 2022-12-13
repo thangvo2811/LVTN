@@ -9,10 +9,12 @@ import Rating from "@mui/material/Rating";
 
 import pf from "../assets/images/products/laptop-asus-tuf-gaming-f15-fx506lh_4_.jpg";
 import pd from "../assets/images/products/laptop-asus-rog-strix-g15-g513ih-hn015t-1.jpg";
+import pfUser from "../assets/images/UserProfile/man.png";
 
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addCart, addNumberCart } from "../redux/apiCalls.js";
+
 import axios from "axios";
 import {
   addCartByCartIdAction,
@@ -21,6 +23,9 @@ import {
   removeCartByCartIdAction,
 } from "../redux/cartRedux";
 import { message } from "antd";
+import UpdateComment from "../pages/Comment/UpdateComment";
+import { useCallback } from "react";
+import DeleteComment from "../pages/Comment/DeleteComment";
 
 const ProductView = (props) => {
   const param = useParams();
@@ -28,8 +33,12 @@ const ProductView = (props) => {
   const [quantity, setQuantity] = useState(1);
   const [text, setText] = useState("");
   const [commentProduct, setCommentProduct] = useState([]);
-  const dispatch = useDispatch();
+  const [reloadPage, setReloadPage] = useState("");
+  const callbackFunction = (childData) => {
+    setReloadPage(childData);
+  };
 
+  const dispatch = useDispatch();
   const newCustomer = localStorage.getItem("User");
   const newItemFromState = useSelector(
     (state) => state.cart.numberCartByCartId
@@ -37,7 +46,7 @@ const ProductView = (props) => {
   const newItemByCartId = newItemFromState[props.id];
   console.log(newItemByCartId);
 
-  const callCommentProduct = async () => {
+  const callCommentProduct = useCallback(async () => {
     await axios
       .get(
         `http://localhost:8000/api/get-comment-of-product/${param.category_id}/`
@@ -49,10 +58,10 @@ const ProductView = (props) => {
       .catch((err) => {
         console.log(err);
       });
-  };
+  }, [param.category_id]);
   useEffect(() => {
     callCommentProduct();
-  }, [param.category_id]);
+  }, [callCommentProduct, param.category_id, reloadPage]);
 
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -77,9 +86,6 @@ const ProductView = (props) => {
     // );
   };
 
-  const handleOnEnter = (text) => {
-    console.log("Customer:", text);
-  };
   // const id = props.iDOption;
   // console.log("ID OPTION", id);
   const handleAddCart = () => {
@@ -164,98 +170,53 @@ const ProductView = (props) => {
       {/* end detail product */}
 
       {/* start prodcut comment */}
-      {newCustomer ? (
-        <div className="product__comment">
-          <div className="product__comment__title">Comments</div>
-          <div className="product__comment__content">
-            <div className="product__comment__content__image">
-              <img src={pf} alt="" />
+
+      <div className="product__comment">
+        <div className="product__comment__title">Comments</div>
+        {commentProduct?.map((item, index) => {
+          return (
+            <div className="product__comment__content__desc">
+              <div className="product__comment__content__desc__img">
+                <img src={pfUser} alt="" />
+              </div>
+              <div className="product__comment__content__desc__type">
+                <div className="product__comment__content__desc__type__user">
+                  {item?.commentUser?.fullname}
+                </div>
+                <div className="product__comment__content__desc__type__key">
+                  {item?.description}{" "}
+                </div>
+                <div className="product__comment__content__desc__type__rate">
+                  {item?.rate ? (
+                    <Rating
+                      name="half-rating"
+                      defaultValue={item.rate}
+                      readOnly
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="product__comment__content__desc__type__features">
+                  <DeleteComment
+                    idComment={item?.id}
+                    parentCallback={callbackFunction}
+                  ></DeleteComment>
+
+                  <UpdateComment
+                    idComment={item?.id}
+                    idProduct={item?.product_id}
+                    descProduct={item?.description}
+                    rateProduct={item?.rate}
+                    idCus={item.idCus}
+                    parentCallback={callbackFunction}
+                  ></UpdateComment>
+                </div>
+              </div>
             </div>
-            <div className="product__comment__content__cmt">
-              <div className="product__comment__content__cmt__type">
-                <InputEmoji
-                  value={text}
-                  onChange={setText}
-                  // cleanOnEnter
-                  onEnter={handleOnEnter}
-                  placeholder="Write comments"
-                />
-              </div>
-              <div className="product__comment__content__cmt__rate">
-                <Rating name="half-rating" defaultValue={0} precision={0.5} />
-              </div>
-            </div>
-          </div>
-          {commentProduct?.map((item, index) => {
-            return (
-              <div className="product__comment__content__desc">
-                <div className="product__comment__content__desc__img">
-                  <img src={pf} alt="" />
-                </div>
-                <div className="product__comment__content__desc__type">
-                  <div className="product__comment__content__desc__type__user">
-                    {item?.commentUser?.fullname}
-                  </div>
-                  <div className="product__comment__content__desc__type__key">
-                    {item?.description}{" "}
-                  </div>
-                  <div className="product__comment__content__desc__type__rate">
-                    {item?.rate ? (
-                      <Rating
-                        name="half-rating"
-                        defaultValue={item.rate}
-                        readOnly
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                  <div className="product__comment__content__desc__type__features">
-                    <div className="product__comment__content__desc__type__features__delete">
-                      Xóa
-                    </div>
-                    <div className="product__comment__content__desc__type__features__update">
-                      Sửa
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      ) : (
-        <div className="product__comment">
-          <div className="product__comment__title">Comments</div>
-          {commentProduct?.map((item, index) => {
-            return (
-              <div className="product__comment__content__desc">
-                <div className="product__comment__content__desc__img">
-                  <img src={pf} alt="" />
-                </div>
-                <div className="product__comment__content__desc__type">
-                  <div className="product__comment__content__desc__type__user">
-                    {item?.commentUser?.fullname}
-                  </div>
-                  <div className="product__comment__content__desc__type__key">
-                    {item?.description}{" "}
-                  </div>
-                  <div className="product__comment__content__desc__type__rate">
-                    {item?.rate ? (
-                      <Rating
-                        name="half-rating"
-                        defaultValue={item.rate}
-                        readOnly
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
+          );
+        })}
+      </div>
 
       {/* end product comment */}
     </div>

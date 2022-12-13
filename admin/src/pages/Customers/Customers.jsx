@@ -31,11 +31,10 @@ const Customers = () => {
                   <tr>
                     <td>ID</td>
                     <td>Email</td>
-                    <td>FullName</td>
-                    <td>PhoneNumber</td>
-                    <td>Avatar</td>
-                    <td>BirthDay</td>
-                    <td>Address</td>
+                    <td>Tên</td>
+                    <td>SĐT</td>
+                    <td>Ngày Sinh</td>
+                    <td>Địa Chỉ</td>
                   </tr>
                 </thead>
                 <thead>
@@ -47,7 +46,6 @@ const Customers = () => {
                         <td>{item.email}</td>
                         <td>{item.fullname}</td>
                         <td>{item.phonenumber}</td>
-                        <td>{item.avatar}</td>
                         <td>{item.birthday}</td>
                         <td>{item.address}</td>
                       </tr>

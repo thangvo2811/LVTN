@@ -52,7 +52,7 @@ const MyAccount = () => {
         {/* start user content right form */}
         <div className="user__content__right__desc__form">
           <form>
-            {file && (
+            {/* {file && (
               <img
                 className="img-user"
                 src={URL.createObjectURL(file)}
@@ -69,7 +69,7 @@ const MyAccount = () => {
               className="form-input mr-input"
               defaultValue={detailUser?.fullname}
               disabled
-            />
+            /> */}
             <input
               type="text"
               className="form-input mr-input"
@@ -93,11 +93,11 @@ const MyAccount = () => {
               defaultValue={detailUser?.address}
               disabled
             />
-            <div className="btn-update">
+            {/* <div className="btn-update">
               <button className="btn-click" onClick={() => handleUploadImage()}>
                 CẬP Nhật
               </button>
-            </div>
+            </div> */}
           </form>
         </div>
         {/* end user content right form */}

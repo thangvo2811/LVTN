@@ -104,3 +104,18 @@ export const addNumberCart = async (dispatch, cartId, idProduct, qty) => {
       console.log(err);
     });
 };
+
+export const addQuantityCart = async (dispatch, idCart, key) => {
+  dispatch(addNumberCartStart());
+  await axios
+    .put("http://localhost:8000/api/plusminus-amount", {
+      cart_id: idCart,
+      key: key,
+    })
+    .then((res) => {
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

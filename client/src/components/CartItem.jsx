@@ -4,7 +4,12 @@ import PropTypes from "prop-types";
 import numberWithCommas from "../utils/numberWithCommas";
 import lp from "../assets/images/products/chuot-choi-game-co-day-logitech-g502-hero.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { addCart, addNumberCart, deleteCart } from "../redux/apiCalls";
+import {
+  addCart,
+  addNumberCart,
+  addQuantityCart,
+  deleteCart,
+} from "../redux/apiCalls";
 import {
   addCartByCartIdAction,
   addCartByProductIdAction,
@@ -25,17 +30,13 @@ const CartItem = (props) => {
   );
   const newItemByCartId = newItemFromState[itemCart.id];
   console.log("Sluong", newItemByCartId);
+  console.log("ID cart", itemCart.id);
 
   const dispatch = useDispatch();
 
   const increaseQuantity = () => {
     // setQuantity(quantity + 1);
-    addNumberCart(
-      dispatch,
-      itemCart.id,
-      itemCart.CartItemProduct.id,
-      quantity + 1
-    );
+    addQuantityCart(dispatch, itemCart.id, "+");
     dispatch(
       addCartByCartIdAction({
         cartId: itemCart.id,
@@ -45,12 +46,7 @@ const CartItem = (props) => {
   };
   const decreaseQuantity = () => {
     // setQuantity(quantity < 2 ? 1 : quantity - 1);
-    addNumberCart(
-      dispatch,
-      itemCart.id,
-      itemCart.CartItemProduct.id,
-      quantity < 2 ? 1 : quantity - 1
-    );
+    addQuantityCart(dispatch, itemCart.id, "-");
     dispatch(
       removeCartByCartIdAction({
         cartId: itemCart.id,

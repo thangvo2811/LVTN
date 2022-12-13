@@ -18,7 +18,7 @@ import { deleteAllCart } from "../../redux/apiCalls";
 const Cart = () => {
   const [cartItem, setCartItem] = useState([]);
   const [totalProduct, setTotalProduct] = useState();
-  const [totalPrice, setToTalPrice] = useState(0);
+  const [totalPrice, setToTalPrice] = useState([]);
 
   const newCustomer = localStorage.getItem("User");
 
@@ -29,6 +29,7 @@ const Cart = () => {
       .then((res) => {
         setCartItem(res.data.cartitem);
         setTotalProduct(res.data.quantity);
+        setToTalPrice(res.data.cartitem);
         res.data.cartitem.forEach((item) => {
           console.log("Item", item);
           dispatch(
@@ -45,8 +46,10 @@ const Cart = () => {
   }, [dispatch, newCustomer]);
 
   const idCartItem = cartItem?.map((item, index) => item.CartItemProduct.id);
-
   console.log("ID CART ITEM", idCartItem);
+
+  const priceProduct = 6000000;
+
   useEffect(() => {
     callCartItem();
   }, [callCartItem]);
@@ -105,7 +108,7 @@ const Cart = () => {
             <div className="cart__info__content__item cart__info__content__item__main">
               <div className="cart__info__content__item__title">Tổng giá</div>
               <div className="cart__info__content__item__price">
-                {totalPrice ? numberWithCommas(totalPrice) : ""} VND
+                {priceProduct ? numberWithCommas(priceProduct) : ""} VND
               </div>
             </div>
           </div>

@@ -8,6 +8,7 @@ import dd3 from "../assets/images/dropdown-images/Artboard-7-8.png";
 import dd4 from "../assets/images/dropdown-images/Artboard-7-copy-8.png";
 import dd5 from "../assets/images/dropdown-images/Artboard-8-8-1.png";
 import dd6 from "../assets/images/dropdown-images/Artboard-8-copy-2-8.png";
+import pf from "../assets/images/UserProfile/man.png";
 
 import axios from "axios";
 

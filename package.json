@@ -5,6 +5,7 @@
     "@mui/styled-engine-sc": "^5.10.14",
     "@reduxjs/toolkit": "^1.8.6",
     "antd": "^4.24.1",
+    "formik": "^2.2.9",
     "moment": "^2.29.4",
     "react-carousel-minimal": "^1.4.1",
     "redux-persist": "^6.0.0",

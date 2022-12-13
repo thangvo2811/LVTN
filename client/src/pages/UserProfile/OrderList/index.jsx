@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import numberWithCommas from "../../../utils/numberWithCommas";
 import axios from "axios";
 import "./style.scss";
+import Orderitem from "../../../components/Orderitem";
 
 const OrderList = () => {
   const [allOrder, setAllOrder] = useState([]);
@@ -23,39 +24,22 @@ const OrderList = () => {
   }, [callAllOrder, idCus]);
   return (
     <>
-      <div className="order-title">DANH SÁCH ĐƠN HÀNG</div>
-      <div className="order-item__status">
-        <div className="order-item__status">Đang Chuẩn Bị</div>
-        {/* <button>Đánh Giá Sản Phẩm</button> */}
-      </div>
-      <div className="order-item">
-        {allOrder?.map((item, index) =>
-          item.OrderProductItem.map((data, i) => {
-            return (
-              <>
-                <div className="order-item__image">
-                  <img src={data.img} alt="" />
-                  <div className="order-item__info">
-                    <div className="order-item__info__title"></div>
-                    <div className="order-item__info__id">
-                      Tên sản phẩm: {data.name}
-                    </div>
-
-                    <div className="order-item__info__price">
-                      Số Lượng: {data.Orderitem.TotalQuantity}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="order-item__total">
-                  <div className="order-item__total__total">
-                    Tổng : {numberWithCommas(data.Orderitem.TotalPrice)} VND
-                  </div>
-                </div>
-              </>
-            );
-          })
-        )}
+      <div className="order">
+        <div className="order__desc">
+          <div className="order__desc__item">
+            {allOrder?.map((item, index) =>
+              item?.OrderProductItem?.map((data, i) => {
+                return (
+                  <Orderitem
+                    orderItem={data}
+                    status={item}
+                    key={index}
+                  ></Orderitem>
+                );
+              })
+            )}
+          </div>
+        </div>
       </div>
     </>
   );

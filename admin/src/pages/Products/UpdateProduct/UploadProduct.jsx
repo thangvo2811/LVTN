@@ -164,13 +164,12 @@ const UploadProduct = (props) => {
               />
               <label>Mô Tả</label>
               <TextArea
-                rows="4"
-                cols="111"
+                rows="8"
+                cols="500"
                 defaultValue={props.descProduct}
                 onChange={(e) => setNewDesc(e.target.value)}
               />
               <label>Hình Ảnh</label>
-
               <Input
                 type="file"
                 onChange={(e) => setFile(e.target.files[0])}

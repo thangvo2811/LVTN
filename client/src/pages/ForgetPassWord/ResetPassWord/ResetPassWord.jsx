@@ -11,6 +11,7 @@ const ResetPassWord = () => {
   const [reNewPassWord, setReNewPassWord] = useState("");
 
   const navigate = useNavigate();
+
   const inputs = [
     {
       key: 1,
@@ -32,15 +33,15 @@ const ResetPassWord = () => {
     //   required: true,
     // },
   ];
-  const callUpdatePassWord = async (dataSend) => {
+  const localUrl = "http://localhost:3000/password?";
+  const callUpdatePassWord = async () => {
+    const queryString = window.location.search.split("?");
+    console.log("Query", queryString);
     await axios
-      .put(
-        `http://localhost:8000/api/forgot-password?email=${dataSend.email}`,
-        {
-          email: dataSend.email,
-          newpassword: newPassWord,
-        }
-      )
+      .put("http://localhost:8000/api/forgot-password/", {
+        email: queryString,
+        newpassword: newPassWord,
+      })
       .then((res) => {
         console.log(res.data);
         message.success("Cập Nhật Mật Khẩu Thành Công");
