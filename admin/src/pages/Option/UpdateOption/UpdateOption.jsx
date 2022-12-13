@@ -123,9 +123,9 @@ const UpdateOption = (props) => {
                 value={selectOption}
                 onChange={(e) => setSelectOption(e.target.value)}
               >
-                {/* <option>{props.name}</option> */}
+                <option>{props.nameOption}</option>
                 {allOption?.map((item, index) => (
-                  <option key={item?.id} defaultValue={item?.name}>
+                  <option key={item?.id} value={item?.id}>
                     {item?.name}
                   </option>
                 ))}

@@ -167,6 +167,8 @@ const AddProduct = (props) => {
               />
               <label>Mô Tả</label>
               <TextArea
+                rows="8"
+                cols="500"
                 type="text"
                 placeholder="Mô Tả"
                 onChange={(e) => setDescProduct(e.target.value)}

@@ -68,6 +68,7 @@ const Option = () => {
                                 idOption={item?.option_id}
                                 parentCallback={callbackFunction}
                                 nameProduct={item?.Product?.name}
+                                nameOption={item?.Option?.name}
                               ></UpdateOption>
                             </span>
                             <span className="card__body__features__delete">
