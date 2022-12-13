@@ -233,11 +233,12 @@ const Register = () => {
                 <div className="login__btnfb">Tiếp tục với facebook</div>
               </div>
             </div>
-            <div className="register__redirect">
+            <span className="login__account">
+              Đã có tài khoản?
               <Link to={"/login"}>
-                <span>Đã có tài khoản? Đăng nhập</span>
+                <span> Đăng nhập</span>
               </Link>
-            </div>
+            </span>
           </div>
         </div>
       </div>

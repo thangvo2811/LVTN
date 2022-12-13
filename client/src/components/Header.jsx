@@ -244,7 +244,7 @@ const Header = () => {
                   <>
                     <Link to={"/login"}>
                       <li className="header-top__cart__list__item">
-                        <i className="bx bx-user icon"></i>
+                        <i className="bx bx-cart"></i>
                         <span>Giỏ hàng</span>
                       </li>
                     </Link>

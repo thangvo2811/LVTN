@@ -57,9 +57,11 @@ const AddOption = (props) => {
   };
   const callAllProduct = async () => {
     await axios
-      .get("http://localhost:8000/api/get-option-product/")
+      .get(
+        "http://localhost:8000/api/get-all-product-admin/?brand_id=&category_id="
+      )
       .then((res) => {
-        setAllProductOption(res.data.Option);
+        setAllProductOption(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -107,8 +109,8 @@ const AddOption = (props) => {
               >
                 <option>Chọn Sản Phẩm</option>
                 {allProductOption?.map((item, index) => (
-                  <option key={index} value={item?.Product?.id}>
-                    {item?.Product?.name}
+                  <option key={index} value={item?.id}>
+                    {item?.name}
                   </option>
                 ))}
               </select>

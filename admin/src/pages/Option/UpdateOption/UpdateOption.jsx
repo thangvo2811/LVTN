@@ -35,9 +35,11 @@ const UpdateOption = (props) => {
   };
   const callAllProduct = async () => {
     await axios
-      .get("http://localhost:8000/api/get-option-product/")
+      .get(
+        "http://localhost:8000/api/get-all-product-admin/?brand_id=&category_id="
+      )
       .then((res) => {
-        setAllProductOption(res.data.Option);
+        setAllProductOption(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -110,8 +112,8 @@ const UpdateOption = (props) => {
               >
                 <option>{props.nameProduct}</option>
                 {allProductOption?.map((item, index) => (
-                  <option key={index} value={item?.Product?.id}>
-                    {item?.Product?.name}
+                  <option key={index} value={item?.id}>
+                    {item?.name}
                   </option>
                 ))}
               </select>
@@ -121,9 +123,9 @@ const UpdateOption = (props) => {
                 value={selectOption}
                 onChange={(e) => setSelectOption(e.target.value)}
               >
-                <option>{props.name}</option>
+                {/* <option>{props.name}</option> */}
                 {allOption?.map((item, index) => (
-                  <option key={index} value={item?.id}>
+                  <option key={item?.id} defaultValue={item?.name}>
                     {item?.name}
                   </option>
                 ))}
