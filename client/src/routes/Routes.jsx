@@ -17,6 +17,7 @@ import Blog from "../components/Blog";
 import ForgetPassWord from "../pages/ForgetPassWord/ForgetPassWord";
 import WishList from "../pages/UserProfile/WishList";
 import Viewed from "../pages/UserProfile/Viewed";
+import ResetPassWord from "../pages/ForgetPassWord/ResetPassWord/ResetPassWord";
 
 const Routes = () => {
   return (
@@ -24,6 +25,7 @@ const Routes = () => {
       <Route path="/" element={<Home />}></Route>
       <Route path="/login" element={<Login />}></Route>
       <Route path="/user" element={<ForgetPassWord />}></Route>
+      <Route path="/password" element={<ResetPassWord />}></Route>
       <Route path="/register" element={<Register />}></Route>
       <Route path="/userprofile" element={<UserProfile />}></Route>
       <Route path="/wishlist" element={<WishList />}></Route>

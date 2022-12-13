@@ -9,6 +9,27 @@ import ChangePhone from "../ChangePhone";
 const MyAccount = () => {
   const [detailUser, setDetailUser] = useState({});
   const newCustomer = localStorage.getItem("User").toString();
+  const [file, setFile] = useState("");
+  const handleUploadImage = async () => {
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      await axios
+        .post("http://localhost:8000/api/create-img-product", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          // setFile(file.secure_url);
+          console.log(res?.data?.res?.url);
+          callUser(res?.data?.res?.url);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
   const callUser = useCallback(async () => {
     await axios
       .get(`http://localhost:8000/api/get-by-Id/${newCustomer}`)
@@ -30,35 +51,54 @@ const MyAccount = () => {
       <div className="user__content__right__desc">
         {/* start user content right form */}
         <div className="user__content__right__desc__form">
-          <input
-            type="text"
-            className="form-input"
-            defaultValue={detailUser?.fullname}
-            disabled
-          />
-          <input
-            type="text"
-            className="form-input"
-            defaultValue={detailUser?.phonenumber}
-            disabled
-          />
-          <input
-            type="email"
-            className="form-input"
-            defaultValue={detailUser?.email}
-            disabled
-          />
-          <input
-            type="date"
-            className="form-date"
-            value={moment(detailUser?.birthday).format("YYYY-MM-DD")}
-          />
-          <input
-            type="text"
-            className="form-input"
-            defaultValue={detailUser?.address}
-            disabled
-          />
+          <form>
+            {file && (
+              <img
+                className="img-user"
+                src={URL.createObjectURL(file)}
+                alt=""
+              />
+            )}
+            <input
+              type="file"
+              className="form-input mr-input"
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+            <input
+              type="text"
+              className="form-input mr-input"
+              defaultValue={detailUser?.fullname}
+              disabled
+            />
+            <input
+              type="text"
+              className="form-input mr-input"
+              defaultValue={detailUser?.phonenumber}
+              disabled
+            />
+            <input
+              type="email"
+              className="form-input mr-input"
+              defaultValue={detailUser?.email}
+              disabled
+            />
+            <input
+              type="date"
+              className="form-date mr-input"
+              value={moment(detailUser?.birthday).format("YYYY-MM-DD")}
+            />
+            <input
+              type="text"
+              className="form-input mr-input"
+              defaultValue={detailUser?.address}
+              disabled
+            />
+            <div className="btn-update">
+              <button className="btn-click" onClick={() => handleUploadImage()}>
+                CẬP Nhật
+              </button>
+            </div>
+          </form>
         </div>
         {/* end user content right form */}
 

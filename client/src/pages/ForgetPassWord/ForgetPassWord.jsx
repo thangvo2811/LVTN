@@ -21,7 +21,6 @@ const ForgetPassWord = () => {
           message.error("Email Không Tồn Tại");
           return;
         }
-        console.log("asdasdasd");
         console.log(res.data);
         message.success("Vui Lòng Kiểm Tra Email");
       })
@@ -34,7 +33,7 @@ const ForgetPassWord = () => {
     handleForgetPassWord();
   };
   return (
-    <Helmet name="Đăng nhập">
+    <Helmet name="Quên Mật Khẩu">
       <div className="forget-pw">
         <div className="forget-pw__container">
           <div className="forget-pw__title">Quên Mật Khẩu</div>

@@ -77,19 +77,13 @@ const ChangePassWord = (props) => {
         oldpassword: oldPw,
       })
       .then((res) => {
-        // if (res.errCode === 1) {
-        //   console.log(res.data);
-        //   message.error("Đổi mật khẩu không thành công");
-        //   return;
-        // }
-        props.refresh();
         console.log(res.data);
         message.success("Đổi Mật Khẩu Thàn Công");
+        setOpen(false);
       })
       .catch((err) => {
         console.log(err);
       });
-    setOpen(false);
   };
   const handleOldPw = (e) => {
     e.preventDefault();
@@ -114,11 +108,7 @@ const ChangePassWord = (props) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <form
-          onSubmit={() =>
-            callChangePassWord(IdCus, newPassWord, reNewPassWord, oldPassWord)
-          }
-        >
+        <form>
           <DialogContent maxWidth="xl">
             <div className="form-title">Đổi Mật Khẩu</div>
             <div className="form-input-pw">
@@ -131,7 +121,16 @@ const ChangePassWord = (props) => {
             <Button onClick={handleClose}>
               <span className="name-cancel">Hủy</span>
             </Button>
-            <Button type="submit">
+            <Button
+              onClick={() =>
+                callChangePassWord(
+                  IdCus,
+                  newPassWord,
+                  reNewPassWord,
+                  oldPassWord
+                )
+              }
+            >
               <span className="name-save">Lưu</span>
             </Button>
           </DialogActions>
