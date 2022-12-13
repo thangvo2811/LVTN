@@ -20,6 +20,11 @@
     "icon": "bx bx-package"
   },
   {
+    "display_name": "Danh Mục Thuộc Tính",
+    "route": "/optionCategory",
+    "icon": "bx bx-list-ol"
+  },
+  {
     "display_name": "Thuộc Tính",
     "route": "/option",
     "icon": "bx bx-package"

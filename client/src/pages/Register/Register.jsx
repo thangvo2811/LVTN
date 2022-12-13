@@ -27,7 +27,24 @@ const Register = () => {
   const [allDistrict, setAllDistrict] = useState([]);
   const [cityById, setCityById] = useState("");
   const [districtById, setDistrictById] = useState("");
+  const [idUser, setIdUser] = useState({});
 
+  const callAllUser = async (id) => {
+    await axios
+      .get(`http://localhost:8000/api/get-by-Id/${id}/`)
+      .then((res) => {
+        setIdUser(res.data.customer);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const newId = idUser.user;
+  console.log("ID User", newId);
+
+  useEffect(() => {
+    callAllUser();
+  }, []);
   const callApi = async () => {
     await axios
       .post("http://localhost:8000/api/sign-up-user/", {
@@ -41,18 +58,32 @@ const Register = () => {
       })
       .then((res) => {
         if (res.data.errCode === 0) {
-          message.success("ĐĂNG KÝ THÀNH CÔNG");
+          message.success("Vui Lòng Kiểm Tra Email");
+          callClickEmail();
+          return;
         }
         if (res.data.errCode === 1) {
           message.error("EMAIL ĐÃ CÓ NGƯỜI SỬ DỤNG");
+          return;
         }
         if (res.data.errCode === 2) {
           message.error("MỜI BẠN NHẬP THÔNG TIN");
+          return;
         }
         setValues(res);
       })
       .catch(() => {
         message.error("ĐĂNG KÝ THẤT BẠI");
+      });
+  };
+  const callClickEmail = async () => {
+    await axios
+      .put(`http://localhost:8000/api/acctive-user-account/${newId}/`)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
@@ -212,14 +243,6 @@ const Register = () => {
               </Button>
             </form>
             <div className="login__sign">
-              <div className="login__sign__phone">
-                <div className="login__sign__phone__icon">
-                  <i class="bx bxs-user"></i>
-                </div>
-                <div className="login__btnphone">
-                  Sử dụng email/ Số điện thoại
-                </div>
-              </div>
               <div className="login__sign__gg">
                 <div className="login__sign__gg__icon">
                   <i class="bx bxl-google"></i>

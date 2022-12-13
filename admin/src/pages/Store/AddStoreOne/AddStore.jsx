@@ -102,7 +102,7 @@ const AddStore = (props) => {
                 placeholder="Số Lượng"
                 onChange={(e) => setQuantity(e.target.value)}
               />
-              <label>Thuộc Tính Màu </label>
+              <label>Thuộc Tính 1</label>
               <Input
                 type="number"
                 placeholder="Thuộc Tính"
@@ -110,7 +110,7 @@ const AddStore = (props) => {
                   setOptionValue(e.target.value);
                 }}
               />
-              <label>Thuộc Tính Bộ Nhớ </label>
+              <label>Thuộc Tính 2</label>
               <Input
                 type="number"
                 placeholder="Thuộc Tính"

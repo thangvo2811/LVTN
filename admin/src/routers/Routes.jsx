@@ -16,6 +16,7 @@ import Order from "../pages/Order/Order";
 
 import Branch from "../pages/Branches/Branch";
 import Tab from "../pages/Store/Tab";
+import CategoryOption from "../pages/CategoryOption/CategoryOption";
 const isLogin = localStorage.getItem("admin") ? true : false;
 const Routes = () => {
   return (
@@ -28,6 +29,7 @@ const Routes = () => {
           <Route path="/categories" exact component={Categories} />
           <Route path="/brand" exact component={Brand} />
           <Route path="/products" exact component={Products} />
+          <Route path="/optionCategory" exact component={CategoryOption} />
           <Route path="/option" exact component={Option} />
           <Route path="/comment" exact component={Comments} />
           <Route path="/blog" exact component={Blog} />
