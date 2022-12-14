@@ -50,10 +50,10 @@ const Login = () => {
                   placeholder="Email"
                   onChange={inputHandler}
                 />
-                <label>Password</label>
+                <label>Mật Khẩu</label>
                 <input
                   type="password"
-                  placeholder="Password"
+                  placeholder="Mật Khẩu"
                   onChange={handlePassWord}
                 />
               </div>

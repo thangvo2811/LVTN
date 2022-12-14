@@ -18,6 +18,7 @@ const UpdateBlog = (props) => {
   const [file, setFile] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const idBlog = props.id;
+  const idCus = localStorage.getItem("admin");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -31,7 +32,7 @@ const UpdateBlog = (props) => {
       .put("http://localhost:8000/api/update-blog/", {
         id: id,
         Description: descBlog,
-        sta_id: statusBlog,
+        sta_id: idCus,
         name: nameBlog,
         img: url,
       })
@@ -98,11 +99,12 @@ const UpdateBlog = (props) => {
                 defaultValue={props.descBlog}
                 onChange={(e) => setDescBlog(e.target.value)}
               />
-              <label>Tình Trạng</label>
+              <label>Mã Nhân Viên</label>
               <Input
-                type="text"
+                type="hidden"
                 // defaultValue={props.statusBlog}
-                onChange={(e) => setSatusBlog(e.target.value)}
+                value={idCus}
+                disabled
               />
               <label>Hình Ảnh</label>
               <Input type="file" onChange={(e) => setFile(e.target.files[0])} />

@@ -6,16 +6,15 @@
   left: 0;
   overflow: hidden;
   margin-bottom: 50px;
-  margin-top: calc(#{$header-height} *-1);
+  margin-top: calc(#{$header-height} * -1);
 
   @include tablet {
-    margin-top: calc(#{$header-tablet-height} *-1);
+    margin-top: calc(#{$header-tablet-height} * -1);
   }
   @include mobile {
-    margin-top: calc(#{$header-mobile-height} *-1);
+    margin-top: calc(#{$header-mobile-height} * -1);
     height: 100vh;
   }
-
 
   &:hover &__control {
     $varHero: 0px;
@@ -60,10 +59,10 @@
       }
     }
     &__info {
-    width: 58.8%;
-    @include tablet {
-      width: 100%;
-    }
+      width: 58.8%;
+      @include tablet {
+        width: 100%;
+      }
       &__title,
       &__description {
         margin-bottom: 30px;
@@ -80,7 +79,6 @@
         overflow: hidden;
         @include mobile {
           font-size: 2rem;
-
         }
       }
 
@@ -95,7 +93,7 @@
       }
 
       &__btn {
-        width: fit-content;
+        // width: fit-content;
         overflow: hidden;
       }
       &__title > span,
@@ -115,36 +113,35 @@
       pointer-events: none;
 
       @include tablet {
-        @include flex(center,center);
+        @include flex(center, center);
       }
-     
+
       .shape {
         position: absolute;
         height: 415px;
         width: 415px;
         right: 0;
         bottom: 0;
-        border-radius: 60% 40% 61% 39% / 64% 63% 37% 36%   ;
+        border-radius: 60% 40% 61% 39% / 64% 63% 37% 36%;
         transition: border-radius 8s ease;
         background-color: $second-bg-color;
         z-index: -1;
-        animation: border infinite 8s ;
-      @include tablet {
-        height: 412px;
-        width: 412px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-      }
-      @include tablet {
-        height: 350px;
-        width: 350px;
-       
-      }
+        animation: border infinite 8s;
+        @include tablet {
+          height: 412px;
+          width: 412px;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+        @include tablet {
+          height: 350px;
+          width: 350px;
+        }
       }
       img {
-        width: 100%;
-        height: 100%;
+        min-width: 100%;
+        min-height: 100%;
         object-fit: cover;
         transform: scale(0) rotate(65deg);
         transition: all 0.6s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -211,18 +208,18 @@
 
 @keyframes border {
   0% {
-    border-radius: 37% 63% 79% 21% / 52% 66% 34% 48%  ;
+    border-radius: 37% 63% 79% 21% / 52% 66% 34% 48%;
   }
   25% {
-    border-radius: 64% 36% 79% 21% / 43% 77% 23% 57%  ;
+    border-radius: 64% 36% 79% 21% / 43% 77% 23% 57%;
   }
   50% {
-    border-radius: 78% 22% 89% 11% / 21% 89% 11% 79%  ;
+    border-radius: 78% 22% 89% 11% / 21% 89% 11% 79%;
   }
   75% {
-    border-radius: 64% 36% 79% 21% / 43% 77% 23% 57% ;
+    border-radius: 64% 36% 79% 21% / 43% 77% 23% 57%;
   }
   100% {
-    border-radius: 37% 63% 79% 21% / 52% 66% 34% 48% ;
+    border-radius: 37% 63% 79% 21% / 52% 66% 34% 48%;
   }
 }

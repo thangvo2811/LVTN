@@ -34,7 +34,7 @@ const Orderitem = (props) => {
       <div className="btn-delete">
         <AddComment img={orderItem.img} idProduct={orderItem.id}></AddComment>
 
-        <button className="btn-click">HỦY ĐƠN HÀNG</button>
+        {/* <button className="btn-click">HỦY ĐƠN HÀNG</button> */}
       </div>
     </div>
   );

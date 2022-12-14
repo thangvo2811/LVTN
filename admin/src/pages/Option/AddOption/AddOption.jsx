@@ -37,8 +37,9 @@ const AddOption = (props) => {
       })
       .then((res) => {
         console.log(res.data);
-        props.parentCallback(Date.now());
+
         message.success("Thêm Thuộc Tính Thành Công");
+        props.parentCallback(Date.now());
       })
       .catch((err) => {
         console.log(err);

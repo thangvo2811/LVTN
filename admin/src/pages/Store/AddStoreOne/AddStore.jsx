@@ -25,7 +25,8 @@ const AddStore = (props) => {
 
   const [allOption, setAllOption] = useState([]);
   const [selectOption, setSelectOption] = useState([]);
-  const [selectIdOption, setSelectIdOption] = useState([]);
+
+  const [newSelect, setNewSelect] = useState([]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -56,29 +57,20 @@ const AddStore = (props) => {
         console.log(err);
       });
   };
-  const callAllIdOption = async () => {
-    await axios
-      .get("http://localhost:8000/api/get-option-product/")
-      .then((res) => {
-        setIdProduct(res.data.Option);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+
   useEffect(() => {
     callAllProduct();
-    callAllOption(selectProduct);
-    callAllIdOption(selectIdOption);
-  }, [selectIdOption, selectOption, selectProduct]);
-  console.log("Array", selectOption, selectIdOption);
+    callAllOption(selectProduct, selectOption, newSelect);
+  }, [selectOption, selectProduct, newSelect]);
+  console.log("ID PRODUCT", selectProduct);
+  console.log("Array", selectOption, newSelect);
   const handleAddWareHouse = async () => {
     await axios
       .post("http://localhost:8000/api/create-warehouse-product/", {
         product_id: idProduct,
         warehouse_id: selected,
         quantity: quantity,
-        optionvalue: [selectOption],
+        optionvalue: [selectOption, newSelect],
       })
       .then((res) => {
         console.log(res.data);
@@ -126,7 +118,9 @@ const AddStore = (props) => {
               <br />
               <select
                 value={selectProduct}
-                onChange={(e) => setSelectProduct(e.target.value)}
+                onChange={(e) => {
+                  setSelectProduct(e.target.value);
+                }}
               >
                 <option>Chọn Sản Phẩm</option>
                 {allProduct?.map((item, index) => (
@@ -140,21 +134,44 @@ const AddStore = (props) => {
                 return (
                   <>
                     <label>Thuộc Tính {item.name}</label>
-                    <select onChange={(e) => setSelectOption(e.target.value)}>
-                      <option value={item.id}>{item.name}</option>
+
+                    <select
+                      onChange={(e) => {
+                        setSelectOption(e.target.value);
+                      }}
+                    >
+                      <option value={item.id}>Chọn {item.name}</option>
                       {item?.values?.map((data, i) => (
                         <option
                           key={i}
-                          value={data.option_id}
+                          value={data.id}
                           onChange={(e) => {
                             setSelectOption(e.target.value);
-                            setSelectIdOption(e.target.value);
                           }}
                         >
                           {data.name}
                         </option>
                       ))}
                     </select>
+                    {/* <select
+                      onChange={(e) => {
+                        setNewSelect(e.target.value);
+                        setSelectProduct(e.target.value);
+                      }}
+                    >
+                      <option value={item.id}>Chọn {item.name}</option>
+                      {item?.values?.map((data, i) => (
+                        <option
+                          key={i}
+                          value={data.id}
+                          onChange={(e) => {
+                            setNewSelect(e.target.value);
+                          }}
+                        >
+                          {data.name}
+                        </option>
+                      ))}
+                    </select> */}
                   </>
                 );
               })}
@@ -233,8 +250,8 @@ const AddStore = (props) => {
           <Button
             onClick={() =>
               handleAddWareHouse(idProduct, selected, quantity, [
-                optionValue,
-                optionValue1,
+                selectOption,
+                newSelect,
               ])
             }
           >

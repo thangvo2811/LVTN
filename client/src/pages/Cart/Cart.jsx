@@ -29,7 +29,7 @@ const Cart = () => {
       .then((res) => {
         setCartItem(res.data.cartitem);
         setTotalProduct(res.data.quantity);
-        setToTalPrice(res.data.cartitem);
+        setToTalPrice(res.data.totalprice);
         res.data.cartitem.forEach((item) => {
           console.log("Item", item);
           dispatch(
@@ -47,8 +47,6 @@ const Cart = () => {
 
   const idCartItem = cartItem?.map((item, index) => item.CartItemProduct.id);
   console.log("ID CART ITEM", idCartItem);
-
-  const priceProduct = 6000000;
 
   useEffect(() => {
     callCartItem();
@@ -108,7 +106,7 @@ const Cart = () => {
             <div className="cart__info__content__item cart__info__content__item__main">
               <div className="cart__info__content__item__title">Tổng giá</div>
               <div className="cart__info__content__item__price">
-                {priceProduct ? numberWithCommas(priceProduct) : ""} VND
+                {totalPrice ? numberWithCommas(totalPrice) : ""} VND
               </div>
             </div>
           </div>

@@ -11,6 +11,7 @@ export const loginAdmin = async (dispatch, admin) => {
         message.success("Đăng Nhập Thành Công");
         dispatch(loginSuccess());
         localStorage.setItem("admin", res.data.data.id);
+
         localStorage.setItem("nameAdmin", res.data.data.fullname);
         window.location.href = "/";
       }

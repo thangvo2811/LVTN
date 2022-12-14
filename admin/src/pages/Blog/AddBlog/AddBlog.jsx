@@ -12,10 +12,10 @@ import { Backdrop, CircularProgress } from "@mui/material";
 const AddBlog = (props) => {
   const [open, setOpen] = React.useState(false);
   const [descBlog, setDescBlog] = useState("");
-  const [statusBlog, setStatusBlog] = useState("");
   const [nameBlog, setNameBlog] = useState("");
   const [file, setFile] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const idCus = localStorage.getItem("admin");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -27,7 +27,7 @@ const AddBlog = (props) => {
     await axios
       .post("http://localhost:8000/api/create-blog/", {
         Description: descBlog,
-        sta_id: statusBlog,
+        sta_id: idCus,
         name: nameBlog,
         img: url,
       })
@@ -68,10 +68,7 @@ const AddBlog = (props) => {
     e.preventDefault();
     setDescBlog(e.target.value);
   };
-  const handleStatusBlog = (e) => {
-    e.preventDefault();
-    setStatusBlog(e.target.value);
-  };
+
   const handleNameBlog = (e) => {
     e.preventDefault();
     setNameBlog(e.target.value);
@@ -81,7 +78,7 @@ const AddBlog = (props) => {
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
         <div className="form-name">
-          <i className="bx bx-plus">Thêm Bài Blog</i>
+          <i className="bx bx-plus">Thêm Bài Bài Viết</i>
         </div>
       </Button>
       <Dialog
@@ -105,12 +102,8 @@ const AddBlog = (props) => {
                 placeholder="Mô tả"
                 onChange={handleDescBlog}
               />
-              <label>Status</label>
-              <Input
-                type="text"
-                placeholder="Status"
-                onChange={handleStatusBlog}
-              />
+
+              <Input type="hidden" value={idCus} disabled />
               <label>Hình Ảnh</label>
               <Input type="file" onChange={(e) => setFile(e.target.files[0])} />
               {file && <img src={URL.createObjectURL(file)} alt="" />}

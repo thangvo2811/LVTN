@@ -8,6 +8,7 @@ import asus from "../../assets/images/banner/asus.jpg";
 
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useCallback } from "react";
 
 const FindCategory = () => {
   const filterToggleRef = useRef(null);
@@ -25,6 +26,18 @@ const FindCategory = () => {
     nameCate: "",
   });
   // const [findIdCategory, setFindIdCategory] = useState([]);
+  const callFindIdCategory = useCallback(async () => {
+    await axios
+      .get(
+        `http://localhost:8000/api/get-all-product?brand_id=&category_id=${param.category_id}`
+      )
+      .then((res) => {
+        setAllProduct(res.data.product);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [param.category_id]);
 
   useEffect(() => {
     const callAllProduct = async () => {
@@ -46,7 +59,7 @@ const FindCategory = () => {
     callAllCategory();
     callAllBrand();
     callFindIdCategory();
-  }, [param.category_id]);
+  }, [callFindIdCategory]);
 
   const callAllCategory = async () => {
     await axios
@@ -69,16 +82,17 @@ const FindCategory = () => {
         console.log(err);
       });
   };
-  const callFindIdCategory = async () => {
-    await axios
-      .get(`http://localhost:8000/api/find-by-Category/${param.category_id}/`)
-      .then((res) => {
-        setAllProduct(res.data.product);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+
+  // const callFindIdCategory = async () => {
+  //   await axios
+  //     .get(`http://localhost:8000/api/find-by-Category/${param.category_id}/`)
+  //     .then((res) => {
+  //       setAllProduct(res.data.product);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
   return (
     <Helmet name="Danh mục">
       <div className="category-banner">

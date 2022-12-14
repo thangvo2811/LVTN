@@ -41,17 +41,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
   const param = useParams();
-  // const [reloadUser, setReloadUser] = useState({});
-  // const callReloadUser = useCallback(async () => {
-  //   await axios
-  //     .get(`http://localhost:8000/api/get-by-Id/${newCustomer}/`)
-  //     .then((res) => {
-  //       setReloadUser(res.data.customer.user.fullname);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, [newCustomer]);
+
   const callSearchProduct = async (searchK) => {
     await axios
       .get(`http://localhost:8000/api/findbykeyword/${searchK}`)
@@ -77,12 +67,12 @@ const Header = () => {
       });
   }, [dispatch, newCustomer]);
 
-  const callAllIdCategory = async () => {
+  const callAllCategory = async () => {
     await axios
-      .get("http://localhost:8000/api/get-category-parent/?parent_id=")
+      .get("http://localhost:8000/api/get-Category/")
       .then((res) => {
-        console.log(res.data.Category);
-        setAllCategory(res.data.Category);
+        console.log(res.data.category);
+        setAllCategory(res.data.category);
       })
       .catch((err) => {
         console.log(err);
@@ -96,8 +86,8 @@ const Header = () => {
     callTotalItems();
   }, [callTotalItems]);
   useEffect(() => {
-    callAllIdCategory();
-  }, [newNameUser]);
+    callAllCategory();
+  }, []);
 
   // useEffect(() => {
   //   callReloadUser();
@@ -271,44 +261,65 @@ const Header = () => {
                     </div>
                     <ul className="header-bottom__dropdown__left__list">
                       {allCategory?.map((item, index) => (
-                        <li
-                          className="header-bottom__dropdown__left__list__item"
-                          onClick={() => navigate("/findcategory/" + item.id)}
-                        >
-                          {item.name}
-                        </li>
+                        <>
+                          <li className="header-bottom__dropdown__left__list__item">
+                            {item.name}
+                          </li>
+                          {item.ChildrenCategoty.map((data, index) => (
+                            <li
+                              className="header-bottom__dropdown__left__list__item"
+                              onClick={() =>
+                                navigate("/findcategory/" + data.id)
+                              }
+                            >
+                              {data.name}
+                            </li>
+                          ))}
+                        </>
                       ))}
                     </ul>
                     {/* Start Category sub Category */}
                     {/* <div className="header-bottom__dropdown__left__sub">
                       {allCategory?.map((item, index) => (
-                        <div className="header-bottom__dropdown__left__sub__btn">
-                          <div className="header-bottom__dropdown__left__sub__btn__text">
-                            {item.name}
+                        <>
+                          <div className="header-bottom__dropdown__left__sub__btn">
+                            <div
+                              className="header-bottom__dropdown__left__sub__btn__text"
+                              key={index}
+                              value={item.id}
+                            >
+                              {item.name}
+                            </div>
+                            <div className="header-bottom__dropdown__left__sub__btn__icon">
+                              <i
+                                class="bx bx-chevron-down"
+                                onClick={() => handleOpen(item.id)}
+                              ></i>
+                            </div>
                           </div>
-                          <div className="header-bottom__dropdown__left__sub__btn__icon">
-                            <i
-                              class="bx bx-chevron-down"
-                              onClick={handleOpen}
-                            ></i>
-                          </div>
-                        </div>
-                      ))}
+                          {item.id && open ? (
+                            <ul className="header-bottom__dropdown__left__sub__item">
+                              {item?.ChildrenCategoty?.map((data, i) => (
+                                <li
+                                  className="header-bottom__dropdown__left__sub__item__list"
+                                  key={index}
+                                  value={data.id}
+                                >
+                                  <div className="header-bottom__dropdown__left__sub__item__list__text">
+                                    {data.name}
+                                  </div>
+                                </li>
+                              ))}
 
-                      {open ? (
-                        <ul className="header-bottom__dropdown__left__sub__item">
-                          <li className="header-bottom__dropdown__left__sub__item__list">
-                            <div className="header-bottom__dropdown__left__sub__item__list__text">
-                              LapTop Gaming
-                            </div>
-                          </li>
-                          <li className="header-bottom__dropdown__left__sub__item__list">
-                            <div className="header-bottom__dropdown__left__sub__item__list__text">
-                              LapTop Văn Phòng
-                            </div>
-                          </li>
-                        </ul>
-                      ) : null}
+                              <li className="header-bottom__dropdown__left__sub__item__list">
+                                <div className="header-bottom__dropdown__left__sub__item__list__text">
+                                  2
+                                </div>
+                              </li>
+                            </ul>
+                          ) : null}
+                        </>
+                      ))}
                     </div> */}
                     {/* end Category sub category */}
                   </div>

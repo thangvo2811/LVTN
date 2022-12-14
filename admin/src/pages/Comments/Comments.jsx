@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import DeleteComment from "./DeleteComment/DeleteComment";
 
 const Comments = () => {
   const [allComment, setAllComment] = useState([]);
-  const param = useParams();
+  const [reloadPage, setReloadPage] = useState("");
+  const callbackFunction = (childData) => {
+    setReloadPage(childData);
+  };
+
   const callAllComment = async (id) => {
     await axios
-      .get(`http://localhost:8000/api/get-comment-of-product/${id}/`)
+      .get("http://localhost:8000/api/get-all-comment/")
       .then((res) => {
-        setAllComment(res.data.Comment);
+        setAllComment(res.data.comment);
       })
       .catch((err) => {
         console.log(err);
@@ -17,7 +22,7 @@ const Comments = () => {
   };
   useEffect(() => {
     callAllComment();
-  }, []);
+  }, [reloadPage]);
   return (
     <div>
       <div className="page-header">
@@ -31,11 +36,10 @@ const Comments = () => {
                 <thead>
                   <tr>
                     <td>ID</td>
-                    <td>Tên Khách Hàng</td>
+                    <td>Mã Khách Hàng</td>
                     <td>Mã Sản Phẩm</td>
                     <td>Nội Dung</td>
                     <td>Đánh Giá</td>
-                    <td>Tình Trạng</td>
                     <td>Cài Đặt</td>
                   </tr>
                 </thead>
@@ -43,18 +47,19 @@ const Comments = () => {
                   {allComment?.map((item, index) => (
                     <tr key={index}>
                       <td>{item.id}</td>
-                      <td>{item.commentUser.name}</td>
-                      <td>{item.CommentProduct.name}</td>
+                      <td>{item.cus_id}</td>
+                      <td>{item.product_id}</td>
                       <td>{item.description}</td>
                       <td>{item.rate}</td>
-                      <td>{item.status}</td>
                       <td>
-                        <span className="card__body__edit">
-                          <i className="bx bxs-edit"></i>
-                        </span>
-                        <span className="card__body__delete">
-                          <i className="bx bx-trash"></i>
-                        </span>
+                        <div className="card__body__features">
+                          <span className="card__body__features__delete">
+                            <DeleteComment
+                              item={item.id}
+                              parentCallback={callbackFunction}
+                            ></DeleteComment>
+                          </span>
+                        </div>
                       </td>
                     </tr>
                   ))}

@@ -79,7 +79,7 @@ const MyAccount = () => {
             <input
               type="email"
               className="form-input mr-input"
-              defaultValue={detailUser?.email}
+              defaultValue={detailUser?.fullname}
               disabled
             />
             <input

@@ -33,7 +33,6 @@ const Employee = () => {
                     <td>Email</td>
                     <td>Tên</td>
                     <td>Phân Quyền</td>
-                    <td>Cài Đặt</td>
                   </tr>
                 </thead>
                 <thead>

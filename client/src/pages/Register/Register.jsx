@@ -62,22 +62,21 @@ const Register = () => {
       })
       .then((res) => {
         if (res.data.errCode === 0) {
-          message.success("Vui Lòng Kiểm Tra Email");
-          callClickEmail();
+          message.success("Đăng Ký Thành Công");
           return;
         }
         if (res.data.errCode === 1) {
-          message.error("EMAIL ĐÃ CÓ NGƯỜI SỬ DỤNG");
+          message.error("Email Đã Có Người Sử Dụng");
           return;
         }
         if (res.data.errCode === 2) {
-          message.error("MỜI BẠN NHẬP THÔNG TIN");
+          message.error("Mời Bạn Nhập Thông Tin");
           return;
         }
         setValues(res);
       })
       .catch(() => {
-        message.error("ĐĂNG KÝ THẤT BẠI");
+        message.error("Đăng Ký Thất Bại");
       });
   };
   const callClickEmail = async (id) => {
@@ -110,7 +109,7 @@ const Register = () => {
       placeholder: "Mật khẩu",
       errorMessage: "8-20 kí tự và có ít nhất một kí tự chữ, một kí tự số",
       label: "Mật khẩu",
-      // pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
+      pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
       required: true,
     },
 
@@ -128,9 +127,9 @@ const Register = () => {
       key: 4,
       name: "phone",
       type: "text",
-      placeholder: "Phone",
-      errorMessage: "Phone phải có ít nhất 10 số",
-      label: "Phone",
+      placeholder: "Số điện thoại",
+      errorMessage: "Số điện thoại phải có ít nhất 10 số",
+      label: "Số điện thoại",
       pattern: "[0-9]{10}",
       required: true,
     },

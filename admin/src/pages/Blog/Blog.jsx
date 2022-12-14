@@ -43,7 +43,7 @@ const Blog = () => {
                     <td>Tên</td>
                     <td>Mô Tả</td>
                     <td>Hình Ảnh</td>
-                    <td>Tình Trạng</td>
+                    <td>Mã Nhân Viên</td>
                     <td>Cài Đặt</td>
                   </tr>
                 </thead>

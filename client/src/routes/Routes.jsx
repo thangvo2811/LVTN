@@ -33,10 +33,7 @@ const Routes = () => {
       <Route path="/wishlist" element={<WishList />}></Route>
       <Route path="/view" element={<Viewed />}></Route>
 
-      <Route
-        path="/findcategory/:category_id"
-        element={<FindCategory />}
-      ></Route>
+      <Route path="/findcategory/:id" element={<FindCategory />}></Route>
       <Route path="/findproduct/:keyword" element={<FindProduct />}></Route>
       <Route path="/product/" element={<Categories />}></Route>
       <Route path="/detailproduct/:category_id" element={<Product />}></Route>

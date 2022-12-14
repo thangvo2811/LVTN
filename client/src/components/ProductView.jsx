@@ -29,7 +29,9 @@ import DeleteComment from "../pages/Comment/DeleteComment";
 
 const ProductView = (props) => {
   const param = useParams();
-
+  const array = props.arr;
+  const filter = array.filter((item) => item !== null && item !== "");
+  console.log("Null", filter);
   const [quantity, setQuantity] = useState(1);
   const [text, setText] = useState("");
   const [commentProduct, setCommentProduct] = useState([]);
@@ -91,7 +93,7 @@ const ProductView = (props) => {
   const handleAddCart = () => {
     console.log("add cart");
     const newProduct = props.product_id;
-    addCart(dispatch, newCustomer, newProduct, props.arr, quantity);
+    addCart(dispatch, newCustomer, newProduct, filter, quantity);
   };
   const handleClick = (e) => {
     e.preventDefault();
@@ -153,6 +155,15 @@ const ProductView = (props) => {
             <div className="product-top__info__content__option">
               <div className="product-top__info__content__option__left">
                 {props.color}
+              </div>
+              <div className="product-top__info__content__option__right">
+                {props.screen}
+              </div>
+              <div className="product-top__info__content__option__right">
+                {props.switch}
+              </div>
+              <div className="product-top__info__content__option__right">
+                {props.hdd}
               </div>
               <div className="product-top__info__content__option__right">
                 {props.ssd}

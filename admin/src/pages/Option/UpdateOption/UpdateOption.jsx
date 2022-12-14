@@ -87,7 +87,7 @@ const UpdateOption = (props) => {
         maxWidth="md"
       >
         <DialogContent>
-          <div className="form-title">Cập Nhật Danh Mục Thuộc Tính</div>
+          <div className="form-title">Cập Nhật Thuộc Tính</div>
           <div className="form-input">
             <form>
               <label>ID</label>

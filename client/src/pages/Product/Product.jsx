@@ -16,8 +16,11 @@ const Product = (props) => {
   const [allProduct, setAllProduct] = useState([]);
   const [detailProduct, setDetailProduct] = useState({});
 
-  const [selectColor, setSelectColor] = useState([]);
-  const [selectOption, setSelectOption] = useState([]);
+  const [selectColor, setSelectColor] = useState("");
+  const [selectOption, setSelectOption] = useState("");
+  const [selectScreen, setSelectScreen] = useState("");
+  const [selectSwitch, setSelectSwitch] = useState("");
+  const [selectHDD, setSelectHDD] = useState("");
   const callDetailProduct = useCallback(async () => {
     await axios
       .get(`http://localhost:8000/api/get-product/${param.category_id}`)
@@ -50,9 +53,19 @@ const Product = (props) => {
 
   console.log("colors: ", selectColor);
   console.log("ssd:", selectOption);
+  console.log("screen:", selectScreen);
+  console.log("switch:", selectSwitch);
+  console.log("hdd:", selectHDD);
   // console.log("total: ", selectOption.concat(selectColor));
   // array
-  console.log("total:", selectColor, selectOption);
+  console.log(
+    "total:",
+    selectColor,
+    selectOption,
+    selectScreen,
+    selectSwitch,
+    selectHDD
+  );
   // selectOption.push(selectColor ?? []);
 
   return (
@@ -62,7 +75,13 @@ const Product = (props) => {
           <div className="container">
             <ProductView
               // idOptionValue={selected}
-              arr={[selectOption, selectColor]}
+              arr={[
+                selectOption,
+                selectColor,
+                selectScreen,
+                selectSwitch,
+                selectHDD,
+              ]}
               product_id={detailProduct?.id ? detailProduct?.id : ""}
               imgProduct={detailProduct?.img ? detailProduct?.img : ""}
               nameProduct={detailProduct?.name ? detailProduct?.name : ""}
@@ -91,13 +110,13 @@ const Product = (props) => {
                       key={index}
                       className="product-top__info__content__option__left__option-color"
                     >
-                      {item.id === 2 ? item.name : ""}
+                      {item.id === 1 ? item.name : ""}
                     </div>
 
                     <div className="product-top__info__content__option__left__option-color__attribute">
                       {item?.values?.map((data, i) => (
                         <>
-                          {data.option_id === 2 ? (
+                          {data.option_id === 1 ? (
                             <div
                               key={data.id}
                               // className={
@@ -134,13 +153,13 @@ const Product = (props) => {
                             key={index}
                             className="product-top__info__content__option__right__option-ssd"
                           >
-                            {item.id === 1 ? item.name : null}
+                            {item.id === 2 ? item.name : null}
                           </div>
 
                           <div className="product-top__info__content__option__right__option-ssd__attribute">
                             {item?.values?.map((data, i) => (
                               <>
-                                {data.option_id === 1 ? (
+                                {data.option_id === 2 ? (
                                   <div
                                     key={data.id}
                                     onClick={() => {
@@ -164,20 +183,126 @@ const Product = (props) => {
                   </>
                 ) : null
               }
-              iDOption={detailProduct?.existingOptions?.map((item, index) =>
-                item?.values?.map((data, i) => <div>{data.id}</div>)
-              )}
-              // attributeName={detailProduct?.existingOptions?.map(
-              //   (item, index) =>
-              //     item?.values?.map((data, i) => (
-              //       <div
-              //         key={i}
-              //         className="product-top__info__content__left__name__attribute__name"
-              //       >
-              //         {data.name}
-              //       </div>
-              //     ))
-              // )}
+              screen={
+                detailProduct.existingOptions ? (
+                  <>
+                    {detailProduct?.existingOptions?.map((item, index) => {
+                      return (
+                        <>
+                          <div
+                            key={index}
+                            className="product-top__info__content__option__right__option-ssd"
+                          >
+                            {item.id === 3 ? item.name : null}
+                          </div>
+
+                          <div className="product-top__info__content__option__right__option-ssd__attribute">
+                            {item?.values?.map((data, i) => (
+                              <>
+                                {data.option_id === 3 ? (
+                                  <div
+                                    key={data.id}
+                                    onClick={() => {
+                                      setSelectScreen(data.id);
+                                    }}
+                                    className={
+                                      data.id === selectScreen
+                                        ? "product-top__info__content__option__right__option-ssd__attribute__name active"
+                                        : "product-top__info__content__option__right__option-ssd__attribute__name"
+                                    }
+                                  >
+                                    {data.name}
+                                  </div>
+                                ) : null}
+                              </>
+                            ))}
+                          </div>
+                        </>
+                      );
+                    })}
+                  </>
+                ) : null
+              }
+              switch={
+                detailProduct.existingOptions ? (
+                  <>
+                    {detailProduct?.existingOptions?.map((item, index) => {
+                      return (
+                        <>
+                          <div
+                            key={index}
+                            className="product-top__info__content__option__right__option-ssd"
+                          >
+                            {item.id === 5 ? item.name : null}
+                          </div>
+
+                          <div className="product-top__info__content__option__right__option-ssd__attribute">
+                            {item?.values?.map((data, i) => (
+                              <>
+                                {data.option_id === 5 ? (
+                                  <div
+                                    key={data.id}
+                                    onClick={() => {
+                                      setSelectSwitch(data.id);
+                                    }}
+                                    className={
+                                      data.id === selectSwitch
+                                        ? "product-top__info__content__option__right__option-ssd__attribute__name active"
+                                        : "product-top__info__content__option__right__option-ssd__attribute__name"
+                                    }
+                                  >
+                                    {data.name}
+                                  </div>
+                                ) : null}
+                              </>
+                            ))}
+                          </div>
+                        </>
+                      );
+                    })}
+                  </>
+                ) : null
+              }
+              hdd={
+                detailProduct.existingOptions ? (
+                  <>
+                    {detailProduct?.existingOptions?.map((item, index) => {
+                      return (
+                        <>
+                          <div
+                            key={index}
+                            className="product-top__info__content__option__right__option-ssd"
+                          >
+                            {item.id === 6 ? item.name : null}
+                          </div>
+
+                          <div className="product-top__info__content__option__right__option-ssd__attribute">
+                            {item?.values?.map((data, i) => (
+                              <>
+                                {data.option_id === 6 ? (
+                                  <div
+                                    key={data.id}
+                                    onClick={() => {
+                                      setSelectHDD(data.id);
+                                    }}
+                                    className={
+                                      data.id === selectHDD
+                                        ? "product-top__info__content__option__right__option-ssd__attribute__name active"
+                                        : "product-top__info__content__option__right__option-ssd__attribute__name"
+                                    }
+                                  >
+                                    {data.name}
+                                  </div>
+                                ) : null}
+                              </>
+                            ))}
+                          </div>
+                        </>
+                      );
+                    })}
+                  </>
+                ) : null
+              }
             ></ProductView>
           </div>
         </SectionBody>
