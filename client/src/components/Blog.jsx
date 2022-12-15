@@ -26,9 +26,6 @@ const Blog = () => {
             hướng chân thực và mang tới lợi thế âm thanh thực thụ trong mỗi trận
             chiến.
           </div>
-          <Button size="sm" animate={true} icon="bx-headphone">
-            Chi tiết
-          </Button>
         </div>
       </div>
       <div className="blog__item blog__item__main">
@@ -48,9 +45,6 @@ const Blog = () => {
             nhập vai, mà lại thích chơi mọi lúc mọi nơi với bạn bè, thường xuyên
             phải di chuyển. Thì chắc hẳn bạn phải cần một chiếc laptop như vậy.
           </div>
-          <Button size="sm" animate={true} icon="bx-laptop">
-            Chi tiết
-          </Button>
         </div>
         <div className="blog__item__image">
           <img src={img1} alt="" />

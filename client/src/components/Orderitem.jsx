@@ -46,7 +46,7 @@ const Orderitem = (props) => {
           <div className="order-item__info">
             <div className="order-item__info__title"></div>
             <div className="order-item__info__id">
-              Tên sản phẩm: {orderItem.name}
+              Tên sản phẩm: {orderItem.Orderitem.name}
             </div>
             <div className="order-item__info__price">
               Số lượng: {orderItem.Orderitem.TotalQuantity}

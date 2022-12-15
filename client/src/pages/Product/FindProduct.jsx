@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import Helmet from "../../components/Helmet";
 
 import Grid from "../../components/Grid";
@@ -12,7 +12,7 @@ import { useParams } from "react-router-dom";
 const FindProdcut = () => {
   const param = useParams();
   const [allProduct, setAllProduct] = useState([]);
-  const callAllProduct = async () => {
+  const callAllProduct = useCallback(async () => {
     await axios
       .get(`http://localhost:8000/api/findbykeyword/${param.keyword}`)
       .then((res) => {
@@ -21,11 +21,11 @@ const FindProdcut = () => {
       .catch((err) => {
         console.log(err);
       });
-  };
+  }, [param.keyword]);
 
   useEffect(() => {
     callAllProduct();
-  }, [param]);
+  }, [callAllProduct, param]);
   return (
     <Helmet name="Sản phẩm tìm kiếm">
       <div className="category-banner">

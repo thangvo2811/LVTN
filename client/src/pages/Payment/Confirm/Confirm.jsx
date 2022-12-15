@@ -14,8 +14,20 @@ const Confirm = (props) => {
   const [email, setEmail] = useState("");
   const [cartItem, setCartItem] = useState([]);
 
+  // const [infoUser, setInfoUser] = useState({});
+
   const newCustomer = localStorage.getItem("User");
 
+  // const callInfoUser = async () => {
+  //   await axios
+  //     .get(`http://localhost:8000/api/get-by-Id/${newCustomer}/`)
+  //     .then((res) => {
+  //       setInfoUser(res.data.customer);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
   const callAllCartItem = useCallback(async () => {
     await axios
       .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}/`)

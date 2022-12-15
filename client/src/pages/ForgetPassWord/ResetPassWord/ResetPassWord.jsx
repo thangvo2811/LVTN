@@ -38,8 +38,6 @@ const ResetPassWord = () => {
     },
   ];
 
-  // console.log("first", filter);
-  // console.log("Query", queryString);
   const callUpdatePassWord = async (e) => {
     e.preventDefault();
     const queryString = window.location.search.split("?");
@@ -89,19 +87,6 @@ const ResetPassWord = () => {
                   {...inputs[1]}
                   onChange={handleRePassword}
                 ></FormInput>
-                {/* <FormInput {...inputs[1]} /> */}
-                {/* <label>Mật Khẩu Mới</label>
-                <input
-                  type="password"
-                  placeholder="Mật Khẩu Mới"
-                  onChange={handleNewPw}
-                />
-                <label>Nhập Lại Mật Khẩu Mới</label>
-                <input
-                  type="password"
-                  placeholder="Nhập Lại Mật Khẩu Mới"
-                  onChange={handleReNewPw}
-                /> */}
               </div>
               <div className="btn-info">
                 <button

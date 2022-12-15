@@ -7,7 +7,10 @@ import DeleteOrder from "./DeleteOrder/DeleteOrder";
 
 const Order = () => {
   const [allOrder, setAllOrder] = useState([]);
-
+  const [reloadPage, setReloadPage] = useState("");
+  const callbackFunction = (childData) => {
+    setReloadPage(childData);
+  };
   const callAllOrder = async () => {
     await axios
       .get("http://localhost:8000/api/get-all-order/")
@@ -42,26 +45,32 @@ const Order = () => {
                   </tr>
                 </thead>
                 <thead>
-                  {allOrder?.map((item, index) => (
-                    <tr>
-                      <td>{item.id}</td>
-                      <td>{item.email}</td>
-                      <td>{item.fullname}</td>
-                      <td>{item.phonenumber}</td>
-                      <td>{item.Address}</td>
-                      <td>{item.status}</td>
-                      <td>
-                        <div className="card__body__features">
-                          <span className="card__body__features__edit">
-                            <UpadateOrder></UpadateOrder>
-                          </span>
-                          <span className="card__body__features__delete">
-                            <DeleteOrder></DeleteOrder>
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
+                  {allOrder
+                    ?.sort((a, b) => a.id - b.id)
+                    .map((item, index) => (
+                      <tr>
+                        <td>{item.id}</td>
+                        <td>{item.email}</td>
+                        <td>{item.fullname}</td>
+                        <td>{item.phonenumber}</td>
+                        <td>{item.Address}</td>
+                        <td>{item.status}</td>
+                        <td>
+                          <div className="card__body__features">
+                            <span className="card__body__features__edit">
+                              <UpadateOrder
+                                idOrder={item.id}
+                                statusOrder={item.status}
+                                parentCallback={callbackFunction}
+                              ></UpadateOrder>
+                            </span>
+                            <span className="card__body__features__delete">
+                              <DeleteOrder></DeleteOrder>
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                 </thead>
               </table>
             </div>

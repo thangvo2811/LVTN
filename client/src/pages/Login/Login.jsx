@@ -61,15 +61,17 @@ const Login = () => {
                 Đăng nhập
               </Button>
             </form>
-            <div className="login__sign">
-              {/* <div className="login__sign__phone">
+
+            {/* Start login social */}
+            {/* <div className="login__sign">
+              <div className="login__sign__phone">
                 <div className="login__sign__phone__icon">
                   <i class="bx bxs-user"></i>
                 </div>
                 <div className="login__btnphone">
                   Sử dụng email/ Số điện thoại
                 </div>
-              </div> */}
+              </div>
               <div className="login__sign__gg">
                 <div className="login__sign__gg__icon">
                   <i class="bx bxl-google"></i>
@@ -88,9 +90,10 @@ const Login = () => {
 
                 <div className="login__btnfb">Tiếp tục với facebook</div>
               </div>
-            </div>
+            </div> */}
+            {/* End login social */}
             <span className="login__account">
-              Bạn chưa có tài khoản ?{" "}
+              <span>Bạn chưa có tài khoản ?</span>
               <Link to={"/register"}>
                 <span> Đăng kí</span>
               </Link>

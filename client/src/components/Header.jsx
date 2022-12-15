@@ -84,7 +84,6 @@ const Header = () => {
   useEffect(() => {
     callSearchProduct();
     if (newCustomer !== "") {
-      console.log("khac hahg asdasd", newCustomer);
       return callTotalItems();
     }
   }, [callTotalItems, newCustomer]);

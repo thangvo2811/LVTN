@@ -19,6 +19,7 @@ const Product = (props) => {
   const [selectColor, setSelectColor] = useState("");
   const [selectOption, setSelectOption] = useState("");
   const [selectScreen, setSelectScreen] = useState("");
+  const [selectMain, setSelectMain] = useState("");
   const [selectSwitch, setSelectSwitch] = useState("");
   const [selectHDD, setSelectHDD] = useState("");
   const callDetailProduct = useCallback(async () => {
@@ -54,6 +55,7 @@ const Product = (props) => {
   console.log("colors: ", selectColor);
   console.log("ssd:", selectOption);
   console.log("screen:", selectScreen);
+  console.log("main:", selectMain);
   console.log("switch:", selectSwitch);
   console.log("hdd:", selectHDD);
   // console.log("total: ", selectOption.concat(selectColor));
@@ -76,9 +78,10 @@ const Product = (props) => {
             <ProductView
               // idOptionValue={selected}
               arr={[
-                selectOption,
                 selectColor,
+                selectOption,
                 selectScreen,
+                selectMain,
                 selectSwitch,
                 selectHDD,
               ]}
@@ -110,20 +113,15 @@ const Product = (props) => {
                       key={index}
                       className="product-top__info__content__option__left__option-color"
                     >
-                      {item.id === 2 ? item.name : ""}
+                      {item.id === 1 ? item.name : ""}
                     </div>
 
                     <div className="product-top__info__content__option__left__option-color__attribute">
                       {item?.values?.map((data, i) => (
                         <>
-                          {data.option_id === 2 ? (
+                          {data.option_id === 1 ? (
                             <div
                               key={data.id}
-                              // className={
-                              //   data.id === selected
-                              //     ? "product-top__info__content__left__attribute__name active"
-                              //     : "product-top__info__content__left__attribute__name "
-                              // }
                               onClick={() => {
                                 setSelectColor(data.id);
                               }}
@@ -153,13 +151,13 @@ const Product = (props) => {
                             key={index}
                             className="product-top__info__content__option__right__option-ssd"
                           >
-                            {item.id === 1 ? item.name : null}
+                            {item.id === 2 ? item.name : null}
                           </div>
 
                           <div className="product-top__info__content__option__right__option-ssd__attribute">
                             {item?.values?.map((data, i) => (
                               <>
-                                {data.option_id === 1 ? (
+                                {data.option_id === 2 ? (
                                   <div
                                     key={data.id}
                                     onClick={() => {
@@ -167,6 +165,45 @@ const Product = (props) => {
                                     }}
                                     className={
                                       data.id === selectOption
+                                        ? "product-top__info__content__option__right__option-ssd__attribute__name active"
+                                        : "product-top__info__content__option__right__option-ssd__attribute__name"
+                                    }
+                                  >
+                                    {data.name}
+                                  </div>
+                                ) : null}
+                              </>
+                            ))}
+                          </div>
+                        </>
+                      );
+                    })}
+                  </>
+                ) : null
+              }
+              main={
+                detailProduct.existingOptions ? (
+                  <>
+                    {detailProduct?.existingOptions?.map((item, index) => {
+                      return (
+                        <>
+                          <div
+                            key={index}
+                            className="product-top__info__content__option__right__option-ssd"
+                          >
+                            {item.id === 3 ? item.name : null}
+                          </div>
+                          <div className="product-top__info__content__option__right__option-ssd__attribute">
+                            {item?.values?.map((data, i) => (
+                              <>
+                                {data.option_id === 3 ? (
+                                  <div
+                                    key={data.id}
+                                    onClick={() => {
+                                      setSelectMain(data.id);
+                                    }}
+                                    className={
+                                      data.id === selectMain
                                         ? "product-top__info__content__option__right__option-ssd__attribute__name active"
                                         : "product-top__info__content__option__right__option-ssd__attribute__name"
                                     }

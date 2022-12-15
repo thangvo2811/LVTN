@@ -40,12 +40,26 @@ const AddOption = (props) => {
           console.log(res.data);
           props.parentCallback(Date.now());
           message.success("Thêm Thuộc Tính Thành Công");
+          return;
+        }
+        if (res.data.errCode === 1) {
+          message.error("Sản Phẩm Không Tồn Tại");
+          return;
+        }
+        if (res.data.errCode === 2) {
+          message.error("Thuộc Tính Không Tồn Tại");
+          return;
         }
         if (res.data.errCode === 3) {
           message.error("Thuộc Tính Đã Tồn Tại");
           return;
         }
+        if (res.data.errCode === 4) {
+          message.error("Thuộc Tính Không Phù Hợp Với Sản Phẩm");
+          return;
+        }
       })
+
       .catch((err) => {
         console.log(err);
       });

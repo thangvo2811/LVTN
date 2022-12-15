@@ -5,10 +5,26 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Input } from "antd";
+import { Input, message } from "antd";
+import axios from "axios";
 
-const UpadateOrder = () => {
+const UpadateOrder = (props) => {
   const [open, setOpen] = React.useState(false);
+  const status = props.statusOrder;
+
+  const handleUpdateOrder = async (id) => {
+    await axios
+      .put(`http://localhost:8000/api/update-accept-order/${id}/`)
+      .then((res) => {
+        console.log(res.data);
+        props.parentCallback(Date.now());
+        message.success("Cập nhật trạng thái đơn hàng thành công");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setOpen(false);
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -29,14 +45,16 @@ const UpadateOrder = () => {
         maxWidth="md"
       >
         <DialogContent>
-          <div className="form-title">Cập Nhật Đơn Hàng</div>
+          <div className="form-title">Xác Nhận Đơn Hàng</div>
           <div className="form-input">
             <form></form>
           </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Hủy</Button>
-          <Button onClick={handleClose}>Cập Nhật</Button>
+          <Button onClick={() => handleUpdateOrder(props.idOrder)}>
+            Xác Nhận
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

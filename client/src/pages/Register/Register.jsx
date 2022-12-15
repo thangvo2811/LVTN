@@ -62,8 +62,8 @@ const Register = () => {
       })
       .then((res) => {
         if (res.data.errCode === 0) {
-          message.success("Đăng Ký Thành Công");
-          callClickEmail();
+          message.success("Vui Lòng Kiểm Tra Email");
+
           return;
         }
         if (res.data.errCode === 1) {
@@ -78,19 +78,6 @@ const Register = () => {
       })
       .catch(() => {
         message.error("Đăng Ký Thất Bại");
-      });
-  };
-  const callClickEmail = async (id) => {
-    const queryString = window.location.search.split("?userId=");
-    const filter = queryString.filter((item) => item !== "");
-    await axios
-      .put(`http://localhost:8000/api/acctive-user-account/${filter}/`)
-      .then((res) => {
-        console.log(res.data);
-        message.success("Kích Hoạt Tài Khoản Thành Công");
-      })
-      .catch((err) => {
-        console.log(err);
       });
   };
 
@@ -249,7 +236,8 @@ const Register = () => {
                 ĐĂNG KÝ
               </Button>
             </form>
-            <div className="login__sign">
+            {/* Start login social */}
+            {/* <div className="login__sign">
               <div className="login__sign__gg">
                 <div className="login__sign__gg__icon">
                   <i class="bx bxl-google"></i>
@@ -262,9 +250,11 @@ const Register = () => {
                 </div>
                 <div className="login__btnfb">Tiếp tục với facebook</div>
               </div>
-            </div>
+            </div> */}
+            {/* End login social */}
+
             <span className="login__account">
-              Đã có tài khoản?
+              <span> Đã có tài khoản?</span>
               <Link to={"/login"}>
                 <span> Đăng nhập</span>
               </Link>

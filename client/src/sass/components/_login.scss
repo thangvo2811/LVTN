@@ -20,12 +20,11 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
     background-color: #fff;
     border: none;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     width: 700px;
-    height: 600px;
+    height: 400px;
     padding: 30px 50px;
     border-radius: 20px;
     @include tablet {
@@ -51,7 +50,7 @@
     }
   }
   &__redirect {
-    margin-top: 20px;
+    margin-top: 10px;
     font-weight: 600;
     &:hover {
       color: $main-color;
@@ -118,5 +117,9 @@
   }
   &__account {
     font-weight: 600;
+
+    span {
+      margin-top: 10px;
+    }
   }
 }

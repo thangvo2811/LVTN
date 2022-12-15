@@ -57,12 +57,6 @@ const ForgetPassWord = () => {
             <form onSubmit={handleSubmit}>
               <div className="form-input">
                 <FormInput {...inputs[0]} onChange={handleEmail}></FormInput>
-                {/* <input
-                  type="email"
-                  placeholder="Email"
-                  onChange={(e) => setNewEmail(e.target.value)}
-                  required
-                /> */}
               </div>
               <div className="btn-info">
                 <button type="submit" className="btn-click">

@@ -25,7 +25,7 @@ const Routes = () => {
     <Switch>
       <Route path="/" element={<Home />}></Route>
       <Route path="/login/" element={<Login />}></Route>
-      <Route path="/user/:userEmail" element={<EmailActive />}></Route>
+      <Route path="/active/" element={<EmailActive />}></Route>
       <Route path="/user" element={<ForgetPassWord />}></Route>
       <Route path="/password/" element={<ResetPassWord />}></Route>
       <Route path="/register" element={<Register />}></Route>

@@ -58,7 +58,7 @@ const Home = () => {
 
       {/* hotsalse product */}
       <Section>
-        <SectionTitle>Bán chạy nhất</SectionTitle>
+        <SectionTitle>Sản phẩm nổi bật</SectionTitle>
         <SectionBody>
           <div className="container">
             <Grid col={4} mdCol={2} smCol={1} gap={20}>
@@ -75,7 +75,7 @@ const Home = () => {
 
       {/* Blog section */}
       <Section>
-        <SectionTitle>Blog</SectionTitle>
+        <SectionTitle>Tin Tức</SectionTitle>
         <SectionBody>
           <div className="container">
             <Blog></Blog>

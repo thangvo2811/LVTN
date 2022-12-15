@@ -8,6 +8,7 @@ const PaymentDetail = (props) => {
   const newCustomer = localStorage.getItem("User");
   const [cartItem, setCartItem] = useState([]);
   const [payment, setPayMent] = useState({});
+  const [totalPrice, setTotalPrice] = useState("");
   const [value, setValue] = useState(1);
 
   const callCartItem = useCallback(async () => {
@@ -16,6 +17,7 @@ const PaymentDetail = (props) => {
       .then((res) => {
         console.log(res.data.cartitem);
         setCartItem(res.data.cartitem);
+        setTotalPrice(res.data.totalprice);
       })
       .catch((err) => {
         console.log(err);
@@ -64,6 +66,12 @@ const PaymentDetail = (props) => {
             </div>
           </div>
         ))}
+        <div className="payment__desc__product">
+          <div className="payment__desc__product__name1">Tổng giá</div>
+          <div className="payment__desc__product__name1">
+            {numberWithCommas(totalPrice)} VNĐ
+          </div>
+        </div>
 
         <div className="payment__desc__method">
           <div className="payment__desc__method__name">
