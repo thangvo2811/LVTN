@@ -37,10 +37,10 @@ const Header = () => {
 
   const nameCustomer = localStorage.getItem("nameUser");
   const newNameUser = localStorage.getItem("updateName");
+
   console.log("Update Name User", newNameUser);
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
-  const param = useParams();
 
   const callSearchProduct = async (searchK) => {
     await axios
@@ -83,8 +83,11 @@ const Header = () => {
   };
   useEffect(() => {
     callSearchProduct();
-    callTotalItems();
-  }, [callTotalItems]);
+    if (newCustomer !== "") {
+      console.log("khac hahg asdasd", newCustomer);
+      return callTotalItems();
+    }
+  }, [callTotalItems, newCustomer]);
   useEffect(() => {
     callAllCategory();
   }, []);

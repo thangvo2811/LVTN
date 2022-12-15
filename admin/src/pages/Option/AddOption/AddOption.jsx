@@ -12,14 +12,14 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const AddOption = (props) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [allProductOption, setAllProductOption] = useState([]);
+  const [allOption, setAllOption] = useState([]);
   const [newName, setNewName] = useState("");
   const [newPrice, setNewPrice] = useState("");
-  // const [newIdProduct, setNewIdProduct] = useState("");
   const [selectProduct, setSelectProduct] = useState("");
-  const [allProductOption, setAllProductOption] = useState([]);
   const [selected, setSelected] = useState("");
-  const [allOption, setAllOption] = useState([]);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -27,7 +27,7 @@ const AddOption = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const callAddOption = async () => {
+  const handleAddOption = async () => {
     await axios
       .post("http://localhost:8000/api/create-option-product", {
         name: newName,
@@ -36,10 +36,15 @@ const AddOption = (props) => {
         option_id: selected,
       })
       .then((res) => {
-        console.log(res.data);
-
-        message.success("Thêm Thuộc Tính Thành Công");
-        props.parentCallback(Date.now());
+        if (res.data.errCode === 0) {
+          console.log(res.data);
+          props.parentCallback(Date.now());
+          message.success("Thêm Thuộc Tính Thành Công");
+        }
+        if (res.data.errCode === 3) {
+          message.error("Thuộc Tính Đã Tồn Tại");
+          return;
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -68,10 +73,12 @@ const AddOption = (props) => {
         console.log(err);
       });
   };
+
   useEffect(() => {
     callAllOption();
     callAllProduct();
   }, []);
+
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -85,6 +92,7 @@ const AddOption = (props) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
+        {<></>}
         <DialogTitle id="alert-dialog-title"></DialogTitle>
         <DialogContent>
           <div className="form-title">Thuộc Tính</div>
@@ -135,7 +143,7 @@ const AddOption = (props) => {
           <Button onClick={handleClose}>Hủy</Button>
           <Button
             onClick={() =>
-              callAddOption(newName, newPrice, selectProduct, selected)
+              handleAddOption(newName, newPrice, selectProduct, selected)
             }
           >
             Thêm

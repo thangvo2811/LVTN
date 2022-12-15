@@ -1,15 +1,44 @@
 import React from "react";
+
 import AddComment from "../pages/Comment/AddComment";
+import DeleleOrder from "../pages/UserProfile/OrderList/DeleleOrder";
 import numberWithCommas from "../utils/numberWithCommas";
 
+const orderStatus = [
+  {
+    id: 1,
+    name: "Đơn hàng đang chờ xác nhận",
+  },
+  {
+    id: 2,
+    name: "Đơn hàng đang được chuẩn bị",
+  },
+  {
+    id: 3,
+    name: "Đơn hàng đang được giao",
+  },
+  {
+    id: 4,
+    name: "Đơn hàng giao thành công",
+  },
+  {
+    id: 5,
+    name: "Đơn hàng đã bị hủy",
+  },
+];
 const Orderitem = (props) => {
   const orderItem = props.orderItem;
   const statusOrder = props.status;
+
   return (
     <div className="order-content">
       <div className="order-title">
         <div className="order-name">Trạng Thái:</div>
-        <div className="order-status">CHƯA XÁC NHẬN</div>
+        {orderStatus?.map((item, index) => (
+          <div className="order-status">
+            {item.id === props.statusOrder ? item.name : null}
+          </div>
+        ))}
       </div>
       <div className="order-item">
         <div className="order-item__image">
@@ -32,8 +61,26 @@ const Orderitem = (props) => {
         </div>
       </div>
       <div className="btn-delete">
-        <AddComment img={orderItem.img} idProduct={orderItem.id}></AddComment>
+        {orderStatus?.map((item, index) => (
+          <div>
+            {item.id && props.statusOrder === 4 ? (
+              <AddComment
+                img={orderItem.img}
+                idProduct={orderItem.id}
+              ></AddComment>
+            ) : null}
+          </div>
+        ))}
+        {orderStatus?.map((item, index) => (
+          <div>
+            {(item.id === props.statusOrder) === 1 ||
+            (item.id === props.statusOrder) === 2 ? (
+              <DeleleOrder></DeleleOrder>
+            ) : null}
+          </div>
+        ))}
 
+        <DeleleOrder></DeleleOrder>
         {/* <button className="btn-click">HỦY ĐƠN HÀNG</button> */}
       </div>
     </div>

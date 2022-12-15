@@ -4,6 +4,7 @@ import Helmet from "../../components/Helmet";
 import "./style.scss";
 import axios from "axios";
 import { message } from "antd";
+import FormInput from "../../components/FormInput";
 
 const ForgetPassWord = () => {
   const [newEmail, setNewEmail] = useState("");
@@ -32,6 +33,21 @@ const ForgetPassWord = () => {
     e.preventDefault();
     handleForgetPassWord();
   };
+  const inputs = [
+    {
+      key: 1,
+      name: "email",
+      type: "email",
+      placeholder: "Email",
+      errorMessage: "Email không hợp lệ",
+      label: "Email",
+      pattern: "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+[a-zA-Z0-9-.]+$",
+      required: true,
+    },
+  ];
+  const handleEmail = (e) => {
+    setNewEmail(e.target.value);
+  };
   return (
     <Helmet name="Quên Mật Khẩu">
       <div className="forget-pw">
@@ -40,12 +56,13 @@ const ForgetPassWord = () => {
           <div className="forget-pw__content">
             <form onSubmit={handleSubmit}>
               <div className="form-input">
-                <label>Email</label>
-                <input
+                <FormInput {...inputs[0]} onChange={handleEmail}></FormInput>
+                {/* <input
                   type="email"
                   placeholder="Email"
                   onChange={(e) => setNewEmail(e.target.value)}
-                />
+                  required
+                /> */}
               </div>
               <div className="btn-info">
                 <button type="submit" className="btn-click">

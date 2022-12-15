@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+
 import DeleteOption from "./DeleteOption/DeleteOption";
 import UpdateOption from "./UpdateOption/UpdateOption";
 import AddOption from "./AddOption/AddOption";

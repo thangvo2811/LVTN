@@ -15,44 +15,62 @@ const ResetPassWord = () => {
   const inputs = [
     {
       key: 1,
-      name: "newPassWord",
+      name: "password",
       type: "password",
       placeholder: "Nhập mật khẩu mới",
       errorMessage: "Hãy nhập mật khẩu mới",
+      value: newPassWord,
       label: "Mật khẩu mới",
       // pattern: `^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$`,
       required: true,
     },
-    // {
-    //   key: 2,
-    //   name: "reNewPassWord",
-    //   type: "password",
-    //   placeholder: "Xác nhận mật khẩu",
-    //   errorMessage: "Mật khẩu không trùng",
-    //   label: "Xác nhận mật khẩu",
-    //   required: true,
-    // },
+
+    {
+      key: 2,
+      name: "reNewPassWord",
+      type: "password",
+      placeholder: "Xác nhận mật khẩu",
+      errorMessage: "Mật khẩu không trùng",
+      value: reNewPassWord,
+      label: "Xác nhận mật khẩu",
+      pattern: newPassWord,
+      required: true,
+    },
   ];
-  const localUrl = "http://localhost:3000/password?";
-  const callUpdatePassWord = async () => {
+
+  // console.log("first", filter);
+  // console.log("Query", queryString);
+  const callUpdatePassWord = async (e) => {
+    e.preventDefault();
     const queryString = window.location.search.split("?");
-    console.log("Query", queryString);
+    const filter = queryString.filter((item) => item !== "");
     await axios
       .put("http://localhost:8000/api/forgot-password/", {
-        email: queryString,
+        email: filter,
         newpassword: newPassWord,
       })
       .then((res) => {
-        console.log(res.data);
-        message.success("Cập Nhật Mật Khẩu Thành Công");
+        if (res.data.errCode === 0) {
+          console.log(res.data);
+          navigate("/login");
+          setTimeout(() => {
+            message.success("Cập Nhật Mật Khẩu Thành Công");
+          }, 1000);
+          return;
+        }
+        message.error("Cập Nhật Mật Khẩu Thất Bại");
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  const handleNewPw = (e) => {
+  const handleNewPassword = (e) => {
     e.preventDefault();
     setNewPassWord(e.target.value);
+  };
+  const handleRePassword = (e) => {
+    e.preventDefault();
+    setReNewPassWord(e.target.value);
   };
 
   return (
@@ -63,7 +81,14 @@ const ResetPassWord = () => {
           <div className="forget-pw__content">
             <form>
               <div className="form-input">
-                <FormInput {...inputs[0]} onchange={handleNewPw} />
+                <FormInput
+                  {...inputs[0]}
+                  onChange={handleNewPassword}
+                ></FormInput>
+                <FormInput
+                  {...inputs[1]}
+                  onChange={handleRePassword}
+                ></FormInput>
                 {/* <FormInput {...inputs[1]} /> */}
                 {/* <label>Mật Khẩu Mới</label>
                 <input
@@ -82,7 +107,7 @@ const ResetPassWord = () => {
                 <button
                   type="submit"
                   className="btn-click"
-                  onClick={() => callUpdatePassWord(newPassWord)}
+                  onClick={(e) => callUpdatePassWord(e, newPassWord)}
                 >
                   Cập Nhật
                 </button>

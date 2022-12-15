@@ -63,6 +63,7 @@ const Register = () => {
       .then((res) => {
         if (res.data.errCode === 0) {
           message.success("Đăng Ký Thành Công");
+          callClickEmail();
           return;
         }
         if (res.data.errCode === 1) {
@@ -80,10 +81,13 @@ const Register = () => {
       });
   };
   const callClickEmail = async (id) => {
+    const queryString = window.location.search.split("?userId=");
+    const filter = queryString.filter((item) => item !== "");
     await axios
-      .put(`http://localhost:8000/api/acctive-user-account/${id}/`)
+      .put(`http://localhost:8000/api/acctive-user-account/${filter}/`)
       .then((res) => {
         console.log(res.data);
+        message.success("Kích Hoạt Tài Khoản Thành Công");
       })
       .catch((err) => {
         console.log(err);

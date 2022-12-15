@@ -3,7 +3,7 @@ import numberWithCommas from "../../../utils/numberWithCommas";
 import axios from "axios";
 import "./style.scss";
 import Orderitem from "../../../components/Orderitem";
-
+//
 const OrderList = () => {
   const [allOrder, setAllOrder] = useState([]);
   const idCus = localStorage.getItem("User");
@@ -32,7 +32,7 @@ const OrderList = () => {
                 return (
                   <Orderitem
                     orderItem={data}
-                    status={item}
+                    statusOrder={item.status}
                     key={index}
                   ></Orderitem>
                 );
