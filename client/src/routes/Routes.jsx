@@ -13,12 +13,12 @@ import UserProfile from "../pages/UserProfile";
 import FindProduct from "../pages/Product/FindProduct";
 import FindCategory from "./../pages/Category/FindCategory";
 
-import Blog from "../components/Blog";
 import ForgetPassWord from "../pages/ForgetPassWord/ForgetPassWord";
 import WishList from "../pages/UserProfile/WishList";
 import Viewed from "../pages/UserProfile/Viewed";
 import ResetPassWord from "../pages/ForgetPassWord/ResetPassWord/ResetPassWord";
 import EmailActive from "../pages/Register/EmailActive";
+import Posts from "../pages/Blog/Posts";
 
 const Routes = () => {
   return (
@@ -37,7 +37,7 @@ const Routes = () => {
       <Route path="/findproduct/:keyword" element={<FindProduct />}></Route>
       <Route path="/product/" element={<Categories />}></Route>
       <Route path="/detailproduct/:category_id" element={<Product />}></Route>
-      <Route path="/blog/" element={<Blog />}></Route>
+      <Route path="/blog/" element={<Posts />}></Route>
       <Route path="/cart" element={<Cart />}></Route>
       <Route path="/payment" element={<Payment />}></Route>
     </Switch>

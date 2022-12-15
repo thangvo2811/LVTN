@@ -110,13 +110,13 @@ const Product = (props) => {
                       key={index}
                       className="product-top__info__content__option__left__option-color"
                     >
-                      {item.id === 1 ? item.name : ""}
+                      {item.id === 2 ? item.name : ""}
                     </div>
 
                     <div className="product-top__info__content__option__left__option-color__attribute">
                       {item?.values?.map((data, i) => (
                         <>
-                          {data.option_id === 1 ? (
+                          {data.option_id === 2 ? (
                             <div
                               key={data.id}
                               // className={
@@ -153,13 +153,13 @@ const Product = (props) => {
                             key={index}
                             className="product-top__info__content__option__right__option-ssd"
                           >
-                            {item.id === 2 ? item.name : null}
+                            {item.id === 1 ? item.name : null}
                           </div>
 
                           <div className="product-top__info__content__option__right__option-ssd__attribute">
                             {item?.values?.map((data, i) => (
                               <>
-                                {data.option_id === 2 ? (
+                                {data.option_id === 1 ? (
                                   <div
                                     key={data.id}
                                     onClick={() => {

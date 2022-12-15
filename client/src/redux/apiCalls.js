@@ -44,7 +44,7 @@ export const addCart = async (dispatch, user, idProduct, idOption, qty) => {
     .then((res) => {
       console.log(res);
       if (res.data.errCode === 5) {
-        message.error("Mời Bạn Chọn Thuộc Tính");
+        message.error("Trong Kho Đã Hết Sản Phẩm");
         return;
       }
       if (res.data.errCode === 0 || res.data.errCode === -1) {

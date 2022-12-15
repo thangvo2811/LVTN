@@ -216,6 +216,7 @@ const ProductView = (props) => {
 
                   <UpdateComment
                     idComment={item?.id}
+                    idCustomer={item?.cus_id}
                     idProduct={item?.product_id}
                     descProduct={item?.description}
                     rateProduct={item?.rate}

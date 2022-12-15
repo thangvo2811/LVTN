@@ -17,6 +17,10 @@ const UpdateComment = (props) => {
   const [newDesc, setNewDesc] = useState("");
   const [newRate, setNewRate] = useState(0);
   const idCus = localStorage.getItem("User");
+  const idComment = props.idComment;
+  const idCUs = props.idCustomer;
+  console.log("ID CUSTOMER", idCUs);
+  console.log("ID comment", idComment);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -29,13 +33,14 @@ const UpdateComment = (props) => {
     await axios
       .put("http://localhost:8000/api/update-comment", {
         id: props.idComment,
-        user_id: idCus,
-        product_1: props.idProduct,
+        cus_id: props.idCustomer,
+        product_id: props.idProduct,
         description: newDesc,
         rate: newRate,
       })
       .then((res) => {
         console.log(res.data);
+        props.parentCallback(Date.now());
         message.success("Cập Nhật Đánh Giá Thành Công");
       })
       .catch((err) => {
@@ -84,7 +89,7 @@ const UpdateComment = (props) => {
             onClick={() =>
               handleUpdateComment(
                 props.idComment,
-                idCus,
+                props.idCustomer,
                 props.idProduct,
                 newDesc,
                 newRate

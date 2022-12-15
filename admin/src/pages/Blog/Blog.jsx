@@ -43,7 +43,7 @@ const Blog = () => {
                     <td>Tên</td>
                     <td>Mô Tả</td>
                     <td>Hình Ảnh</td>
-                    <td>Mã Nhân Viên</td>
+
                     <td>Cài Đặt</td>
                   </tr>
                 </thead>
@@ -61,7 +61,6 @@ const Blog = () => {
                           src={item.img ? item.img : item.name}
                         />
                       </td>
-                      <td>{item?.sta_id}</td>
 
                       <td>
                         <div className="card__body__features">
