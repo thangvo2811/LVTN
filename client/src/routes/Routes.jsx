@@ -19,6 +19,7 @@ import Viewed from "../pages/UserProfile/Viewed";
 import ResetPassWord from "../pages/ForgetPassWord/ResetPassWord/ResetPassWord";
 import EmailActive from "../pages/Register/EmailActive";
 import Posts from "../pages/Blog/Posts";
+import DetailOrder from "../pages/UserProfile/OrderList/DetailOrder/DetailOrder";
 
 const Routes = () => {
   return (
@@ -32,6 +33,7 @@ const Routes = () => {
       <Route path="/userprofile" element={<UserProfile />}></Route>
       <Route path="/wishlist" element={<WishList />}></Route>
       <Route path="/view" element={<Viewed />}></Route>
+      <Route path="/detailorder/:id" element={<DetailOrder />}></Route>
 
       <Route path="/findcategory/:id" element={<FindCategory />}></Route>
       <Route path="/findproduct/:keyword" element={<FindProduct />}></Route>

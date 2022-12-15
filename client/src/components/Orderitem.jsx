@@ -3,6 +3,7 @@ import React from "react";
 import AddComment from "../pages/Comment/AddComment";
 import DeleleOrder from "../pages/UserProfile/OrderList/DeleleOrder";
 import numberWithCommas from "../utils/numberWithCommas";
+import { Link, useNavigate } from "react-router-dom";
 
 const orderStatus = [
   {
@@ -29,6 +30,8 @@ const orderStatus = [
 const Orderitem = (props) => {
   const orderItem = props.orderItem;
   const statusOrder = props.status;
+  const id = props.idOrderDetail;
+  const navigate = useNavigate();
 
   return (
     <div className="order-content">
@@ -42,7 +45,11 @@ const Orderitem = (props) => {
       </div>
       <div className="order-item">
         <div className="order-item__image">
-          <img src={orderItem.img} alt="" />
+          <img
+            src={orderItem.img}
+            alt=""
+            onClick={() => navigate("/detailorder/" + id)}
+          />
           <div className="order-item__info">
             <div className="order-item__info__title"></div>
             <div className="order-item__info__id">
