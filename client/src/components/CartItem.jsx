@@ -58,8 +58,8 @@ const CartItem = (props) => {
   const handleDeleteCartItem = (e) => {
     e.preventDefault();
     deleteCart(dispatch, itemCart.id);
-    reloadPage();
   };
+  useEffect(() => {}, [reloadPage]);
 
   return (
     <>

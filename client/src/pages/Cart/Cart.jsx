@@ -55,7 +55,6 @@ const Cart = () => {
   const handleDeleteAllCart = (e) => {
     e.preventDefault();
     deleteAllCart(dispatch, idCartItem);
-    callCartItem();
   };
 
   return (

@@ -18,6 +18,7 @@ import Branch from "../pages/Branches/Branch";
 import Tab from "../pages/Store/Tab";
 import CategoryOption from "../pages/CategoryOption/CategoryOption";
 const isLogin = localStorage.getItem("admin") ? true : false;
+
 const Routes = () => {
   return (
     <Switch>

@@ -5,12 +5,22 @@ import axios from "axios";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 import FormInput from "../../../components/FormInput";
+import { Backdrop, CircularProgress } from "@mui/material";
 
 const ResetPassWord = () => {
   const [newPassWord, setNewPassWord] = useState("");
   const [reNewPassWord, setReNewPassWord] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const inputs = [
     {
@@ -39,6 +49,7 @@ const ResetPassWord = () => {
   ];
 
   const callUpdatePassWord = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     const queryString = window.location.search.split("?");
     const filter = queryString.filter((item) => item !== "");
@@ -48,19 +59,16 @@ const ResetPassWord = () => {
         newpassword: newPassWord,
       })
       .then((res) => {
-        if (res.data.errCode === 0) {
-          console.log(res.data);
-          navigate("/login");
-          setTimeout(() => {
-            message.success("Cập Nhật Mật Khẩu Thành Công");
-          }, 1000);
-          return;
-        }
-        message.error("Cập Nhật Mật Khẩu Thất Bại");
+        console.log(res.data);
+        navigate("/login");
+        setTimeout(() => {
+          message.success("Cập Nhật Mật Khẩu Thành Công");
+        }, 1000);
       })
       .catch((err) => {
         console.log(err);
       });
+    setIsLoading(false);
   };
   const handleNewPassword = (e) => {
     e.preventDefault();
@@ -89,13 +97,26 @@ const ResetPassWord = () => {
                 ></FormInput>
               </div>
               <div className="btn-info">
-                <button
-                  type="submit"
-                  className="btn-click"
-                  onClick={(e) => callUpdatePassWord(e, newPassWord)}
-                >
-                  Cập Nhật
-                </button>
+                {isLoading ? (
+                  <Backdrop
+                    sx={{
+                      color: "#fff",
+                      zIndex: (theme) => theme.zIndex.drawer + 1,
+                    }}
+                    open={open}
+                    onClick={handleClose}
+                  >
+                    <CircularProgress color="inherit" />
+                  </Backdrop>
+                ) : (
+                  <button
+                    type="submit"
+                    className="btn-click"
+                    onClick={(e) => callUpdatePassWord(e, newPassWord)}
+                  >
+                    Cập Nhật
+                  </button>
+                )}
               </div>
             </form>
           </div>
