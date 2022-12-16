@@ -29,19 +29,24 @@ const orderStatus = [
 ];
 const Orderitem = (props) => {
   const orderItem = props.orderItem;
-  const statusOrder = props.status;
+  const itemOrder = props.item;
   const id = props.idOrderDetail;
   const navigate = useNavigate();
 
   return (
     <div className="order-content">
       <div className="order-title">
-        <div className="order-name">Trạng Thái:</div>
-        {orderStatus?.map((item, index) => (
-          <div className="order-status">
-            {item.id === props.statusOrder ? item.name : null}
-          </div>
-        ))}
+        <div className="order-id">
+          Mã Đơn Hàng: <span className="order-id-code">{itemOrder.code}</span>
+        </div>
+        <div className="order-detail-status">
+          <div className="order-name">Trạng Thái:</div>
+          {orderStatus?.map((item, index) => (
+            <div className="order-status">
+              {item.id === props.statusOrder ? item.name : null}
+            </div>
+          ))}
+        </div>
       </div>
       <div className="order-item">
         <div className="order-item__image">
@@ -70,24 +75,28 @@ const Orderitem = (props) => {
       <div className="btn-delete">
         {orderStatus?.map((item, index) => (
           <div>
-            {item.id && props.statusOrder === 4 ? (
+            {item.id === 4 && props.statusOrder === 4 ? (
               <AddComment
                 img={orderItem.img}
                 idProduct={orderItem.id}
               ></AddComment>
             ) : null}
-          </div>
-        ))}
-        {orderStatus?.map((item, index) => (
-          <div>
-            {(item.id === props.statusOrder) === 1 ||
-            (item.id === props.statusOrder) === 2 ? (
+            {item.id === 1 && props.statusOrder === 1 ? (
+              <DeleleOrder></DeleleOrder>
+            ) : item.id === 2 && props.statusOrder === 2 ? (
               <DeleleOrder></DeleleOrder>
             ) : null}
           </div>
         ))}
+        {/* {orderStatus?.map((item, index) => (
+          <div>
+            {item.id && props.statusOrder === 2 ? (
+              <DeleleOrder></DeleleOrder>
+            ) : null}
+          </div>
+        ))} */}
 
-        <DeleleOrder></DeleleOrder>
+        {/* <DeleleOrder></DeleleOrder> */}
         {/* <button className="btn-click">HỦY ĐƠN HÀNG</button> */}
       </div>
     </div>

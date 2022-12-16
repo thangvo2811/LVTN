@@ -264,7 +264,10 @@ const Header = () => {
                     <ul className="header-bottom__dropdown__left__list">
                       {allCategory?.map((item, index) => (
                         <>
-                          <li className="header-bottom__dropdown__left__list__item">
+                          <li
+                            className="header-bottom__dropdown__left__list__item"
+                            onClick={() => navigate("/findcategory/" + item.id)}
+                          >
                             {item.name}
                           </li>
                           {item.ChildrenCategoty.map((data, index) => (

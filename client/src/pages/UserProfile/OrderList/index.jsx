@@ -34,6 +34,7 @@ const OrderList = () => {
                     orderItem={data}
                     statusOrder={item.status}
                     key={index}
+                    item={item}
                     idOrderDetail={item.id}
                   ></Orderitem>
                 );

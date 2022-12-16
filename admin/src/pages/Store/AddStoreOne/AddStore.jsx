@@ -64,6 +64,8 @@ const AddStore = (props) => {
   }, [selectOption, selectProduct, newSelect]);
   console.log("ID PRODUCT", selectProduct);
   console.log("Array", selectOption, newSelect);
+  let newArray = [newSelect].concat(selectOption);
+  console.log("object", newArray);
   const handleAddWareHouse = async () => {
     await axios
       .post("http://localhost:8000/api/create-warehouse-product/", {
@@ -134,19 +136,21 @@ const AddStore = (props) => {
                 return (
                   <>
                     <label>Thuộc Tính {item.name}</label>
-
                     <select
+                      // value={selectOption}
                       onChange={(e) => {
+                        setNewSelect(e.target.value);
                         setSelectOption(e.target.value);
                       }}
                     >
                       <option value={item.id}>Chọn {item.name}</option>
                       {item?.values?.map((data, i) => (
                         <option
-                          key={i}
+                          key={i.value}
                           value={data.id}
                           onChange={(e) => {
                             setSelectOption(e.target.value);
+                            setNewSelect(e.target.value);
                           }}
                         >
                           {data.name}
@@ -156,7 +160,6 @@ const AddStore = (props) => {
                     {/* <select
                       onChange={(e) => {
                         setNewSelect(e.target.value);
-                        setSelectProduct(e.target.value);
                       }}
                     >
                       <option value={item.id}>Chọn {item.name}</option>

@@ -25,19 +25,19 @@ const FindCategory = () => {
     idCate: "",
     nameCate: "",
   });
-  // const [findIdCategory, setFindIdCategory] = useState([]);
+
   const callFindIdCategory = useCallback(async () => {
     await axios
       .get(
-        `http://localhost:8000/api/get-all-product?brand_id=&category_id=${param.category_id}`
+        `http://localhost:8000/api/get-all-product?brand_id=&category_id=${param.id}`
       )
       .then((res) => {
-        setAllProduct(res.data.product);
+        setAllProduct(res.data.products);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [param.category_id]);
+  }, [param.id]);
 
   useEffect(() => {
     const callAllProduct = async () => {
@@ -83,22 +83,16 @@ const FindCategory = () => {
       });
   };
 
-  // const callFindIdCategory = async () => {
-  //   await axios
-  //     .get(`http://localhost:8000/api/find-by-Category/${param.category_id}/`)
-  //     .then((res) => {
-  //       setAllProduct(res.data.product);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
   return (
     <Helmet name="Danh mục">
       <div className="category-banner">
         <img src={asus} alt="" />
       </div>
-      <div className="category-title">Sản Phẩm Tìm Kiếm</div>
+      <div className="category-title">
+        {category.idCate
+          ? `Danh mục ${category.nameCate}`
+          : "Danh sách Sản Phẩm"}
+      </div>
       <div className="category">
         <div className="category__filters" ref={filterToggleRef}>
           <div className="category__filters__close">
@@ -157,22 +151,42 @@ const FindCategory = () => {
               </li>
               {allCategory?.map((item, index) => {
                 return (
-                  <li
-                    className="header-bottom__dropdown__left__list__item"
-                    key={index}
-                    onClick={() => {
-                      setCategory((category) => ({
-                        idCate: item.id,
-                        nameCate: item.name,
-                      }));
-                      setBrand({
-                        id: "",
-                        name: brand.name,
-                      });
-                    }}
-                  >
-                    {item.name}
-                  </li>
+                  <>
+                    <li
+                      className="header-bottom__dropdown__left__list__item"
+                      key={index}
+                      onClick={() => {
+                        setCategory(() => ({
+                          idCate: item.id,
+                          nameCate: item.name,
+                        }));
+                        setBrand({
+                          id: "",
+                          name: brand.name,
+                        });
+                      }}
+                    >
+                      {item.name}
+                    </li>
+                    {item?.ChildrenCategoty?.map((data, index) => (
+                      <li
+                        className="header-bottom__dropdown__left__list__item"
+                        key={index}
+                        onClick={() => {
+                          setCategory(() => ({
+                            idCate: data.id,
+                            nameCate: data.name,
+                          }));
+                          setBrand({
+                            id: "",
+                            name: brand.name,
+                          });
+                        }}
+                      >
+                        {data.name}
+                      </li>
+                    ))}
+                  </>
                 );
               })}
             </div>

@@ -30,7 +30,7 @@ const Categories = () => {
   useEffect(() => {
     callAllCategory();
     callAllBrand();
-  }, []);
+  }, [category, brand]);
 
   const callAllCategory = async () => {
     await axios
@@ -156,22 +156,42 @@ const Categories = () => {
                   </li>
                   {allCategory?.map((item, index) => {
                     return (
-                      <li
-                        className="header-bottom__dropdown__left__list__item"
-                        key={index}
-                        onClick={() => {
-                          setCategory((category) => ({
-                            idCate: item.id,
-                            nameCate: item.name,
-                          }));
-                          setBrand({
-                            id: "",
-                            name: brand.name,
-                          });
-                        }}
-                      >
-                        {item.name}
-                      </li>
+                      <>
+                        <li
+                          className="header-bottom__dropdown__left__list__item"
+                          key={index}
+                          onClick={() => {
+                            setCategory(() => ({
+                              idCate: item.id,
+                              nameCate: item.name,
+                            }));
+                            setBrand({
+                              id: "",
+                              name: brand.name,
+                            });
+                          }}
+                        >
+                          {item.name}
+                        </li>
+                        {item?.ChildrenCategoty?.map((data, index) => (
+                          <li
+                            className="header-bottom__dropdown__left__list__item"
+                            key={index}
+                            onClick={() => {
+                              setCategory(() => ({
+                                idCate: data.id,
+                                nameCate: data.name,
+                              }));
+                              setBrand({
+                                id: "",
+                                name: brand.name,
+                              });
+                            }}
+                          >
+                            {data.name}
+                          </li>
+                        ))}
+                      </>
                     );
                   })}
                 </div>
