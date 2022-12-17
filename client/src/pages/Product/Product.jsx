@@ -15,6 +15,7 @@ const Product = (props) => {
 
   const [allProduct, setAllProduct] = useState([]);
   const [detailProduct, setDetailProduct] = useState({});
+  const [quantityProduct, setQuantityProduct] = useState({});
 
   const [selectColor, setSelectColor] = useState("");
   const [selectOption, setSelectOption] = useState("");
@@ -22,6 +23,7 @@ const Product = (props) => {
   const [selectMain, setSelectMain] = useState("");
   const [selectSwitch, setSelectSwitch] = useState("");
   const [selectHDD, setSelectHDD] = useState("");
+
   const callDetailProduct = useCallback(async () => {
     await axios
       .get(`http://localhost:8000/api/get-product/${param.category_id}`)
@@ -36,11 +38,6 @@ const Product = (props) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [param.category_id]);
-
-  useEffect(() => {
-    callAllProduct();
-    callDetailProduct();
-  }, [callDetailProduct, param.category_id]);
   const callAllProduct = async () => {
     await axios
       .get("http://localhost:8000/api/get-all-product?brand_id=&category_id=")
@@ -51,6 +48,32 @@ const Product = (props) => {
         console.log(err);
       });
   };
+  const callQuantityProduct = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-product-quantity/", {
+        product_id: detailProduct.id,
+        optionvalue: [
+          selectColor,
+          selectOption,
+          selectScreen,
+          selectMain,
+          selectSwitch,
+          selectHDD,
+        ],
+      })
+      .then((res) => {
+        console.log(res.data.data);
+        setQuantityProduct(res.data.qa);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    callAllProduct();
+    callDetailProduct();
+    callQuantityProduct();
+  }, [callDetailProduct, param.category_id]);
 
   console.log("colors: ", selectColor);
   console.log("ssd:", selectOption);
@@ -86,6 +109,9 @@ const Product = (props) => {
                 selectHDD,
               ]}
               product_id={detailProduct?.id ? detailProduct?.id : ""}
+              statusProduct={
+                detailProduct?.currentQuantity > 0 ? "Còn Hàng" : "Hết Hàng"
+              }
               imgProduct={detailProduct?.img ? detailProduct?.img : ""}
               nameProduct={detailProduct?.name ? detailProduct?.name : ""}
               nameBrand={

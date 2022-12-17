@@ -29,7 +29,7 @@ const Blog = () => {
   return (
     <div>
       <div className="page-header">
-        <h2 className="page-header__title">Blog</h2>
+        <h2 className="page-header__title">Bài Viết</h2>
         <AddBlog parentCallback={callbackFunction}></AddBlog>
       </div>
       <div className="row">

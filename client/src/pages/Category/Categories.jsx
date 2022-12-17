@@ -100,87 +100,70 @@ const Categories = () => {
               <div className="category__filters__close">
                 <i className="bx bx-chevrons-left"></i>
               </div>
-
-              <div className="category__filters__item">
-                <div className="category__filters__item__title">
-                  Thương hiệu
-                </div>
-                <select
-                  value={brand.name}
-                  className="category__filters__item__select"
-                  onChange={(e) => {
-                    setCategory((category) => ({
-                      ...category,
-                      ...{
-                        idCate: "",
-                      },
-                    }));
-                    setBrand((brand) => ({
-                      ...brand,
-                      ...{
-                        id: e.target.value,
-                        name: e.target.value,
-                      },
-                    }));
-                  }}
-                >
-                  <option value="">Tất cả</option>
-                  {allBrand?.map((item, index) => {
-                    return (
-                      <option value={item.id} name={item.name} key={index}>
-                        {item.name}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-              <div className="category__filters__item">
-                <div className="category__filters__item__title">Danh mục</div>
-                <div className="category__filters__item__checkbox">
-                  <li
-                    className="header-bottom__dropdown__left__list__item"
-                    onClick={() => {
-                      setBrand((brand) => ({
-                        ...brand,
-                        ...{ id: "" },
-                      }));
+              <div className="category__filters__content">
+                <div className="category__filters__item">
+                  <div className="category__filters__item__title">
+                    Thương hiệu
+                  </div>
+                  <select
+                    value={brand.name}
+                    className="category__filters__item__select"
+                    onChange={(e) => {
                       setCategory((category) => ({
                         ...category,
                         ...{
                           idCate: "",
                         },
                       }));
+                      setBrand((brand) => ({
+                        ...brand,
+                        ...{
+                          id: e.target.value,
+                          name: e.target.value,
+                        },
+                      }));
                     }}
                   >
-                    Tất cả
-                  </li>
-                  {allCategory?.map((item, index) => {
-                    return (
-                      <>
-                        <li
-                          className="header-bottom__dropdown__left__list__item"
-                          key={index}
-                          onClick={() => {
-                            setCategory(() => ({
-                              idCate: item.id,
-                              nameCate: item.name,
-                            }));
-                            setBrand({
-                              id: "",
-                              name: brand.name,
-                            });
-                          }}
-                        >
+                    <option value="">Tất cả</option>
+                    {allBrand?.map((item, index) => {
+                      return (
+                        <option value={item.id} name={item.name} key={index}>
                           {item.name}
-                        </li>
-                        {item?.ChildrenCategoty?.map((data, index) => (
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div className="category__filters__item">
+                  <div className="category__filters__item__title">Danh mục</div>
+                  <div className="category__filters__item__checkbox">
+                    <li
+                      className="header-bottom__dropdown__left__list__item"
+                      onClick={() => {
+                        setBrand((brand) => ({
+                          ...brand,
+                          ...{ id: "" },
+                        }));
+                        setCategory((category) => ({
+                          ...category,
+                          ...{
+                            idCate: "",
+                          },
+                        }));
+                      }}
+                    >
+                      Tất cả
+                    </li>
+                    {allCategory?.map((item, index) => {
+                      return (
+                        <>
                           <li
                             className="header-bottom__dropdown__left__list__item"
                             key={index}
                             onClick={() => {
                               setCategory(() => ({
-                                idCate: data.id,
-                                nameCate: data.name,
+                                idCate: item.id,
+                                nameCate: item.name,
                               }));
                               setBrand({
                                 id: "",
@@ -188,12 +171,30 @@ const Categories = () => {
                               });
                             }}
                           >
-                            {data.name}
+                            {item.name}
                           </li>
-                        ))}
-                      </>
-                    );
-                  })}
+                          {item?.ChildrenCategoty?.map((data, index) => (
+                            <li
+                              className="header-bottom__dropdown__left__list__item"
+                              key={index}
+                              onClick={() => {
+                                setCategory(() => ({
+                                  idCate: data.id,
+                                  nameCate: data.name,
+                                }));
+                                setBrand({
+                                  id: "",
+                                  name: brand.name,
+                                });
+                              }}
+                            >
+                              {data.name}
+                            </li>
+                          ))}
+                        </>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </div>

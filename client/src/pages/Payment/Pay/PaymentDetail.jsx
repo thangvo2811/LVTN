@@ -80,17 +80,14 @@ const PaymentDetail = (props) => {
           <Radio.Group onChange={(e) => setValue(e.target.value)} value={value}>
             <Space direction="vertical">
               <Radio value={1} className="rdi">
-                {" "}
                 Thanh Toán MoMo
               </Radio>
             </Space>
           </Radio.Group>
         </div>
       </div>
-      <div className="payment__card">
-        <button className="btn-pay" onClick={callPayMent}>
-          Thanh Toán
-        </button>
+      <div className="payment__card" onClick={callPayMent}>
+        <button className="btn-pay">Thanh Toán</button>
       </div>
     </div>
   );

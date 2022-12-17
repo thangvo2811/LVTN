@@ -45,7 +45,7 @@ const Cart = () => {
       });
   }, [dispatch, newCustomer]);
 
-  const idCartItem = cartItem?.map((item, index) => item.CartItemProduct.id);
+  const idCartItem = cartItem?.map((item, index) => item.cart_id);
   console.log("ID CART ITEM", idCartItem);
 
   useEffect(() => {
@@ -74,8 +74,8 @@ const Cart = () => {
               );
             })}
           </div>
-          <div className="cart__desc__clear">
-            <Button size="sm" animate2={true} onClick={handleDeleteAllCart}>
+          <div className="cart__desc__clear" onClick={handleDeleteAllCart}>
+            <Button size="sm" animate2={true}>
               Xóa Tất Cả
             </Button>
           </div>
@@ -109,16 +109,20 @@ const Cart = () => {
               </div>
             </div>
           </div>
-          <div className="cart__info__btn cart__info__btn__payment">
-            <Button size="stable" animate3={true}>
-              <Link to={"/payment"}>Tiếp tục thanh toán</Link>
-            </Button>
-          </div>
-          <div className="cart__info__btn cart__info__btn__cart">
-            <Button size="stable" animate3={true}>
-              <Link to={"/product"}>tiếp tục mua hàng</Link>
-            </Button>
-          </div>
+          <Link to={"/payment"}>
+            <div className="cart__info__btn cart__info__btn__payment">
+              <Button size="stable" animate3={true}>
+                Tiếp tục thanh toán
+              </Button>
+            </div>
+          </Link>
+          <Link to={"/product"}>
+            <div className="cart__info__btn cart__info__btn__cart">
+              <Button size="stable" animate3={true}>
+                tiếp tục mua hàng
+              </Button>
+            </div>
+          </Link>
         </div>
       </div>
     </Helmet>

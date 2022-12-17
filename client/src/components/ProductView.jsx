@@ -33,7 +33,7 @@ const ProductView = (props) => {
   const filter = array.filter((item) => item !== null && item !== "");
   console.log("Null", filter);
   const [quantity, setQuantity] = useState(1);
-  const [text, setText] = useState("");
+
   const [commentProduct, setCommentProduct] = useState([]);
   const [reloadPage, setReloadPage] = useState("");
   const callbackFunction = (childData) => {
@@ -93,7 +93,14 @@ const ProductView = (props) => {
   const handleAddCart = () => {
     console.log("add cart");
     const newProduct = props.product_id;
-    addCart(dispatch, newCustomer, newProduct, filter, quantity);
+    addCart(
+      dispatch,
+      newCustomer,
+      newProduct,
+      filter,
+      quantity,
+      props.idWareHouse
+    );
   };
   const handleClick = (e) => {
     e.preventDefault();
@@ -129,7 +136,7 @@ const ProductView = (props) => {
                 Danh mục: {props.nameCategory ? props.nameCategory : ""}
               </div>
               <div className="product-top__info__status">
-                {/* Trạng thái: {props.statusProduct ? props.statusProduct : ""} */}
+                Trạng thái: {props.statusProduct ? props.statusProduct : ""}
               </div>
               <div className="product-top__info__quantity">
                 <i className="bx bx-minus" onClick={decreaseQuantity}></i>
@@ -213,7 +220,6 @@ const ProductView = (props) => {
                     idComment={item?.id}
                     parentCallback={callbackFunction}
                   ></DeleteComment>
-
                   <UpdateComment
                     idComment={item?.id}
                     idCustomer={item?.cus_id}

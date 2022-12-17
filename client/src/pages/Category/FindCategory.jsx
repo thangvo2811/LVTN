@@ -129,53 +129,37 @@ const FindCategory = () => {
               })}
             </select>
           </div>
-          <div className="category__filters__item">
-            <div className="category__filters__item__title">Danh mục</div>
-            <div className="category__filters__item__checkbox">
-              <li
-                className="header-bottom__dropdown__left__list__item"
-                onClick={() => {
-                  setBrand((brand) => ({
-                    ...brand,
-                    ...{ id: "" },
-                  }));
-                  setCategory((category) => ({
-                    ...category,
-                    ...{
-                      idCate: "",
-                    },
-                  }));
-                }}
-              >
-                Tất cả
-              </li>
-              {allCategory?.map((item, index) => {
-                return (
-                  <>
-                    <li
-                      className="header-bottom__dropdown__left__list__item"
-                      key={index}
-                      onClick={() => {
-                        setCategory(() => ({
-                          idCate: item.id,
-                          nameCate: item.name,
-                        }));
-                        setBrand({
-                          id: "",
-                          name: brand.name,
-                        });
-                      }}
-                    >
-                      {item.name}
-                    </li>
-                    {item?.ChildrenCategoty?.map((data, index) => (
+          <div className="category__filters__content">
+            <div className="category__filters__item">
+              <div className="category__filters__item__title">Danh mục</div>
+              <div className="category__filters__item__checkbox">
+                <li
+                  className="header-bottom__dropdown__left__list__item"
+                  onClick={() => {
+                    setBrand((brand) => ({
+                      ...brand,
+                      ...{ id: "" },
+                    }));
+                    setCategory((category) => ({
+                      ...category,
+                      ...{
+                        idCate: "",
+                      },
+                    }));
+                  }}
+                >
+                  Tất cả
+                </li>
+                {allCategory?.map((item, index) => {
+                  return (
+                    <>
                       <li
                         className="header-bottom__dropdown__left__list__item"
                         key={index}
                         onClick={() => {
                           setCategory(() => ({
-                            idCate: data.id,
-                            nameCate: data.name,
+                            idCate: item.id,
+                            nameCate: item.name,
                           }));
                           setBrand({
                             id: "",
@@ -183,12 +167,30 @@ const FindCategory = () => {
                           });
                         }}
                       >
-                        {data.name}
+                        {item.name}
                       </li>
-                    ))}
-                  </>
-                );
-              })}
+                      {item?.ChildrenCategoty?.map((data, index) => (
+                        <li
+                          className="header-bottom__dropdown__left__list__item"
+                          key={index}
+                          onClick={() => {
+                            setCategory(() => ({
+                              idCate: data.id,
+                              nameCate: data.name,
+                            }));
+                            setBrand({
+                              id: "",
+                              name: brand.name,
+                            });
+                          }}
+                        >
+                          {data.name}
+                        </li>
+                      ))}
+                    </>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>

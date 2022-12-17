@@ -15,7 +15,7 @@ const SidebarItem = (props) => {
 
   return (
     <div className="sidebar__item">
-      <div className={`sidebar__item-inner`}>
+      <div className={`sidebar__item-inner ${active}`}>
         <i className={props.icon}></i>
         <i className={props.icoj}></i>
         <span>{props.title}</span>
@@ -48,7 +48,7 @@ const Sidebar = (props) => {
               <SidebarItem
                 title={item.display_name}
                 icon={item.icon}
-                active={index === activeStaff}
+                active={index === activeItem}
               />
             </Link>
           ))}
@@ -63,7 +63,7 @@ const Sidebar = (props) => {
               <SidebarItem
                 title={item.display_name}
                 icon={item.icon}
-                active={index === activeItem}
+                active={index === activeStaff}
               />
             </Link>
           ))}

@@ -14,20 +14,8 @@ const Confirm = (props) => {
   const [email, setEmail] = useState("");
   const [cartItem, setCartItem] = useState([]);
 
-  // const [infoUser, setInfoUser] = useState({});
-
   const newCustomer = localStorage.getItem("User");
 
-  // const callInfoUser = async () => {
-  //   await axios
-  //     .get(`http://localhost:8000/api/get-by-Id/${newCustomer}/`)
-  //     .then((res) => {
-  //       setInfoUser(res.data.customer);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
   const callAllCartItem = useCallback(async () => {
     await axios
       .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}/`)
@@ -112,22 +100,21 @@ const Confirm = (props) => {
                 {...inputs[3]}
                 onChange={(e) => setAddress(e.target.value)}
               ></FormInput>
-              <div className="btn-info">
-                <button
-                  type="submit"
-                  className="btn-click"
-                  onClick={() => {
-                    props.createOrder(
-                      name,
-                      email,
-                      address,
-                      phone,
-                      newCustomer,
-                      idCart
-                    );
-                    props.continue();
-                  }}
-                >
+              <div
+                className="btn-info"
+                onClick={() => {
+                  props.createOrder(
+                    name,
+                    email,
+                    address,
+                    phone,
+                    newCustomer,
+                    idCart
+                  );
+                  props.continue();
+                }}
+              >
+                <button type="submit" className="btn-click">
                   Tiếp Tục
                 </button>
               </div>
