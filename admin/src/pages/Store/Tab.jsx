@@ -9,26 +9,22 @@ import StoreTwo from "./StoreTwo";
 
 const Tab = () => {
   const [tabPosition, setTabPosition] = useState("left");
-  // const [allBranch, setAllBranch] = useState([]);
+  const [allWareHouse, setAllWareHouse] = useState("");
 
-  // const callAllBranch = async () => {
-  //   await axios
-  //     .get("http://localhost:8000/api/get-warehouse/")
-  //     .then((res) => {
-  //       setAllBranch(res.data.Warehouse);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-  // useEffect(() => {
-  //   callAllBranch();
-  // }, []);
+  const callAllWareHouse = async () => {
+    await axios
+      .get("http://localhost:8000/api/Get-all-warehouse/?id=")
+      .then((res) => {
+        setAllWareHouse(res.data.product);
+      })
+      .then((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    callAllWareHouse();
+  }, []);
 
-  // const idBranch = allBranch.map((item, index) =>
-  //   item.id === 1 ? item.id : null
-  // );
-  // console.log("ID BRANCH", idBranch);
   const onChange = (key) => {
     console.log(key);
   };

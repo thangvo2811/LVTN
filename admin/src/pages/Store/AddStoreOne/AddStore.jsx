@@ -12,12 +12,8 @@ import { useEffect } from "react";
 const AddStore = (props) => {
   const [open, setOpen] = React.useState(false);
   const [allWareHouse, setAllWareHouse] = useState([]);
-  const [idProduct, setIdProduct] = useState("");
+
   const [quantity, setQuantity] = useState("");
-
-  const [optionValue, setOptionValue] = useState([]);
-  const [optionValue1, setOptionValue1] = useState([]);
-
   const [selected, setSelected] = useState("");
 
   const [allProduct, setAllProduct] = useState([]);
@@ -25,8 +21,6 @@ const AddStore = (props) => {
 
   const [allOption, setAllOption] = useState([]);
   const [selectOption, setSelectOption] = useState([]);
-
-  const [newSelect, setNewSelect] = useState([]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -60,19 +54,18 @@ const AddStore = (props) => {
 
   useEffect(() => {
     callAllProduct();
-    callAllOption(selectProduct, selectOption, newSelect);
-  }, [selectOption, selectProduct, newSelect]);
+    callAllOption(selectProduct, selectOption);
+  }, [selectOption, selectProduct]);
   console.log("ID PRODUCT", selectProduct);
-  console.log("Array", selectOption, newSelect);
-  let newArray = [newSelect].concat(selectOption);
-  console.log("object", newArray);
+  console.log("Array", selectOption);
+
   const handleAddWareHouse = async () => {
     await axios
       .post("http://localhost:8000/api/create-warehouse-product/", {
-        product_id: idProduct,
+        product_id: selectProduct,
         warehouse_id: selected,
         quantity: quantity,
-        optionvalue: [selectOption, newSelect],
+        optionvalue: selectOption,
       })
       .then((res) => {
         console.log(res.data);
@@ -139,93 +132,23 @@ const AddStore = (props) => {
                     <select
                       // value={selectOption}
                       onChange={(e) => {
-                        setNewSelect(e.target.value);
-                        setSelectOption(e.target.value);
+                        let newOption = selectOption;
+                        newOption.push(e.target.value);
+                        console.log("newOption", newOption);
+                        setSelectOption(newOption);
                       }}
                     >
                       <option value={item.id}>Chọn {item.name}</option>
                       {item?.values?.map((data, i) => (
-                        <option
-                          key={i.value}
-                          value={data.id}
-                          onChange={(e) => {
-                            setSelectOption(e.target.value);
-                            setNewSelect(e.target.value);
-                          }}
-                        >
+                        <option key={i.value} value={data.id}>
                           {data.name}
                         </option>
                       ))}
                     </select>
-                    {/* <select
-                      onChange={(e) => {
-                        setNewSelect(e.target.value);
-                      }}
-                    >
-                      <option value={item.id}>Chọn {item.name}</option>
-                      {item?.values?.map((data, i) => (
-                        <option
-                          key={i}
-                          value={data.id}
-                          onChange={(e) => {
-                            setNewSelect(e.target.value);
-                          }}
-                        >
-                          {data.name}
-                        </option>
-                      ))}
-                    </select> */}
                   </>
                 );
               })}
-              {/* <label>Thuộc Tính Sản Phẩm</label>
-              <br />
-              {allOption?.existingOptions?.map((item, index) => (
-                <select
-                  onChange={(e) => {
-                    setSelectOption(e.target.value);
-                    setSelectProduct(e.target.value);
-                  }}
-                >
-                  <option key={index} value={item.id}>
-                    {item.name}
-                  </option>
-                  {item.values.map((data, i) => (
-                    <option key={i} value={data.option_id}>
-                      {data.name}
-                    </option>
-                  ))}
-                </select>
-              ))} */}
 
-              {/* <select
-                value={selectProduct}
-                onChange={(e) => setSelectProduct(e.target.value)}
-              >
-                <option>Chọn Sản Phẩm</option>
-                {allProduct?.map((item, index) => (
-                  <option key={index} value={item?.id}>
-                    {item?.name}
-                  </option>
-                ))}
-              </select> */}
-
-              {/* <label>Thuộc Tính 1</label>
-              <Input
-                type="number"
-                placeholder="Thuộc Tính"
-                onChange={(e) => {
-                  setOptionValue(e.target.value);
-                }}
-              />
-              <label>Thuộc Tính 2</label>
-              <Input
-                type="number"
-                placeholder="Thuộc Tính"
-                onChange={(e) => {
-                  setOptionValue1(e.target.value);
-                }}
-              /> */}
               <label>Tên Kho</label>
               <br />
               <select
@@ -252,10 +175,12 @@ const AddStore = (props) => {
           <Button onClick={handleClose}>Hủy</Button>
           <Button
             onClick={() =>
-              handleAddWareHouse(idProduct, selected, quantity, [
-                selectOption,
-                newSelect,
-              ])
+              handleAddWareHouse(
+                selectProduct,
+                selected,
+                quantity,
+                selectOption
+              )
             }
           >
             Thêm

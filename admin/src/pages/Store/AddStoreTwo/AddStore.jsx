@@ -16,9 +16,14 @@ const AddStore = (props) => {
   const [idProduct, setIdProduct] = useState("");
 
   const [quantity, setQuantity] = useState("");
-  const [optionValue, setOptionValue] = useState([]);
-  const [optionValue1, setOptionValue1] = useState([]);
+
   const [selected, setSelected] = useState("");
+
+  const [allProduct, setAllProduct] = useState([]);
+  const [selectProduct, setSelectProduct] = useState("");
+
+  const [allOption, setAllOption] = useState([]);
+  const [selectOption, setSelectOption] = useState([]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -27,13 +32,40 @@ const AddStore = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
+  const callAllProduct = async () => {
+    await axios
+      .get(
+        "http://localhost:8000/api/get-all-product-admin/?brand_id=&category_id="
+      )
+      .then((res) => {
+        setAllProduct(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const callAllOption = async (id) => {
+    await axios
+      .get(`http://localhost:8000/api/get-product/${id}/`)
+      .then((res) => {
+        setAllOption(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    callAllProduct();
+    callAllOption(selectProduct, selectOption);
+  }, [selectOption, selectProduct]);
   const handleAddWareHouse = async () => {
     await axios
       .post("http://localhost:8000/api/create-warehouse-product/", {
-        product_id: idProduct,
+        product_id: selectProduct,
         warehouse_id: selected,
         quantity: quantity,
-        optionvalue: [optionValue],
+        optionvalue: selectOption,
       })
       .then((res) => {
         console.log(res.data);
@@ -60,7 +92,6 @@ const AddStore = (props) => {
     callAllWareHouse();
   }, []);
 
-  console.log("ID", optionValue, optionValue1);
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -79,12 +110,45 @@ const AddStore = (props) => {
           <div className="form-title">Thêm Sản Phẩm Kho</div>
           <div className="form-input">
             <form>
-              <label>Mã Sản Phẩm</label>
-              <Input
-                type="number"
-                placeholder="Mã Sản Phẩm"
-                onChange={(e) => setIdProduct(e.target.value)}
-              />
+              <label>Tên Sản Phẩm</label>
+              <br />
+              <select
+                value={selectProduct}
+                onChange={(e) => {
+                  setSelectProduct(e.target.value);
+                }}
+              >
+                <option>Chọn Sản Phẩm</option>
+                {allProduct?.map((item, index) => (
+                  <option key={index} value={item?.id}>
+                    {item?.name}
+                  </option>
+                ))}
+              </select>
+
+              {allOption?.existingOptions?.map((item, index) => {
+                return (
+                  <>
+                    <label>Thuộc Tính {item.name}</label>
+                    <select
+                      // value={selectOption}
+                      onChange={(e) => {
+                        let newOption = selectOption;
+                        newOption.push(e.target.value);
+                        console.log("newOption", newOption);
+                        setSelectOption(newOption);
+                      }}
+                    >
+                      <option value={item.id}>Chọn {item.name}</option>
+                      {item?.values?.map((data, i) => (
+                        <option key={i.value} value={data.id}>
+                          {data.name}
+                        </option>
+                      ))}
+                    </select>
+                  </>
+                );
+              })}
               <label>Tên Kho</label>
               <br />
               <select
@@ -104,22 +168,6 @@ const AddStore = (props) => {
                 placeholder="Số Lượng"
                 onChange={(e) => setQuantity(e.target.value)}
               />
-              <label>Thuộc Tính 1</label>
-              <Input
-                type="number"
-                placeholder="Thuộc Tính"
-                onChange={(e) => {
-                  setOptionValue(e.target.value);
-                }}
-              />
-              <label>Thuộc Tính 2</label>
-              <Input
-                type="number"
-                placeholder="Thuộc Tính"
-                onChange={(e) => {
-                  setOptionValue1(e.target.value);
-                }}
-              />
             </form>
           </div>
         </DialogContent>
@@ -127,10 +175,12 @@ const AddStore = (props) => {
           <Button onClick={handleClose}>Hủy</Button>
           <Button
             onClick={() =>
-              handleAddWareHouse(idProduct, selected, quantity, [
-                optionValue,
-                optionValue1,
-              ])
+              handleAddWareHouse(
+                selectProduct,
+                selected,
+                quantity,
+                selectOption
+              )
             }
           >
             Thêm
