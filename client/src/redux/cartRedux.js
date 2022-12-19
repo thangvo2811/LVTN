@@ -9,6 +9,7 @@ const cartSlice = createSlice({
     carts: [],
     _products: [],
     totalPrice: 0,
+    totalNumberCart: 0,
   },
   reducers: {
     addStart: (state) => {
@@ -75,23 +76,26 @@ const cartSlice = createSlice({
       state._products = action.payload;
       state.numberCart = action.payload._products.length;
     },
+    totalCartNumber: (state, action) => {
+      state.totalNumberCart = action.payload;
+    },
 
-    addNumberCartStart: (state) => {
-      state.isFetching = true;
-    },
-    addNumberCartSuccess: (state, action) => {
-      state.isFetching = false;
-      state.numberCart = action.payload;
-      state.totalPrice = action.payload;
-    },
-    addNumberCartIncrease: (state, action) => {
-      state.isFetching = false;
-      state.numberCart = state.numberCart + 1;
-    },
-    addNumberCartDecrease: (state, action) => {
-      state.isFetching = false;
-      state.numberCart = state.numberCart - 1;
-    },
+    // addNumberCartStart: (state) => {
+    //   state.isFetching = true;
+    // },
+    // addNumberCartSuccess: (state, action) => {
+    //   state.isFetching = false;
+    //   state.numberCart = action.payload;
+    //   state.totalPrice = action.payload;
+    // },
+    // addNumberCartIncrease: (state, action) => {
+    //   state.isFetching = false;
+    //   state.numberCart = state.numberCart + 1;
+    // },
+    // addNumberCartDecrease: (state, action) => {
+    //   state.isFetching = false;
+    //   state.numberCart = state.numberCart - 1;
+    // },
   },
 });
 
@@ -103,10 +107,7 @@ export const {
   deleteCartSuccess,
   deleteAllCartStart,
   deleteAllCartSuccess,
-  addNumberCartStart,
-  addNumberCartSuccess,
-  addNumberCartIncrease,
-  addNumberCartDecrease,
+  totalCartNumber,
   addCartByCartIdAction,
   removeCartByCartIdAction,
   initialCartByCartIdAction,

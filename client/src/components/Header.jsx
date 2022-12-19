@@ -39,6 +39,9 @@ const Header = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = React.useState(false);
 
+  const totalNumber = useSelector((state) => state.cart.totalNumberCart);
+  console.log("ASDAS231231ASDZXCZXC", totalNumber);
+
   const callSearchProduct = async (searchK) => {
     await axios
       .get(`http://localhost:8000/api/findbykeyword/${searchK}`)
@@ -57,12 +60,12 @@ const Header = () => {
         setTotalItem(res.data.quantity);
         setIdCart(res.data.cartitem);
         localStorage.setItem("cartItem", res.data.quantity);
-        dispatch(addNumberCartSuccess(res.data.quantity));
+        // dispatch(addNumberCartSuccess(res.data.quantity));
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [dispatch, newCustomer]);
+  }, [newCustomer]);
 
   const totalIdCart = useSelector((state) => state.cart.numberCartByCartId);
   console.log("ppppppppp", totalIdCart);
@@ -70,6 +73,7 @@ const Header = () => {
   const totalNum = idcart.reduce((sum, item) => sum + totalIdCart[item.id], 0);
   console.log("qweqweqweqwe", totalNum);
   console.log("asdasdasdasdas", idCartItem);
+
   const callAllCategory = async () => {
     await axios
       .get("http://localhost:8000/api/get-Category/")
@@ -238,7 +242,7 @@ const Header = () => {
                         <i className="bx bx-cart"></i>
                         <span>Giỏ hàng</span>
                         <div className="notification">
-                          <span>{totalNum || 0}</span>
+                          <span>{totalNumber || 0}</span>
                         </div>
                       </li>
                     </Link>

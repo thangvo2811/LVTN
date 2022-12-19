@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 
 import numberWithCommas from "../utils/numberWithCommas";
@@ -12,10 +12,8 @@ import {
 } from "../redux/apiCalls";
 import {
   addCartByCartIdAction,
-  addCartByProductIdAction,
-  addNumberCartDecrease,
-  addNumberCartIncrease,
   removeCartByCartIdAction,
+  totalCartNumber,
 } from "../redux/cartRedux";
 import axios from "axios";
 import { message } from "antd";
@@ -33,6 +31,7 @@ const CartItem = (props) => {
   const newItemByCartId = newItemFromState[itemCart.id];
   console.log("Sluong", newItemByCartId);
   console.log("ID cart", itemCart.id);
+  const newCustomer = localStorage.getItem("User");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -46,6 +45,7 @@ const CartItem = (props) => {
         currentAmount: itemCart.amount,
       })
     );
+    props.reloadPage(Date.now());
   };
   const decreaseQuantity = () => {
     // setQuantity(quantity < 2 ? 1 : quantity - 1);
@@ -56,6 +56,7 @@ const CartItem = (props) => {
         currentAmount: itemCart.amount,
       })
     );
+    props.reloadPage(Date.now());
   };
 
   const handleDeleteCartItem = async (e, id) => {
@@ -64,7 +65,8 @@ const CartItem = (props) => {
       .delete(`http://localhost:8000/api/handle-Delete-Cartitem/${id}/`)
       .then((res) => {
         console.log(res.data);
-        props.reload();
+
+        props.reloadPage(Date.now());
         message.success("Xóa Sản Phẩm Thành Công");
       })
       .catch((err) => {

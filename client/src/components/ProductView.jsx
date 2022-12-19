@@ -15,16 +15,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { addCart, addNumberCart, addQuantityCart } from "../redux/apiCalls.js";
 
 import axios from "axios";
-import {
-  addCartByCartIdAction,
-  addNumberCartDecrease,
-  addNumberCartIncrease,
-  removeCartByCartIdAction,
-} from "../redux/cartRedux";
+
 import { message } from "antd";
 import UpdateComment from "../pages/Comment/UpdateComment";
 import { useCallback } from "react";
 import DeleteComment from "../pages/Comment/DeleteComment";
+import { totalCartNumber } from "../redux/cartRedux";
 
 const ProductView = (props) => {
   const param = useParams();
@@ -47,6 +43,18 @@ const ProductView = (props) => {
   // );
   // const newItemByCartId = newItemFromState[props.id];
   // console.log("asdasdsadasdsadsad", newItemByCartId);
+
+  const callCartItem = useCallback(async () => {
+    await axios
+      .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}/`)
+      .then((res) => {
+        console.log("Tong SP", res.data.quantity);
+        dispatch(totalCartNumber(res.data.quantity));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [dispatch, newCustomer]);
 
   const callCommentProduct = useCallback(async () => {
     await axios
@@ -117,7 +125,16 @@ const ProductView = (props) => {
     const filter = array.filter((item) => item !== null && item !== "");
     console.log("add cart");
     const newProduct = props.product_id;
-    addCart(dispatch, newCustomer, newProduct, filter, quantity, idWare);
+
+    addCart(
+      dispatch,
+      newCustomer,
+      newProduct,
+      filter,
+      quantity,
+      idWare,
+      callCartItem
+    );
   };
   const handleClick = (e) => {
     e.preventDefault();

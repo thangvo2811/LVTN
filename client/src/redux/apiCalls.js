@@ -2,15 +2,7 @@ import axios from "axios";
 import React from "react";
 import { loginFailure, loginStart, loginSuccess } from "./userLogin";
 import { message } from "antd";
-import {
-  addCartAction,
-  addNumberCartStart,
-  addStart,
-  deleteAllCartStart,
-  deleteAllCartSuccess,
-  deleteCartStart,
-  deleteCartSuccess,
-} from "./cartRedux";
+import { addCartAction, addNumberCartStart, addStart } from "./cartRedux";
 
 export const loginUser = async (dispatch, user, navigate) => {
   dispatch(loginStart());
@@ -38,7 +30,8 @@ export const addCart = async (
   idProduct,
   idOption,
   qty,
-  idWarehouse
+  idWarehouse,
+  callCartItem
 ) => {
   dispatch(addStart());
   await axios
@@ -50,7 +43,7 @@ export const addCart = async (
       warehouse_id: idWarehouse,
     })
     .then((res) => {
-      console.log(res);
+      console.log("Ress", res);
       if (res.data.errCode === 3) {
         message.error("Bạn Chưa Chọn Thuộc Tính");
         return;
@@ -66,6 +59,7 @@ export const addCart = async (
       if (res.data.errCode === 0 || res.data.errCode === -1) {
         message.success("Thêm Sản Phẩm Thành Công");
       }
+      callCartItem();
       // let cartNumber = parseInt(localStorage.getItem("cartItem")) + 1;
       dispatch(addCartAction());
       // localStorage.setItem(
@@ -78,34 +72,9 @@ export const addCart = async (
       console.log(err);
     });
 };
-// export const deleteCart = async (dispatch, cartId) => {
-//   dispatch(deleteCartStart());
-//   await axios
-//     .delete(`http://localhost:8000/api/handle-Delete-Cartitem/${cartId}/`)
-//     .then((res) => {
-//       console.log(res.data);
-//       message.success("Xóa Sản Phẩm Thành Công");
-//       dispatch(deleteCartSuccess());
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
-// export const deleteAllCart = async (dispatch, [cartId]) => {
-//   dispatch(deleteAllCartStart());
-//   await axios
-//     .delete(`http://localhost:8000/api/handle-Delete-All-Cartitem/${cartId}/`)
-//     .then((res) => {
-//       console.log(res.data);
-//       message.success("Xóa Sản Phẩm Thành Công");
-//       dispatch(deleteAllCartSuccess());
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
+
 export const addNumberCart = async (dispatch, cartId, idProduct, qty) => {
-  dispatch(addNumberCartStart());
+  // dispatch(addNumberCartStart());
   console.log(cartId);
   await axios
     .put("http://localhost:8000/api/update-amount-cart", {
@@ -122,7 +91,7 @@ export const addNumberCart = async (dispatch, cartId, idProduct, qty) => {
 };
 
 export const addQuantityCart = async (dispatch, idCart, key) => {
-  dispatch(addNumberCartStart());
+  // dispatch(addNumberCartStart());
   await axios
     .put("http://localhost:8000/api/plusminus-amount", {
       cart_id: idCart,

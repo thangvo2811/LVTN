@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addCartByCartIdAction,
   initialCartByCartIdAction,
+  totalCartNumber,
 } from "../../redux/cartRedux";
 
 import { message } from "antd";
@@ -20,7 +21,7 @@ const Cart = () => {
   const [cartItem, setCartItem] = useState([]);
   const [totalProduct, setTotalProduct] = useState();
   const [totalPrice, setToTalPrice] = useState([]);
-
+  const [refreshState, setRefreshState] = useState();
   const newCustomer = localStorage.getItem("User");
 
   const dispatch = useDispatch();
@@ -31,7 +32,9 @@ const Cart = () => {
       .then((res) => {
         setCartItem(res.data.cartitem);
         setTotalProduct(res.data.quantity);
+
         setToTalPrice(res.data.totalprice);
+        dispatch(totalCartNumber(res.data.quantity));
         res.data.cartitem.forEach((item) => {
           console.log("Item", item);
           dispatch(
@@ -49,7 +52,7 @@ const Cart = () => {
 
   useEffect(() => {
     callCartItem();
-  }, [callCartItem]);
+  }, [callCartItem, refreshState]);
 
   const idCartItem = cartItem?.map((item, index) => item.cart_id);
   console.log("ID CART ITEM", idCartItem);
@@ -78,6 +81,10 @@ const Cart = () => {
       });
   };
 
+  const refreshList = (randomValue) => {
+    setRefreshState(randomValue);
+  };
+
   return (
     <Helmet name="Giỏ hàng">
       <div className="cart">
@@ -91,6 +98,7 @@ const Cart = () => {
                   key={index}
                   reload={callCartItem}
                   idCartItem={item.CartItemProduct.id}
+                  reloadPage={refreshList}
                 ></CartItem>
               );
             })}
