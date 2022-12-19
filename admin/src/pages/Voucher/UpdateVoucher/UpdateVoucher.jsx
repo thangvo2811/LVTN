@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -8,13 +8,12 @@ import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 import { Input } from "antd";
 import { message } from "antd";
-import { useState } from "react";
 
-const UpdateBranch = (props) => {
-  const [open, setOpen] = useState(false);
+const UpdateVoucher = (props) => {
+  const [open, setOpen] = React.useState(false);
   const [newName, setNewName] = useState("");
-  const [newAddress, setNewAddress] = useState("");
-  const id = props.idBranch;
+  const [newDateStart, setNewDateStart] = useState("");
+  const [newDateEnd, setNewDateEnd] = useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -23,17 +22,18 @@ const UpdateBranch = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const callUpdateBranch = async () => {
+  const handleUpdateVoucher = async () => {
     await axios
-      .put("http://localhost:8000/api/update-warehouse/", {
-        id: id,
+      .put("http://localhost:8000/api/update-event/", {
+        id: props.idVoucher,
         name: newName,
-        address: newAddress,
+        datestart: newDateStart,
+        dateend: newDateEnd,
       })
       .then((res) => {
         console.log(res.data);
         props.parentCallback(Date.now());
-        message.success("Cập Nhật Chi Nhánh Thành Công");
+        message.success("Cập Nhật Voucher Thành Công");
       })
       .catch((err) => {
         console.log(err);
@@ -54,29 +54,44 @@ const UpdateBranch = (props) => {
       >
         <DialogTitle id="alert-dialog-title"></DialogTitle>
         <DialogContent>
-          <div className="form-title">Cập Nhật Danh Mục</div>
+          <div className="form-title">Cập Nhật Voucher</div>
           <div className="form-input">
             <form>
-              <label>Id</label>
-              <Input type="number" defaultValue={props.idBranch} disabled />
-              <label>Tên Chi Nhánh</label>
+              <label>ID</label>
+              <Input type="number" value={props.idVoucher} disabled />
+              <label>Tên voucher</label>
               <Input
                 type="text"
-                defaultValue={props.nameBranch}
+                defaultValue={props.nameVoucher}
                 onChange={(e) => setNewName(e.target.value)}
               />
-              <label>Địa Chỉ</label>
+              <label>Ngày Bắt Đẩu</label>
               <Input
-                type="text"
-                defaultValue={props.addressBranch}
-                onChange={(e) => setNewAddress(e.target.value)}
+                type="date"
+                defaultValue={props.dateStart}
+                onChange={(e) => setNewDateStart(e.target.value)}
+              />
+              <label>Ngày Kết Thúc</label>
+              <Input
+                type="date"
+                defaultValue={props.dateEnd}
+                onChange={(e) => setNewDateEnd(e.target.value)}
               />
             </form>
           </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Hủy</Button>
-          <Button onClick={() => callUpdateBranch(id, newName, newAddress)}>
+          <Button
+            onClick={() =>
+              handleUpdateVoucher(
+                props.idVoucher,
+                newName,
+                newDateStart,
+                setNewDateEnd
+              )
+            }
+          >
             Cập Nhật
           </Button>
         </DialogActions>
@@ -85,4 +100,4 @@ const UpdateBranch = (props) => {
   );
 };
 
-export default UpdateBranch;
+export default UpdateVoucher;

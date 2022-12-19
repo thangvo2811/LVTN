@@ -1,9 +1,9 @@
 import React from "react";
 
 import AddComment from "../pages/Comment/AddComment";
-import DeleleOrder from "../pages/UserProfile/OrderList/DeleleOrder";
 import numberWithCommas from "../utils/numberWithCommas";
 import { Link, useNavigate } from "react-router-dom";
+import DeleteOrder from "../pages/UserProfile/OrderList/DeleleOrder";
 
 const orderStatus = [
   {
@@ -79,12 +79,26 @@ const Orderitem = (props) => {
               <AddComment
                 img={orderItem.img}
                 idProduct={orderItem.id}
+                reloadPage={props.parentCallback()}
               ></AddComment>
             ) : null}
             {item.id === 1 && props.statusOrder === 1 ? (
-              <DeleleOrder></DeleleOrder>
+              <DeleteOrder
+                id={itemOrder.id}
+                reloadPage={props.parentCallback()}
+              ></DeleteOrder>
             ) : item.id === 2 && props.statusOrder === 2 ? (
-              <DeleleOrder></DeleleOrder>
+              <DeleteOrder
+                id={itemOrder.id}
+                reloadPage={props.parentCallback()}
+              ></DeleteOrder> ? (
+                props.payment === 2 ? null : (
+                  <DeleteOrder
+                    id={itemOrder.id}
+                    reloadPage={props.parentCallback()}
+                  ></DeleteOrder>
+                )
+              ) : null
             ) : null}
           </div>
         ))}

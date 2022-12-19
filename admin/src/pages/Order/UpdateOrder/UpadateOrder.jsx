@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -12,7 +12,7 @@ const UpadateOrder = (props) => {
   const [open, setOpen] = React.useState(false);
   const status = props.statusOrder;
 
-  const handleUpdateOrder = async (id) => {
+  const handleUpdateOrder1 = async (id) => {
     await axios
       .put(`http://localhost:8000/api/update-accept-order/${id}/`)
       .then((res) => {
@@ -25,6 +25,53 @@ const UpadateOrder = (props) => {
       });
     setOpen(false);
   };
+  const handleUpdateOrder2 = async (id) => {
+    await axios
+      .put(`http://localhost:8000/api/update-order-status-3/${id}/`)
+      .then((res) => {
+        console.log(res.data);
+        props.parentCallback(Date.now());
+        message.success("Cập nhật trạng thái đơn hàng thành công");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setOpen(false);
+  };
+
+  const handleUpdateOrder3 = async (id) => {
+    await axios
+      .put(`http://localhost:8000/api/update-order-status-4/${id}/`)
+      .then((res) => {
+        console.log(res.data);
+        props.parentCallback(Date.now());
+        message.success("Cập nhật trạng thái đơn hàng thành công");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setOpen(false);
+  };
+
+  console.log("asdasdadas", status);
+  const handleUpdateOrder = async (e) => {
+    e.preventDefault();
+    if (status === 1) {
+      handleUpdateOrder1(props.idOrder);
+      props.parentCallback(Date.now());
+      return;
+    }
+    if (status === 2) {
+      handleUpdateOrder2(props.idOrder);
+      props.parentCallback(Date.now());
+      return;
+    }
+    if (status === 3) {
+      handleUpdateOrder3(props.idOrder);
+      props.parentCallback(Date.now());
+      return;
+    }
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -32,6 +79,7 @@ const UpadateOrder = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
+
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -46,15 +94,11 @@ const UpadateOrder = (props) => {
       >
         <DialogContent>
           <div className="form-title">Xác Nhận Đơn Hàng</div>
-          <div className="form-input">
-            <form></form>
-          </div>
+          <div className="form-input"></div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Hủy</Button>
-          <Button onClick={() => handleUpdateOrder(props.idOrder)}>
-            Xác Nhận
-          </Button>
+          <Button onClick={handleUpdateOrder}>Xác Nhận</Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -5,11 +5,12 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { message } from "antd";
 import axios from "axios";
+import { message } from "antd";
 
-const DeleteOrder = (props) => {
+const DeleteVoucher = (props) => {
   const [open, setOpen] = React.useState(false);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -17,12 +18,14 @@ const DeleteOrder = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleDeleteOrder = async (id) => {
+
+  const handleDeleteVoucher = async (id) => {
     await axios
-      .delete(`http://localhost:8000/api/delete-order-by-Oder-id/${id}/`)
+      .delete(`http://localhost:8000/api/delete-event/${id}/`)
       .then((res) => {
         console.log(res.data);
-        message.success("Xóa Đơn Hàng Thành Công");
+        props.parentCallback(Date.now());
+        message.success("Xóa Voucher Thành Công");
       })
       .catch((err) => {
         console.log(err);
@@ -43,11 +46,13 @@ const DeleteOrder = (props) => {
         <DialogContent>Bạn có muốn xóa không ?</DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Hủy</Button>
-          <Button onClick={() => handleDeleteOrder(props.idOrder)}>Xóa</Button>
+          <Button onClick={() => handleDeleteVoucher(props.idVoucher)}>
+            Xóa
+          </Button>
         </DialogActions>
       </Dialog>
     </div>
   );
 };
 
-export default DeleteOrder;
+export default DeleteVoucher;

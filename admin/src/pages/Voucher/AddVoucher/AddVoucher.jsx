@@ -5,17 +5,15 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import axios from "axios";
 import { Input } from "antd";
+import axios from "axios";
 import { message } from "antd";
 import { useState } from "react";
-
-const UpdateBranch = (props) => {
-  const [open, setOpen] = useState(false);
-  const [newName, setNewName] = useState("");
-  const [newAddress, setNewAddress] = useState("");
-  const id = props.idBranch;
-
+const AddVoucher = (props) => {
+  const [open, setOpen] = React.useState(false);
+  const [nameVoucher, setNameVoucher] = useState("");
+  const [startVoucher, setStartVoucher] = useState("");
+  const [endVoucher, setEndVoucher] = useState("");
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -23,61 +21,70 @@ const UpdateBranch = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const callUpdateBranch = async () => {
+
+  const handleAddVoucher = async (name, dateStart, dateEnd) => {
     await axios
-      .put("http://localhost:8000/api/update-warehouse/", {
-        id: id,
-        name: newName,
-        address: newAddress,
+      .post("http://localhost:8000/api/create-event/", {
+        name: name,
+        datestart: dateStart,
+        dateend: dateEnd,
       })
       .then((res) => {
         console.log(res.data);
         props.parentCallback(Date.now());
-        message.success("Cập Nhật Chi Nhánh Thành Công");
+        message.success("Thêm Voucher Thành Công");
       })
       .catch((err) => {
         console.log(err);
       });
     setOpen(false);
   };
+
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
-        <i className="bx bxs-edit"></i>
+        <div className="form-name">
+          <i className="bx bx-plus">Thêm Voucher</i>
+        </div>
       </Button>
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        maxWidth="md"
       >
         <DialogTitle id="alert-dialog-title"></DialogTitle>
         <DialogContent>
-          <div className="form-title">Cập Nhật Danh Mục</div>
+          <div className="form-title">Voucher</div>
           <div className="form-input">
             <form>
-              <label>Id</label>
-              <Input type="number" defaultValue={props.idBranch} disabled />
-              <label>Tên Chi Nhánh</label>
+              <label>Tên Voucher</label>
               <Input
                 type="text"
-                defaultValue={props.nameBranch}
-                onChange={(e) => setNewName(e.target.value)}
+                placeholder="Tên Thuộc Tính"
+                onChange={(e) => setNameVoucher(e.target.value)}
               />
-              <label>Địa Chỉ</label>
+              <label>Ngày Bắt Đầu</label>
               <Input
-                type="text"
-                defaultValue={props.addressBranch}
-                onChange={(e) => setNewAddress(e.target.value)}
+                type="date"
+                onChange={(e) => setStartVoucher(e.target.value)}
+              />
+              <label>Ngày Kết Thúc</label>
+              <Input
+                type="date"
+                onChange={(e) => setEndVoucher(e.target.value)}
               />
             </form>
           </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Hủy</Button>
-          <Button onClick={() => callUpdateBranch(id, newName, newAddress)}>
-            Cập Nhật
+          <Button
+            onClick={() =>
+              handleAddVoucher(nameVoucher, startVoucher, endVoucher)
+            }
+          >
+            Thêm
           </Button>
         </DialogActions>
       </Dialog>
@@ -85,4 +92,4 @@ const UpdateBranch = (props) => {
   );
 };
 
-export default UpdateBranch;
+export default AddVoucher;

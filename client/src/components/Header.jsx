@@ -27,13 +27,10 @@ const Header = () => {
   const [searchKey, setSearchKey] = useState("");
   const [allCategory, setAllCategory] = useState([]);
 
+  const [idcart, setIdCart] = useState([]);
+
   // const newUser = useSelector((state) => state.user.currentUser);
   const newCustomer = localStorage.getItem("User");
-
-  // Google
-  const newCustomerGoogle = localStorage.getItem("loginGoogle");
-  const nameCustomerGoogle = localStorage.getItem("loginNameGoogle");
-  // end Google
 
   const nameCustomer = localStorage.getItem("nameUser");
   const newNameUser = localStorage.getItem("updateName");
@@ -57,8 +54,8 @@ const Header = () => {
     await axios
       .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}`)
       .then((res) => {
-        console.log(res.data.quantity);
         setTotalItem(res.data.quantity);
+        setIdCart(res.data.cartitem);
         localStorage.setItem("cartItem", res.data.quantity);
         dispatch(addNumberCartSuccess(res.data.quantity));
       })
@@ -67,6 +64,12 @@ const Header = () => {
       });
   }, [dispatch, newCustomer]);
 
+  const totalIdCart = useSelector((state) => state.cart.numberCartByCartId);
+  console.log("ppppppppp", totalIdCart);
+  const idCartItem = idcart?.map((item, index) => item.id);
+  const totalNum = idcart.reduce((sum, item) => sum + totalIdCart[item.id], 0);
+  console.log("qweqweqweqwe", totalNum);
+  console.log("asdasdasdasdas", idCartItem);
   const callAllCategory = async () => {
     await axios
       .get("http://localhost:8000/api/get-Category/")
@@ -104,6 +107,13 @@ const Header = () => {
       navigate("/");
       message.error("SẢN PHẨM KHÔNG TỒN TẠI");
     }
+    // if (searchKey === "") {
+    //   navigate("/");
+    //   message.error("Chưa Nhập Sản Phẩm");
+    //   return;
+    // } else {
+    //   navigate(`/findproduct/${searchKey}`);
+    // }
   };
 
   const openMenuHandler = () => {
@@ -228,7 +238,7 @@ const Header = () => {
                         <i className="bx bx-cart"></i>
                         <span>Giỏ hàng</span>
                         <div className="notification">
-                          <span>{newItem || 0}</span>
+                          <span>{totalNum || 0}</span>
                         </div>
                       </li>
                     </Link>

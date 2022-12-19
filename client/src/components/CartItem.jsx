@@ -17,14 +17,16 @@ import {
   addNumberCartIncrease,
   removeCartByCartIdAction,
 } from "../redux/cartRedux";
+import axios from "axios";
+import { message } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const CartItem = (props) => {
   const itemCart = props.cartItem;
-  const reloadPage = props.reload;
-
-  const [quantity, setQuantity] = useState("");
+  // const reloadPage = props.reload;
 
   // const newItem = useSelector((state) => state.cart.numberCart);
+  const cartItem = useSelector((state) => state.cart);
   const newItemFromState = useSelector(
     (state) => state.cart.numberCartByCartId
   );
@@ -33,6 +35,7 @@ const CartItem = (props) => {
   console.log("ID cart", itemCart.id);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const increaseQuantity = () => {
     // setQuantity(quantity + 1);
@@ -55,11 +58,20 @@ const CartItem = (props) => {
     );
   };
 
-  const handleDeleteCartItem = (e) => {
+  const handleDeleteCartItem = async (e, id) => {
     e.preventDefault();
-    deleteCart(dispatch, itemCart.id);
+    await axios
+      .delete(`http://localhost:8000/api/handle-Delete-Cartitem/${id}/`)
+      .then((res) => {
+        console.log(res.data);
+        props.reload();
+        message.success("Xóa Sản Phẩm Thành Công");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // deleteCart(dispatch, itemCart.id);
   };
-  useEffect(() => {}, [reloadPage]);
 
   return (
     <>
@@ -93,7 +105,10 @@ const CartItem = (props) => {
           </div>
         </div>
         <div className="cart-item__delete">
-          <i className="bx bx-trash" onClick={handleDeleteCartItem}></i>
+          <i
+            className="bx bx-trash"
+            onClick={(e) => handleDeleteCartItem(e, itemCart.id)}
+          ></i>
         </div>
       </div>
     </>

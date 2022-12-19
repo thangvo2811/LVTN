@@ -18,6 +18,7 @@ const Payment = () => {
     address,
     phone,
     newCustomer,
+    idWareHouse,
     idCart
   ) => {
     await axios

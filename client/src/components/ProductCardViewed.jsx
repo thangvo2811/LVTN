@@ -43,7 +43,7 @@ const ProductCardViewed = (props) => {
         <div className="product-card-view__interact">
           <div
             className="product-card-view__interact__btn"
-            onClick={() => navigate("/detailproduct/" + product.id)}
+            onClick={() => navigate("/detailproduct/" + product.product_id)}
           >
             Xem ngay
           </div>

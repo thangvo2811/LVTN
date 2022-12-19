@@ -51,8 +51,16 @@ export const addCart = async (
     })
     .then((res) => {
       console.log(res);
+      if (res.data.errCode === 3) {
+        message.error("Bạn Chưa Chọn Thuộc Tính");
+        return;
+      }
       if (res.data.errCode === 5) {
-        message.error("Trong Kho Đã Hết Sản Phẩm");
+        message.error("Bạn Chưa Chọn Thuộc Tính");
+        return;
+      }
+      if (res.data.errCode === 6) {
+        message.error(res.data.errMessage);
         return;
       }
       if (res.data.errCode === 0 || res.data.errCode === -1) {
@@ -70,32 +78,32 @@ export const addCart = async (
       console.log(err);
     });
 };
-export const deleteCart = async (dispatch, cartId) => {
-  dispatch(deleteCartStart());
-  await axios
-    .delete(`http://localhost:8000/api/handle-Delete-Cartitem/${cartId}/`)
-    .then((res) => {
-      console.log(res.data);
-      message.success("Xóa Sản Phẩm Thành Công");
-      dispatch(deleteCartSuccess());
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
-export const deleteAllCart = async (dispatch, [cartId]) => {
-  dispatch(deleteAllCartStart());
-  await axios
-    .delete(`http://localhost:8000/api/handle-Delete-All-Cartitem/${cartId}/`)
-    .then((res) => {
-      console.log(res.data);
-      message.success("Xóa Sản Phẩm Thành Công");
-      dispatch(deleteAllCartSuccess());
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
+// export const deleteCart = async (dispatch, cartId) => {
+//   dispatch(deleteCartStart());
+//   await axios
+//     .delete(`http://localhost:8000/api/handle-Delete-Cartitem/${cartId}/`)
+//     .then((res) => {
+//       console.log(res.data);
+//       message.success("Xóa Sản Phẩm Thành Công");
+//       dispatch(deleteCartSuccess());
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
+// export const deleteAllCart = async (dispatch, [cartId]) => {
+//   dispatch(deleteAllCartStart());
+//   await axios
+//     .delete(`http://localhost:8000/api/handle-Delete-All-Cartitem/${cartId}/`)
+//     .then((res) => {
+//       console.log(res.data);
+//       message.success("Xóa Sản Phẩm Thành Công");
+//       dispatch(deleteAllCartSuccess());
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// };
 export const addNumberCart = async (dispatch, cartId, idProduct, qty) => {
   dispatch(addNumberCartStart());
   console.log(cartId);

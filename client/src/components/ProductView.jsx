@@ -7,13 +7,12 @@ import InputEmoji from "react-input-emoji";
 
 import Rating from "@mui/material/Rating";
 
-import pf from "../assets/images/products/laptop-asus-tuf-gaming-f15-fx506lh_4_.jpg";
 import pd from "../assets/images/products/laptop-asus-rog-strix-g15-g513ih-hn015t-1.jpg";
 import pfUser from "../assets/images/UserProfile/man.png";
 
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { addCart, addNumberCart } from "../redux/apiCalls.js";
+import { addCart, addNumberCart, addQuantityCart } from "../redux/apiCalls.js";
 
 import axios from "axios";
 import {
@@ -30,23 +29,24 @@ import DeleteComment from "../pages/Comment/DeleteComment";
 const ProductView = (props) => {
   const param = useParams();
   const array = props.arr;
-  const filter = array.filter((item) => item !== null && item !== "");
-  console.log("Null", filter);
-  const [quantity, setQuantity] = useState(1);
 
+  const [quantity, setQuantity] = useState(1);
   const [commentProduct, setCommentProduct] = useState([]);
   const [reloadPage, setReloadPage] = useState("");
+  const [quantityProduct, setQuantityProduct] = useState([]);
+
+  const [idWare, setIdWare] = useState("");
+
   const callbackFunction = (childData) => {
     setReloadPage(childData);
   };
-
   const dispatch = useDispatch();
   const newCustomer = localStorage.getItem("User");
-  const newItemFromState = useSelector(
-    (state) => state.cart.numberCartByCartId
-  );
-  const newItemByCartId = newItemFromState[props.id];
-  console.log(newItemByCartId);
+  // const newItemFromState = useSelector(
+  //   (state) => state.cart.numberCartByCartId
+  // );
+  // const newItemByCartId = newItemFromState[props.id];
+  // console.log("asdasdsadasdsadsad", newItemByCartId);
 
   const callCommentProduct = useCallback(async () => {
     await axios
@@ -61,17 +61,42 @@ const ProductView = (props) => {
         console.log(err);
       });
   }, [param.category_id]);
+  const callAllQuantity = useCallback(async () => {
+    const filter = array.filter((item) => item !== null && item !== "");
+    await axios
+      .post("http://localhost:8000/api/get-product-quantity/", {
+        product_id: props.product_id,
+        optionvalue: filter,
+      })
+
+      .then((res) => {
+        setQuantityProduct(res.data.qa);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [array, props.product_id]);
   useEffect(() => {
     callCommentProduct();
-  }, [callCommentProduct, param.category_id, reloadPage]);
+  }, [callCommentProduct]);
+
+  useEffect(() => {
+    if (array.length <= 0) {
+      return;
+    }
+    if (!props.product_id) {
+      return;
+    }
+    callAllQuantity();
+  }, [callAllQuantity, array, props.product_id]);
 
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
     // setQuantity(dispatch(addNumberCartIncrease));
-    // addNumberCart(dispatch, props.id, "+");
+    // addQuantityCart(dispatch, props.product_id, "+");
     // dispatch(
     //   addCartByCartIdAction({
-    //     cartId: props.id,
+    //     cartId: props.product_id,
     //     currentAmount: quantity + 1,
     //   })
     // );
@@ -79,28 +104,20 @@ const ProductView = (props) => {
   const decreaseQuantity = () => {
     setQuantity(quantity < 2 ? 1 : quantity - 1);
     // setQuantity(dispatch(addNumberCartDecrease));
-    // addNumberCart(dispatch, props.id, "-");
+    // addQuantityCart(dispatch, props.product_id, "-");
     // dispatch(
     //   removeCartByCartIdAction({
-    //     cartId: props.id,
+    //     cartId: props.product_id,
     //     currentAmount: quantity < 2 ? 1 : quantity - 1,
     //   })
     // );
   };
 
-  // const id = props.iDOption;
-  // console.log("ID OPTION", id);
   const handleAddCart = () => {
+    const filter = array.filter((item) => item !== null && item !== "");
     console.log("add cart");
     const newProduct = props.product_id;
-    addCart(
-      dispatch,
-      newCustomer,
-      newProduct,
-      filter,
-      quantity,
-      props.idWareHouse
-    );
+    addCart(dispatch, newCustomer, newProduct, filter, quantity, idWare);
   };
   const handleClick = (e) => {
     e.preventDefault();
@@ -140,7 +157,7 @@ const ProductView = (props) => {
               </div>
               <div className="product-top__info__quantity">
                 <i className="bx bx-minus" onClick={decreaseQuantity}></i>
-                <div>{quantity}</div>
+                <div>{quantity || 0}</div>
                 <i className="bx bx-plus" onClick={increaseQuantity}></i>
               </div>
               {newCustomer ? (
@@ -174,6 +191,21 @@ const ProductView = (props) => {
               </div>
               <div className="product-top__info__content__option__right">
                 {props.ssd}
+              </div>
+              <div className="product-top__info__content__option__right__select">
+                <select onChange={(e) => setIdWare(e.target.value)}>
+                  <option>Chọn Chi Nhánh</option>
+                  {quantityProduct?.map((item, index) => (
+                    <>
+                      <option
+                        selected={index === 0 ? "selected" : ""}
+                        value={item.warehouse_id}
+                      >
+                        {item.UserwarehouseProduct.name}
+                      </option>
+                    </>
+                  ))}
+                </select>
               </div>
             </div>
           </div>

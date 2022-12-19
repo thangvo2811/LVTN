@@ -13,10 +13,8 @@ import { useState } from "react";
 const AddStore = (props) => {
   const [open, setOpen] = React.useState(false);
   const [allWareHouse, setAllWareHouse] = useState([]);
-  const [idProduct, setIdProduct] = useState("");
 
   const [quantity, setQuantity] = useState("");
-
   const [selected, setSelected] = useState("");
 
   const [allProduct, setAllProduct] = useState([]);
@@ -59,6 +57,9 @@ const AddStore = (props) => {
     callAllProduct();
     callAllOption(selectProduct, selectOption);
   }, [selectOption, selectProduct]);
+  console.log("ID PRODUCT", selectProduct);
+  console.log("Array", selectOption);
+
   const handleAddWareHouse = async () => {
     await axios
       .post("http://localhost:8000/api/create-warehouse-product/", {
@@ -82,7 +83,6 @@ const AddStore = (props) => {
       .get("http://localhost:8000/api/get-warehouse/")
       .then((res) => {
         setAllWareHouse(res.data.Warehouse);
-        props.parentCallback(Date.now());
       })
       .catch((err) => {
         console.log(err);

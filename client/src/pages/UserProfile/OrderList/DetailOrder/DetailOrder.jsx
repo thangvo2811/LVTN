@@ -41,20 +41,20 @@ const DetailOrder = () => {
             <>
               <div className="detail-item">
                 <div className="detail-item__image">
-                  <img src={item.img} alt="" />
+                  <img src={item?.img} alt="" />
                   <div className="detail-item__info">
                     <div className="detail-item__info__title"></div>
                     <div className="detail-item__info__id">
-                      Tên sản phẩm: {item.Orderitem.name}
+                      Tên sản phẩm: {item?.Orderitem?.name}
                     </div>
                     <div className="detail-item__info__price">
-                      Số lượng:{item.Orderitem.TotalQuantity}
+                      Số lượng:{item?.Orderitem?.TotalQuantity}
                     </div>
                     <div className="detail-item__info__price">
-                      Giá:{numberWithCommas(item.Orderitem.price)} VNĐ
+                      Giá:{numberWithCommas(item?.Orderitem?.price)} VNĐ
                     </div>
                     <div className="detail-item__info__price">
-                      Mã Đơn Hàng: {detailOrder.code}
+                      Mã Đơn Hàng: {item?.Orderitem?.serinumber}
                     </div>
                   </div>
                 </div>

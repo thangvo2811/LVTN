@@ -23,7 +23,7 @@ const Order = () => {
   };
   useEffect(() => {
     callAllOrder();
-  }, []);
+  }, [reloadPage]);
   return (
     <div>
       <div className="page-header">
@@ -65,7 +65,10 @@ const Order = () => {
                               ></UpadateOrder>
                             </span>
                             <span className="card__body__features__delete">
-                              <DeleteOrder></DeleteOrder>
+                              <DeleteOrder
+                                idOrder={item.id}
+                                parentCallback={callbackFunction}
+                              ></DeleteOrder>
                             </span>
                           </div>
                         </td>

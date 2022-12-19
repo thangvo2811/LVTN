@@ -9,13 +9,25 @@ import { Input } from "antd";
 import axios from "axios";
 import { message } from "antd";
 
-const DeleleOrder = () => {
+const DeleteOrder = (props) => {
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    setOpen(false);
+  };
+  const handleDeleteOrder = async (id) => {
+    await axios
+      .put(`http://localhost:8000/api/cancel-order/${id}/`)
+      .then((res) => {
+        console.log(res.data);
+        message.success("Hủy Đơn Hàng Thành Công");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     setOpen(false);
   };
   return (
@@ -33,11 +45,11 @@ const DeleleOrder = () => {
         <DialogContent>Bạn có muốn xóa không ?</DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Hủy</Button>
-          <Button onClick={handleClose}>Xóa</Button>
+          <Button onClick={() => handleDeleteOrder(props.id)}>Xóa</Button>
         </DialogActions>
       </Dialog>
     </div>
   );
 };
 
-export default DeleleOrder;
+export default DeleteOrder;

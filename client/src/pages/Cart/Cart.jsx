@@ -4,16 +4,17 @@ import Button from "../../components/Button";
 import CartItem from "../../components/CartItem";
 import Helmet from "../../components/Helmet";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import numberWithCommas from "../../utils/numberWithCommas";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addCartByCartIdAction,
   initialCartByCartIdAction,
 } from "../../redux/cartRedux";
-import { deleteAllCart } from "../../redux/apiCalls";
+
+import { message } from "antd";
 
 const Cart = () => {
   const [cartItem, setCartItem] = useState([]);
@@ -23,6 +24,7 @@ const Cart = () => {
   const newCustomer = localStorage.getItem("User");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const callCartItem = useCallback(async () => {
     await axios
       .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}/`)
@@ -45,16 +47,35 @@ const Cart = () => {
       });
   }, [dispatch, newCustomer]);
 
-  const idCartItem = cartItem?.map((item, index) => item.cart_id);
-  console.log("ID CART ITEM", idCartItem);
-
   useEffect(() => {
     callCartItem();
   }, [callCartItem]);
 
-  const handleDeleteAllCart = (e) => {
+  const idCartItem = cartItem?.map((item, index) => item.cart_id);
+  console.log("ID CART ITEM", idCartItem);
+
+  const totalIdCart = useSelector((state) => state.cart.numberCartByCartId);
+  console.log("ppppppppp", totalIdCart);
+  const id = cartItem?.map((item, index) => item.id);
+  const totalNum = cartItem.reduce(
+    (sum, item) => sum + totalIdCart[item.id],
+    0
+  );
+  console.log("qweqweqweqwe", totalNum);
+  console.log("asdasdasdasdas", id);
+
+  const handleDeleteAllCart = async (e, [id]) => {
     e.preventDefault();
-    deleteAllCart(dispatch, idCartItem);
+    await axios
+      .delete(`http://localhost:8000/api/handle-Delete-All-Cartitem/${id}/`)
+      .then((res) => {
+        console.log(res.data);
+        message.success("Xóa Sản Phẩm Thành Công");
+        callCartItem();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -74,7 +95,10 @@ const Cart = () => {
               );
             })}
           </div>
-          <div className="cart__desc__clear" onClick={handleDeleteAllCart}>
+          <div
+            className="cart__desc__clear"
+            onClick={(e) => handleDeleteAllCart(e, idCartItem)}
+          >
             <Button size="sm" animate2={true}>
               Xóa Tất Cả
             </Button>
@@ -93,7 +117,7 @@ const Cart = () => {
                 Tổng sản phẩm
               </div>
               <div className="cart__info__content__item__price">
-                {totalProduct ? totalProduct : 0}
+                {totalNum ? totalNum : 0}
               </div>
             </div>
             <div className="cart__info__content__item">

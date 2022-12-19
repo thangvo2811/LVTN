@@ -7,6 +7,10 @@ import Orderitem from "../../../components/Orderitem";
 const OrderList = () => {
   const [allOrder, setAllOrder] = useState([]);
   const idCus = localStorage.getItem("User");
+  const [reloadPage, setReloadPage] = useState("");
+  const callbackFunction = (childData) => {
+    setReloadPage(childData);
+  };
 
   const callAllOrder = useCallback(async () => {
     await axios
@@ -21,7 +25,7 @@ const OrderList = () => {
   }, [idCus]);
   useEffect(() => {
     callAllOrder();
-  }, [callAllOrder, idCus]);
+  }, [callAllOrder, idCus, reloadPage]);
   return (
     <>
       <div className="order">
@@ -36,6 +40,8 @@ const OrderList = () => {
                     key={index}
                     item={item}
                     idOrderDetail={item.id}
+                    paymentStatus={item.paymentStatus}
+                    parentCallback={callbackFunction}
                   ></Orderitem>
                 );
               })

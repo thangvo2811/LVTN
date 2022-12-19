@@ -15,7 +15,6 @@ const Product = (props) => {
 
   const [allProduct, setAllProduct] = useState([]);
   const [detailProduct, setDetailProduct] = useState({});
-  const [quantityProduct, setQuantityProduct] = useState({});
 
   const [selectColor, setSelectColor] = useState("");
   const [selectOption, setSelectOption] = useState("");
@@ -48,31 +47,10 @@ const Product = (props) => {
         console.log(err);
       });
   };
-  const callQuantityProduct = async () => {
-    await axios
-      .get("http://localhost:8000/api/get-product-quantity/", {
-        product_id: detailProduct.id,
-        optionvalue: [
-          selectColor,
-          selectOption,
-          selectScreen,
-          selectMain,
-          selectSwitch,
-          selectHDD,
-        ],
-      })
-      .then((res) => {
-        console.log(res.data.data);
-        setQuantityProduct(res.data.qa);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+
   useEffect(() => {
     callAllProduct();
     callDetailProduct();
-    callQuantityProduct();
   }, [callDetailProduct, param.category_id]);
 
   console.log("colors: ", selectColor);
@@ -88,6 +66,7 @@ const Product = (props) => {
     selectColor,
     selectOption,
     selectScreen,
+    selectMain,
     selectSwitch,
     selectHDD
   );

@@ -12,6 +12,7 @@ const Confirm = (props) => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
+  const [warehouseId, setWareHouseId] = useState("");
   const [cartItem, setCartItem] = useState([]);
 
   const newCustomer = localStorage.getItem("User");
@@ -28,8 +29,11 @@ const Confirm = (props) => {
       });
   }, [newCustomer]);
 
-  const idCart = cartItem.map((item, index) => item.id);
+  const idCart = cartItem?.map((item, index) => item.id);
   console.log("ID Cart", idCart);
+
+  const idWareHouse = cartItem?.map((item, index) => item.warehouse_id);
+  console.log("ID WareHouse", idWareHouse);
 
   useEffect(() => {
     callAllCartItem();
@@ -109,6 +113,7 @@ const Confirm = (props) => {
                     address,
                     phone,
                     newCustomer,
+                    warehouseId,
                     idCart
                   );
                   props.continue();
