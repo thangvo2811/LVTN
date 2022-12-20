@@ -60,19 +60,18 @@ const Header = () => {
         setTotalItem(res.data.quantity);
         setIdCart(res.data.cartitem);
         localStorage.setItem("cartItem", res.data.quantity);
-        // dispatch(addNumberCartSuccess(res.data.quantity));
       })
       .catch((err) => {
         console.log(err);
       });
   }, [newCustomer]);
 
-  const totalIdCart = useSelector((state) => state.cart.numberCartByCartId);
-  console.log("ppppppppp", totalIdCart);
-  const idCartItem = idcart?.map((item, index) => item.id);
-  const totalNum = idcart.reduce((sum, item) => sum + totalIdCart[item.id], 0);
-  console.log("qweqweqweqwe", totalNum);
-  console.log("asdasdasdasdas", idCartItem);
+  // const totalIdCart = useSelector((state) => state.cart.numberCartByCartId);
+  // console.log("ppppppppp", totalIdCart);
+  // const idCartItem = idcart?.map((item, index) => item.id);
+  // const totalNum = idcart.reduce((sum, item) => sum + totalIdCart[item.id], 0);
+  // console.log("qweqweqweqwe", totalNum);
+  // console.log("asdasdasdasdas", idCartItem);
 
   const callAllCategory = async () => {
     await axios
@@ -122,6 +121,9 @@ const Header = () => {
 
   const openMenuHandler = () => {
     headerContentRef.current.classList.toggle("active");
+  };
+  const handleCartClick = () => {
+    message.error("Bạn Chưa Đăng Nhập");
   };
 
   useEffect(() => {
@@ -250,7 +252,10 @@ const Header = () => {
                 ) : (
                   <>
                     <Link to={"/login"}>
-                      <li className="header-top__cart__list__item">
+                      <li
+                        className="header-top__cart__list__item"
+                        onClick={handleCartClick}
+                      >
                         <i className="bx bx-cart"></i>
                         <span>Giỏ hàng</span>
                       </li>

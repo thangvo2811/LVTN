@@ -32,7 +32,6 @@ const ProductView = (props) => {
   const [quantityProduct, setQuantityProduct] = useState([]);
 
   const [idWare, setIdWare] = useState("");
-
   const callbackFunction = (childData) => {
     setReloadPage(childData);
   };
@@ -43,6 +42,25 @@ const ProductView = (props) => {
   // );
   // const newItemByCartId = newItemFromState[props.id];
   // console.log("asdasdsadasdsadsad", newItemByCartId);
+
+  const statusProduct = [
+    {
+      id: 1,
+      name: "Còn Hàng",
+    },
+    {
+      id: 2,
+      name: "Hết Hàng",
+    },
+    {
+      id: 3,
+      name: "Sắp ra mắt",
+    },
+    {
+      id: 4,
+      name: "Đang ẩn",
+    },
+  ];
 
   const callCartItem = useCallback(async () => {
     await axios
@@ -169,8 +187,17 @@ const ProductView = (props) => {
               <div className="product-top__info__content__desc__category">
                 Danh mục: {props.nameCategory ? props.nameCategory : ""}
               </div>
+
+              {statusProduct?.map((item, index) => (
+                <div className="product-top__info__status">
+                  {item.id === props.statusProduct
+                    ? `Trạng Thái: ${item.name} `
+                    : null}
+                  {/* Trạng thái: {props.statusProduct ? props.statusProduct : ""} */}
+                </div>
+              ))}
               <div className="product-top__info__status">
-                Trạng thái: {props.statusProduct ? props.statusProduct : ""}
+                Số lượng: {props.current ? props.current : ""} sản phẩm
               </div>
               <div className="product-top__info__quantity">
                 <i className="bx bx-minus" onClick={decreaseQuantity}></i>
@@ -215,7 +242,9 @@ const ProductView = (props) => {
                   {quantityProduct?.map((item, index) => (
                     <>
                       <option
-                        selected={index === 0 ? "selected" : ""}
+                        setIdWare={
+                          index === 0 ? "Chon Chi Nhanh" : "Chon Chi Nhanh"
+                        }
                         value={item.warehouse_id}
                       >
                         {item.UserwarehouseProduct.name}

@@ -86,6 +86,7 @@ const MyAccount = () => {
               type="date"
               className="form-date mr-input"
               value={moment(detailUser?.birthday).format("YYYY-MM-DD")}
+              disabled
             />
             <input
               type="text"
@@ -135,7 +136,7 @@ const MyAccount = () => {
               <i className="bx bxs-key"></i>
               <span>Mật Khẩu</span>
             </div>
-            <ChangePassWord></ChangePassWord>
+            <ChangePassWord pw={detailUser?.password}></ChangePassWord>
           </div>
         </div>
         {/* end user content right update */}

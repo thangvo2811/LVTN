@@ -127,7 +127,7 @@ const AddOption = (props) => {
               <label>Tên Sản Phẩm</label>
               <br />
               <select
-                value={selectProduct}
+                // value={selectProduct}
                 onChange={(e) => setSelectProduct(e.target.value)}
               >
                 <option>Chọn Sản Phẩm</option>
@@ -140,7 +140,7 @@ const AddOption = (props) => {
               <label>Tên Thuộc Tính</label>
               <br />
               <select
-                value={selected}
+                // value={selected}
                 onChange={(e) => setSelected(e.target.value)}
               >
                 <option>Chọn Thuộc Tính</option>

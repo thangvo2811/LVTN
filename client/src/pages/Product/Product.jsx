@@ -89,7 +89,12 @@ const Product = (props) => {
               ]}
               product_id={detailProduct?.id ? detailProduct?.id : ""}
               statusProduct={
-                detailProduct?.currentQuantity > 0 ? "Còn Hàng" : "Hết Hàng"
+                detailProduct?.status ? detailProduct?.status : "Null"
+              }
+              current={
+                detailProduct?.currentQuantity
+                  ? detailProduct?.currentQuantity
+                  : ""
               }
               imgProduct={detailProduct?.img ? detailProduct?.img : ""}
               nameProduct={detailProduct?.name ? detailProduct?.name : ""}

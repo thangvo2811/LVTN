@@ -45,11 +45,15 @@ export const addCart = async (
     .then((res) => {
       console.log("Ress", res);
       if (res.data.errCode === 3) {
-        message.error("Bạn Chưa Chọn Thuộc Tính");
+        message.error("Trong Kho Không Có Sản Phẩm");
+        return;
+      }
+      if (res.data.errCode === 4) {
+        message.error("Trong Kho Không Có Sản Phẩm");
         return;
       }
       if (res.data.errCode === 5) {
-        message.error("Bạn Chưa Chọn Thuộc Tính");
+        message.error("Trong Kho Không Có Sản Phẩm");
         return;
       }
       if (res.data.errCode === 6) {

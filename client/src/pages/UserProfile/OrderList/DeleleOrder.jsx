@@ -23,6 +23,7 @@ const DeleteOrder = (props) => {
       .put(`http://localhost:8000/api/cancel-order/${id}/`)
       .then((res) => {
         console.log(res.data);
+        props.reloadPage(Date.now());
         message.success("Hủy Đơn Hàng Thành Công");
       })
       .catch((err) => {

@@ -131,22 +131,21 @@ const UploadProduct = (props) => {
               />
               <label>Tên Danh Mục</label>
               <br />
-              <select
-                value={selectedCate}
-                onChange={(e) => setSelectedCate(e.target.value)}
-              >
+              <select onChange={(e) => setSelectedCate(e.target.value)}>
                 <option>{props.nameCate}</option>
-                {allCategory?.map((item, index) => (
-                  <option key={index} value={item.id}>
-                    {item?.name}
-                  </option>
-                ))}
+                {allCategory?.map((item, index) =>
+                  item.ChildrenCategoty?.map((data, i) => (
+                    <option key={index} value={data.id}>
+                      {data.name}
+                    </option>
+                  ))
+                )}
               </select>
               <br />
               <label>Tên Thương Hiệu</label>
               <br />
               <select
-                value={selectedBrand}
+                // value={selectedBrand}
                 onChange={(e) => setSelectedBrand(e.target.value)}
               >
                 <option>{props.nameBrand}</option>

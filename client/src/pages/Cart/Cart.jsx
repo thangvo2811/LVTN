@@ -32,7 +32,6 @@ const Cart = () => {
       .then((res) => {
         setCartItem(res.data.cartitem);
         setTotalProduct(res.data.quantity);
-
         setToTalPrice(res.data.totalprice);
         dispatch(totalCartNumber(res.data.quantity));
         res.data.cartitem.forEach((item) => {

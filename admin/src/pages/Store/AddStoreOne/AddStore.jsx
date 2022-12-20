@@ -71,6 +71,7 @@ const AddStore = (props) => {
         console.log(res.data);
         props.parentCallback(Date.now());
         message.success("Đã Thêm Sản Phẩm Trong Kho");
+        callAllProduct();
       })
       .catch((err) => {
         console.log(err);
@@ -112,7 +113,7 @@ const AddStore = (props) => {
               <label>Tên Sản Phẩm</label>
               <br />
               <select
-                value={selectProduct}
+                // value={selectProduct}
                 onChange={(e) => {
                   setSelectProduct(e.target.value);
                 }}
@@ -152,7 +153,7 @@ const AddStore = (props) => {
               <label>Tên Kho</label>
               <br />
               <select
-                value={selected}
+                // value={selected}
                 onChange={(e) => setSelected(e.target.value)}
               >
                 <option>Chọn Kho</option>

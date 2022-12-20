@@ -64,6 +64,9 @@
       @include mobile {
         padding: 0;
       }
+      &__status {
+        margin-bottom: 10px;
+      }
       &__title {
         font-weight: 600;
         font-size: 2rem;

@@ -107,7 +107,7 @@ const UpdateOption = (props) => {
               <label>Tên Sản Phẩm</label>
               <br />
               <select
-                value={selectProduct}
+                // value={selectProduct}
                 onChange={(e) => setSelectProduct(e.target.value)}
               >
                 <option>{props.nameProduct}</option>
@@ -120,7 +120,7 @@ const UpdateOption = (props) => {
               <label>Tên Thuộc Tính</label>
               <br />
               <select
-                value={selectOption}
+                // value={selectOption}
                 onChange={(e) => setSelectOption(e.target.value)}
               >
                 <option>{props.nameOption}</option>

@@ -9,7 +9,7 @@ import StoreTwo from "./StoreTwo";
 
 const Tab = () => {
   const [tabPosition, setTabPosition] = useState("left");
-  const [allWareHouse, setAllWareHouse] = useState("");
+  const [allWareHouse, setAllWareHouse] = useState([]);
 
   const callAllWareHouse = async () => {
     await axios
@@ -30,12 +30,12 @@ const Tab = () => {
   };
   const tabContent = [
     {
-      label: `KHO 1`,
+      label: `CHI NHÁNH KHO HỒ CHÍ MINH`,
       key: 1,
       children: <StoreOne />,
     },
     {
-      label: `KHO 2`,
+      label: `CHI NHÁNH KHO HÀ HỘI`,
       key: 2,
       children: <StoreTwo />,
     },

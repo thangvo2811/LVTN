@@ -133,8 +133,18 @@ const AddProduct = (props) => {
               />
               <label>Tên Danh Mục</label>
               <br />
-              <select
-                value={selectedCate}
+              <select onChange={(e) => setSelectedCate(e.target.value)}>
+                <option>Chọn Danh Mục</option>
+                {allCategory?.map((item, index) =>
+                  item.ChildrenCategoty?.map((data, i) => (
+                    <option key={index} value={data.id}>
+                      {data.name}
+                    </option>
+                  ))
+                )}
+              </select>
+              {/* <select
+                // value={selectedCate}
                 onChange={(e) => setSelectedCate(e.target.value)}
               >
                 <option>Chọn Danh Mục</option>
@@ -143,12 +153,12 @@ const AddProduct = (props) => {
                     {item.name}
                   </option>
                 ))}
-              </select>
+              </select> */}
               <br />
               <label>Tên Thương Hiệu</label>
               <br />
               <select
-                value={selectedBrand}
+                // value={selectedBrand}
                 onChange={(e) => setSelectedBrand(e.target.value)}
               >
                 <option>Chọn Thương Hiệu</option>

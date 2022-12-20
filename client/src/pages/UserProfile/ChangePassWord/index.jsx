@@ -77,13 +77,20 @@ const ChangePassWord = (props) => {
         oldpassword: oldPw,
       })
       .then((res) => {
-        console.log(res.data);
-        message.success("Đổi Mật Khẩu Thàn Công");
-        setOpen(false);
+        if (res.data.errCode === 0) {
+          console.log(res.data);
+          message.success("Đổi Mật Khẩu Thàn Công");
+          return;
+        }
+        if (res.data.errCode === 2) {
+          message.error("Mật Khẩu Cũ Sai");
+          return;
+        }
       })
       .catch((err) => {
         console.log(err);
       });
+    setOpen(false);
   };
   const handleOldPw = (e) => {
     e.preventDefault();

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import "./_userprofile.scss";
 import pf from "../../assets/images/UserProfile/man.jpg";
 
@@ -13,6 +13,10 @@ import OrderList from "./OrderList/index";
 
 const UserProfile = (props) => {
   const [tabPosition, setTabPosition] = useState("left");
+  const [reloadPage, setReloadPage] = useState("");
+  const callbackFunction = (childData) => {
+    setReloadPage(childData);
+  };
   // const changeTabPosition = (e) => {
   //   setTabPosition(e.target.value);
   // };
@@ -26,7 +30,7 @@ const UserProfile = (props) => {
         </div>
       ),
       key: 1,
-      children: <MyAccount />,
+      children: <MyAccount parentCallback={callbackFunction} />,
     },
     {
       label: (
@@ -58,17 +62,18 @@ const UserProfile = (props) => {
       key: 4,
       children: <OrderList />,
     },
-    {
-      label: (
-        <div className="user__content__left__card__item">
-          <i className="bx bxs-discount"></i>
-          <span>Mã Giảm Giá</span>
-        </div>
-      ),
-      key: 5,
-      children: <Voucher />,
-    },
+    // {
+    //   label: (
+    //     <div className="user__content__left__card__item">
+    //       <i className="bx bxs-discount"></i>
+    //       <span>Mã Giảm Giá</span>
+    //     </div>
+    //   ),
+    //   key: 5,
+    //   children: <Voucher />,
+    // },
   ];
+  useEffect(() => {}, [reloadPage]);
   return (
     <>
       <div className="user__profile">
