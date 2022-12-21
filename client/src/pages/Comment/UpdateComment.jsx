@@ -33,7 +33,7 @@ const UpdateComment = (props) => {
     await axios
       .put("http://localhost:8000/api/update-comment", {
         id: props.idComment,
-        cus_id: props.idCustomer,
+        cus_id: idCus,
         product_id: props.idProduct,
         description: newDesc,
         rate: newRate,
@@ -89,7 +89,7 @@ const UpdateComment = (props) => {
             onClick={() =>
               handleUpdateComment(
                 props.idComment,
-                props.idCustomer,
+                idCus,
                 props.idProduct,
                 newDesc,
                 newRate

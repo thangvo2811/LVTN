@@ -8,8 +8,9 @@ import WishList from "./WishList";
 import { Tabs } from "antd";
 import MyAccount from "./MyAccount";
 import Viewed from "./Viewed";
-import Voucher from "./Voucher";
+
 import OrderList from "./OrderList/index";
+import Warranty from "./Warranty";
 
 const UserProfile = (props) => {
   const [tabPosition, setTabPosition] = useState("left");
@@ -62,16 +63,16 @@ const UserProfile = (props) => {
       key: 4,
       children: <OrderList />,
     },
-    // {
-    //   label: (
-    //     <div className="user__content__left__card__item">
-    //       <i className="bx bxs-discount"></i>
-    //       <span>Mã Giảm Giá</span>
-    //     </div>
-    //   ),
-    //   key: 5,
-    //   children: <Voucher />,
-    // },
+    {
+      label: (
+        <div className="user__content__left__card__item">
+          <i class="bx bxs-cog"></i>
+          <span>Bảo Hành</span>
+        </div>
+      ),
+      key: 5,
+      children: <Warranty />,
+    },
   ];
   useEffect(() => {}, [reloadPage]);
   return (

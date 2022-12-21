@@ -56,16 +56,6 @@ const Cart = () => {
   const idCartItem = cartItem?.map((item, index) => item.cart_id);
   console.log("ID CART ITEM", idCartItem);
 
-  const totalIdCart = useSelector((state) => state.cart.numberCartByCartId);
-  console.log("ppppppppp", totalIdCart);
-  const id = cartItem?.map((item, index) => item.id);
-  const totalNum = cartItem.reduce(
-    (sum, item) => sum + totalIdCart[item.id],
-    0
-  );
-  console.log("qweqweqweqwe", totalNum);
-  console.log("asdasdasdasdas", id);
-
   const handleDeleteAllCart = async (e, [id]) => {
     e.preventDefault();
     await axios
@@ -124,7 +114,7 @@ const Cart = () => {
                 Tổng sản phẩm
               </div>
               <div className="cart__info__content__item__price">
-                {totalNum ? totalNum : 0}
+                {totalProduct || 0}
               </div>
             </div>
             <div className="cart__info__content__item">

@@ -22,7 +22,7 @@ const DeleteProduct = (props) => {
   const handleDeleteProduct = async (e, id) => {
     e.preventDefault();
     await axios
-      .delete(`http://localhost:8000/api/delete-product/${id}/`)
+      .put(`http://localhost:8000/api/delete-product-soft/${id}/`)
       .then((res) => {
         console.log(res.data);
         props.parentCallback(Date.now());

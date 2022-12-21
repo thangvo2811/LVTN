@@ -40,7 +40,6 @@ const OrderList = () => {
                     key={index}
                     item={item}
                     idOrderDetail={item.id}
-                    paymentStatus={item.paymentStatus}
                     parentCallback={callbackFunction}
                   ></Orderitem>
                 );

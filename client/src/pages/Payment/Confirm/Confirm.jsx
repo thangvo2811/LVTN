@@ -14,8 +14,20 @@ const Confirm = (props) => {
   const [email, setEmail] = useState("");
   const [warehouseId, setWareHouseId] = useState("");
   const [cartItem, setCartItem] = useState([]);
+  const [detailUser, setDetailUser] = useState("");
 
   const newCustomer = localStorage.getItem("User");
+
+  const callInfoUser = useCallback(async () => {
+    await axios
+      .get(`http://localhost:8000/api/get-by-Id/${newCustomer}/`)
+      .then((res) => {
+        setDetailUser(res.data.customer.user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [newCustomer]);
 
   const callAllCartItem = useCallback(async () => {
     await axios
@@ -37,7 +49,8 @@ const Confirm = (props) => {
 
   useEffect(() => {
     callAllCartItem();
-  }, [callAllCartItem, newCustomer]);
+    callInfoUser();
+  }, [callAllCartItem, newCustomer, callInfoUser]);
 
   const inputs = [
     {
@@ -48,6 +61,7 @@ const Confirm = (props) => {
       errorMessage: "Email không hợp lệ",
       label: "Email",
       pattern: "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+[a-zA-Z0-9-.]+$",
+      defaultValue: detailUser.email,
       required: true,
     },
     {
@@ -57,6 +71,7 @@ const Confirm = (props) => {
       placeholder: "Họ tên",
       errorMessage: "Họ tên không được trống",
       label: "Họ tên",
+      defaultValue: detailUser.fullname,
       pattern: null,
       required: true,
     },
@@ -67,6 +82,7 @@ const Confirm = (props) => {
       placeholder: "Phone",
       errorMessage: "Phone phải có ít nhất 10 số",
       label: "Phone",
+      defaultValue: detailUser.phonenumber,
       pattern: "[0-9]{10}",
       required: true,
     },
@@ -77,6 +93,7 @@ const Confirm = (props) => {
       placeholder: "Địa chỉ",
       errorMessage: "Địa chỉ không được trống",
       label: "Đỉa chỉ",
+      defaultValue: detailUser.address,
       pattern: null,
       required: true,
     },
@@ -108,10 +125,10 @@ const Confirm = (props) => {
                 className="btn-info"
                 onClick={() => {
                   props.createOrder(
-                    name,
-                    email,
-                    address,
-                    phone,
+                    detailUser.fullname,
+                    detailUser.email,
+                    detailUser.address,
+                    detailUser.phonenumber,
                     newCustomer,
                     warehouseId,
                     idCart

@@ -15,6 +15,7 @@ const Product = (props) => {
 
   const [allProduct, setAllProduct] = useState([]);
   const [detailProduct, setDetailProduct] = useState({});
+  // const [selectOption, setSelectOption] = useState([]);
 
   const [selectColor, setSelectColor] = useState("");
   const [selectOption, setSelectOption] = useState("");
@@ -22,6 +23,10 @@ const Product = (props) => {
   const [selectMain, setSelectMain] = useState("");
   const [selectSwitch, setSelectSwitch] = useState("");
   const [selectHDD, setSelectHDD] = useState("");
+  const [selectOption7, setSelectOption7] = useState("");
+  const [selectOption8, setSelectOption8] = useState("");
+  const [selectOption9, setSelectOption9] = useState("");
+  const [selectOption10, setSelectOption10] = useState("");
 
   const callDetailProduct = useCallback(async () => {
     await axios
@@ -53,23 +58,23 @@ const Product = (props) => {
     callDetailProduct();
   }, [callDetailProduct, param.category_id]);
 
-  console.log("colors: ", selectColor);
-  console.log("ssd:", selectOption);
-  console.log("screen:", selectScreen);
-  console.log("main:", selectMain);
-  console.log("switch:", selectSwitch);
-  console.log("hdd:", selectHDD);
+  // console.log("colors: ", selectColor);
+  // console.log("ssd:", selectOption);
+  // console.log("screen:", selectScreen);
+  // console.log("main:", selectMain);
+  // console.log("switch:", selectSwitch);
+  // console.log("hdd:", selectHDD);
   // console.log("total: ", selectOption.concat(selectColor));
   // array
-  console.log(
-    "total:",
-    selectColor,
-    selectOption,
-    selectScreen,
-    selectMain,
-    selectSwitch,
-    selectHDD
-  );
+  // console.log(
+  //   "total:",
+  //   selectColor,
+  //   selectOption,
+  //   selectScreen,
+  //   selectMain,
+  //   selectSwitch,
+  //   selectHDD
+  // );
   // selectOption.push(selectColor ?? []);
 
   return (
@@ -86,6 +91,10 @@ const Product = (props) => {
                 selectMain,
                 selectSwitch,
                 selectHDD,
+                selectOption7,
+                selectOption8,
+                selectOption9,
+                selectOption10,
               ]}
               product_id={detailProduct?.id ? detailProduct?.id : ""}
               statusProduct={
@@ -115,7 +124,39 @@ const Product = (props) => {
               desProduct={
                 detailProduct?.Description ? detailProduct?.Description : ""
               }
-              // color
+              // attriubteProduct={detailProduct?.existingOptions?.map(
+              //   (item, index) => {
+              //     return (
+              //       <>
+              //         <div
+              //           key={index}
+              //           className="product-top__info__content__option__left__option-color"
+              //         >
+              //           {item.id ? item.name : ""}
+              //         </div>
+              //         <div className="product-top__info__content__option__left__option-color__attribute">
+              //           {item?.values?.map((data, i) => (
+              //             <>
+              //               {data.option_id ? (
+              //                 <div
+              //                   className="product-top__info__content__option__left__option-color__attribute__name "
+              //                   onClick={(e) => {
+              //                     selectOption.push(data.id);
+              //                     console.log("newOption", selectOption);
+              //                     setSelectOption(selectOption);
+              //                   }}
+              //                 >
+              //                   {data.name}
+              //                 </div>
+              //               ) : null}
+              //             </>
+              //           ))}
+              //         </div>
+              //       </>
+              //     );
+              //   }
+              // )}
+
               color={detailProduct?.existingOptions?.map((item, index) => {
                 return (
                   <>
@@ -150,7 +191,6 @@ const Product = (props) => {
                   </>
                 );
               })}
-              // ssd
               ssd={
                 detailProduct.existingOptions ? (
                   <>
@@ -334,6 +374,166 @@ const Product = (props) => {
                                     }}
                                     className={
                                       data.id === selectHDD
+                                        ? "product-top__info__content__option__right__option-ssd__attribute__name active"
+                                        : "product-top__info__content__option__right__option-ssd__attribute__name"
+                                    }
+                                  >
+                                    {data.name}
+                                  </div>
+                                ) : null}
+                              </>
+                            ))}
+                          </div>
+                        </>
+                      );
+                    })}
+                  </>
+                ) : null
+              }
+              option7={
+                detailProduct.existingOptions ? (
+                  <>
+                    {detailProduct?.existingOptions?.map((item, index) => {
+                      return (
+                        <>
+                          <div
+                            key={index}
+                            className="product-top__info__content__option__right__option-ssd"
+                          >
+                            {item.id === 7 ? item.name : null}
+                          </div>
+
+                          <div className="product-top__info__content__option__right__option-ssd__attribute">
+                            {item?.values?.map((data, i) => (
+                              <>
+                                {data.option_id === 7 ? (
+                                  <div
+                                    key={data.id}
+                                    onClick={() => {
+                                      setSelectOption7(data.id);
+                                    }}
+                                    className={
+                                      data.id === selectOption7
+                                        ? "product-top__info__content__option__right__option-ssd__attribute__name active"
+                                        : "product-top__info__content__option__right__option-ssd__attribute__name"
+                                    }
+                                  >
+                                    {data.name}
+                                  </div>
+                                ) : null}
+                              </>
+                            ))}
+                          </div>
+                        </>
+                      );
+                    })}
+                  </>
+                ) : null
+              }
+              option8={
+                detailProduct.existingOptions ? (
+                  <>
+                    {detailProduct?.existingOptions?.map((item, index) => {
+                      return (
+                        <>
+                          <div
+                            key={index}
+                            className="product-top__info__content__option__right__option-ssd"
+                          >
+                            {item.id === 8 ? item.name : null}
+                          </div>
+
+                          <div className="product-top__info__content__option__right__option-ssd__attribute">
+                            {item?.values?.map((data, i) => (
+                              <>
+                                {data.option_id === 8 ? (
+                                  <div
+                                    key={data.id}
+                                    onClick={() => {
+                                      setSelectOption8(data.id);
+                                    }}
+                                    className={
+                                      data.id === selectOption8
+                                        ? "product-top__info__content__option__right__option-ssd__attribute__name active"
+                                        : "product-top__info__content__option__right__option-ssd__attribute__name"
+                                    }
+                                  >
+                                    {data.name}
+                                  </div>
+                                ) : null}
+                              </>
+                            ))}
+                          </div>
+                        </>
+                      );
+                    })}
+                  </>
+                ) : null
+              }
+              option9={
+                detailProduct.existingOptions ? (
+                  <>
+                    {detailProduct?.existingOptions?.map((item, index) => {
+                      return (
+                        <>
+                          <div
+                            key={index}
+                            className="product-top__info__content__option__right__option-ssd"
+                          >
+                            {item.id === 9 ? item.name : null}
+                          </div>
+
+                          <div className="product-top__info__content__option__right__option-ssd__attribute">
+                            {item?.values?.map((data, i) => (
+                              <>
+                                {data.option_id === 9 ? (
+                                  <div
+                                    key={data.id}
+                                    onClick={() => {
+                                      setSelectOption9(data.id);
+                                    }}
+                                    className={
+                                      data.id === selectOption9
+                                        ? "product-top__info__content__option__right__option-ssd__attribute__name active"
+                                        : "product-top__info__content__option__right__option-ssd__attribute__name"
+                                    }
+                                  >
+                                    {data.name}
+                                  </div>
+                                ) : null}
+                              </>
+                            ))}
+                          </div>
+                        </>
+                      );
+                    })}
+                  </>
+                ) : null
+              }
+              option10={
+                detailProduct.existingOptions ? (
+                  <>
+                    {detailProduct?.existingOptions?.map((item, index) => {
+                      return (
+                        <>
+                          <div
+                            key={index}
+                            className="product-top__info__content__option__right__option-ssd"
+                          >
+                            {item.id === 10 ? item.name : null}
+                          </div>
+
+                          <div className="product-top__info__content__option__right__option-ssd__attribute">
+                            {item?.values?.map((data, i) => (
+                              <>
+                                {data.option_id === 10 ? (
+                                  <div
+                                    key={data.id}
+                                    onClick={() => {
+                                      setSelectOption10(data.id);
+                                    }}
+                                    className={
+                                      data.id === selectOption10
                                         ? "product-top__info__content__option__right__option-ssd__attribute__name active"
                                         : "product-top__info__content__option__right__option-ssd__attribute__name"
                                     }

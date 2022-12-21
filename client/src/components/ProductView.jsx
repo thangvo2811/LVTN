@@ -25,11 +25,16 @@ import { totalCartNumber } from "../redux/cartRedux";
 const ProductView = (props) => {
   const param = useParams();
   const array = props.arr;
+  console.log("arrayOption", array);
 
   const [quantity, setQuantity] = useState(1);
   const [commentProduct, setCommentProduct] = useState([]);
   const [reloadPage, setReloadPage] = useState("");
   const [quantityProduct, setQuantityProduct] = useState([]);
+
+  const [quantityOptionProdct, setQuantityOptionProdct] = useState([]);
+
+  const [idUserComment, setIdUserComment] = useState([]);
 
   const [idWare, setIdWare] = useState("");
   const callbackFunction = (childData) => {
@@ -74,6 +79,21 @@ const ProductView = (props) => {
       });
   }, [dispatch, newCustomer]);
 
+  const callIdUserCommnet = useCallback(async () => {
+    await axios
+      .get(`http://localhost:8000/api/get-all-comment-customer/${newCustomer}/`)
+      .then((res) => {
+        setIdUserComment(res.data.comment);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [newCustomer]);
+
+  const idUser = idUserComment?.map((item, index) => item.cus_id);
+  const idComment = idUser[0];
+  console.log("asdasda12313", idComment);
+
   const callCommentProduct = useCallback(async () => {
     await axios
       .get(
@@ -104,7 +124,8 @@ const ProductView = (props) => {
   }, [array, props.product_id]);
   useEffect(() => {
     callCommentProduct();
-  }, [callCommentProduct]);
+    callIdUserCommnet();
+  }, [callCommentProduct, callIdUserCommnet]);
 
   useEffect(() => {
     if (array.length <= 0) {
@@ -115,6 +136,30 @@ const ProductView = (props) => {
     }
     callAllQuantity();
   }, [callAllQuantity, array, props.product_id]);
+
+  const callAllOptionProduct = useCallback(async () => {
+    const filter = array.filter((item) => item !== null && item !== "");
+    await axios
+      .post("http://localhost:8000/api/get-product-quantity/", {
+        product_id: props.product_id,
+        optionvalue: filter,
+      })
+      .then((res) => {
+        setQuantityOptionProdct(res.data.qa);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [array, props.product_id]);
+  useEffect(() => {
+    if (array.length <= 0) {
+      return;
+    }
+    if (!props.product_id) {
+      return;
+    }
+    callAllOptionProduct();
+  }, [array, callAllOptionProduct, props.product_id]);
 
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -224,6 +269,9 @@ const ProductView = (props) => {
               <div className="product-top__info__content__option__left">
                 {props.color}
               </div>
+              <div className="product-top__info__content__option__left">
+                {props.ssd}
+              </div>
               <div className="product-top__info__content__option__right">
                 {props.screen}
               </div>
@@ -234,8 +282,18 @@ const ProductView = (props) => {
                 {props.hdd}
               </div>
               <div className="product-top__info__content__option__right">
-                {props.ssd}
+                {props.option7}
               </div>
+              <div className="product-top__info__content__option__right">
+                {props.option8}
+              </div>
+              <div className="product-top__info__content__option__right">
+                {props.option9}
+              </div>
+              <div className="product-top__info__content__option__right">
+                {props.option10}
+              </div>
+
               <div className="product-top__info__content__option__right__select">
                 <select onChange={(e) => setIdWare(e.target.value)}>
                   <option>Chọn Chi Nhánh</option>
@@ -252,6 +310,13 @@ const ProductView = (props) => {
                     </>
                   ))}
                 </select>
+              </div>
+              <div className="product-top__info__content__option__right__select">
+                {quantityOptionProdct?.map((item, index) => (
+                  <div>
+                    {item.UserwarehouseProduct.name}: {item.quantity} sản phẩm
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -293,20 +358,26 @@ const ProductView = (props) => {
                     ""
                   )}
                 </div>
+
                 <div className="product__comment__content__desc__type__features">
-                  <DeleteComment
-                    idComment={item?.id}
-                    parentCallback={callbackFunction}
-                  ></DeleteComment>
-                  <UpdateComment
-                    idComment={item?.id}
-                    idCustomer={item?.cus_id}
-                    idProduct={item?.product_id}
-                    descProduct={item?.description}
-                    rateProduct={item?.rate}
-                    idCus={item.idCus}
-                    parentCallback={callbackFunction}
-                  ></UpdateComment>
+                  {item?.cus_id === idComment ? (
+                    <DeleteComment
+                      idComment={item?.id}
+                      parentCallback={callbackFunction}
+                    ></DeleteComment>
+                  ) : null}
+
+                  {item.cus_id === idComment ? (
+                    <UpdateComment
+                      idComment={item?.id}
+                      idCustomer={item?.cus_id}
+                      idProduct={item?.product_id}
+                      descProduct={item?.description}
+                      rateProduct={item?.rate}
+                      idCus={item.idCus}
+                      parentCallback={callbackFunction}
+                    ></UpdateComment>
+                  ) : null}
                 </div>
               </div>
             </div>

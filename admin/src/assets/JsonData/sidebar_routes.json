@@ -70,5 +70,15 @@
     "display_name": "Chi Nhánh",
     "route": "/branch",
     "icon": "bx bx-store"
+  },
+  {
+    "display_name": "Chi Nhánh Bảo Hành",
+    "route": "/branchWarranty",
+    "icon": "bx bx-store"
+  },
+  {
+    "display_name": "Bảo Hành",
+    "route": "/warranty",
+    "icon": "bx bx-store"
   }
 ]

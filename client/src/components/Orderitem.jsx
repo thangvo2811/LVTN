@@ -30,6 +30,8 @@ const orderStatus = [
 const Orderitem = (props) => {
   const orderItem = props.orderItem;
   const itemOrder = props.item;
+
+  console.log("StatusPay", itemOrder.paymentstatus);
   const id = props.idOrderDetail;
   const navigate = useNavigate();
 
@@ -72,6 +74,11 @@ const Orderitem = (props) => {
           </div>
         </div>
       </div>
+      <div className="order-item__pay">
+        {itemOrder.paymentstatus === 2 ? (
+          <div className="order-item__pay">Đã Thanh Toán</div>
+        ) : null}
+      </div>
       <div className="btn-delete">
         {orderStatus?.map((item, index) => (
           <div>
@@ -82,37 +89,21 @@ const Orderitem = (props) => {
                 reloadPage={props.parentCallback()}
               ></AddComment>
             ) : null}
-            {item.id === 1 && props.statusOrder === 1 ? (
+            {(item.id === 1 &&
+              props.statusOrder === 1 &&
+              itemOrder.paymentstatus !== 2) ||
+            (item.id === 2 &&
+              props.statusOrder === 2 &&
+              itemOrder.paymentstatus !== 2) ? (
               <DeleteOrder
                 id={itemOrder.id}
                 reloadPage={props.parentCallback()}
               ></DeleteOrder>
-            ) : item.id === 2 && props.statusOrder === 2 ? (
-              <DeleteOrder
-                id={itemOrder.id}
-                reloadPage={props.parentCallback()}
-              ></DeleteOrder> ? (
-                props.payment === 2 ? null : (
-                  <DeleteOrder
-                    id={itemOrder.id}
-                    reloadPage={props.parentCallback()}
-                  ></DeleteOrder>
-                )
-              ) : null
             ) : null}
           </div>
         ))}
-        {/* {orderStatus?.map((item, index) => (
-          <div>
-            {item.id && props.statusOrder === 2 ? (
-              <DeleleOrder></DeleleOrder>
-            ) : null}
-          </div>
-        ))} */}
-
-        {/* <DeleleOrder></DeleleOrder> */}
-        {/* <button className="btn-click">HỦY ĐƠN HÀNG</button> */}
       </div>
+      {/* {itemOrder.paymentstatus === 2 ? null : null} */}
     </div>
   );
 };

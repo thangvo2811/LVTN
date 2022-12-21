@@ -112,18 +112,27 @@ const AddOption = (props) => {
           <div className="form-title">Thuộc Tính</div>
           <div className="form-input">
             <form>
+              <label>Danh Mục Thuộc Tính</label>
+              <br />
+              <select
+                // value={selected}
+                onChange={(e) => setSelected(e.target.value)}
+              >
+                <option>Chọn Thuộc Tính</option>
+                {allOption?.map((item, index) => (
+                  <option key={index} value={item?.id}>
+                    {item?.name}
+                  </option>
+                ))}
+              </select>
+
               <label>Tên Thuộc Tính</label>
               <Input
                 type="text"
                 placeholder="Tên Thuộc Tính"
                 onChange={(e) => setNewName(e.target.value)}
               />
-              <label>Giá</label>
-              <Input
-                type="number"
-                placeholder="Giá"
-                onChange={(e) => setNewPrice(e.target.value)}
-              />
+
               <label>Tên Sản Phẩm</label>
               <br />
               <select
@@ -137,19 +146,12 @@ const AddOption = (props) => {
                   </option>
                 ))}
               </select>
-              <label>Tên Thuộc Tính</label>
-              <br />
-              <select
-                // value={selected}
-                onChange={(e) => setSelected(e.target.value)}
-              >
-                <option>Chọn Thuộc Tính</option>
-                {allOption?.map((item, index) => (
-                  <option key={index} value={item?.id}>
-                    {item?.name}
-                  </option>
-                ))}
-              </select>
+              <label>Giá</label>
+              <Input
+                type="number"
+                placeholder="Giá"
+                onChange={(e) => setNewPrice(e.target.value)}
+              />
             </form>
           </div>
         </DialogContent>

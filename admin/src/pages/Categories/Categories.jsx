@@ -15,9 +15,9 @@ const Categories = () => {
 
   const callAllCategory = async () => {
     await axios
-      .get("http://localhost:8000/api/get-Category/")
+      .get("http://localhost:8000/api/get-category-parent/")
       .then((res) => {
-        setAllCategory(res.data.category);
+        setAllCategory(res.data.Category);
       })
       .catch((err) => {
         console.log(err);
