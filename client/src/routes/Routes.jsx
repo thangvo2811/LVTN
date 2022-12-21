@@ -20,6 +20,7 @@ import ResetPassWord from "../pages/ForgetPassWord/ResetPassWord/ResetPassWord";
 import EmailActive from "../pages/Register/EmailActive";
 import Posts from "../pages/Blog/Posts";
 import DetailOrder from "../pages/UserProfile/OrderList/DetailOrder/DetailOrder";
+import DetailWarranty from "../pages/UserProfile/Warranty/DetailWarranty/DetailWarranty";
 
 const Routes = () => {
   return (
@@ -42,6 +43,7 @@ const Routes = () => {
       <Route path="/blog/" element={<Posts />}></Route>
       <Route path="/cart" element={<Cart />}></Route>
       <Route path="/payment" element={<Payment />}></Route>
+      <Route path="/detailWarranty/:id" element={<DetailWarranty />}></Route>
     </Switch>
   );
 };
