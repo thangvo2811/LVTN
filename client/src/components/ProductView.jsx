@@ -241,9 +241,9 @@ const ProductView = (props) => {
                   {/* Trạng thái: {props.statusProduct ? props.statusProduct : ""} */}
                 </div>
               ))}
-              <div className="product-top__info__status">
+              {/* <div className="product-top__info__status">
                 Số lượng: {props.current ? props.current : ""} sản phẩm
-              </div>
+              </div> */}
               <div className="product-top__info__quantity">
                 <i className="bx bx-minus" onClick={decreaseQuantity}></i>
                 <div>{quantity || 0}</div>

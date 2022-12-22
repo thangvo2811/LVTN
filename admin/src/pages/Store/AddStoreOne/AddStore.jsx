@@ -13,7 +13,7 @@ const AddStore = (props) => {
   const [open, setOpen] = React.useState(false);
   const [allWareHouse, setAllWareHouse] = useState([]);
 
-  const [quantity, setQuantity] = useState("");
+  const [quantity, setQuantity] = useState(0);
   const [selected, setSelected] = useState("");
 
   const [allProduct, setAllProduct] = useState([]);
@@ -22,12 +22,25 @@ const AddStore = (props) => {
   const [allOption, setAllOption] = useState([]);
   const [selectOption, setSelectOption] = useState([]);
 
+  const [searchKey, setSearchKey] = useState("");
+
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+  const callSearchKey = async (keyWord) => {
+    await axios
+      .get(`http://localhost:8000/api/findbykeyword/${keyWord}/`)
+      .then((res) => {
+        console.log(res.data.listProduct);
+        setSearchKey(res.data.listProduct);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   const callAllProduct = async () => {
     await axios
@@ -58,6 +71,13 @@ const AddStore = (props) => {
   }, [selectOption, selectProduct]);
   console.log("ID PRODUCT", selectProduct);
   console.log("Array", selectOption);
+
+  useEffect(() => {
+    callSearchKey();
+  }, []);
+  const handleSearch = (e) => {
+    console.log("SearchProduct", searchKey);
+  };
 
   const handleAddWareHouse = async () => {
     await axios
@@ -114,8 +134,10 @@ const AddStore = (props) => {
               <br />
               <select
                 // value={selectProduct}
+
                 onChange={(e) => {
                   setSelectProduct(e.target.value);
+                  handleSearch();
                 }}
               >
                 <option>Chọn Sản Phẩm</option>

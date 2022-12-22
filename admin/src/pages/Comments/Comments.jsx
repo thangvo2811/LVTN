@@ -26,7 +26,7 @@ const Comments = () => {
   return (
     <div>
       <div className="page-header">
-        <h2 className="page-header__title">Option</h2>
+        <h2 className="page-header__title">Đánh Giá</h2>
       </div>
       <div className="row">
         <div className="col-12">

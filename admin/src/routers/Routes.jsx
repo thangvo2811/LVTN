@@ -20,6 +20,8 @@ import CategoryOption from "../pages/CategoryOption/CategoryOption";
 import Voucher from "../pages/Voucher/Voucher";
 import BranchWarranty from "../pages/BranchWarranty/BranchWarranty";
 import Warranty from "../pages/Warranty/Warranty";
+import InFoWarranty from "../pages/InFoWarranty/InFoWarranty";
+import TabWarranty from "../pages/InFoWarranty/TabWarranty";
 const isLogin = localStorage.getItem("admin") ? true : false;
 
 const Routes = () => {
@@ -47,6 +49,7 @@ const Routes = () => {
             component={BranchWarranty}
           ></Route>
           <Route path="/warranty" exact component={Warranty} />
+          <Route path="/infoWarranty" exact component={TabWarranty} />
         </>
       ) : (
         <Redirect from="" to="login" />
