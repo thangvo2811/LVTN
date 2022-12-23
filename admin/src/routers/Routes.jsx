@@ -22,6 +22,7 @@ import BranchWarranty from "../pages/BranchWarranty/BranchWarranty";
 import Warranty from "../pages/Warranty/Warranty";
 import InFoWarranty from "../pages/InFoWarranty/InFoWarranty";
 import TabWarranty from "../pages/InFoWarranty/TabWarranty";
+import FeedBack from "../pages/FeedBackComment/FeedBack";
 const isLogin = localStorage.getItem("admin") ? true : false;
 
 const Routes = () => {
@@ -38,6 +39,7 @@ const Routes = () => {
           <Route path="/optionCategory" exact component={CategoryOption} />
           <Route path="/option" exact component={Option} />
           <Route path="/comment" exact component={Comments} />
+          <Route path="/feedback" exact component={FeedBack} />
           <Route path="/blog" exact component={Blog} />
           <Route path="/orders" exact component={Order} />
           <Route path="/store" exact component={Tab} />

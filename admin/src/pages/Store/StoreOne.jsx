@@ -29,6 +29,7 @@ const StoreOne = (props) => {
     item.optionvalue.map((data, i) => data)
   );
   console.log("ARRAY", array);
+
   useEffect(() => {
     callAllStore();
   }, [callAllStore, reloadPage]);

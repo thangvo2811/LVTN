@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import DeleteComment from "./DeleteComment/DeleteComment";
+import React, { useEffect, useState } from "react";
+import AddCommnet from "./AddComment/AddCommnet";
+import DeleteComment from "./DeleteFeedBack/DeleteComment";
 
-const Comments = () => {
+const FeedBack = () => {
   const [allComment, setAllComment] = useState([]);
   const [reloadPage, setReloadPage] = useState("");
   const callbackFunction = (childData) => {
     setReloadPage(childData);
   };
 
-  const callAllComment = async (id) => {
+  const callAllComment = async () => {
     await axios
-      .get("http://localhost:8000/api/get-all-comment/")
+      .get("http://localhost:8000/api/get-all-comment-admin/")
       .then((res) => {
         setAllComment(res.data.comment);
       })
@@ -27,6 +27,7 @@ const Comments = () => {
     <div>
       <div className="page-header">
         <h2 className="page-header__title">Đánh Giá</h2>
+        <AddCommnet parentCallback={callbackFunction}></AddCommnet>
       </div>
       <div className="row">
         <div className="col-12">
@@ -36,10 +37,8 @@ const Comments = () => {
                 <thead>
                   <tr>
                     <td>ID</td>
-                    <td>Mã Khách Hàng</td>
-                    <td>Mã Sản Phẩm</td>
+                    <td>Mã Bình Luận</td>
                     <td>Nội Dung</td>
-                    <td>Đánh Giá</td>
                     <td>Cài Đặt</td>
                   </tr>
                 </thead>
@@ -47,17 +46,13 @@ const Comments = () => {
                   {allComment?.map((item, index) => (
                     <tr key={index}>
                       <td>{item.id}</td>
-                      <td>{item.cus_id}</td>
-                      <td>{item.product_id}</td>
-
+                      <td>{item.comment_id}</td>
                       <td>{item.description}</td>
-
-                      <td>{item.rate}</td>
                       <td>
                         <div className="card__body__features">
                           <span className="card__body__features__delete">
                             <DeleteComment
-                              item={item.id}
+                              id={item.comment_id}
                               parentCallback={callbackFunction}
                             ></DeleteComment>
                           </span>
@@ -75,4 +70,4 @@ const Comments = () => {
   );
 };
 
-export default Comments;
+export default FeedBack;

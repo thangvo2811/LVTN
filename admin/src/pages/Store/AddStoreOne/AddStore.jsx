@@ -8,6 +8,7 @@ import { Input, message } from "antd";
 import axios from "axios";
 import React, { useState } from "react";
 import { useEffect } from "react";
+import Select from "react-select";
 
 const AddStore = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -31,17 +32,7 @@ const AddStore = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const callSearchKey = async (keyWord) => {
-    await axios
-      .get(`http://localhost:8000/api/findbykeyword/${keyWord}/`)
-      .then((res) => {
-        console.log(res.data.listProduct);
-        setSearchKey(res.data.listProduct);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+
   const callAllProduct = async () => {
     await axios
       .get(
@@ -54,6 +45,11 @@ const AddStore = (props) => {
         console.log(err);
       });
   };
+
+  let productOption = allProduct?.map((item, index) => {
+    return { label: item.name, value: item.id };
+  });
+
   const callAllOption = async (id) => {
     await axios
       .get(`http://localhost:8000/api/get-product/${id}/`)
@@ -71,13 +67,6 @@ const AddStore = (props) => {
   }, [selectOption, selectProduct]);
   console.log("ID PRODUCT", selectProduct);
   console.log("Array", selectOption);
-
-  useEffect(() => {
-    callSearchKey();
-  }, []);
-  const handleSearch = (e) => {
-    console.log("SearchProduct", searchKey);
-  };
 
   const handleAddWareHouse = async () => {
     await axios
@@ -111,6 +100,13 @@ const AddStore = (props) => {
   useEffect(() => {
     callAllWareHouse();
   }, []);
+  const handleProduct = (index) => {
+    let idProduct = allProduct?.map((item, index) => {
+      return item.id;
+    });
+
+    setSelectProduct(idProduct);
+  };
 
   return (
     <div>
@@ -132,9 +128,9 @@ const AddStore = (props) => {
             <form>
               <label>Tên Sản Phẩm</label>
               <br />
-              <select
+              {/* <select
                 // value={selectProduct}
-
+                name="select"
                 onChange={(e) => {
                   setSelectProduct(e.target.value);
                   handleSearch();
@@ -146,7 +142,16 @@ const AddStore = (props) => {
                     {item?.name}
                   </option>
                 ))}
-              </select>
+              </select> */}
+
+              <Select
+                // onChange={(e) => setSelectProduct(e.target.value)}
+                className="basic-single"
+                classNamePrefix="select"
+                name="color"
+                options={productOption}
+                onChange={handleProduct}
+              ></Select>
 
               {allOption?.existingOptions?.map((item, index) => {
                 return (

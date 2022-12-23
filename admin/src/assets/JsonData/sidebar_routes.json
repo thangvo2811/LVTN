@@ -47,6 +47,11 @@
     "icon": "bx bx-comment"
   },
   {
+    "display_name": "Phản Hồi Đánh Giá",
+    "route": "/feedback",
+    "icon": "bx bx-comment"
+  },
+  {
     "display_name": "Bài Viết",
     "route": "/blog",
     "icon": "bx bx-news"

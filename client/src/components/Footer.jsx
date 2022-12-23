@@ -8,56 +8,56 @@ import { Link } from "react-router-dom";
 const footerAboutLink = [
   {
     display: "Giới thiệu",
-    path: "/about",
+    path: "/",
   },
   {
     display: "Liên hệ",
-    path: "/about",
+    path: "/",
   },
   {
     display: "Tin tức",
-    path: "/about",
+    path: "/",
   },
   {
     display: "Tuyển dụng",
-    path: "/about",
+    path: "/",
   },
   {
     display: "Hệ thống cửa hàng",
-    path: "/about",
+    path: "/",
   },
 ];
 
 const footerCustomerLink = [
   {
     display: "Chính sách đổi trả",
-    path: "/about",
+    path: "/",
   },
   {
     display: "Chính sách bảo hành",
-    path: "/about",
+    path: "/",
   },
   {
     display: "Chính sách hoàn tiền",
-    path: "/about",
+    path: "/",
   },
 ];
 const footerCustomerContact = [
   {
     display: "phunguyen@gmail.com",
-    path: "/about",
+    path: "/",
   },
   {
     display: "vohoangthang2811@gmail.com",
-    path: "/about",
+    path: "/",
   },
   {
     display: "0909090909",
-    path: "/about",
+    path: "/",
   },
   {
     display: "0908070605",
-    path: "/about",
+    path: "/",
   },
 ];
 const Footer = () => {
