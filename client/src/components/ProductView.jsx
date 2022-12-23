@@ -9,6 +9,7 @@ import Rating from "@mui/material/Rating";
 
 import pd from "../assets/images/products/laptop-asus-rog-strix-g15-g513ih-hn015t-1.jpg";
 import pfUser from "../assets/images/UserProfile/man.png";
+import admin from "../assets/images/UserProfile/admin.png";
 
 import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -25,7 +26,6 @@ import { totalCartNumber } from "../redux/cartRedux";
 const ProductView = (props) => {
   const param = useParams();
   const array = props.arr;
-  console.log("arrayOption", array);
 
   const [quantity, setQuantity] = useState(1);
   const [commentProduct, setCommentProduct] = useState([]);
@@ -35,6 +35,8 @@ const ProductView = (props) => {
   const [quantityOptionProdct, setQuantityOptionProdct] = useState([]);
 
   const [idUserComment, setIdUserComment] = useState([]);
+
+  const [responeComment, setResponeComment] = useState([]);
 
   const [idWare, setIdWare] = useState("");
   const callbackFunction = (childData) => {
@@ -94,6 +96,18 @@ const ProductView = (props) => {
   const idComment = idUser[0];
   console.log("asdasda12313", idComment);
 
+  const callFeedbackComment = useCallback(async () => {
+    await axios
+      .get(`http://localhost:8000/api/get-comment-respone/${param.comment_id}/`)
+      .then((res) => {
+        console.log("aaaaaaaaabbbbbbbbb", res.data.commentres);
+        setResponeComment(res.data.commentres);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [param.comment_id]);
+
   const callCommentProduct = useCallback(async () => {
     await axios
       .get(
@@ -122,10 +136,15 @@ const ProductView = (props) => {
         console.log(err);
       });
   }, [array, props.product_id]);
-  useEffect(() => {
-    callCommentProduct();
-    callIdUserCommnet();
-  }, [callCommentProduct, callIdUserCommnet]);
+  useEffect(
+    () => {
+      callCommentProduct();
+      callIdUserCommnet();
+      callFeedbackComment();
+    },
+    [callCommentProduct, callFeedbackComment, callIdUserCommnet],
+    reloadPage
+  );
 
   useEffect(() => {
     if (array.length <= 0) {
@@ -383,6 +402,30 @@ const ProductView = (props) => {
             </div>
           );
         })}
+
+        {/* Start Feedback Comment */}
+        <div className="product__comment__admin">
+          {responeComment?.map((item, index) => {
+            return (
+              <>
+                <div className="product__comment__admin__top">
+                  <div className="product__comment__admin__top__img">
+                    <img src={admin} alt="" />
+                  </div>
+                  <div className="product__comment__admin__top__name">
+                    <span>Quản Trị Viên</span>
+                  </div>
+                </div>
+                <div className="product__comment__admin__bottom">
+                  <div className="product__comment__admin__bottom__content">
+                    {item?.description}
+                  </div>
+                </div>
+              </>
+            );
+          })}
+        </div>
+        {/* End FeedBack Comment */}
       </div>
 
       {/* end product comment */}

@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import AddCommnet from "./AddComment/AddCommnet";
 import DeleteComment from "./DeleteFeedBack/DeleteComment";
+import UpdateComment from "./UpdateFeedBack/UpdateComment";
 
 const FeedBack = () => {
   const [allComment, setAllComment] = useState([]);
@@ -45,14 +46,22 @@ const FeedBack = () => {
                 <thead>
                   {allComment?.map((item, index) => (
                     <tr key={index}>
-                      <td>{item.id}</td>
-                      <td>{item.comment_id}</td>
-                      <td>{item.description}</td>
+                      <td>{item?.id}</td>
+                      <td>{item?.comment_id}</td>
+                      <td>{item?.description}</td>
                       <td>
                         <div className="card__body__features">
+                          <span className="card__body__features__edit">
+                            <UpdateComment
+                              id={item?.id}
+                              idComment={item?.comment_id}
+                              descComment={item?.description}
+                              parentCallback={callbackFunction}
+                            ></UpdateComment>
+                          </span>
                           <span className="card__body__features__delete">
                             <DeleteComment
-                              id={item.comment_id}
+                              id={item?.id}
                               parentCallback={callbackFunction}
                             ></DeleteComment>
                           </span>

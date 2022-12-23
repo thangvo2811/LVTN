@@ -320,5 +320,38 @@
         }
       }
     }
+    &__admin {
+      padding-top: 20px;
+      padding-left: 50px;
+      &__top {
+        display: flex;
+        &__img {
+          img {
+            max-width: 50px;
+            max-height: 50px;
+            min-width: 50px;
+            min-height: 50px;
+            object-fit: cover;
+          }
+        }
+        &__name {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          span {
+            font-weight: 700;
+            font-size: 16px;
+            margin-left: 10px;
+          }
+        }
+      }
+      &__bottom {
+        margin-top: 10px;
+        &__content {
+          width: 50%;
+          margin-left: 60px;
+        }
+      }
+    }
   }
 }
