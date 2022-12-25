@@ -34,7 +34,10 @@ const Viewed = () => {
         <Grid col={4} mdCol={2} smCol={1} gap={20}>
           {allList?.map((item, index) => (
             <ProductCardViewed
-              product={item}
+              imgProduct={item?.ViewProduct?.img}
+              nameProduct={item?.ViewProduct?.name}
+              priceProduct={item?.ViewProduct?.unitprice}
+              idProduct={item?.ViewProduct?.id}
               key={index}
               parentCallback={callbackFunction}
             ></ProductCardViewed>

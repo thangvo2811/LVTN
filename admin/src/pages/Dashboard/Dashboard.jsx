@@ -110,7 +110,10 @@ const orderStatus = {
 
 const Dashboard = () => {
   const [allOrder, setAllOrder] = useState([]);
-  const [countOrder, setCountOrder] = useState({});
+  const [countOrder, setCountOrder] = useState();
+  const [totalPrice, setTotalPrice] = useState();
+  const [totalProduct, setTotalProduct] = useState();
+  const [totalOrder, setTotalOrder] = useState();
 
   const themeReducer = useSelector((state) => state.ThemeReducer.mode);
   const statusOrder = [
@@ -141,6 +144,9 @@ const Dashboard = () => {
       .get("http://localhost:8000/api/Count-Order-chart/")
       .then((res) => {
         setCountOrder(res.data.order);
+        setTotalPrice(res.data.price);
+        setTotalProduct(res.data.product);
+        setTotalOrder(res.data.ordersta4);
       })
       .catch((err) => {
         console.log(err);
@@ -161,10 +167,34 @@ const Dashboard = () => {
 
   useEffect(() => {
     callAllOrder();
+    callAllOrderCount();
   }, []);
 
   const dateOrder = allOrder?.map((item, index) => item.createdAt);
   console.log("object", dateOrder);
+
+  const chartOrder = [
+    {
+      icon: "bx bx-shopping-bag",
+      count: totalProduct,
+      title: "Sản Phẩm Đã Bán",
+    },
+    {
+      icon: "bx bx-cart",
+      count: countOrder,
+      title: "Tổng Đơn Hàng",
+    },
+    {
+      icon: "bx bx-dollar-circle",
+      count: `${totalPrice}Đ`,
+      title: "Tổng Thu Nhập",
+    },
+    {
+      icon: "bx bx-receipt",
+      count: totalOrder,
+      title: "Đơn Đặt Hàng",
+    },
+  ];
 
   return (
     <div>
@@ -172,7 +202,7 @@ const Dashboard = () => {
       <div className="row">
         <div className="col-6">
           <div className="row">
-            {statusCards.map((item, index) => (
+            {chartOrder.map((item, index) => (
               <div className="col-6" key={index}>
                 <StatusCard
                   icon={item.icon}
