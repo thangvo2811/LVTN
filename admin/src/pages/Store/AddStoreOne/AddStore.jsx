@@ -100,12 +100,9 @@ const AddStore = (props) => {
   useEffect(() => {
     callAllWareHouse();
   }, []);
-  const handleProduct = (index) => {
-    let idProduct = allProduct?.map((item, index) => {
-      return item.id;
-    });
-
-    setSelectProduct(idProduct);
+  const handleProduct = (e) => {
+    console.log("eeeeeeeeee", e.value);
+    setSelectProduct(e.value);
   };
 
   return (

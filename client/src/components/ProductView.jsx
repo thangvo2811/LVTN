@@ -25,6 +25,7 @@ import { totalCartNumber } from "../redux/cartRedux";
 
 const ProductView = (props) => {
   const param = useParams();
+
   const array = props.arr;
 
   const [quantity, setQuantity] = useState(1);
@@ -36,7 +37,9 @@ const ProductView = (props) => {
 
   const [idUserComment, setIdUserComment] = useState([]);
 
-  const [responeComment, setResponeComment] = useState([]);
+  const [allCommentAdmin, setAllCommentAdmin] = useState([]);
+
+  const [totalPriceProduct, setTotalPriceProduct] = useState({});
 
   const [idWare, setIdWare] = useState("");
   const callbackFunction = (childData) => {
@@ -73,7 +76,7 @@ const ProductView = (props) => {
     await axios
       .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}/`)
       .then((res) => {
-        console.log("Tong SP", res.data.quantity);
+        // console.log("Tong SP", res.data.quantity);
         dispatch(totalCartNumber(res.data.quantity));
       })
       .catch((err) => {
@@ -96,18 +99,6 @@ const ProductView = (props) => {
   const idComment = idUser[0];
   console.log("asdasda12313", idComment);
 
-  const callFeedbackComment = useCallback(async () => {
-    await axios
-      .get(`http://localhost:8000/api/get-comment-respone/${param.comment_id}/`)
-      .then((res) => {
-        console.log("aaaaaaaaabbbbbbbbb", res.data.commentres);
-        setResponeComment(res.data.commentres);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [param.comment_id]);
-
   const callCommentProduct = useCallback(async () => {
     await axios
       .get(
@@ -121,28 +112,26 @@ const ProductView = (props) => {
         console.log(err);
       });
   }, [param.category_id]);
-  const callAllQuantity = useCallback(async () => {
-    const filter = array.filter((item) => item !== null && item !== "");
-    await axios
-      .post("http://localhost:8000/api/get-product-quantity/", {
-        product_id: props.product_id,
-        optionvalue: filter,
-      })
 
+  const callAllFeedBack = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-all-comment-admin/")
       .then((res) => {
-        setQuantityProduct(res.data.qa);
+        setAllCommentAdmin(res.data.comment);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [array, props.product_id]);
+  };
+  const idFeedBack = commentProduct?.map((item, index) => item.id);
+  const idAdmin = idFeedBack[0];
   useEffect(
     () => {
       callCommentProduct();
       callIdUserCommnet();
-      callFeedbackComment();
+      callAllFeedBack();
     },
-    [callCommentProduct, callFeedbackComment, callIdUserCommnet],
+    [callCommentProduct, callIdUserCommnet],
     reloadPage
   );
 
@@ -153,8 +142,7 @@ const ProductView = (props) => {
     if (!props.product_id) {
       return;
     }
-    callAllQuantity();
-  }, [callAllQuantity, array, props.product_id]);
+  }, [array, props.product_id]);
 
   const callAllOptionProduct = useCallback(async () => {
     const filter = array.filter((item) => item !== null && item !== "");
@@ -164,6 +152,8 @@ const ProductView = (props) => {
         optionvalue: filter,
       })
       .then((res) => {
+        setTotalPriceProduct(res.data.price);
+        setQuantityProduct(res.data.qa);
         setQuantityOptionProdct(res.data.qa);
       })
       .catch((err) => {
@@ -242,7 +232,10 @@ const ProductView = (props) => {
           <div className="product-top__info__content">
             <div className="product-top__info__content__desc">
               <div className="product-top__info__content__desc__price">
-                {props.priceProduct ? numberWithCommas(props.priceProduct) : ""}{" "}
+                {totalPriceProduct
+                  ? numberWithCommas(totalPriceProduct)
+                  : numberWithCommas(props.priceProduct)}
+                {/* {props.priceProduct ? numberWithCommas(props.priceProduct) : ""} */}
                 VND
               </div>
               <div className="product-top__info__content__desc__brand">
@@ -253,7 +246,7 @@ const ProductView = (props) => {
               </div>
 
               {statusProduct?.map((item, index) => (
-                <div className="product-top__info__status">
+                <div className="product-top__info__status" key={index}>
                   {item.id === props.statusProduct
                     ? `Trạng Thái: ${item.name} `
                     : null}
@@ -319,9 +312,7 @@ const ProductView = (props) => {
                   {quantityProduct?.map((item, index) => (
                     <>
                       <option
-                        setIdWare={
-                          index === 0 ? "Chon Chi Nhanh" : "Chon Chi Nhanh"
-                        }
+                        setIdWare={index === 0 ? "Chon Chi Nhanh" : null}
                         value={item.warehouse_id}
                       >
                         {item.UserwarehouseProduct.name}
@@ -332,7 +323,7 @@ const ProductView = (props) => {
               </div>
               <div className="product-top__info__content__option__right__select">
                 {quantityOptionProdct?.map((item, index) => (
-                  <div>
+                  <div key={index}>
                     {item.UserwarehouseProduct.name}: {item.quantity} sản phẩm
                   </div>
                 ))}
@@ -355,77 +346,77 @@ const ProductView = (props) => {
         <div className="product__comment__title">Comments</div>
         {commentProduct?.map((item, index) => {
           return (
-            <div className="product__comment__content__desc">
-              <div className="product__comment__content__desc__img">
-                <img src={pfUser} alt="" />
+            <>
+              <div className="product__comment__content__desc" key={index}>
+                <div className="product__comment__content__desc__img">
+                  <img src={pfUser} alt="" />
+                </div>
+                <div className="product__comment__content__desc__type">
+                  <div className="product__comment__content__desc__type__user">
+                    {item?.commentUser?.fullname}
+                  </div>
+                  <div className="product__comment__content__desc__type__key">
+                    {item?.description}{" "}
+                  </div>
+                  <div className="product__comment__content__desc__type__rate">
+                    {item?.rate ? (
+                      <Rating
+                        name="half-rating"
+                        defaultValue={item.rate}
+                        readOnly
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div className="product__comment__content__desc__type__features">
+                    {item?.cus_id === idComment ? (
+                      <DeleteComment
+                        idComment={item?.id}
+                        parentCallback={callbackFunction}
+                      ></DeleteComment>
+                    ) : null}
+                    {item.cus_id === idComment ? (
+                      <UpdateComment
+                        idComment={item?.id}
+                        idCustomer={item?.cus_id}
+                        idProduct={item?.product_id}
+                        descProduct={item?.description}
+                        rateProduct={item?.rate}
+                        idCus={item.idCus}
+                        parentCallback={callbackFunction}
+                      ></UpdateComment>
+                    ) : null}
+                  </div>
+                </div>
               </div>
-              <div className="product__comment__content__desc__type">
-                <div className="product__comment__content__desc__type__user">
-                  {item?.commentUser?.fullname}
-                </div>
-                <div className="product__comment__content__desc__type__key">
-                  {item?.description}{" "}
-                </div>
-                <div className="product__comment__content__desc__type__rate">
-                  {item?.rate ? (
-                    <Rating
-                      name="half-rating"
-                      defaultValue={item.rate}
-                      readOnly
-                    />
-                  ) : (
-                    ""
-                  )}
-                </div>
 
-                <div className="product__comment__content__desc__type__features">
-                  {item?.cus_id === idComment ? (
-                    <DeleteComment
-                      idComment={item?.id}
-                      parentCallback={callbackFunction}
-                    ></DeleteComment>
-                  ) : null}
+              {/* Start Feedback Comment */}
+              <div className="product__comment__admin">
+                {allCommentAdmin?.map((data, index) => (
+                  <div className="product__comment__admin__top">
+                    <div className="product__comment__admin__top__img">
+                      {item.id === data.comment_id ? (
+                        <img src={admin} alt="" />
+                      ) : null}
+                    </div>
+                    <div className="product__comment__admin__top__name">
+                      {item.id === data.comment_id ? (
+                        <span>Quản Trị Viên</span>
+                      ) : null}
+                      <div className="product__comment__admin__top__name__content">
+                        {item.id === data.comment_id ? data.description : null}
+                      </div>
+                    </div>
+                  </div>
+                ))}
 
-                  {item.cus_id === idComment ? (
-                    <UpdateComment
-                      idComment={item?.id}
-                      idCustomer={item?.cus_id}
-                      idProduct={item?.product_id}
-                      descProduct={item?.description}
-                      rateProduct={item?.rate}
-                      idCus={item.idCus}
-                      parentCallback={callbackFunction}
-                    ></UpdateComment>
-                  ) : null}
-                </div>
+                {/* <div className="product__comment__admin__bottom"></div> */}
               </div>
-            </div>
+              {/* End FeedBack Comment */}
+            </>
           );
         })}
-
-        {/* Start Feedback Comment */}
-        <div className="product__comment__admin">
-          {responeComment?.map((item, index) => {
-            return (
-              <>
-                <div className="product__comment__admin__top">
-                  <div className="product__comment__admin__top__img">
-                    <img src={admin} alt="" />
-                  </div>
-                  <div className="product__comment__admin__top__name">
-                    <span>Quản Trị Viên</span>
-                  </div>
-                </div>
-                <div className="product__comment__admin__bottom">
-                  <div className="product__comment__admin__bottom__content">
-                    {item?.description}
-                  </div>
-                </div>
-              </>
-            );
-          })}
-        </div>
-        {/* End FeedBack Comment */}
       </div>
 
       {/* end product comment */}

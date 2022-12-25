@@ -48,8 +48,8 @@ const Voucher = () => {
                     <tr>
                       <td>{item.id}</td>
                       <td>{item.name}</td>
-                      <td>{item.datestart}</td>
-                      <td>{item.dateend}</td>
+                      <td>{item.datestart.slice(0, 10)}</td>
+                      <td>{item.dateend.slice(0, 10)}</td>
                       <div className="card__body__features">
                         <span className="card__body__features__edit">
                           {/* <i className="bx bxs-edit"></i> */}

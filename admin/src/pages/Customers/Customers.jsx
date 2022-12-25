@@ -46,7 +46,7 @@ const Customers = () => {
                         <td>{item.email}</td>
                         <td>{item.fullname}</td>
                         <td>{item.phonenumber}</td>
-                        <td>{item.birthday}</td>
+                        <td>{item.birthday.slice(0, 10)}</td>
                         <td>{item.address}</td>
                       </tr>
                     ))}

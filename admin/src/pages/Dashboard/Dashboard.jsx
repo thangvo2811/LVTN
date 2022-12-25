@@ -2,9 +2,10 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-import Chart from "react-apexcharts";
+// import Chart from "react-apexcharts";
 
 import { useSelector } from "react-redux";
+import { Line } from "@ant-design/charts";
 
 import StatusCard from "../../components/statuscard/StatusCard";
 
@@ -13,132 +14,92 @@ import Table from "../../components/table/Table";
 import Badge from "../../components/badge/Badge";
 
 import statusCards from "../../assets/JsonData/status-card-data.json";
+import { useState } from "react";
+import axios from "axios";
+import { useEffect } from "react";
 
-const chartOptions = {
-  series: [
-    {
-      name: "Online Customers",
-      data: [40, 70, 20, 90, 36, 80, 30, 91, 60],
-    },
-    {
-      name: "Store Customers",
-      data: [40, 30, 70, 80, 40, 16, 40, 20, 51, 10],
-    },
-  ],
-  options: {
-    color: ["#6ab04c", "#2980b9"],
-    chart: {
-      background: "transparent",
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      curve: "smooth",
-    },
-    xaxis: {
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-      ],
-    },
-    legend: {
-      position: "top",
-    },
-    grid: {
-      show: false,
+const data = [
+  { year: "1991", value: 3 },
+  { year: "1992", value: 4 },
+  { year: "1993", value: 3.5 },
+  { year: "1994", value: 5 },
+  { year: "1995", value: 4.9 },
+  { year: "1996", value: 6 },
+  { year: "1997", value: 7 },
+  { year: "1998", value: 9 },
+  { year: "1999", value: 13 },
+];
+
+const config = {
+  data,
+  width: 500,
+  height: 400,
+  autoFit: false,
+  xField: "year",
+  yField: "value",
+  point: {
+    size: 5,
+    shape: "diamond",
+  },
+  label: {
+    style: {
+      fill: "#aaa",
     },
   },
 };
 
-const topCustomers = {
-  head: ["user", "total orders", "total spending"],
-  body: [
-    {
-      username: "john doe",
-      order: "490",
-      price: "$15,870",
-    },
-    {
-      username: "frank iva",
-      order: "250",
-      price: "$12,251",
-    },
-    {
-      username: "anthony baker",
-      order: "120",
-      price: "$10,840",
-    },
-    {
-      username: "frank iva",
-      order: "110",
-      price: "$9,251",
-    },
-    {
-      username: "anthony baker",
-      order: "80",
-      price: "$8,840",
-    },
-  ],
+let chart;
+
+// Export Image
+const downloadImage = () => {
+  chart?.downloadImage();
 };
 
-const renderCusomerHead = (item, index) => <th key={index}>{item}</th>;
-
-const renderCusomerBody = (item, index) => (
-  <tr key={index}>
-    <td>{item.username}</td>
-    <td>{item.order}</td>
-    <td>{item.price}</td>
-  </tr>
-);
-
-const latestOrders = {
-  header: ["order id", "user", "total price", "date", "status"],
-  body: [
-    {
-      id: "#OD1711",
-      user: "john doe",
-      date: "17 Jun 2021",
-      price: "$900",
-      status: "shipping",
-    },
-    {
-      id: "#OD1712",
-      user: "frank iva",
-      date: "1 Jun 2021",
-      price: "$400",
-      status: "paid",
-    },
-    {
-      id: "#OD1713",
-      user: "anthony baker",
-      date: "27 Jun 2021",
-      price: "$200",
-      status: "pending",
-    },
-    {
-      id: "#OD1712",
-      user: "frank iva",
-      date: "1 Jun 2021",
-      price: "$400",
-      status: "paid",
-    },
-    {
-      id: "#OD1713",
-      user: "anthony baker",
-      date: "27 Jun 2021",
-      price: "$200",
-      status: "refund",
-    },
-  ],
+// Get chart base64 string
+const toDataURL = () => {
+  console.log(chart?.toDataURL());
 };
+
+// const topCustomers = {
+//   head: ["user", "total orders", "total spending"],
+//   body: [
+//     {
+//       username: "john doe",
+//       order: "490",
+//       price: "$15,870",
+//     },
+//     {
+//       username: "frank iva",
+//       order: "250",
+//       price: "$12,251",
+//     },
+//     {
+//       username: "anthony baker",
+//       order: "120",
+//       price: "$10,840",
+//     },
+//     {
+//       username: "frank iva",
+//       order: "110",
+//       price: "$9,251",
+//     },
+//     {
+//       username: "anthony baker",
+//       order: "80",
+//       price: "$8,840",
+//     },
+//   ],
+// };
+
+// const renderCusomerHead = (item, index) => <th key={index}>{item}</th>;
+
+// const renderCusomerBody = (item, index) => (
+//   <tr key={index}>
+//     <td>{item.username}</td>
+//     <td>{item.order}</td>
+//     <td>{item.price}</td>
+//   </tr>
+// );
 
 const orderStatus = {
   shipping: "primary",
@@ -147,22 +108,63 @@ const orderStatus = {
   refund: "danger",
 };
 
-const renderOrderHead = (item, index) => <th key={index}>{item}</th>;
-
-const renderOrderBody = (item, index) => (
-  <tr key={index}>
-    <td>{item.id}</td>
-    <td>{item.user}</td>
-    <td>{item.price}</td>
-    <td>{item.date}</td>
-    <td>
-      <Badge type={orderStatus[item.status]} content={item.status} />
-    </td>
-  </tr>
-);
-
 const Dashboard = () => {
+  const [allOrder, setAllOrder] = useState([]);
+  const [countOrder, setCountOrder] = useState({});
+
   const themeReducer = useSelector((state) => state.ThemeReducer.mode);
+  const statusOrder = [
+    {
+      id: 1,
+      name: "Chờ Xác Nhận",
+    },
+    {
+      id: 2,
+      name: "Đang Chuẩn Bị",
+    },
+    {
+      id: 3,
+      name: "Đang giao",
+    },
+    {
+      id: 4,
+      name: " Giao Thành Công",
+    },
+    {
+      id: 5,
+      name: "Đã Hủy",
+    },
+  ];
+
+  const callAllOrderCount = async () => {
+    await axios
+      .get("http://localhost:8000/api/Count-Order-chart/")
+      .then((res) => {
+        setCountOrder(res.data.order);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const callAllOrder = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-all-order/")
+      .then((res) => {
+        console.log(res.data.order);
+        setAllOrder(res.data.order);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    callAllOrder();
+  }, []);
+
+  const dateOrder = allOrder?.map((item, index) => item.createdAt);
+  console.log("object", dateOrder);
 
   return (
     <div>
@@ -183,30 +185,49 @@ const Dashboard = () => {
         </div>
         <div className="col-6">
           <div className="card full-height">
-            <Chart
-              options={
-                themeReducer === "theme-mode-dark"
-                  ? {
-                      ...chartOptions.options,
-                      theme: { mode: "dark" },
-                    }
-                  : {
-                      ...chartOptions.options,
-                      theme: { mode: "light" },
-                    }
-              }
-              series={chartOptions.series}
-              type="line"
-              height="100%"
-            />
+            <div>
+              {/* <button
+                type="button"
+                onClick={downloadImage}
+                style={{ marginRight: 24 }}
+              >
+                Export Image
+              </button> */}
+              {/* <button type="button" onClick={toDataURL}>
+                Get base64
+              </button> */}
+              <Line
+                {...config}
+                onReady={(chartInstance) => (chart = chartInstance)}
+              />
+            </div>
           </div>
         </div>
-        <div className="col-4">
+        {/* <div className="col-4">
           <div className="card">
             <div className="card__header">
-              <h3>top customers</h3>
+              <h3>Khách Hàng</h3>
             </div>
             <div className="card__body">
+              <table>
+                <thead>
+                  <tr>
+                    <td>Khách Hàng</td>
+                    <td>Tổng Đơn Đặt</td>
+                    <td>Tổng Chi Tiêu </td>
+                  </tr>
+                </thead>
+                <thead>
+                  {allCustomer?.map((item, index) => (
+                    <>
+                      <tr>
+                        <td>{item.code}</td>
+                        <td>{item.fullname}</td>
+                      </tr>
+                    </>
+                  ))}
+                </thead>
+              </table>
               <Table
                 headData={topCustomers.head}
                 renderHead={(item, index) => renderCusomerHead(item, index)}
@@ -218,22 +239,47 @@ const Dashboard = () => {
               <Link to="/">view all</Link>
             </div>
           </div>
-        </div>
-        <div className="col-8">
+        </div> */}
+        <div className="col-12">
           <div className="card">
             <div className="card__header">
-              <h3>latest orders</h3>
+              <h3>Danh Sách Đơn Hàng</h3>
             </div>
             <div className="card__body">
-              <Table
-                headData={latestOrders.header}
-                renderHead={(item, index) => renderOrderHead(item, index)}
-                bodyData={latestOrders.body}
-                renderBody={(item, index) => renderOrderBody(item, index)}
-              />
-            </div>
-            <div className="card__footer">
-              <Link to="/">view all</Link>
+              <table>
+                <thead>
+                  <tr>
+                    <td>Mã Đơn Hàng</td>
+                    <td>Khách Hàng</td>
+                    <td>Ngày Đặt</td>
+                    <td>Tình Trạng</td>
+                  </tr>
+                </thead>
+                <thead>
+                  {allOrder?.map((item, index) => (
+                    <>
+                      <tr>
+                        <td>{item.code}</td>
+                        <td>{item.fullname}</td>
+                        <td>{item.createdAt.slice(0, 10)}</td>
+                        <td>
+                          {item.status === 1
+                            ? "Chờ Xác Nhận"
+                            : item.status === 2
+                            ? "Đang Chuẩn bị"
+                            : item.status === 3
+                            ? "Đang Giao"
+                            : item.status
+                            ? "Giao Thành Công"
+                            : item.status === 5
+                            ? "Đã Hủy"
+                            : null}
+                        </td>
+                      </tr>
+                    </>
+                  ))}
+                </thead>
+              </table>
             </div>
           </div>
         </div>

@@ -9,6 +9,7 @@ import { Input, message } from "antd";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
+import Select from "react-select";
 
 const AddStore = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -30,6 +31,9 @@ const AddStore = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
+  let productOption = allProduct?.map((item, index) => {
+    return { label: item.name, value: item.id };
+  });
   const callAllProduct = async () => {
     await axios
       .get(
@@ -92,6 +96,11 @@ const AddStore = (props) => {
     callAllWareHouse();
   }, []);
 
+  const handleProduct = (e) => {
+    console.log("eeeeeeeeee", e.value);
+    setSelectProduct(e.value);
+  };
+
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -112,7 +121,7 @@ const AddStore = (props) => {
             <form>
               <label>Tên Sản Phẩm</label>
               <br />
-              <select
+              {/* <select
                 value={selectProduct}
                 onChange={(e) => {
                   setSelectProduct(e.target.value);
@@ -124,7 +133,15 @@ const AddStore = (props) => {
                     {item?.name}
                   </option>
                 ))}
-              </select>
+              </select> */}
+              <Select
+                // onChange={(e) => setSelectProduct(e.target.value)}
+                className="basic-single"
+                classNamePrefix="select"
+                name="color"
+                options={productOption}
+                onChange={handleProduct}
+              ></Select>
 
               {allOption?.existingOptions?.map((item, index) => {
                 return (
