@@ -305,6 +305,21 @@ const ProductView = (props) => {
               <div className="product-top__info__content__option__right">
                 {props.option10}
               </div>
+              <div className="product-top__info__content__option__right">
+                {props.option11}
+              </div>
+              <div className="product-top__info__content__option__right">
+                {props.option12}
+              </div>
+              <div className="product-top__info__content__option__right">
+                {props.option13}
+              </div>
+              <div className="product-top__info__content__option__right">
+                {props.option14}
+              </div>
+              <div className="product-top__info__content__option__right">
+                {props.option15}
+              </div>
 
               <div className="product-top__info__content__option__right__select">
                 <select onChange={(e) => setIdWare(e.target.value)}>

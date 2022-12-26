@@ -20,12 +20,12 @@ const curr_user = {
   image: user_image,
 };
 
-// const renderNotificationItem = (item, index) => (
-//   <div className="notification-item" key={index}>
-//     <i className={item.icon}></i>
-//     <span>{item.content}</span>
-//   </div>
-// );
+const renderNotificationItem = (item, index) => (
+  <div className="notification-item" key={index}>
+    <i className={item.icon}></i>
+    <span>{item.content}</span>
+  </div>
+);
 
 const renderUserToggle = (user) => (
   <div className="topnav__right-user">
@@ -71,7 +71,7 @@ const Topnav = () => {
             icon="bx bx-bell"
             badge="12"
             contentData={notifications}
-            // renderItems={(item, index) => renderNotificationItem(item, index)}
+            renderItems={(item, index) => renderNotificationItem(item, index)}
             renderFooter={() => <Link to="/">View All</Link>}
           />
           {/* dropdown here */}

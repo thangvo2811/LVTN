@@ -10,6 +10,7 @@ import axios from "axios";
 import { message } from "antd";
 import { useState } from "react";
 import { useEffect } from "react";
+import Select from "react-select";
 
 const AddOption = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -87,11 +88,18 @@ const AddOption = (props) => {
         console.log(err);
       });
   };
+  let productOption = allProductOption?.map((item, index) => {
+    return { label: item.name, value: item.id };
+  });
 
   useEffect(() => {
     callAllOption();
     callAllProduct();
   }, []);
+
+  const handleProduct = (e) => {
+    setSelectProduct(e.value);
+  };
 
   return (
     <div>
@@ -112,6 +120,27 @@ const AddOption = (props) => {
           <div className="form-title">Thuộc Tính</div>
           <div className="form-input">
             <form>
+              <label>Tên Sản Phẩm</label>
+              <br />
+              {/* <select
+                // value={selectProduct}
+                onChange={(e) => setSelectProduct(e.target.value)}
+              >
+                <option>Chọn Sản Phẩm</option>
+                {allProductOption?.map((item, index) => (
+                  <option key={index} value={item?.id}>
+                    {item?.name}
+                  </option>
+                ))}
+              </select> */}
+              <Select
+                // onChange={(e) => setSelectProduct(e.target.value)}
+                className="basic-single"
+                classNamePrefix="select"
+                name="color"
+                options={productOption}
+                onChange={handleProduct}
+              ></Select>
               <label>Danh Mục Thuộc Tính</label>
               <br />
               <select
@@ -133,19 +162,6 @@ const AddOption = (props) => {
                 onChange={(e) => setNewName(e.target.value)}
               />
 
-              <label>Tên Sản Phẩm</label>
-              <br />
-              <select
-                // value={selectProduct}
-                onChange={(e) => setSelectProduct(e.target.value)}
-              >
-                <option>Chọn Sản Phẩm</option>
-                {allProductOption?.map((item, index) => (
-                  <option key={index} value={item?.id}>
-                    {item?.name}
-                  </option>
-                ))}
-              </select>
               <label>Giá</label>
               <Input
                 type="number"

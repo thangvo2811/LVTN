@@ -1,27 +1,27 @@
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Input, message } from "antd";
+import { Input } from "antd";
 import axios from "axios";
-import React, { useState } from "react";
-import { useEffect } from "react";
+import { message } from "antd";
 import Select from "react-select";
 
-const AddStore = (props) => {
+const AddOrder = (props) => {
   const [open, setOpen] = React.useState(false);
-  const [allWareHouse, setAllWareHouse] = useState([]);
-
-  const [quantity, setQuantity] = useState(0);
-  const [selected, setSelected] = useState("");
-
-  const [allProduct, setAllProduct] = useState([]);
+  const [phoneCus, setPhoneCus] = useState("");
+  const [nameCus, setNameCus] = useState("");
+  const [idWareHouse, setIdWareHouse] = useState("");
+  const [selectOption, setSelectOption] = useState([]);
+  const [qtyProduct, setQtyProduct] = useState("");
   const [selectProduct, setSelectProduct] = useState("");
 
+  const [allWareHouse, setAllWareHouse] = useState([]);
+  const [allProduct, setAllProduct] = useState([]);
   const [allOption, setAllOption] = useState([]);
-  const [selectOption, setSelectOption] = useState([]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -30,24 +30,62 @@ const AddStore = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  const callAllProduct = async () => {
+  const handleCreateOrderDirect = async (
+    phone,
+    nameCus,
+    idWareHouse,
+    idProduct,
+    selectOption,
+    qty
+  ) => {
     await axios
-      .get(
-        "http://localhost:8000/api/get-all-product-admin/?brand_id=&category_id="
-      )
+      .post("http://localhost:8000/api/create-order-direct/", {
+        phonenumber: phone,
+        fullname: nameCus,
+        warehouse_id: idWareHouse,
+        product: [
+          {
+            product_id: idProduct,
+            optionvalue: [selectOption],
+            amount: qty,
+          },
+        ],
+      })
       .then((res) => {
-        setAllProduct(res.data);
+        console.log(res.data);
+        props.parentCallback(Date.now());
+        message.success("Tạo Đơn Thành Công");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setOpen(false);
+  };
+
+  const callAllWareHouse = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-warehouse/")
+      .then((res) => {
+        setAllWareHouse(res.data.Warehouse);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
+  const callAllProduct = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-all-product?brand_id=&category_id=")
+      .then((res) => {
+        setAllProduct(res.data.products);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   let productOption = allProduct?.map((item, index) => {
     return { label: item.name, value: item.id };
   });
-
   const callAllOption = async (id) => {
     await axios
       .get(`http://localhost:8000/api/get-product/${id}/`)
@@ -60,53 +98,19 @@ const AddStore = (props) => {
   };
 
   useEffect(() => {
+    callAllWareHouse();
     callAllProduct();
     callAllOption(selectProduct, selectOption);
   }, [selectOption, selectProduct]);
-  console.log("ID PRODUCT", selectProduct);
-  console.log("Array", selectOption);
 
-  const handleAddWareHouse = async () => {
-    await axios
-      .post("http://localhost:8000/api/create-warehouse-product/", {
-        product_id: selectProduct,
-        warehouse_id: selected,
-        quantity: quantity,
-        optionvalue: selectOption,
-      })
-      .then((res) => {
-        console.log(res.data);
-        props.parentCallback(Date.now());
-        message.success("Đã Thêm Sản Phẩm Trong Kho");
-        callAllProduct();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    setOpen(false);
-  };
-  const callAllWareHouse = async () => {
-    await axios
-      .get("http://localhost:8000/api/get-warehouse/")
-      .then((res) => {
-        setAllWareHouse(res.data.Warehouse);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  useEffect(() => {
-    callAllWareHouse();
-  }, []);
   const handleProduct = (e) => {
     setSelectProduct(e.value);
   };
-
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
         <div className="form-name">
-          <i className="bx bx-plus">Thêm Sản Phẩm Kho</i>
+          <i className="bx bx-plus">Tạo Đơn</i>
         </div>
       </Button>
       <Dialog
@@ -115,29 +119,35 @@ const AddStore = (props) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
+        {<></>}
         <DialogTitle id="alert-dialog-title"></DialogTitle>
         <DialogContent>
-          <div className="form-title">Thêm Sản Phẩm Kho</div>
+          <div className="form-title">Tạo Đơn Hàng</div>
           <div className="form-input">
             <form>
-              <label>Tên Sản Phẩm</label>
-              <br />
-              {/* <select
-                // value={selectProduct}
-                name="select"
-                onChange={(e) => {
-                  setSelectProduct(e.target.value);
-                  handleSearch();
-                }}
-              >
-                <option>Chọn Sản Phẩm</option>
-                {allProduct?.map((item, index) => (
+              <label>Tên Khách Hàng</label>
+              <Input
+                type="text"
+                placeholder="Tên Khách Hàng"
+                onChange={(e) => setNameCus(e.target.value)}
+              />
+              <label>Số Điện Thoại</label>
+              <Input
+                type="number"
+                placeholder="Số Điện Thoại"
+                onChange={(e) => setPhoneCus(e.target.value)}
+              ></Input>
+
+              <label>Chọn Kho</label>
+              <select onChange={(e) => setIdWareHouse(e.target.value)}>
+                <option>Chọn Kho</option>
+                {allWareHouse?.map((item, index) => (
                   <option key={index} value={item?.id}>
                     {item?.name}
                   </option>
                 ))}
-              </select> */}
-
+              </select>
+              <label>Chọn Sản Phẩm</label>
               <Select
                 // onChange={(e) => setSelectProduct(e.target.value)}
                 className="basic-single"
@@ -171,37 +181,26 @@ const AddStore = (props) => {
                 );
               })}
 
-              <label>Tên Kho</label>
-              <br />
-              <select
-                // value={selected}
-                onChange={(e) => setSelected(e.target.value)}
-              >
-                <option>Chọn Kho</option>
-                {allWareHouse?.map((item, index) => (
-                  <option key={index} value={item?.id}>
-                    {item?.name}
-                  </option>
-                ))}
-              </select>
               <label>Số Lượng</label>
               <Input
                 type="number"
-                placeholder="Số Lượng"
-                onChange={(e) => setQuantity(e.target.value)}
-              />
+                onChange={(e) => setQtyProduct(e.target.value)}
+              ></Input>
             </form>
           </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Hủy</Button>
+
           <Button
             onClick={() =>
-              handleAddWareHouse(
+              handleCreateOrderDirect(
+                phoneCus,
+                nameCus,
+                idWareHouse,
                 selectProduct,
-                selected,
-                quantity,
-                selectOption
+                selectOption,
+                qtyProduct
               )
             }
           >
@@ -213,4 +212,4 @@ const AddStore = (props) => {
   );
 };
 
-export default AddStore;
+export default AddOrder;

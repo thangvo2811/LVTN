@@ -19,15 +19,15 @@ import axios from "axios";
 import { useEffect } from "react";
 
 const data = [
-  { year: "1991", value: 3 },
-  { year: "1992", value: 4 },
-  { year: "1993", value: 3.5 },
-  { year: "1994", value: 5 },
-  { year: "1995", value: 4.9 },
-  { year: "1996", value: 6 },
-  { year: "1997", value: 7 },
-  { year: "1998", value: 9 },
-  { year: "1999", value: 13 },
+  { month: "Th1", value: 3 },
+  { month: "Th2", value: 4 },
+  { month: "Th3", value: 3.5 },
+  { month: "Th4", value: 5 },
+  { month: "Th5", value: 4.9 },
+  { month: "Th6", value: 6 },
+  { month: "Th7", value: 7 },
+  { month: "Th8", value: 9 },
+  { month: "Th9", value: 13 },
 ];
 
 const config = {
@@ -35,7 +35,7 @@ const config = {
   width: 500,
   height: 400,
   autoFit: false,
-  xField: "year",
+  xField: "month",
   yField: "value",
   point: {
     size: 5,
@@ -180,7 +180,7 @@ const Dashboard = () => {
       title: "Sản Phẩm Đã Bán",
     },
     {
-      icon: "bx bx-cart",
+      icon: "bx bx-receipt",
       count: countOrder,
       title: "Tổng Đơn Hàng",
     },
@@ -190,9 +190,9 @@ const Dashboard = () => {
       title: "Tổng Thu Nhập",
     },
     {
-      icon: "bx bx-receipt",
+      icon: "bx bx-cart",
       count: totalOrder,
-      title: "Đơn Đặt Hàng",
+      title: "Đơn Đã Đặt",
     },
   ];
 

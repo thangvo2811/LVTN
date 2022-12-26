@@ -27,7 +27,7 @@ const UpdateWarrantyTwo = (props) => {
     await axios
       .put("http://localhost:8000/api/update-warranty/", {
         id: warrantyItem.id,
-        name: newName,
+        name: warrantyItem.name,
         description: newInFor,
         infor: newDesc,
       })
@@ -61,11 +61,7 @@ const UpdateWarrantyTwo = (props) => {
               <label>Id</label>
               <Input type="number" value={warrantyItem.id} disabled />
               <label>Tên Sản Phẩm</label>
-              <Input
-                type="text"
-                defaultValue={warrantyItem.name}
-                onChange={(e) => setNewName(e.target.value)}
-              />
+              <Input type="text" value={warrantyItem.name} disabled />
               <label>Thông Tin Bảo Hành</label>
               <Input
                 type="text"
@@ -85,7 +81,12 @@ const UpdateWarrantyTwo = (props) => {
           <Button onClick={handleClose}>Hủy</Button>
           <Button
             onClick={() =>
-              handleUpdateWarranty(warrantyItem.id, newName, newDesc, newInFor)
+              handleUpdateWarranty(
+                warrantyItem.id,
+                warrantyItem.name,
+                newDesc,
+                newInFor
+              )
             }
           >
             Cập Nhật

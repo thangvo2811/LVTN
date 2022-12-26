@@ -18,5 +18,10 @@
     "display_name": "Chi Nhánh",
     "route": "/branch",
     "icon": "bx bx-store"
+  },
+  {
+    "display_name": "Thông Tin Bảo Hành",
+    "route": "/infoWarranty",
+    "icon": "bx bx-store"
   }
 ]

@@ -12,7 +12,7 @@ const WarrantyItem = (props) => {
         <div className="order-item__image">
           <div
             className="order-item__info"
-            onClick={() => navigate("/detailWarranty/" + warrantyItem.order_id)}
+            onClick={() => navigate("/detailWarranty/" + props.idWarranty)}
           >
             <div className="order-item__info__title">
               {warrantyItem.infor} Của Mã Đơn: {warrantyItem.code}

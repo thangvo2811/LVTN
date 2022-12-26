@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AddWarrantyTwo from "./AddWarrantyTwo/AddWarrantyTwo";
 import UpdateWarrantyTwo from "./UpdateWarrantyTwo/UpdateWarrantyTwo";
+import { useCallback } from "react";
 
 const InfoWarrantyTwo = () => {
   const [infoWarranty, setInfoWarranty] = useState([]);
@@ -10,19 +11,19 @@ const InfoWarrantyTwo = () => {
     setReloadPage(childData);
   };
 
-  const callInfoWarranty = async () => {
+  const callInfoWarranty = useCallback(async () => {
     await axios
-      .get(`http://localhost:8000/api/get-all-warranty/${2}/`)
+      .get(`http://localhost:8000/api/get-all-warranty-info/${2}/`)
       .then((res) => {
-        setInfoWarranty(res.data.Warranty);
+        setInfoWarranty(res.data.warranty);
       })
       .catch((err) => {
         console.log(err);
       });
-  };
+  }, []);
   useEffect(() => {
     callInfoWarranty();
-  }, [reloadPage]);
+  }, [callInfoWarranty, reloadPage]);
   return (
     <div>
       <div className="page-header">
@@ -44,25 +45,27 @@ const InfoWarrantyTwo = () => {
                   </tr>
                 </thead>
                 <thead>
-                  {infoWarranty?.map((item, index) => (
-                    <tr>
-                      <td>{item?.id}</td>
-                      <td>{item?.name}</td>
-                      <td>{item?.infor}</td>
-                      <td>{item?.description}</td>
-                      <td>{item?.serinumber}</td>
-                      <td>
-                        <div className="card__body__features">
-                          <span className="card__body__features__edit">
-                            <UpdateWarrantyTwo
-                              item={item}
-                              parentCallback={callbackFunction}
-                            ></UpdateWarrantyTwo>
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
+                  {infoWarranty
+                    ?.sort((a, b) => a.id - b.id)
+                    .map((item, index) => (
+                      <tr>
+                        <td>{item?.id}</td>
+                        <td>{item?.name}</td>
+                        <td>{item?.infor}</td>
+                        <td>{item?.description}</td>
+                        <td>{item?.serinumber}</td>
+                        <td>
+                          <div className="card__body__features">
+                            <span className="card__body__features__edit">
+                              <UpdateWarrantyTwo
+                                item={item}
+                                parentCallback={callbackFunction}
+                              ></UpdateWarrantyTwo>
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
                 </thead>
               </table>
             </div>

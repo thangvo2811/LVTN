@@ -12,7 +12,6 @@ import { message } from "antd";
 const UpdateWarrantyOne = (props) => {
   const warrantyItem = props.item;
   const [open, setOpen] = React.useState(false);
-  const [newName, setNewName] = useState("");
   const [newInFor, setNewInFor] = useState("");
   const [newDesc, setNewDesc] = useState("");
 
@@ -27,7 +26,7 @@ const UpdateWarrantyOne = (props) => {
     await axios
       .put("http://localhost:8000/api/update-warranty/", {
         id: warrantyItem.id,
-        name: newName,
+        name: warrantyItem.name,
         description: newInFor,
         infor: newDesc,
       })
@@ -55,17 +54,13 @@ const UpdateWarrantyOne = (props) => {
       >
         <DialogTitle id="alert-dialog-title"></DialogTitle>
         <DialogContent>
-          <div className="form-title">Cập Nhật Danh Mục</div>
+          <div className="form-title">Cập Nhật Đơn</div>
           <div className="form-input">
             <form>
               <label>Id</label>
               <Input type="number" value={warrantyItem.id} disabled />
               <label>Tên Sản Phẩm</label>
-              <Input
-                type="text"
-                defaultValue={warrantyItem.name}
-                onChange={(e) => setNewName(e.target.value)}
-              />
+              <Input type="text" value={warrantyItem.name} disabled />
               <label>Thông Tin Bảo Hành</label>
               <Input
                 type="text"
@@ -85,7 +80,12 @@ const UpdateWarrantyOne = (props) => {
           <Button onClick={handleClose}>Hủy</Button>
           <Button
             onClick={() =>
-              handleUpdateWarranty(warrantyItem.id, newName, newDesc, newInFor)
+              handleUpdateWarranty(
+                warrantyItem.id,
+                warrantyItem.name,
+                newDesc,
+                newInFor
+              )
             }
           >
             Cập Nhật

@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import UpadateOrder from "./UpdateOrder/UpadateOrder";
 import DeleteOrder from "./DeleteOrder/DeleteOrder";
+import AddOrder from "./AddOrder/AddOrder";
 
 const Order = () => {
   const [allOrder, setAllOrder] = useState([]);
@@ -28,6 +29,7 @@ const Order = () => {
     <div>
       <div className="page-header">
         <h2 className="page-header__title">Đơn Hàng</h2>
+        <AddOrder parentCallback={callbackFunction}></AddOrder>
       </div>
       <div className="row">
         <div className="col-12">

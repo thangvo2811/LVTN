@@ -25,7 +25,9 @@ const Warranty = () => {
         <div className="order__desc">
           <div className="order__desc__item">
             {allWarranty?.map((item, index) => {
-              return <WarrantyItem item={item}></WarrantyItem>;
+              return (
+                <WarrantyItem item={item} idWarranty={item.id}></WarrantyItem>
+              );
             })}
           </div>
         </div>

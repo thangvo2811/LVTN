@@ -30,7 +30,7 @@ const Routes = () => {
     <Switch>
       {isLogin ? (
         <>
-          <Route path="/" exact component={Dashboard} />
+          <Route path="/dashboard" exact component={Dashboard} />
           <Route path="/employee" exact component={Employee} />
           <Route path="/customers" exact component={Customers} />
           <Route path="/categories" exact component={Categories} />

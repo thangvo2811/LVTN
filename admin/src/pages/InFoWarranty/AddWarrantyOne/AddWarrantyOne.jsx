@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -8,15 +8,19 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Input } from "antd";
 import axios from "axios";
 import { message } from "antd";
+import Select from "react-select";
 
 const AddWarrantyOne = (props) => {
   const [open, setOpen] = React.useState(false);
   const [info, setInfo] = useState("");
   const [desc, setDesc] = useState("");
-  const [idProduct, setIdProduct] = useState("");
-  const [staffId, setStaffId] = useState("");
-  const [orderCode, setOrderCode] = useState("");
+  const [selectOrderCode, setSelectOrderCode] = useState("");
   const [seriNumber, setSeriNumber] = useState("");
+
+  const [allOrder, setAllOrder] = useState([]);
+  const [allSeriNumber, setAllSeriNumber] = useState([]);
+
+  const idStaff = localStorage.getItem("admin");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -25,24 +29,20 @@ const AddWarrantyOne = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const callCreateWarrantyInfo = async (
-    info,
-    desc,
-    idProduct,
-    staId,
-    order,
-    seri
-  ) => {
+  const callCreateWarrantyInfo = async (info, desc, staId, order, seri) => {
     await axios
       .post("http://localhost:8000/api/create-warranty/", {
         infor: info,
         description: desc,
-        product_id: idProduct,
         sta_id: staId,
-        orderCode: order,
+        order_id: order,
         serinumber: seri,
       })
       .then((res) => {
+        if (res.data.errCode === 1) {
+          message.error("Không Tìm Thấy Đơn Bảo Hành");
+          return;
+        }
         console.log(res.data);
         props.parentCallback(Date.now());
         message.success("Tạo Đơn Thành Công");
@@ -52,6 +52,34 @@ const AddWarrantyOne = (props) => {
       });
     setOpen(false);
   };
+
+  const callAllOrder = async () => {
+    await axios
+      .get("http://localhost:8000/api/get-all-order/")
+      .then((res) => {
+        setAllOrder(res.data.order);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const callAllSeriNumber = async (orderId) => {
+    await axios
+      .get(`http://localhost:8000/api/get-order-detail/${orderId}/`)
+      .then((res) => {
+        setAllSeriNumber(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    callAllOrder();
+    callAllSeriNumber(selectOrderCode);
+  }, [selectOrderCode]);
+
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -71,6 +99,36 @@ const AddWarrantyOne = (props) => {
           <div className="form-title">Đơn Bảo Hành</div>
           <div className="form-input">
             <form>
+              <label>Mã Đơn Hàng</label>
+              <select onChange={(e) => setSelectOrderCode(e.target.value)}>
+                <option>Mã Đơn Hàng</option>
+                {allOrder?.map((item, index) => (
+                  <option key={item.id} value={item.id}>
+                    {item?.code}
+                  </option>
+                ))}
+              </select>
+
+              <label>Thông Số Máy</label>
+              <select onChange={(e) => setSeriNumber(e.target.value)}>
+                <option>Thông Số Máy</option>
+                {allSeriNumber?.listOrder?.map((item, index) => {
+                  return (
+                    <>
+                      <option
+                        key={allSeriNumber.id}
+                        value={item.Orderitem.serinumber}
+                      >
+                        {item?.Orderitem?.serinumber}
+                      </option>
+                    </>
+                  );
+                })}
+              </select>
+
+              {/* <label>Mã Nhân Viên</label> */}
+              <Input type="hidden" placeholder="Mã Nhân Viên" value={idStaff} />
+
               <label>Thông Tin Đơn</label>
               <Input
                 type="text"
@@ -83,30 +141,6 @@ const AddWarrantyOne = (props) => {
                 placeholder="Nội Dung Bảo Hành"
                 onChange={(e) => setDesc(e.target.value)}
               />
-              <label>Mã Sản Phẩm</label>
-              <Input
-                type="text"
-                placeholder="Mã Sản Phẩm"
-                onChange={(e) => setIdProduct(e.target.value)}
-              />
-              <label>Mã Nhân Viên</label>
-              <Input
-                type="text"
-                placeholder="Mã Nhân Viên"
-                onChange={(e) => setStaffId(e.target.value)}
-              />
-              <label>Mã Đơn Hàng</label>
-              <Input
-                type="text"
-                placeholder="Mã Đơn Hàng"
-                onChange={(e) => setOrderCode(e.target.value)}
-              />
-              <label>Thông Số Máy</label>
-              <Input
-                type="text"
-                placeholder="Thông Số Máy"
-                onChange={(e) => setSeriNumber(e.target.value)}
-              />
             </form>
           </div>
         </DialogContent>
@@ -117,9 +151,8 @@ const AddWarrantyOne = (props) => {
               callCreateWarrantyInfo(
                 info,
                 desc,
-                idProduct,
-                staffId,
-                orderCode,
+                idStaff,
+                selectOrderCode,
                 seriNumber
               )
             }

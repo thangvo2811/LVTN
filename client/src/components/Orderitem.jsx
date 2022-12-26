@@ -33,6 +33,7 @@ const Orderitem = (props) => {
 
   console.log("StatusPay", itemOrder.paymentstatus);
   const id = props.idOrderDetail;
+
   const navigate = useNavigate();
 
   return (
