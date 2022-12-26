@@ -23,7 +23,7 @@ const AddCategoryOption = (props) => {
   };
   const callAddOption = async () => {
     await axios
-      .post("http://localhost:8000/api/create-option/", {
+      .post(`${process.env.REACT_APP_API_URL}/api/create-option/`, {
         name: nameOption,
       })
       .then((res) => {

@@ -25,7 +25,7 @@ const ChangePhone = (props) => {
   const callChangePhone = async (idCustomer, newPhone) => {
     console.log(newPhone);
     await axios
-      .put("http://localhost:8000/api/update-user/", {
+      .put(`${process.env.REACT_APP_API_URL}/api/update-user/`, {
         id: idCustomer,
         fullname: nameCus,
         phonenumber: newPhone,

@@ -9,7 +9,9 @@ const DetailWarranty = () => {
 
   const callDetail = useCallback(async () => {
     await axios
-      .get(`http://localhost:8000/api/get-detail-warranty/${param.id}/`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/get-detail-warranty/${param.id}/`
+      )
       .then((res) => {
         setDetailWarranty(res.data.warranty);
       })

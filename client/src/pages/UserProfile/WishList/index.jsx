@@ -16,7 +16,9 @@ const WishList = () => {
   };
   const callAllList = useCallback(async () => {
     await axios
-      .get(`http://localhost:8000/api/get-all-product-by-cus/${idCus}/`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/get-all-product-by-cus/${idCus}/`
+      )
       .then((res) => {
         setAllList(res.data.product);
       })

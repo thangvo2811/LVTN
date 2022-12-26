@@ -25,7 +25,7 @@ const AddBlog = (props) => {
   };
   const handleAddBlog = async (url) => {
     await axios
-      .post("http://localhost:8000/api/create-blog/", {
+      .post(`${process.env.REACT_APP_API_URL}/api/create-blog/`, {
         Description: descBlog,
         sta_id: idCus,
         name: nameBlog,
@@ -47,11 +47,15 @@ const AddBlog = (props) => {
       const formData = new FormData();
       formData.append("file", file);
       await axios
-        .post("http://localhost:8000/api/create-img-product", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
+        .post(
+          `${process.env.REACT_APP_API_URL}/api/create-img-product`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
         .then((res) => {
           // setFile(file.secure_url);
           console.log(res?.data?.res?.url);

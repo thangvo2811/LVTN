@@ -14,7 +14,7 @@ const Order = () => {
   };
   const callAllOrder = async () => {
     await axios
-      .get("http://localhost:8000/api/get-all-order/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-all-order/`)
       .then((res) => {
         setAllOrder(res.data.order);
       })

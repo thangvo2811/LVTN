@@ -15,11 +15,15 @@ const MyAccount = () => {
       const formData = new FormData();
       formData.append("file", file);
       await axios
-        .post("http://localhost:8000/api/create-img-product", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
+        .post(
+          `${process.env.REACT_APP_API_URL}/api/create-img-product`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
         .then((res) => {
           // setFile(file.secure_url);
           console.log(res?.data?.res?.url);
@@ -32,7 +36,7 @@ const MyAccount = () => {
   };
   const callUser = useCallback(async () => {
     await axios
-      .get(`http://localhost:8000/api/get-by-Id/${newCustomer}`)
+      .get(`${process.env.REACT_APP_API_URL}/api/get-by-Id/${newCustomer}`)
       .then((res) => {
         console.log(res.data.customer.user);
         setDetailUser(res.data.customer.user);

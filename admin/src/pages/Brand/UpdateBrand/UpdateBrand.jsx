@@ -23,7 +23,7 @@ const UpdateBrand = (props) => {
   };
   const handleUpdateBrand = async (id, name) => {
     await axios
-      .put("http://localhost:8000/api/update-brand", {
+      .put(`${process.env.REACT_APP_API_URL}/api/update-brand`, {
         id: id,
         name: name,
       })

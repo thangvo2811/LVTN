@@ -11,7 +11,9 @@ const EmailActive = () => {
     const filter = queryString.filter((item) => item !== "");
     console.log("filter: ", filter);
     await axios
-      .put(`http://localhost:8000/api/acctive-user-account/${filter}/`)
+      .put(
+        `${process.env.REACT_APP_API_URL}/api/acctive-user-account/${filter}/`
+      )
       .then((res) => {
         if (res.data.errCode === 0) {
           console.log(res.data);

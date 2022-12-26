@@ -21,7 +21,7 @@ const DeleteBranch = (props) => {
   };
   const callDeleteBranch = async (id) => {
     await axios
-      .delete(`http://localhost:8000/api/delete-warehouse/${id}`)
+      .delete(`${process.env.REACT_APP_API_URL}/api/delete-warehouse/${id}`)
       .then((res) => {
         console.log(res.data);
         props.parentCallback(Date.now());

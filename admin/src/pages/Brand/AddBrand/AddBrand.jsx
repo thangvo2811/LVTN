@@ -25,7 +25,7 @@ const AddBrand = (props) => {
   const handleAddBrand = async (e) => {
     e.preventDefault();
     await axios
-      .post("http://localhost:8000/api/get-create-brand", {
+      .post(`${process.env.REACT_APP_API_URL}/api/get-create-brand`, {
         name: nameBrand,
       })
       .then((res) => {

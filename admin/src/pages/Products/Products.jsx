@@ -16,7 +16,7 @@ const Products = () => {
   const callAllProduct = async () => {
     await axios
       .get(
-        "http://localhost:8000/api/get-all-product-admin/?brand_id=&category_id="
+        `${process.env.REACT_APP_API_URL}/api/get-all-product-admin/?brand_id=&category_id=`
       )
       .then((res) => {
         console.log(res.data);

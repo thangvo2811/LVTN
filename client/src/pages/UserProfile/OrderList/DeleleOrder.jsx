@@ -20,7 +20,7 @@ const DeleteOrder = (props) => {
   };
   const handleDeleteOrder = async (id) => {
     await axios
-      .put(`http://localhost:8000/api/cancel-order/${id}/`)
+      .put(`${process.env.REACT_APP_API_URL}/api/cancel-order/${id}/`)
       .then((res) => {
         console.log(res.data);
         props.reloadPage(Date.now());

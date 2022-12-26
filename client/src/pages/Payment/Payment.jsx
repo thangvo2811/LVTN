@@ -22,7 +22,7 @@ const Payment = () => {
     idCart
   ) => {
     await axios
-      .post("http://localhost:8000/api/create-order-user/", {
+      .post(`${process.env.REACT_APP_API_URL}/api/create-order-user/`, {
         fullname: name,
         email: email,
         Address: address,

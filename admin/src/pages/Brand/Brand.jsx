@@ -15,7 +15,7 @@ const Brand = () => {
   };
   const callAllBrand = async () => {
     await axios
-      .get("http://localhost:8000/api/get-brand/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-brand/`)
       .then((res) => {
         setAllBrand(res.data.brand);
       })

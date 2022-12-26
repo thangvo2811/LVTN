@@ -30,7 +30,7 @@ const AddOption = (props) => {
   };
   const handleAddOption = async () => {
     await axios
-      .post("http://localhost:8000/api/create-option-product", {
+      .post(`${process.env.REACT_APP_API_URL}/api/create-option-product`, {
         name: newName,
         price: newPrice,
         product_id: selectProduct,
@@ -68,7 +68,7 @@ const AddOption = (props) => {
   };
   const callAllOption = async () => {
     await axios
-      .get("http://localhost:8000/api/get-option/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-option/`)
       .then((res) => {
         setAllOption(res.data.option);
       })
@@ -79,7 +79,7 @@ const AddOption = (props) => {
   const callAllProduct = async () => {
     await axios
       .get(
-        "http://localhost:8000/api/get-all-product-admin/?brand_id=&category_id="
+        `${process.env.REACT_APP_API_URL}/api/get-all-product-admin/?brand_id=&category_id=`
       )
       .then((res) => {
         setAllProductOption(res.data);

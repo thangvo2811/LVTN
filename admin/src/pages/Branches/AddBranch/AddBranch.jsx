@@ -23,7 +23,7 @@ const AddBranch = (props) => {
   };
   const callAddBranch = async () => {
     await axios
-      .post("http://localhost:8000/api/create-warehouse/", {
+      .post(`${process.env.REACT_APP_API_URL}/api/create-warehouse/`, {
         address: addressBranch,
         name: nameBranch,
       })

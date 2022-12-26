@@ -14,7 +14,9 @@ const FindProdcut = () => {
   const [allProduct, setAllProduct] = useState([]);
   const callAllProduct = useCallback(async () => {
     await axios
-      .get(`http://localhost:8000/api/findbykeyword/${param.keyword}`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/findbykeyword/${param.keyword}`
+      )
       .then((res) => {
         setAllProduct(res.data.listProduct);
       })

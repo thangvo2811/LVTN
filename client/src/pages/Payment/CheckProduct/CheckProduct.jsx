@@ -11,7 +11,9 @@ const CheckProduct = () => {
   const dispatch = useDispatch();
   const callCartItem = useCallback(async () => {
     await axios
-      .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}/`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/get-cart-by-customer-id/${newCustomer}/`
+      )
       .then((res) => {
         console.log(res.data.cartitem);
         setCartItem(res.data.cartitem);

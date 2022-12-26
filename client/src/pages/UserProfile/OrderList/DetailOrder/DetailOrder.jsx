@@ -9,7 +9,7 @@ const DetailOrder = () => {
   const param = useParams();
   const callDetailOrder = useCallback(async () => {
     await axios
-      .get(`http://localhost:8000/api/get-order-detail/${param.id}/`)
+      .get(`${process.env.REACT_APP_API_URL}/api/get-order-detail/${param.id}/`)
       .then((res) => {
         setDetailOrder(res.data.data);
         setDetailUser(res.data.data);

@@ -6,7 +6,7 @@ const Employee = () => {
 
   const callAllStaff = async () => {
     await axios
-      .get("http://localhost:8000/api/get-all-staff/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-all-staff/`)
       .then((res) => {
         setAllStaff(res.data.staff);
       })

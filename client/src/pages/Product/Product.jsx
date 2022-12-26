@@ -35,7 +35,9 @@ const Product = (props) => {
 
   const callDetailProduct = useCallback(async () => {
     await axios
-      .get(`http://localhost:8000/api/get-product/${param.category_id}`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/get-product/${param.category_id}`
+      )
       .then((res) => {
         console.log(res.data.data);
         setDetailProduct(res.data.data);
@@ -49,7 +51,9 @@ const Product = (props) => {
   }, [param.category_id]);
   const callAllProduct = async () => {
     await axios
-      .get("http://localhost:8000/api/get-all-product?brand_id=&category_id=")
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/get-all-product?brand_id=&category_id=`
+      )
       .then((res) => {
         setAllProduct(res.data.products);
       })

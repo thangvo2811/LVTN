@@ -70,7 +70,7 @@ const ChangePassWord = (props) => {
   };
   const callChangePassWord = async (idUser, newPw, reNewPw, oldPw) => {
     await axios
-      .put("http://localhost:8000/api/udate-password/", {
+      .put(`${process.env.REACT_APP_API_URL}/api/udate-password/`, {
         id: idUser,
         newpassword: newPw,
         repassword: reNewPw,

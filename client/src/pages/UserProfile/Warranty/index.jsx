@@ -8,7 +8,9 @@ const Warranty = () => {
 
   const callAllWarranty = useCallback(async () => {
     await axios
-      .get(`http://localhost:8000/api/get-all-warranty-by-cus/${newCustomer}/`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/get-all-warranty-by-cus/${newCustomer}/`
+      )
       .then((res) => {
         setAllWarranty(res.data.warranty);
       })

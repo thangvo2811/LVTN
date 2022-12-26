@@ -13,7 +13,7 @@ const Option = () => {
   };
   const callAllOption = async () => {
     await axios
-      .get("http://localhost:8000/api/get-option-product/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-option-product/`)
       .then((res) => {
         setAllOption(res.data.Option);
       })

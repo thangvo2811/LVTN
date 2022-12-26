@@ -19,7 +19,9 @@ const DeleteOrder = (props) => {
   };
   const handleDeleteOrder = async (id) => {
     await axios
-      .delete(`http://localhost:8000/api/delete-order-by-Oder-id/${id}/`)
+      .delete(
+        `${process.env.REACT_APP_API_URL}/api/delete-order-by-Oder-id/${id}/`
+      )
       .then((res) => {
         console.log(res.data);
         message.success("Xóa Đơn Hàng Thành Công");

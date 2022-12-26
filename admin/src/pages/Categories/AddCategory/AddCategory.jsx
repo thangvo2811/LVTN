@@ -23,7 +23,7 @@ const AddCategory = (props) => {
   };
   const callAddCategory = async () => {
     await axios
-      .post("http://localhost:8000/api/get-create-Category/", {
+      .post(`${process.env.REACT_APP_API_URL}/api/get-create-Category/`, {
         name: nameCategory,
         parent_id: parentID,
       })

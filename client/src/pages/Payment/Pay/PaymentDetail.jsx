@@ -13,7 +13,9 @@ const PaymentDetail = (props) => {
 
   const callCartItem = useCallback(async () => {
     await axios
-      .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}/`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/get-cart-by-customer-id/${newCustomer}/`
+      )
       .then((res) => {
         console.log(res.data.cartitem);
         setCartItem(res.data.cartitem);
@@ -28,7 +30,7 @@ const PaymentDetail = (props) => {
   }, [callCartItem, newCustomer]);
   const callPayMent = async () => {
     await axios
-      .post("http://localhost:8000/api/get-momo-payment-link/", {
+      .post(`${process.env.REACT_APP_API_URL}/api/get-momo-payment-link/`, {
         orderId: props.idOrder,
       })
 

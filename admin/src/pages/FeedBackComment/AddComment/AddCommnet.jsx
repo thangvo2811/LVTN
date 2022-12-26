@@ -26,7 +26,7 @@ const AddCommnet = (props) => {
 
   const callAllCommentUser = async () => {
     await axios
-      .get("http://localhost:8000/api/get-all-comment/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-all-comment/`)
       .then((res) => {
         setAllCommentUser(res.data.comment);
       })
@@ -40,7 +40,7 @@ const AddCommnet = (props) => {
 
   const handleFeedBack = async () => {
     await axios
-      .post("http://localhost:8000/api/create-comment-response/", {
+      .post(`${process.env.REACT_APP_API_URL}/api/create-comment-response/`, {
         comment_id: selectComment,
         description: descComment,
       })

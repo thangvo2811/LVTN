@@ -13,7 +13,7 @@ const ProductCardViewed = (props) => {
   const navigate = useNavigate();
   const handleAddListProduct = async () => {
     await axios
-      .post("http://localhost:8000/api/add-too-wish-list/", {
+      .post(`${process.env.REACT_APP_API_URL}/api/add-too-wish-list/`, {
         cus_id: idCus,
         product_id: props.idProduct,
       })

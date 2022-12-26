@@ -31,7 +31,7 @@ const UpdateComment = (props) => {
   };
   const handleUpdateComment = async () => {
     await axios
-      .put("http://localhost:8000/api/update-comment", {
+      .put(`${process.env.REACT_APP_API_URL}/api/update-comment`, {
         id: props.idComment,
         cus_id: idCus,
         product_id: props.idProduct,

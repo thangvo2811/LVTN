@@ -25,7 +25,7 @@ const UpdateWarrantyTwo = (props) => {
   };
   const handleUpdateWarranty = async () => {
     await axios
-      .put("http://localhost:8000/api/update-warranty/", {
+      .put(`${process.env.REACT_APP_API_URL}/api/update-warranty/`, {
         id: warrantyItem.id,
         name: warrantyItem.name,
         description: newInFor,

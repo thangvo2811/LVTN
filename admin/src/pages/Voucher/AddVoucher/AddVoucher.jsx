@@ -24,7 +24,7 @@ const AddVoucher = (props) => {
 
   const handleAddVoucher = async (name, dateStart, dateEnd) => {
     await axios
-      .post("http://localhost:8000/api/create-event/", {
+      .post(`${process.env.REACT_APP_API_URL}/api/create-event/`, {
         name: name,
         datestart: dateStart,
         dateend: dateEnd,

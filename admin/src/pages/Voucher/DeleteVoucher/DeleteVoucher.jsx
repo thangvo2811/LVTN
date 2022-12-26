@@ -21,7 +21,7 @@ const DeleteVoucher = (props) => {
 
   const handleDeleteVoucher = async (id) => {
     await axios
-      .delete(`http://localhost:8000/api/delete-event/${id}/`)
+      .delete(`${process.env.REACT_APP_API_URL}/api/delete-event/${id}/`)
       .then((res) => {
         console.log(res.data);
         props.parentCallback(Date.now());

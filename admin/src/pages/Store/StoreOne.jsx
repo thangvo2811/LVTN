@@ -17,7 +17,9 @@ const StoreOne = (props) => {
 
   const callAllStore = useCallback(async () => {
     await axios
-      .get(`http://localhost:8000/api/Get-all-warehouse/?id=${idBranch}`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/Get-all-warehouse/?id=${idBranch}`
+      )
       .then((res) => {
         setAllStore(res.data.product);
       })

@@ -39,7 +39,7 @@ const AddOrder = (props) => {
     qty
   ) => {
     await axios
-      .post("http://localhost:8000/api/create-order-direct/", {
+      .post(`${process.env.REACT_APP_API_URL}/api/create-order-direct/`, {
         phonenumber: phone,
         fullname: nameCus,
         warehouse_id: idWareHouse,
@@ -64,7 +64,7 @@ const AddOrder = (props) => {
 
   const callAllWareHouse = async () => {
     await axios
-      .get("http://localhost:8000/api/get-warehouse/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-warehouse/`)
       .then((res) => {
         setAllWareHouse(res.data.Warehouse);
       })
@@ -75,7 +75,9 @@ const AddOrder = (props) => {
 
   const callAllProduct = async () => {
     await axios
-      .get("http://localhost:8000/api/get-all-product?brand_id=&category_id=")
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/get-all-product?brand_id=&category_id=`
+      )
       .then((res) => {
         setAllProduct(res.data.products);
       })
@@ -88,7 +90,7 @@ const AddOrder = (props) => {
   });
   const callAllOption = async (id) => {
     await axios
-      .get(`http://localhost:8000/api/get-product/${id}/`)
+      .get(`${process.env.REACT_APP_API_URL}/api/get-product/${id}/`)
       .then((res) => {
         setAllOption(res.data.data);
       })

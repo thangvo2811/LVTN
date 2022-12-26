@@ -5,7 +5,7 @@ import { message } from "antd";
 export const loginAdmin = async (dispatch, admin) => {
   dispatch(loginStart());
   await axios
-    .post("http://localhost:8000/api/login-admin/", admin)
+    .post(`${process.env.REACT_APP_API_URL}/api/login-admin/`, admin)
     .then((res) => {
       if (res.data.errorCode === 0) {
         message.success("Đăng Nhập Thành Công");

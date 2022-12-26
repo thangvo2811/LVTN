@@ -62,7 +62,9 @@ const CartItem = (props) => {
   const handleDeleteCartItem = async (e, id) => {
     e.preventDefault();
     await axios
-      .delete(`http://localhost:8000/api/handle-Delete-Cartitem/${id}/`)
+      .delete(
+        `${process.env.REACT_APP_API_URL}/api/handle-Delete-Cartitem/${id}/`
+      )
       .then((res) => {
         console.log(res.data);
 

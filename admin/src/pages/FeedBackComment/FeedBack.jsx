@@ -13,7 +13,7 @@ const FeedBack = () => {
 
   const callAllComment = async () => {
     await axios
-      .get("http://localhost:8000/api/get-all-comment-admin/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-all-comment-admin/`)
       .then((res) => {
         setAllComment(res.data.comment);
       })

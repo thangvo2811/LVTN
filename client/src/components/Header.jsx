@@ -44,7 +44,7 @@ const Header = () => {
 
   const callSearchProduct = async (searchK) => {
     await axios
-      .get(`http://localhost:8000/api/findbykeyword/${searchK}`)
+      .get(`${process.env.REACT_APP_API_URL}/api/findbykeyword/${searchK}`)
       .then((res) => {
         setSearchKey(res.data.listProduct);
       })
@@ -55,7 +55,9 @@ const Header = () => {
 
   const callTotalItems = useCallback(async () => {
     await axios
-      .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/get-cart-by-customer-id/${newCustomer}`
+      )
       .then((res) => {
         setTotalItem(res.data.quantity);
         setIdCart(res.data.cartitem);
@@ -75,7 +77,7 @@ const Header = () => {
 
   const callAllCategory = async () => {
     await axios
-      .get("http://localhost:8000/api/get-Category/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-Category/`)
       .then((res) => {
         console.log(res.data.category);
         setAllCategory(res.data.category);

@@ -14,7 +14,7 @@ const OrderList = () => {
 
   const callAllOrder = useCallback(async () => {
     await axios
-      .get(`http://localhost:8000/api/get-order-by-user/${idCus}/`)
+      .get(`${process.env.REACT_APP_API_URL}/api/get-order-by-user/${idCus}/`)
       .then((res) => {
         console.log(res.data.findOrder);
         setAllOrder(res.data.findOrder);

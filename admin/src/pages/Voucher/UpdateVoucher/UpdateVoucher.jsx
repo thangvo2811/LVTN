@@ -24,7 +24,7 @@ const UpdateVoucher = (props) => {
   };
   const handleUpdateVoucher = async () => {
     await axios
-      .put("http://localhost:8000/api/update-event/", {
+      .put(`${process.env.REACT_APP_API_URL}/api/update-event/`, {
         id: props.idVoucher,
         name: newName,
         datestart: newDateStart,

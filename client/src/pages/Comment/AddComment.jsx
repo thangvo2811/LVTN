@@ -31,7 +31,7 @@ const AddComment = (props) => {
   };
   const handleAddComment = async () => {
     await axios
-      .post("http://localhost:8000/api/add-comment", {
+      .post(`${process.env.REACT_APP_API_URL}/api/add-comment`, {
         cus_id: idCus,
         product_id: idProduct,
         description: desc,

@@ -141,7 +141,7 @@ const Dashboard = () => {
 
   const callAllOrderCount = async () => {
     await axios
-      .get("http://localhost:8000/api/Count-Order-chart/")
+      .get(`${process.env.REACT_APP_API_URL}/api/Count-Order-chart/`)
       .then((res) => {
         setCountOrder(res.data.order);
         setTotalPrice(res.data.price);
@@ -155,7 +155,7 @@ const Dashboard = () => {
 
   const callAllOrder = async () => {
     await axios
-      .get("http://localhost:8000/api/get-all-order/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-all-order/`)
       .then((res) => {
         console.log(res.data.order);
         setAllOrder(res.data.order);

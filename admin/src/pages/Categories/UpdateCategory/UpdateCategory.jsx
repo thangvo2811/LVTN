@@ -33,7 +33,7 @@ const UpdateCategory = (props) => {
     descCate
   ) => {
     await axios
-      .put("http://localhost:8000/api/update-Category/", {
+      .put(`${process.env.REACT_APP_API_URL}/api/update-Category/`, {
         id: idCate,
         name: nameCate,
         parent_id: parentIdCate,

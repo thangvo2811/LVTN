@@ -31,7 +31,7 @@ const AddWarrantyOne = (props) => {
   };
   const callCreateWarrantyInfo = async (info, desc, staId, order, seri) => {
     await axios
-      .post("http://localhost:8000/api/create-warranty/", {
+      .post(`${process.env.REACT_APP_API_URL}/api/create-warranty/`, {
         infor: info,
         description: desc,
         sta_id: staId,
@@ -55,7 +55,7 @@ const AddWarrantyOne = (props) => {
 
   const callAllOrder = async () => {
     await axios
-      .get("http://localhost:8000/api/get-all-order/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-all-order/`)
       .then((res) => {
         setAllOrder(res.data.order);
       })
@@ -66,7 +66,7 @@ const AddWarrantyOne = (props) => {
 
   const callAllSeriNumber = async (orderId) => {
     await axios
-      .get(`http://localhost:8000/api/get-order-detail/${orderId}/`)
+      .get(`${process.env.REACT_APP_API_URL}/api/get-order-detail/${orderId}/`)
       .then((res) => {
         setAllSeriNumber(res.data.data);
       })

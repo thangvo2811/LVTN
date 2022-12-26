@@ -12,7 +12,7 @@ const Comments = () => {
 
   const callAllComment = async (id) => {
     await axios
-      .get("http://localhost:8000/api/get-all-comment/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-all-comment/`)
       .then((res) => {
         setAllComment(res.data.comment);
       })

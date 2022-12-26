@@ -34,7 +34,7 @@ const UploadProduct = (props) => {
   const handleUpdateProduct = async (url) => {
     console.log(url);
     await axios
-      .put("http://localhost:8000/api/update-Product/", {
+      .put(`${process.env.REACT_APP_API_URL}/api/update-Product/`, {
         id: id,
         name: newName,
         unitprice: newPrice,
@@ -60,11 +60,15 @@ const UploadProduct = (props) => {
       const formData = new FormData();
       formData.append("file", file);
       await axios
-        .post("http://localhost:8000/api/create-img-product", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
+        .post(
+          `${process.env.REACT_APP_API_URL}/api/create-img-product`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
         .then((res) => {
           // setFile(file.secure_url);
           console.log(res?.data?.res?.url);
@@ -79,7 +83,7 @@ const UploadProduct = (props) => {
   };
   const callAllCategory = async () => {
     await axios
-      .get("http://localhost:8000/api/get-Category/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-Category/`)
       .then((res) => {
         setAllCategory(res.data.category);
       })
@@ -89,7 +93,7 @@ const UploadProduct = (props) => {
   };
   const callAllBrand = async () => {
     await axios
-      .get("http://localhost:8000/api/get-brand/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-brand/`)
       .then((res) => {
         setAllBrand(res.data.brand);
       })

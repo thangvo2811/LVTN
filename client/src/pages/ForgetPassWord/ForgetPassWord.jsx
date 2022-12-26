@@ -10,7 +10,7 @@ const ForgetPassWord = () => {
   const [newEmail, setNewEmail] = useState("");
   const handleForgetPassWord = async () => {
     await axios
-      .post("http://localhost:8000/api/forgot-password/", {
+      .post(`${process.env.REACT_APP_API_URL}/api/forgot-password/`, {
         email: newEmail,
       })
       .then((res) => {

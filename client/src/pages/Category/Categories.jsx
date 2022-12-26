@@ -34,7 +34,7 @@ const Categories = () => {
 
   const callAllCategory = async () => {
     await axios
-      .get("http://localhost:8000/api/get-Category/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-Category/`)
       .then((res) => {
         setAllCategory(res.data.category);
       })
@@ -44,7 +44,7 @@ const Categories = () => {
   };
   const callAllBrand = async () => {
     await axios
-      .get("http://localhost:8000/api/get-brand/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-brand/`)
       .then((res) => {
         setAllBrand(res.data.brand);
       })
@@ -58,7 +58,7 @@ const Categories = () => {
     const callAllProduct = async () => {
       await axios
         .get(
-          `http://localhost:8000/api/get-all-product?brand_id=${brand.id}&category_id=${category.idCate}`
+          `${process.env.REACT_APP_API_URL}/api/get-all-product?brand_id=${brand.id}&category_id=${category.idCate}`
         )
         .then((res) => {
           setAllProduct(res.data.products);

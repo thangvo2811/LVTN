@@ -54,7 +54,7 @@ const ResetPassWord = () => {
     const queryString = window.location.search.split("?");
     const filter = queryString.filter((item) => item !== "");
     await axios
-      .put("http://localhost:8000/api/forgot-password/", {
+      .put(`${process.env.REACT_APP_API_URL}/api/forgot-password/`, {
         email: filter,
         newpassword: newPassWord,
       })

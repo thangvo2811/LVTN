@@ -21,7 +21,7 @@ const DeleteComment = (props) => {
   };
   const handleDeleteComment = async (id) => {
     await axios
-      .delete(`http://localhost:8000/api/delete-comment/${id}/`)
+      .delete(`${process.env.REACT_APP_API_URL}/api/delete-comment/${id}/`)
       .then((res) => {
         console.log(res.data);
         props.parentCallback(Date.now());

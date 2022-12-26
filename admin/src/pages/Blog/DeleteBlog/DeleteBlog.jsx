@@ -19,7 +19,7 @@ const DeleteBlog = (props) => {
   };
   const handleDeleteBlog = async (e, id) => {
     await axios
-      .delete(`http://localhost:8000/api/delete-blog/${id}/`)
+      .delete(`${process.env.REACT_APP_API_URL}/api/delete-blog/${id}/`)
       .then((res) => {
         console.log(res.data);
         props.parentCallback(Date.now());

@@ -13,7 +13,7 @@ const Tab = () => {
 
   const callAllWareHouse = async () => {
     await axios
-      .get("http://localhost:8000/api/Get-all-warehouse/?id=")
+      .get(`${process.env.REACT_APP_API_URL}/api/Get-all-warehouse/?id=`)
       .then((res) => {
         setAllWareHouse(res.data.product);
       })

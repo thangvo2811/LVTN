@@ -13,7 +13,7 @@ const InFoWarranty = (props) => {
 
   const callInfoWarranty = useCallback(async () => {
     await axios
-      .get(`http://localhost:8000/api/get-all-warranty-info/${1}/`)
+      .get(`${process.env.REACT_APP_API_URL}/api/get-all-warranty-info/${1}/`)
       .then((res) => {
         setInfoWarranty(res.data.warranty);
       })

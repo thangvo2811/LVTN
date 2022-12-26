@@ -21,7 +21,7 @@ const DeleteCategory = (props) => {
   const handleDeleteCategory = async (e, id) => {
     e.preventDefault();
     await axios
-      .delete(`http://localhost:8000/api/delete-Category/${id}/`)
+      .delete(`${process.env.REACT_APP_API_URL}/api/delete-Category/${id}/`)
       .then((res) => {
         console.log(res.data);
         props.parentCallback(Date.now());

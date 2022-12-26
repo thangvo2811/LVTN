@@ -12,7 +12,9 @@ const ProductCardList = (props) => {
   const navigate = useNavigate();
   const callDeleteProduct = async () => {
     await axios
-      .delete(`http://localhost:8000/api/delete-wishlist/${idWishList}/`)
+      .delete(
+        `${process.env.REACT_APP_API_URL}/api/delete-wishlist/${idWishList}/`
+      )
       .then((res) => {
         console.log(res.data);
         props.parentCallback(Date.now());

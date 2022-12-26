@@ -7,7 +7,7 @@ import { addCartAction, addNumberCartStart, addStart } from "./cartRedux";
 export const loginUser = async (dispatch, user, navigate) => {
   dispatch(loginStart());
   await axios
-    .post("http://localhost:8000/api/get-user-login", user)
+    .post(`${process.env.REACT_APP_API_URL}/api/get-user-login`, user)
     .then((res) => {
       if (res.data.errorCode === 0) {
         message.success("Đăng Nhập Thành Công");
@@ -35,7 +35,7 @@ export const addCart = async (
 ) => {
   dispatch(addStart());
   await axios
-    .post("http://localhost:8000/api/add-to-cart", {
+    .post(`${process.env.REACT_APP_API_URL}/api/add-to-cart`, {
       cus_id: parseInt(user),
       product_id: idProduct,
       optionvalue: idOption,
@@ -81,7 +81,7 @@ export const addNumberCart = async (dispatch, cartId, idProduct, qty) => {
   // dispatch(addNumberCartStart());
   console.log(cartId);
   await axios
-    .put("http://localhost:8000/api/update-amount-cart", {
+    .put(`${process.env.REACT_APP_API_URL}/api/update-amount-cart`, {
       id: cartId,
       product_id: idProduct,
       amount: qty,
@@ -97,7 +97,7 @@ export const addNumberCart = async (dispatch, cartId, idProduct, qty) => {
 export const addQuantityCart = async (dispatch, idCart, key) => {
   // dispatch(addNumberCartStart());
   await axios
-    .put("http://localhost:8000/api/plusminus-amount", {
+    .put(`${process.env.REACT_APP_API_URL}/api/plusminus-amount`, {
       cart_id: idCart,
       key: key,
     })

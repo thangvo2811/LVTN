@@ -28,7 +28,9 @@ const Cart = () => {
   const navigate = useNavigate();
   const callCartItem = useCallback(async () => {
     await axios
-      .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}/`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/get-cart-by-customer-id/${newCustomer}/`
+      )
       .then((res) => {
         setCartItem(res.data.cartitem);
         setTotalProduct(res.data.quantity);
@@ -59,7 +61,9 @@ const Cart = () => {
   const handleDeleteAllCart = async (e, [id]) => {
     e.preventDefault();
     await axios
-      .delete(`http://localhost:8000/api/handle-Delete-All-Cartitem/${id}/`)
+      .delete(
+        `${process.env.REACT_APP_API_URL}/api/handle-Delete-All-Cartitem/${id}/`
+      )
       .then((res) => {
         console.log(res.data);
         message.success("Xóa Sản Phẩm Thành Công");

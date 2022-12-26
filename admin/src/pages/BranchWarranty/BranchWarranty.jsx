@@ -8,7 +8,7 @@ const BranchWarranty = () => {
 
   const callAllBranchWarranty = async () => {
     await axios
-      .get("http://localhost:8000/api/get-all-store/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-all-store/`)
       .then((res) => {
         setAllBranchWarranty(res.data.store);
       })

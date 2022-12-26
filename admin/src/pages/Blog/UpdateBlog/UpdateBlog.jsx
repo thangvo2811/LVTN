@@ -29,7 +29,7 @@ const UpdateBlog = (props) => {
   };
   const handleUpdateBlog = async (url) => {
     await axios
-      .put("http://localhost:8000/api/update-blog/", {
+      .put(`${process.env.REACT_APP_API_URL}/api/update-blog/`, {
         id: id,
         Description: descBlog,
         sta_id: idCus,
@@ -49,11 +49,15 @@ const UpdateBlog = (props) => {
       const formData = new FormData();
       formData.append("file", file);
       await axios
-        .post("http://localhost:8000/api/create-img-product", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
+        .post(
+          `${process.env.REACT_APP_API_URL}/api/create-img-product`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
         .then((res) => {
           // setFile(file.secure_url);
           console.log(res?.data?.res?.url);

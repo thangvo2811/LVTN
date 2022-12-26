@@ -25,7 +25,7 @@ const ChangeName = (props) => {
   const callChangeName = async (idCustomer, newNameCus) => {
     console.log(newNameCus);
     await axios
-      .put("http://localhost:8000/api/update-user/", {
+      .put(`${process.env.REACT_APP_API_URL}/api/update-user/`, {
         id: idCustomer,
         fullname: newNameCus,
         phonenumber: oldPhone,

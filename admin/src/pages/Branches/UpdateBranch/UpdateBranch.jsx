@@ -25,7 +25,7 @@ const UpdateBranch = (props) => {
   };
   const callUpdateBranch = async () => {
     await axios
-      .put("http://localhost:8000/api/update-warehouse/", {
+      .put(`${process.env.REACT_APP_API_URL}/api/update-warehouse/`, {
         id: id,
         name: newName,
         address: newAddress,

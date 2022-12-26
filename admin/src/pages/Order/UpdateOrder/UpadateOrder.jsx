@@ -14,7 +14,7 @@ const UpadateOrder = (props) => {
 
   const handleUpdateOrder1 = async (id) => {
     await axios
-      .put(`http://localhost:8000/api/update-accept-order/${id}/`)
+      .put(`${process.env.REACT_APP_API_URL}/api/update-accept-order/${id}/`)
       .then((res) => {
         console.log(res.data);
         props.parentCallback(Date.now());
@@ -27,7 +27,7 @@ const UpadateOrder = (props) => {
   };
   const handleUpdateOrder2 = async (id) => {
     await axios
-      .put(`http://localhost:8000/api/update-order-status-3/${id}/`)
+      .put(`${process.env.REACT_APP_API_URL}/api/update-order-status-3/${id}/`)
       .then((res) => {
         console.log(res.data);
         props.parentCallback(Date.now());
@@ -41,7 +41,7 @@ const UpadateOrder = (props) => {
 
   const handleUpdateOrder3 = async (id) => {
     await axios
-      .put(`http://localhost:8000/api/update-order-status-4/${id}/`)
+      .put(`${process.env.REACT_APP_API_URL}/api/update-order-status-4/${id}/`)
       .then((res) => {
         console.log(res.data);
         props.parentCallback(Date.now());

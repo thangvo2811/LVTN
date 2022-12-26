@@ -7,7 +7,7 @@ const Warranty = () => {
   const [allWarranty, setAllWarranty] = useState([]);
   const callAllWarranty = async () => {
     await axios
-      .get(`http://localhost:8000/api/get-all-warranty/`)
+      .get(`${process.env.REACT_APP_API_URL}/api/get-all-warranty/`)
       .then((res) => {
         setAllWarranty(res.data.Warranty);
       })

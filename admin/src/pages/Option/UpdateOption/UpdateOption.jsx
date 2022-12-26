@@ -25,7 +25,7 @@ const UpdateOption = (props) => {
   };
   const callAllOption = async () => {
     await axios
-      .get("http://localhost:8000/api/get-option/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-option/`)
       .then((res) => {
         setAllOption(res.data.option);
       })
@@ -36,7 +36,7 @@ const UpdateOption = (props) => {
   const callAllProduct = async () => {
     await axios
       .get(
-        "http://localhost:8000/api/get-all-product-admin/?brand_id=&category_id="
+        `${process.env.REACT_APP_API_URL}/api/get-all-product-admin/?brand_id=&category_id=`
       )
       .then((res) => {
         setAllProductOption(res.data);
@@ -57,7 +57,7 @@ const UpdateOption = (props) => {
     idoption
   ) => {
     await axios
-      .put("http://localhost:8000/api/update-option-product", {
+      .put(`${process.env.REACT_APP_API_URL}/api/update-option-product`, {
         id: id,
         name: nameOption,
         price: priceOption,

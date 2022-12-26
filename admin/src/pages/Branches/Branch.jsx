@@ -14,7 +14,7 @@ const Branch = () => {
   };
   const callAllBranch = async () => {
     await axios
-      .get("http://localhost:8000/api/get-warehouse/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-warehouse/`)
       .then((res) => {
         setAllBranch(res.data.Warehouse);
       })

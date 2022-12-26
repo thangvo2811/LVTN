@@ -29,7 +29,7 @@ const FindCategory = () => {
   const callFindIdCategory = useCallback(async () => {
     await axios
       .get(
-        `http://localhost:8000/api/get-all-product?brand_id=&category_id=${param.id}`
+        `${process.env.REACT_APP_API_URL}/api/get-all-product?brand_id=&category_id=${param.id}`
       )
       .then((res) => {
         setAllProduct(res.data.products);
@@ -43,7 +43,7 @@ const FindCategory = () => {
     const callAllProduct = async () => {
       await axios
         .get(
-          `http://localhost:8000/api/get-all-product?brand_id=${brand.id}&category_id=${category.idCate}`
+          `${process.env.REACT_APP_API_URL}/api/get-all-product?brand_id=${brand.id}&category_id=${category.idCate}`
         )
         .then((res) => {
           setAllProduct(res.data.products);
@@ -63,7 +63,7 @@ const FindCategory = () => {
 
   const callAllCategory = async () => {
     await axios
-      .get("http://localhost:8000/api/get-Category/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-Category/`)
       .then((res) => {
         setAllCategory(res.data.category);
       })
@@ -74,7 +74,7 @@ const FindCategory = () => {
 
   const callAllBrand = async () => {
     await axios
-      .get("http://localhost:8000/api/get-brand/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-brand/`)
       .then((res) => {
         setAllBrand(res.data.brand);
       })

@@ -6,7 +6,7 @@ const Customers = () => {
 
   const callAllCustomer = async () => {
     await axios
-      .get("http://localhost:8000/api/get-all-user")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-all-user`)
       .then((res) => {
         setAllCustomer(res.data.customer);
       })

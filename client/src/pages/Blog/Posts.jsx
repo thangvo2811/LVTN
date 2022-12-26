@@ -9,7 +9,7 @@ const Posts = () => {
 
   const callAllBlog = async () => {
     await axios
-      .get("http://localhost:8000/api/get-all-blog/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-all-blog/`)
       .then((res) => {
         console.log(res.data.blog);
         setAllBlog(res.data.blog);

@@ -12,7 +12,7 @@ const CategoryOption = () => {
   };
   const callAllOption = async () => {
     await axios
-      .get("http://localhost:8000/api/get-option/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-option/`)
       .then((res) => {
         setAllOption(res.data.option);
       })

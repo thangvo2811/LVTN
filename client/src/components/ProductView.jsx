@@ -74,7 +74,9 @@ const ProductView = (props) => {
 
   const callCartItem = useCallback(async () => {
     await axios
-      .get(`http://localhost:8000/api/get-cart-by-customer-id/${newCustomer}/`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/get-cart-by-customer-id/${newCustomer}/`
+      )
       .then((res) => {
         // console.log("Tong SP", res.data.quantity);
         dispatch(totalCartNumber(res.data.quantity));
@@ -86,7 +88,9 @@ const ProductView = (props) => {
 
   const callIdUserCommnet = useCallback(async () => {
     await axios
-      .get(`http://localhost:8000/api/get-all-comment-customer/${newCustomer}/`)
+      .get(
+        `${process.env.REACT_APP_API_URL}/api/get-all-comment-customer/${newCustomer}/`
+      )
       .then((res) => {
         setIdUserComment(res.data.comment);
       })
@@ -102,7 +106,7 @@ const ProductView = (props) => {
   const callCommentProduct = useCallback(async () => {
     await axios
       .get(
-        `http://localhost:8000/api/get-comment-of-product/${param.category_id}/`
+        `${process.env.REACT_APP_API_URL}/api/get-comment-of-product/${param.category_id}/`
       )
       .then((res) => {
         console.log(res.data.Comment);
@@ -115,7 +119,7 @@ const ProductView = (props) => {
 
   const callAllFeedBack = async () => {
     await axios
-      .get("http://localhost:8000/api/get-all-comment-admin/")
+      .get(`${process.env.REACT_APP_API_URL}/api/get-all-comment-admin/`)
       .then((res) => {
         setAllCommentAdmin(res.data.comment);
       })
@@ -147,7 +151,7 @@ const ProductView = (props) => {
   const callAllOptionProduct = useCallback(async () => {
     const filter = array.filter((item) => item !== null && item !== "");
     await axios
-      .post("http://localhost:8000/api/get-product-quantity/", {
+      .post(`${process.env.REACT_APP_API_URL}/api/get-product-quantity/`, {
         product_id: props.product_id,
         optionvalue: filter,
       })

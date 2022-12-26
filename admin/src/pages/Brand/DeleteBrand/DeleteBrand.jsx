@@ -22,7 +22,7 @@ const DeleteBrand = (props) => {
   const handleDeleteBrand = async (e, id) => {
     e.preventDefault();
     await axios
-      .delete(`http://localhost:8000/api/delete-brand/${id}/`)
+      .delete(`${process.env.REACT_APP_API_URL}/api/delete-brand/${id}/`)
       .then((res) => {
         console.log(res);
         props.parentCallback(Date.now());

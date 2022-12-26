@@ -15,7 +15,7 @@ const Viewed = () => {
   const callAllViewed = useCallback(async () => {
     await axios
       .get(
-        `http://localhost:8000/api/get-product-view-by-customer-id/${idCus}/`
+        `${process.env.REACT_APP_API_URL}/api/get-product-view-by-customer-id/${idCus}/`
       )
       .then((res) => {
         setAllList(res.data.findP);

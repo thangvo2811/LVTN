@@ -35,7 +35,7 @@ const Register = () => {
 
   // const callAllUser = async (id) => {
   //   await axios
-  //     .get(`http://localhost:8000/api/get-by-Id/${id}/`)
+  //     .get(`${process.env.REACT_APP_API_URL}/api/get-by-Id/${id}/`)
   //     .then((res) => {
   //       setIdUser(res.data.customer);
   //     })
@@ -51,7 +51,7 @@ const Register = () => {
   // }, [newId]);
   const callApi = async () => {
     await axios
-      .post("http://localhost:8000/api/sign-up-user/", {
+      .post(`${process.env.REACT_APP_API_URL}/api/sign-up-user/`, {
         email: email,
         password: password,
         fullname: userName,
