@@ -35,6 +35,27 @@ const DetailOrder = () => {
           <div className="detail-location__phone">
             (+84) {detailUser.phonenumber}
           </div>
+          <div>
+            <div className="detail-location__status">THÔNG TIN ĐƠN HÀNG</div>
+            <div>
+              {detailUser?.paymentstatus === 2 ? (
+                <div className="detail-location__status__payment">
+                  Trạng Thái Thanh Toán: <span>Đã Thanh Toán</span>
+                </div>
+              ) : (
+                <div className="detail-location__status__payment">
+                  Trạng Thái Thanh Toán: <span>Chưa Thanh Toán</span>
+                </div>
+              )}
+            </div>
+            <div>
+              {detailUser?.method_id === 1 ? (
+                <div className="detail-location__status__method">
+                  Phương Thức Thanh Toán: <span>Thanh Toán MoMo</span>
+                </div>
+              ) : null}
+            </div>
+          </div>
         </div>
 
         <div className="detail-content">
@@ -66,7 +87,7 @@ const DetailOrder = () => {
                   </div>
                 </div>
               </div>
-              <div className="">
+              {/* <div className="">
                 Trạng Thái:
                 {detailOrder?.paymentstatus === 2
                   ? " Đã Thanh Toán"
@@ -77,7 +98,7 @@ const DetailOrder = () => {
                 {detailOrder?.method_id === 1
                   ? "Thanh Toán MoMo"
                   : "Chưa Thanh Toán"}
-              </div>
+              </div> */}
             </>
           ))}
         </div>

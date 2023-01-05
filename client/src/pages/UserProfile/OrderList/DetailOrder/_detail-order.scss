@@ -29,6 +29,28 @@
   &__address {
     padding-bottom: 10px;
   }
+  &__status {
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 10px 0px;
+    &__payment {
+      font-weight: 400;
+      padding-bottom: 10px;
+      span {
+        font-weight: 700;
+        font-size: 14px;
+      }
+    }
+    &__method {
+      font-weight: 400;
+      padding-bottom: 10px;
+      span {
+        font-weight: 700;
+        font-size: 14px;
+      }
+    }
+  }
 }
 
 .detail-item {
@@ -62,6 +84,7 @@
   }
   &__info {
     min-width: 70%;
+    margin-left: 10px;
     @include tablet {
       width: 60%;
     }
