@@ -1,3 +1,9 @@
+.order-content {
+  border: solid 1px #eee;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 20px;
+  margin: 10px 0px;
+}
 .order-title {
   min-width: 100%;
   display: flex;
@@ -9,6 +15,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  margin: 5px;
 }
 .order-name {
   font-weight: 700;
@@ -16,7 +23,7 @@
 }
 .order-id {
   min-width: 25%;
-
+  margin: 5px;
   text-transform: uppercase;
   font-weight: 400;
 }
@@ -68,9 +75,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: solid 1px #eee;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  border-radius: 20px;
+  // border: solid 1px #eee;
+  // box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  // border-radius: 20px;
   overflow: hidden;
   padding: 0 20px;
   margin-bottom: 20px;
@@ -85,6 +92,7 @@
     font-weight: 700;
     text-transform: uppercase;
     color: rgb(17, 255, 0);
+    margin: 5px;
   }
 
   &__image {
