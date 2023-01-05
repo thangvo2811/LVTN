@@ -11,6 +11,10 @@
   display: flex;
   justify-content: center;
   gap: 20px;
+  span {
+    font-weight: 700;
+    font-size: 14px;
+  }
 }
 .detail-location {
   border-right: 1px solid rgb(194, 194, 194);

@@ -27,13 +27,16 @@ const DetailOrder = () => {
       <div className="detail">
         <div className="detail-location">
           <div className="detail-location__title">Địa Chỉ Nhận Hàng</div>
-          <div className="detail-location__name">{detailUser.fullname}</div>
+          <div className="detail-location__name">
+            Họ tên:
+            <span> {detailUser.fullname}</span>
+          </div>
           <div className="detail-location__address">
-            2266/14/29/10, đường Huỳnh Tấn Phát, Tổ 6, Ấp 3, Phú Xuân, Huyện Nhà
-            Bè
+            Địa chỉ:
+            <span> {detailUser?.Address}</span>
           </div>
           <div className="detail-location__phone">
-            (+84) {detailUser.phonenumber}
+            Số điện thoại: <span> (+84) {detailUser.phonenumber}</span>
           </div>
           <div>
             <div className="detail-location__status">THÔNG TIN ĐƠN HÀNG</div>
