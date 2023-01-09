@@ -348,10 +348,10 @@ const Dashboard = () => {
                 </thead>
                 <thead>
                   {allOrder
-                    ?.sort((a, b) => a.status - b.status)
+                    ?.sort((a, b) => b.id - a.id)
                     .map((item, index) => (
                       <>
-                        <tr>
+                        <tr key={index}>
                           <td>{item.code}</td>
                           <td>{item.fullname}</td>
                           <td>{item.createdAt.slice(0, 10)}</td>

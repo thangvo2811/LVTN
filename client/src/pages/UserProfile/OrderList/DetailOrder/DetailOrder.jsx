@@ -62,13 +62,20 @@ const DetailOrder = () => {
             <div>
               {detailUser?.paymentstatus === 2 ? (
                 <div className="detail-location__status__payment">
-                  Trạng Thái Thanh Toán: <span>Đã Thanh Toán</span>
+                  Trạng Thái: <span>Đã Thanh Toán</span>
                 </div>
               ) : (
                 <div className="detail-location__status__payment">
-                  Trạng Thái Thanh Toán: <span>Chưa Thanh Toán</span>
+                  Trạng Thái: <span>Chưa Thanh Toán</span>
                 </div>
               )}
+            </div>
+            <div>
+              {detailUser?.status === 6 ? (
+                <div className="detail-location__status__method">
+                  Trạng Thái Đơn Hàng: <span>Đã Hủy</span>
+                </div>
+              ) : null}
             </div>
             <div>
               {detailUser?.method_id === 1 ? (
@@ -110,11 +117,14 @@ const DetailOrder = () => {
               </div>
             </>
           ))}
-          {detailUser.paymentstatus === 2 ? null : (
-            <div className="payment__card" onClick={callPayMentOrder}>
+          {detailUser.paymentstatus === 2 ? null : <div
+              className="payment__card"
+              onClick={callPayMentOrder}
+            >
               <button className="btn-pay">Thanh Toán</button>
-            </div>
-          )}
+            </div> ? (
+            detailUser.status === 6 ? null : null
+          ) : null}
         </div>
       </div>
     </>

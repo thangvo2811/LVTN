@@ -41,75 +41,235 @@ const Orderitem = (props) => {
   const navigate = useNavigate();
 
   return (
-    <div className="order-content">
-      <div className="order-title">
-        <div className="order-id">
-          Mã Đơn Hàng: <span className="order-id-code">{itemOrder.code}</span>
+    <>
+      {props.statusOrder === 6 ? (
+        <div className="order-content-delete">
+          <div className="order-title">
+            <div className="order-id">
+              Mã Đơn Hàng:{" "}
+              <span className="order-id-code">{itemOrder.code}</span>
+            </div>
+            <div className="order-detail-status">
+              <div className="order-name">Trạng Thái:</div>
+              {orderStatus?.map((item, index) => (
+                <div className="order-status">
+                  {item.id === 6 && props.statusOrder === 6 ? (
+                    <span className="order-status-delete">{item.name}</span>
+                  ) : item.id === props.statusOrder ? (
+                    item.name
+                  ) : null}
+                  {/* {item.id === props.statusOrder ? item.name : null} */}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="order-item">
+            <div className="order-item__image">
+              <img
+                src={orderItem.img}
+                alt=""
+                onClick={() => navigate("/detailorder/" + id)}
+              />
+              <div className="order-item__info">
+                <div className="order-item__info__title"></div>
+                <div className="order-item__info__id">
+                  Tên sản phẩm: {orderItem.Orderitem.name}
+                </div>
+                <div className="order-item__info__price">
+                  Số lượng: {orderItem.Orderitem.TotalQuantity}
+                </div>
+              </div>
+            </div>
+
+            <div className="order-item__total">
+              <div className="order-item__total__total">
+                Tổng : {numberWithCommas(orderItem.Orderitem.TotalPrice)} VND
+              </div>
+            </div>
+          </div>
+          <div className="order-item__pay">
+            {itemOrder.paymentstatus === 2 ? (
+              <div className="order-item__pay">Đã Thanh Toán</div>
+            ) : null}
+          </div>
+          <div className="btn-delete">
+            {orderStatus?.map((item, index) => (
+              <div>
+                {item.id === 4 && props.statusOrder === 4 ? (
+                  <AddComment
+                    img={orderItem.img}
+                    idProduct={orderItem.id}
+                    reloadPage={props.parentCallback()}
+                  ></AddComment>
+                ) : null}
+                {(item.id === 1 &&
+                  props.statusOrder === 1 &&
+                  itemOrder.paymentstatus !== 2) ||
+                (item.id === 2 &&
+                  props.statusOrder === 2 &&
+                  itemOrder.paymentstatus !== 2) ? (
+                  <DeleteOrder
+                    id={itemOrder.id}
+                    reloadPage={props.parentCallback()}
+                  ></DeleteOrder>
+                ) : null}
+              </div>
+            ))}
+          </div>
+          {/* {itemOrder.paymentstatus === 2 ? null : null} */}
         </div>
-        <div className="order-detail-status">
-          <div className="order-name">Trạng Thái:</div>
+      ) : (
+        <div className="order-content">
+          <div className="order-title">
+            <div className="order-id">
+              Mã Đơn Hàng:{" "}
+              <span className="order-id-code">{itemOrder.code}</span>
+            </div>
+            <div className="order-detail-status">
+              <div className="order-name">Trạng Thái:</div>
+              {orderStatus?.map((item, index) => (
+                <div className="order-status">
+                  {item.id === 6 && props.statusOrder === 6 ? (
+                    <span className="order-status-delete">{item.name}</span>
+                  ) : item.id === props.statusOrder ? (
+                    item.name
+                  ) : null}
+                  {/* {item.id === props.statusOrder ? item.name : null} */}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="order-item">
+            <div className="order-item__image">
+              <img
+                src={orderItem.img}
+                alt=""
+                onClick={() => navigate("/detailorder/" + id)}
+              />
+              <div className="order-item__info">
+                <div className="order-item__info__title"></div>
+                <div className="order-item__info__id">
+                  Tên sản phẩm: {orderItem.Orderitem.name}
+                </div>
+                <div className="order-item__info__price">
+                  Số lượng: {orderItem.Orderitem.TotalQuantity}
+                </div>
+              </div>
+            </div>
+
+            <div className="order-item__total">
+              <div className="order-item__total__total">
+                Tổng : {numberWithCommas(orderItem.Orderitem.TotalPrice)} VND
+              </div>
+            </div>
+          </div>
+          <div className="order-item__pay">
+            {itemOrder.paymentstatus === 2 ? (
+              <div className="order-item__pay">Đã Thanh Toán</div>
+            ) : null}
+          </div>
+          <div className="btn-delete">
+            {orderStatus?.map((item, index) => (
+              <div>
+                {item.id === 4 && props.statusOrder === 4 ? (
+                  <AddComment
+                    img={orderItem.img}
+                    idProduct={orderItem.id}
+                    reloadPage={props.parentCallback()}
+                  ></AddComment>
+                ) : null}
+                {(item.id === 1 &&
+                  props.statusOrder === 1 &&
+                  itemOrder.paymentstatus !== 2) ||
+                (item.id === 2 &&
+                  props.statusOrder === 2 &&
+                  itemOrder.paymentstatus !== 2) ? (
+                  <DeleteOrder
+                    id={itemOrder.id}
+                    reloadPage={props.parentCallback()}
+                  ></DeleteOrder>
+                ) : null}
+              </div>
+            ))}
+          </div>
+          {/* {itemOrder.paymentstatus === 2 ? null : null} */}
+        </div>
+      )}
+      {/* <div className="order-content">
+        <div className="order-title">
+          <div className="order-id">
+            Mã Đơn Hàng: <span className="order-id-code">{itemOrder.code}</span>
+          </div>
+          <div className="order-detail-status">
+            <div className="order-name">Trạng Thái:</div>
+            {orderStatus?.map((item, index) => (
+              <div className="order-status">
+                {item.id === 6 && props.statusOrder === 6 ? (
+                  <span className="order-status-delete">{item.name}</span>
+                ) : item.id === props.statusOrder ? (
+                  item.name
+                ) : null}
+                {item.id === props.statusOrder ? item.name : null}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="order-item">
+          <div className="order-item__image">
+            <img
+              src={orderItem.img}
+              alt=""
+              onClick={() => navigate("/detailorder/" + id)}
+            />
+            <div className="order-item__info">
+              <div className="order-item__info__title"></div>
+              <div className="order-item__info__id">
+                Tên sản phẩm: {orderItem.Orderitem.name}
+              </div>
+              <div className="order-item__info__price">
+                Số lượng: {orderItem.Orderitem.TotalQuantity}
+              </div>
+            </div>
+          </div>
+
+          <div className="order-item__total">
+            <div className="order-item__total__total">
+              Tổng : {numberWithCommas(orderItem.Orderitem.TotalPrice)} VND
+            </div>
+          </div>
+        </div>
+        <div className="order-item__pay">
+          {itemOrder.paymentstatus === 2 ? (
+            <div className="order-item__pay">Đã Thanh Toán</div>
+          ) : null}
+        </div>
+        <div className="btn-delete">
           {orderStatus?.map((item, index) => (
-            <div className="order-status">
-              {item.id === props.statusOrder ? item.name : null}
+            <div>
+              {item.id === 4 && props.statusOrder === 4 ? (
+                <AddComment
+                  img={orderItem.img}
+                  idProduct={orderItem.id}
+                  reloadPage={props.parentCallback()}
+                ></AddComment>
+              ) : null}
+              {(item.id === 1 &&
+                props.statusOrder === 1 &&
+                itemOrder.paymentstatus !== 2) ||
+              (item.id === 2 &&
+                props.statusOrder === 2 &&
+                itemOrder.paymentstatus !== 2) ? (
+                <DeleteOrder
+                  id={itemOrder.id}
+                  reloadPage={props.parentCallback()}
+                ></DeleteOrder>
+              ) : null}
             </div>
           ))}
         </div>
-      </div>
-      <div className="order-item">
-        <div className="order-item__image">
-          <img
-            src={orderItem.img}
-            alt=""
-            onClick={() => navigate("/detailorder/" + id)}
-          />
-          <div className="order-item__info">
-            <div className="order-item__info__title"></div>
-            <div className="order-item__info__id">
-              Tên sản phẩm: {orderItem.Orderitem.name}
-            </div>
-            <div className="order-item__info__price">
-              Số lượng: {orderItem.Orderitem.TotalQuantity}
-            </div>
-          </div>
-        </div>
-
-        <div className="order-item__total">
-          <div className="order-item__total__total">
-            Tổng : {numberWithCommas(orderItem.Orderitem.TotalPrice)} VND
-          </div>
-        </div>
-      </div>
-      <div className="order-item__pay">
-        {itemOrder.paymentstatus === 2 ? (
-          <div className="order-item__pay">Đã Thanh Toán</div>
-        ) : null}
-      </div>
-      <div className="btn-delete">
-        {orderStatus?.map((item, index) => (
-          <div>
-            {item.id === 4 && props.statusOrder === 4 ? (
-              <AddComment
-                img={orderItem.img}
-                idProduct={orderItem.id}
-                reloadPage={props.parentCallback()}
-              ></AddComment>
-            ) : null}
-            {(item.id === 1 &&
-              props.statusOrder === 1 &&
-              itemOrder.paymentstatus !== 2) ||
-            (item.id === 2 &&
-              props.statusOrder === 2 &&
-              itemOrder.paymentstatus !== 2) ? (
-              <DeleteOrder
-                id={itemOrder.id}
-                reloadPage={props.parentCallback()}
-              ></DeleteOrder>
-            ) : null}
-          </div>
-        ))}
-      </div>
-      {/* {itemOrder.paymentstatus === 2 ? null : null} */}
-    </div>
+        {itemOrder.paymentstatus === 2 ? null : null}
+      </div> */}
+    </>
   );
 };
 
