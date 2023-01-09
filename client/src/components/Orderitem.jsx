@@ -24,6 +24,10 @@ const orderStatus = [
   },
   {
     id: 5,
+    name: "Đơn hàng đã thanh toán trực tiếp",
+  },
+  {
+    id: 6,
     name: "Đơn hàng đã bị hủy",
   },
 ];

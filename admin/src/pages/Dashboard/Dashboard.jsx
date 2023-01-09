@@ -362,9 +362,11 @@ const Dashboard = () => {
                               ? "Đang Chuẩn bị"
                               : item.status === 3
                               ? "Đang Giao"
-                              : item.status
+                              : item.status === 4
                               ? "Giao Thành Công"
                               : item.status === 5
+                              ? "Thanh Toán Trực Tiếp"
+                              : item.status === 6
                               ? "Đã Hủy"
                               : null}
                           </td>

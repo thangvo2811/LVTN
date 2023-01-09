@@ -43,10 +43,10 @@ const DeleteOrder = (props) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title"></DialogTitle>
-        <DialogContent>Bạn có muốn xóa không ?</DialogContent>
+        <DialogContent>Bạn có muốn hủy đơn hàng không ?</DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Hủy</Button>
-          <Button onClick={() => handleDeleteOrder(props.id)}>Xóa</Button>
+          <Button onClick={() => handleDeleteOrder(props.id)}>OK</Button>
         </DialogActions>
       </Dialog>
     </div>

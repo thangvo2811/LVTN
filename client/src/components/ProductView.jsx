@@ -314,12 +314,13 @@ const ProductView = (props) => {
               </div>
 
               <div className="product-top__info__content__option__right__select">
+                {/* <h1>{idWare ? "aad" : null}</h1> */}
                 <select onChange={(e) => setIdWare(e.target.value)}>
                   <option>Chọn Chi Nhánh</option>
                   {quantityProduct?.map((item, index) => (
                     <>
                       <option
-                        setIdWare={index === 0 ? "Chọn Chi Nhánh" : null}
+                        setIdWare={index === 0 ? null : null}
                         value={item.warehouse_id}
                       >
                         {item.UserwarehouseProduct.name}
@@ -332,6 +333,11 @@ const ProductView = (props) => {
                   {quantityProduct?.map((item, index) => (
                     <div key={index}>
                       {item.UserwarehouseProduct.name}: {item.quantity} sản phẩm
+                      {/* {idWare
+                        ? `${item.UserwarehouseProduct.name}: ${item.quantity} sản phẩm`
+                        : idWare === 0
+                        ? null
+                        : null} */}
                     </div>
                   ))}
                 </div>
