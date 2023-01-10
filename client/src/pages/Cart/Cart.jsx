@@ -159,6 +159,13 @@ const Cart = () => {
               </div>
             </Link>
           )}
+          {/* <Link to={"/payment"}>
+            <div className="cart__info__btn cart__info__btn__payment">
+              <Button size="stable" animate3={true}>
+                Tiếp tục thanh toán
+              </Button>
+            </div>
+          </Link> */}
 
           <Link to={"/product"}>
             <div className="cart__info__btn cart__info__btn__cart">

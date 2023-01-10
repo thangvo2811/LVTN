@@ -9,7 +9,7 @@ const OrderList = () => {
   const [allOrder, setAllOrder] = useState([]);
   const idCus = localStorage.getItem("User");
   const [reloadPage, setReloadPage] = useState("");
-  const [statusOrder, setStatusOrder] = useState([]);
+  // const [selectStatusOrder, setSelectStatusOrder] = useState([]);
   const callbackFunction = (childData) => {
     setReloadPage(childData);
   };
@@ -25,29 +25,38 @@ const OrderList = () => {
         console.log(err);
       });
   }, [idCus]);
-  // const callOrderByStatus = async (id) => {
+
+  // const callOrderByStatus = useCallback(async () => {
   //   await axios
-  //     .get(
-  //       `${process.env.REACT_APP_API_URL}/api/get-all-order-by-status/${id}/`
-  //     )
+  //     .post(`${process.env.REACT_APP_API_URL}/api/get-order-by-user-status/`, {
+  //       cus_id: idCus,
+  //       status: selectStatusOrder,
+  //     })
   //     .then((res) => {
-  //       setAllOrder(res.data);
+  //       setAllOrder(res.data.findOrder);
   //     })
   //     .catch((err) => {
   //       console.log(err);
   //     });
-  // };
+  // }, [idCus, selectStatusOrder]);
+
   useEffect(() => {
     callAllOrder();
-    // callOrderByStatus(statusOrder);
   }, [callAllOrder, idCus, reloadPage]);
+  // useEffect(() => {
+  //   callOrderByStatus();
+  // }, [callOrderByStatus]);
   return (
     <>
       <SectionTitle>Danh Sách Đơn Hàng</SectionTitle>
-      {/* <select onChange={(e) => setStatusOrder(e.target.value)}>
-        <option>Trạng Thái Đơn Hàng</option>
+      {/* <select onChange={(e) => setSelectStatusOrder(e.target.value)}>
+        <option>Chọn Trạng Thái</option>
         {allOrder?.map((item, index) => (
-          <option key={index} value={item.id}>
+          <option
+            setSelectStatusOrder={index === 0 ? null : null}
+            key={index}
+            value={item?.status}
+          >
             {item.status}
           </option>
         ))}

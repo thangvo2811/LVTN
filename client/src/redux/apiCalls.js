@@ -102,6 +102,10 @@ export const addQuantityCart = async (dispatch, idCart, key) => {
       key: key,
     })
     .then((res) => {
+      if (res.data.errCode === 1) {
+        message.error(res.data.errMessage);
+        return;
+      }
       console.log(res.data);
     })
     .catch((err) => {
