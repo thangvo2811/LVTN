@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Input } from "antd";
 import axios from "axios";
 import { message } from "antd";
-// import Select from "react-select";
+import Select from "react-select";
 
 const AddWarrantyOne = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -63,6 +63,9 @@ const AddWarrantyOne = (props) => {
         console.log(err);
       });
   };
+  let orderCode = allOrder?.map((item, index) => {
+    return { label: item?.code, value: item?.id };
+  });
 
   const callAllSeriNumber = async (orderId) => {
     await axios
@@ -79,7 +82,9 @@ const AddWarrantyOne = (props) => {
     callAllOrder();
     callAllSeriNumber(selectOrderCode);
   }, [selectOrderCode]);
-
+  const handleOrderCode = (e) => {
+    setSelectOrderCode(e.value);
+  };
   return (
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
@@ -100,14 +105,22 @@ const AddWarrantyOne = (props) => {
           <div className="form-input">
             <form>
               <label>Mã Đơn Hàng</label>
-              <select onChange={(e) => setSelectOrderCode(e.target.value)}>
+              {/* <select onChange={(e) => setSelectOrderCode(e.target.value)}>
                 <option>Mã Đơn Hàng</option>
                 {allOrder?.map((item, index) => (
                   <option key={item.id} value={item.id}>
                     {item?.code}
                   </option>
                 ))}
-              </select>
+              </select> */}
+              <Select
+                // onChange={(e) => setSelectProduct(e.target.value)}
+                className="basic-single"
+                classNamePrefix="select"
+                name="color"
+                options={orderCode}
+                onChange={handleOrderCode}
+              ></Select>
 
               <label>Thông Số Máy</label>
               <select onChange={(e) => setSeriNumber(e.target.value)}>

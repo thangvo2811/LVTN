@@ -32,7 +32,7 @@ const AddVoucher = (props) => {
       .then((res) => {
         console.log(res.data);
         props.parentCallback(Date.now());
-        message.success("Thêm Voucher Thành Công");
+        message.success("Thêm Sự Kiện Thành Công");
       })
       .catch((err) => {
         console.log(err);
@@ -44,7 +44,7 @@ const AddVoucher = (props) => {
     <div>
       <Button variant="outlined" onClick={handleClickOpen}>
         <div className="form-name">
-          <i className="bx bx-plus">Thêm Voucher</i>
+          <i className="bx bx-plus">Thêm Sự Kiện</i>
         </div>
       </Button>
       <Dialog
@@ -58,7 +58,7 @@ const AddVoucher = (props) => {
           <div className="form-title">Voucher</div>
           <div className="form-input">
             <form>
-              <label>Tên Voucher</label>
+              <label>Tên Sự Kiện</label>
               <Input
                 type="text"
                 placeholder="Tên Thuộc Tính"

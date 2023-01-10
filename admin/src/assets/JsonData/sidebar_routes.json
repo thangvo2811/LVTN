@@ -62,7 +62,7 @@
     "icon": "bx bx-cart"
   },
   {
-    "display_name": "Voucher",
+    "display_name": "Sự Kiện",
     "route": "/discount",
     "icon": "bx bx-gift"
   },

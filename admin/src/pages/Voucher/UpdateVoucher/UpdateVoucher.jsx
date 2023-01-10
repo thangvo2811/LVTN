@@ -33,7 +33,7 @@ const UpdateVoucher = (props) => {
       .then((res) => {
         console.log(res.data);
         props.parentCallback(Date.now());
-        message.success("Cập Nhật Voucher Thành Công");
+        message.success("Cập Nhật Sự Kiện Thành Công");
       })
       .catch((err) => {
         console.log(err);
@@ -54,7 +54,7 @@ const UpdateVoucher = (props) => {
       >
         <DialogTitle id="alert-dialog-title"></DialogTitle>
         <DialogContent>
-          <div className="form-title">Cập Nhật Voucher</div>
+          <div className="form-title">Cập Nhật Sự Kiện</div>
           <div className="form-input">
             <form>
               <label>ID</label>

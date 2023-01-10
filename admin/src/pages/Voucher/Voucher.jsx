@@ -27,7 +27,7 @@ const Voucher = () => {
   return (
     <div>
       <div className="page-header">
-        <h2 className="page-header__title">Voucher</h2>
+        <h2 className="page-header__title">Sự Kiện</h2>
         <AddVoucher parentCallback={callbackFunction}></AddVoucher>
       </div>
       <div className="row">

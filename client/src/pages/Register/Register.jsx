@@ -131,7 +131,7 @@ const Register = () => {
       pattern: "YYYY-MM-DD",
       required: true,
       min: "1970-01-01",
-      max: "2023-12-31",
+      max: "2023-01-31",
     },
     {
       key: 6,

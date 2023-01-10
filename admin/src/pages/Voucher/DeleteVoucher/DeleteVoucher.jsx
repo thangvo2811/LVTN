@@ -25,7 +25,7 @@ const DeleteVoucher = (props) => {
       .then((res) => {
         console.log(res.data);
         props.parentCallback(Date.now());
-        message.success("Xóa Voucher Thành Công");
+        message.success("Xóa Sự Kiện Thành Công");
       })
       .catch((err) => {
         console.log(err);

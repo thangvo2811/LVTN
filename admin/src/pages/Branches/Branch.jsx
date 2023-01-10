@@ -29,7 +29,7 @@ const Branch = () => {
   return (
     <div>
       <div className="page-header">
-        <h2 className="page-header__title">Chi Nhánh</h2>
+        <h2 className="page-header__title">Chi Nhánh Kho</h2>
         <AddBranch parentCallback={callbackFunction}></AddBranch>
       </div>
       <div className="row">
