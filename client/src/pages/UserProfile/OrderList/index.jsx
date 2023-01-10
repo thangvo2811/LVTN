@@ -9,6 +9,7 @@ const OrderList = () => {
   const [allOrder, setAllOrder] = useState([]);
   const idCus = localStorage.getItem("User");
   const [reloadPage, setReloadPage] = useState("");
+  const [statusOrder, setStatusOrder] = useState([]);
   const callbackFunction = (childData) => {
     setReloadPage(childData);
   };
@@ -24,12 +25,33 @@ const OrderList = () => {
         console.log(err);
       });
   }, [idCus]);
+  // const callOrderByStatus = async (id) => {
+  //   await axios
+  //     .get(
+  //       `${process.env.REACT_APP_API_URL}/api/get-all-order-by-status/${id}/`
+  //     )
+  //     .then((res) => {
+  //       setAllOrder(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
   useEffect(() => {
     callAllOrder();
+    // callOrderByStatus(statusOrder);
   }, [callAllOrder, idCus, reloadPage]);
   return (
     <>
       <SectionTitle>Danh Sách Đơn Hàng</SectionTitle>
+      {/* <select onChange={(e) => setStatusOrder(e.target.value)}>
+        <option>Trạng Thái Đơn Hàng</option>
+        {allOrder?.map((item, index) => (
+          <option key={index} value={item.id}>
+            {item.status}
+          </option>
+        ))}
+      </select> */}
       <div className="order">
         <div className="order__desc">
           <div className="order__desc__item">

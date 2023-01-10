@@ -219,25 +219,27 @@ const Product = (props) => {
                           </div>
 
                           <div className="product-top__info__content__option__right__option-ssd__attribute">
-                            {item?.values?.map((data, i) => (
-                              <>
-                                {data.option_id === 2 ? (
-                                  <div
-                                    key={data.id}
-                                    onClick={() => {
-                                      setSelectOption(data.id);
-                                    }}
-                                    className={
-                                      data.id === selectOption
-                                        ? "product-top__info__content__option__right__option-ssd__attribute__name active"
-                                        : "product-top__info__content__option__right__option-ssd__attribute__name"
-                                    }
-                                  >
-                                    {data.name}
-                                  </div>
-                                ) : null}
-                              </>
-                            ))}
+                            {item?.values
+                              ?.sort((a, b) => a.id - b.id)
+                              .map((data, i) => (
+                                <>
+                                  {data.option_id === 2 ? (
+                                    <div
+                                      key={data.id}
+                                      onClick={() => {
+                                        setSelectOption(data.id);
+                                      }}
+                                      className={
+                                        data.id === selectOption
+                                          ? "product-top__info__content__option__right__option-ssd__attribute__name active"
+                                          : "product-top__info__content__option__right__option-ssd__attribute__name"
+                                      }
+                                    >
+                                      {data.name}
+                                    </div>
+                                  ) : null}
+                                </>
+                              ))}
                           </div>
                         </>
                       );
